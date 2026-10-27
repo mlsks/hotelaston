@@ -154,9 +154,10 @@ test('médias : variantes WebP, recadrage portrait, doublon, type refusé', asyn
   const media = res.json().media;
   assert.equal(media.status, 'ready');
   const purposes = media.variants.map((v) => v.purpose).sort();
-  assert.deepEqual(purposes, ['portrait', 'thumb', 'w1024', 'w1600', 'w2000', 'w640']); // 2000 px : largeur d'origine gardée
+  assert.deepEqual(purposes, ['portrait', 'share', 'thumb', 'w1024', 'w1600', 'w2000', 'w640']); // 2000 px : largeur d'origine gardée
   for (const v of media.variants) assert.ok(fs.existsSync(path.join(config.mediaDir, v.path)), v.path);
   assert.equal(media.variants.find((v) => v.purpose === 'portrait').height, 1200);
+  assert.deepEqual(['width', 'height', 'format'].map((k) => media.variants.find((v) => v.purpose === 'share')[k]), [1200, 630, 'jpeg']);
 
   const again = await upload('editor', 'copie.png', png);
   assert.equal(again.statusCode, 200);

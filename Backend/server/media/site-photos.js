@@ -16,7 +16,7 @@ import path from 'node:path';
 import { Readable } from 'node:stream';
 import { config } from '../config.js';
 import { nowIso } from '../lib/util.js';
-import { ingestUpload, waitFor } from './pipeline.js';
+import { ingestUpload, waitFor, shareImagePath } from './pipeline.js';
 
 const CDN_RE = /^https:\/\/[a-z0-9]+\.cloudfront\.net\/cache\/img\//;
 const IMG_TAG = /<img\b[^>]*>/g;
@@ -195,6 +195,16 @@ export async function importSitePhotos(db, { dir = config.templatesDir, convert 
       if (JSON.stringify(next) !== JSON.stringify(settings[key])) saveSetting.run(JSON.stringify(next), now, key);
     }
   })();
+  /* Image de partage par défaut : variante JPEG 1200×630 (aussi pour une base déjà basculée en WebP) */
+  const og = db.prepare("SELECT value FROM cms_settings WHERE key = 'og_image_default'").pluck().get();
+  const ogUrl = og ? JSON.parse(og) : null;
+  const ogHash = /\/media\/v\/([0-9a-f]{16})-(?!share-)[^/]+$/.exec(ogUrl || '')?.[1];
+  const ogMedia = ogHash && db.prepare('SELECT id FROM cms_media WHERE substr(sha256, 1, 16) = ? AND deleted_at IS NULL').pluck().get(ogHash);
+  const share = ogMedia && await shareImagePath(db, ogMedia);
+  if (share) {
+    db.prepare("UPDATE cms_settings SET value = ?, updated_at = ? WHERE key = 'og_image_default'").run(JSON.stringify(`${config.siteUrl}/media/${share}`), nowIso());
+    log('Image de partage : JPEG 1200×630.');
+  }
   log(`Médiathèque : ${best.size} photo(s) traitée(s), ${Object.keys(manifest).length} emplacement(s) dans les gabarits.`);
   return { photos: best.size, slots: Object.keys(manifest).length };
 }

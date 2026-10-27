@@ -2,7 +2,8 @@
  * Pipeline des médias à l'upload.
  *  - Contrôles : type réel (premiers octets), poids maximal par type, empreinte SHA-256 contre les doublons.
  *  - Images (sharp) : orientation EXIF appliquée, métadonnées retirées, WebP en 640 / 1024 / 1600 / 2400 px
- *    (jamais au-delà de l'original, dont la largeur est gardée aussi), recadrage portrait 900×1600 centré sur le point d'intérêt, miniature.
+ *    (jamais au-delà de l'original, dont la largeur est gardée aussi), recadrage portrait 900×1600 centré sur le point d'intérêt,
+ *    image de partage JPEG 1200×630, miniature.
  *  - Vidéos et sons (ffprobe / ffmpeg) : durée et dimensions ; poster WebP extrait des vidéos.
  * Les originaux restent dans storage/uploads (jamais servis) ; les variantes vont dans media/v/
  * avec un nom tiré de l'empreinte, donc immuables.
@@ -123,6 +124,34 @@ async function portrait(db, m, src, width, height) {
   saveVariant(db, m.id, 'portrait', 'webp', info, rel);
 }
 
+/**
+ * Image de partage (og:image) : JPEG 1200×630 centré sur le point d'intérêt.
+ * JPEG plutôt que WebP : c'est le seul format lu partout (Facebook, WhatsApp, LinkedIn, messageries).
+ */
+async function shareVariant(db, m, src, width, height) {
+  let cw = width;
+  let ch = Math.round(width * (630 / 1200));
+  if (ch > height) {
+    ch = height;
+    cw = Math.round(height * (1200 / 630));
+  }
+  const left = Math.min(Math.max(0, Math.round(m.focal_x * width - cw / 2)), width - cw);
+  const top = Math.min(Math.max(0, Math.round(m.focal_y * height - ch / 2)), height - ch);
+  const rel = variantPath(m, `share-${Math.round(m.focal_x * 100)}-${Math.round(m.focal_y * 100)}.jpg`);
+  const info = await sharp(src).rotate().extract({ left, top, width: cw, height: ch })
+    .resize({ width: 1200, height: 630, fit: 'cover' }).flatten({ background: '#ffffff' }).jpeg({ quality: 82, mozjpeg: true }).toFile(absolute(rel));
+  saveVariant(db, m.id, 'share', 'jpeg', info, rel);
+}
+
+/** Adresse (relative à media/) de l'image de partage d'une image, créée au besoin (images importées avant cette variante). */
+export async function shareImagePath(db, id) {
+  const m = db.prepare('SELECT * FROM cms_media WHERE id = ?').get(id);
+  if (!m || m.kind !== 'image' || !m.width) return null;
+  const find = () => db.prepare("SELECT path FROM cms_media_variants WHERE media_id = ? AND purpose = 'share'").pluck().get(id);
+  if (!find()) await shareVariant(db, m, path.join(config.uploadsDir, m.storage_key), m.width, m.height);
+  return find();
+}
+
 export async function processMedia(db, id) {
   const m = db.prepare('SELECT * FROM cms_media WHERE id = ?').get(id);
   if (!m || m.kind === 'embed') return;
@@ -141,6 +170,7 @@ export async function processMedia(db, id) {
         saveVariant(db, m.id, `w${w}`, 'webp', info, rel);
       }
       await portrait(db, m, src, width, height);
+      await shareVariant(db, m, src, width, height);
       const thumbRel = variantPath(m, 'thumb.webp');
       saveVariant(db, m.id, 'thumb', 'webp', await sharp(src).rotate().resize({ width: 320, height: 240, fit: 'cover' }).webp({ quality: 70 }).toFile(absolute(thumbRel)), thumbRel);
       db.prepare("UPDATE cms_media SET width = ?, height = ?, status = 'ready', error = NULL WHERE id = ?").run(width, height, m.id);
@@ -181,6 +211,7 @@ export async function refreshPortrait(db, id) {
   const m = db.prepare('SELECT * FROM cms_media WHERE id = ?').get(id);
   if (!m || m.kind !== 'image' || !m.width) return;
   await portrait(db, m, path.join(config.uploadsDir, m.storage_key), m.width, m.height);
+  await shareVariant(db, m, path.join(config.uploadsDir, m.storage_key), m.width, m.height);
 }
 
 /** Lien externe (YouTube, Vimeo, Spotify…) : enregistré tel quel, chargé au clic sur le site. */
