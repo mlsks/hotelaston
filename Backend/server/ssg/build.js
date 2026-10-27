@@ -6,7 +6,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import * as cheerio from 'cheerio';
-import { config } from '../config.js';
+import { config, fromVarPath, toVarPath } from '../config.js';
 import { getDb, openDb } from '../db/connection.js';
 import { sha, nowIso } from '../lib/util.js';
 import { Source } from './source.js';
@@ -307,10 +307,10 @@ export function runBuild({ kind = 'preview', trigger = 'manual', now = new Date(
       if (kind === 'production') {
         if (trigger === 'cron') {
           if (!current?.snapshot_path) throw new Error("Rien n'est encore publié : la régénération attend une première publication.");
-          snapshotPath = current.snapshot_path;
+          snapshotPath = fromVarPath(current.snapshot_path);
         } else if (scope?.length) {
           // Compte limité : seule sa partie change, le reste repart du contenu en ligne
-          snapshotPath = createScopedSnapshot(db, id, scope, current?.snapshot_path);
+          snapshotPath = createScopedSnapshot(db, id, scope, fromVarPath(current?.snapshot_path));
           ownSnapshot = true;
         } else {
           snapshotPath = createSnapshot(db, id);
@@ -345,7 +345,7 @@ export function runBuild({ kind = 'preview', trigger = 'manual', now = new Date(
           fs.mkdirSync(config.releasesDir, { recursive: true });
           const releasePath = path.join(config.releasesDir, String(id));
           fs.renameSync(tmpDir, releasePath);
-          finish({ ...summary, status: 'success', snapshot_path: snapshotPath, release_path: releasePath });
+          finish({ ...summary, status: 'success', snapshot_path: toVarPath(snapshotPath), release_path: toVarPath(releasePath) });
           activateRelease(db, id, releasePath);
           savePageState(db, result.pages);
           pruneReleases(db);

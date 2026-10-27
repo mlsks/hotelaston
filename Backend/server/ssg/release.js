@@ -4,7 +4,7 @@
  */
 import fs from 'node:fs';
 import path from 'node:path';
-import { config } from '../config.js';
+import { config, fromVarPath } from '../config.js';
 import { getDb } from '../db/connection.js';
 import { nowIso } from '../lib/util.js';
 import { withBuildLock } from './lock.js';
@@ -66,10 +66,10 @@ export function pruneReleases(db, keep = config.keepReleases) {
   if (current) keepIds.add(current.id);
   for (const b of releases) {
     if (keepIds.has(b.id)) continue;
-    fs.rmSync(b.release_path, { recursive: true, force: true });
+    fs.rmSync(fromVarPath(b.release_path), { recursive: true, force: true });
     db.prepare('UPDATE sys_builds SET release_path = NULL WHERE id = ?').run(b.id);
   }
-  const used = new Set(db.prepare(`SELECT snapshot_path FROM sys_builds WHERE release_path IS NOT NULL AND snapshot_path IS NOT NULL`).pluck().all().map((p) => path.resolve(p)));
+  const used = new Set(db.prepare(`SELECT snapshot_path FROM sys_builds WHERE release_path IS NOT NULL AND snapshot_path IS NOT NULL`).pluck().all().map((p) => path.resolve(fromVarPath(p))));
   if (fs.existsSync(config.snapshotsDir)) {
     for (const f of fs.readdirSync(config.snapshotsDir)) {
       const full = path.resolve(config.snapshotsDir, f);
@@ -101,12 +101,13 @@ export function restoreRelease({ buildId = null, withContent = false, userId = n
     const target = buildId
       ? db.prepare(`SELECT * FROM sys_builds WHERE id = ? AND kind = 'production' AND status = 'success'`).get(buildId)
       : db.prepare(`SELECT * FROM sys_builds WHERE kind = 'production' AND status = 'success' AND release_path IS NOT NULL AND id < ? ORDER BY id DESC LIMIT 1`).get(current?.id ?? Number.MAX_SAFE_INTEGER);
-    if (!target?.release_path || !fs.existsSync(target.release_path)) throw new Error('Aucune version précédente disponible.');
+    const releasePath = fromVarPath(target?.release_path);
+    if (!releasePath || !fs.existsSync(releasePath)) throw new Error('Aucune version précédente disponible.');
     if (target.id === current?.id) throw new Error(`La version #${target.id} est déjà en ligne.`);
-    activateRelease(db, target.id, target.release_path);
-    resetPageState(db, target.release_path);
+    activateRelease(db, target.id, releasePath);
+    resetPageState(db, releasePath);
     let backup = null;
-    if (withContent) backup = await restoreContent(db, target.snapshot_path);
+    if (withContent) backup = await restoreContent(db, fromVarPath(target.snapshot_path));
     const now = nowIso();
     db.prepare(`INSERT INTO sys_builds (kind, triggered_by, status, user_id, warnings, started_at, finished_at)
       VALUES ('rollback', 'rollback', 'success', ?, ?, ?, ?)`)

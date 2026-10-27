@@ -85,7 +85,7 @@ Documentation : [Backend/README.md](Backend/README.md) (commandes, rôles, écra
 | 5 | Vidéo du Hero | Fournir la prise de vue définitive : elle sera traitée en boucle et la vidéo réactivée. |
 | 6 | Résidence Aston La Scala | Ajouter sur residenceastonlascala.com le lien vers l'hôtel (extrait prêt en bas de `index.html`). 17 appartements annoncés, 16 détaillés. Les clients de la Résidence ont-ils accès à la piscine ? Valider son moteur de réservation (D-Edge `J1P3`, `hotelId=29961`). |
 | 7 | Géolocalisation des statistiques | Donner l'accord pour télécharger la base gratuite DB-IP (pays et régions), à renouveler chaque mois. |
-| 8 | Politique de confidentialité | Ajouter un paragraphe sur la mesure d'audience : sans cookie, données agrégées, 13 mois, et comment s'y opposer. |
+| 8 | Politique de confidentialité | Faire valider et ajouter le paragraphe sur la mesure d'audience, prêt dans [docs/confidentialite-mesure-audience.md](docs/confidentialite-mesure-audience.md). |
 | 9 | Traductions | L'anglais est activé mais aucune page n'est encore entièrement traduite : seul le français sera publié tant que ce n'est pas fait. Désigner les traducteurs (comptes à créer), puis l'italien et l'allemand. |
 | 10 | Anciennes adresses | Relever les adresses actuelles de hotel-aston.com pour créer les redirections 301 et ne pas perdre le référencement. |
 
@@ -93,8 +93,9 @@ Documentation : [Backend/README.md](Backend/README.md) (commandes, rôles, écra
 
 | Priorité | Sujet | Détail |
 |---|---|---|
-| Avant mise en ligne | Fichiers de déploiement | Caddyfile (HTTPS, fichiers statiques, cache, redirections, `/api`, `/admin` et `/preview` vers Node), PM2, Dockerfile. |
-| Avant mise en ligne | Sauvegardes | Copie nocturne de la base sur 7 jours (pour l'instant, une sauvegarde n'est faite qu'avant une restauration) et script de synchronisation de `media/` hors du serveur. |
+| Fait (27/10) | Fichiers de déploiement | Caddyfile, PM2, Dockerfile dans [deploy/](deploy/README.md). Restent l'hébergeur et l'adresse des alertes Let's Encrypt. |
+| Fait (27/10) | Sauvegardes | `deploy/backup-db.sh` (base et snapshots, 7 jours) et `deploy/sync-media.sh` (rclone). Reste à choisir le stockage externe. |
+| Fait (27/10) | Chemins en base | Chemins des versions et des snapshots relatifs au dossier des données : la base passe du PC Windows au serveur Linux sans retouche. |
 | Avant mise en ligne | Photos du site | Importer les photos (encore lues sur le CDN du site actuel) dans la médiathèque et basculer les gabarits. |
 | Avant mise en ligne | Comptes | Créer les vrais comptes sur le serveur ; les comptes de développement restent en local. |
 | Ensuite | SEO | Corriger les 54 remarques du dernier build (titles de plus de 60 caractères, descriptions de plus de 160…) depuis l'onglet « Référencement » de chaque page. |
@@ -127,4 +128,4 @@ npm --prefix hotelaston/Backend test
 
 La maquette d'origine se lance avec `python -m http.server 8765 --directory hotelaston`.
 
-Sur un autre ordinateur, garder le même emplacement (`C:\dev\Claude\Remotion\hotelaston`) : la base enregistre des chemins absolus. Le contexte pour Claude (consignes et mémoire du projet) est dans `.claude/`.
+Le code est sur GitHub (`mlsks/hotelaston`). La base n'enregistre plus de chemins absolus : le projet peut vivre dans n'importe quel dossier, y compris sur le serveur Linux. Les questions à envoyer à l'hôtel sont dans [docs/questions-hotel.md](docs/questions-hotel.md). Le contexte pour Claude (consignes et mémoire du projet) est dans `.claude/`.

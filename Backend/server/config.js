@@ -48,3 +48,26 @@ export const config = {
   uploadMaxMb: { image: Number(env('UPLOAD_MAX_IMAGE_MB', 25)), video: Number(env('UPLOAD_MAX_VIDEO_MB', 200)), audio: Number(env('UPLOAD_MAX_AUDIO_MB', 30)) },
   warnMb: { video: 8, audio: 5 },
 };
+
+/**
+ * Chemins enregistrés en base (sys_builds.snapshot_path, release_path) : relatifs à varDir,
+ * avec des « / », pour que la base suive le dossier d'un ordinateur ou d'un système à l'autre.
+ */
+export const toVarPath = (abs) => (abs ? path.relative(VAR, abs).split(path.sep).join('/') : abs);
+
+// Dossiers de varDir qui peuvent figurer dans un chemin enregistré
+const VAR_ROOTS = new Set(['releases', 'storage']);
+
+/**
+ * Chemin enregistré → chemin absolu. Accepte aussi les anciens chemins absolus, y compris
+ * Windows (C:\dev\…\Backend\releases\12) : ils sont replacés sous le varDir actuel.
+ */
+export function fromVarPath(stored) {
+  if (!stored) return stored;
+  const absolute = path.isAbsolute(stored) || /^[A-Za-z]:[\\/]/.test(stored) || stored.startsWith('\\\\');
+  if (!absolute) return path.resolve(VAR, ...stored.split('/'));
+  if (fs.existsSync(stored)) return stored;
+  const parts = stored.split(/[\\/]+/);
+  const i = parts.findLastIndex((p, k) => VAR_ROOTS.has(p) && k < parts.length - 1);
+  return i < 0 ? stored : path.join(VAR, ...parts.slice(i));
+}

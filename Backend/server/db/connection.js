@@ -5,7 +5,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import Database from 'better-sqlite3';
-import { config } from '../config.js';
+import { config, fromVarPath, toVarPath } from '../config.js';
 import { ensureUiStrings } from '../ssg/ui-strings.js';
 
 const MIGRATIONS_DIR = path.join(path.dirname(fileURLToPath(import.meta.url)), 'migrations');
@@ -30,6 +30,7 @@ export function getDb() {
   if (!shared) {
     shared = openDb();
     migrate(shared);
+    relativizeBuildPaths(shared);
     ensureUiStrings(shared);
   }
   return shared;
@@ -60,4 +61,25 @@ export function migrate(db) {
     applied.push(file);
   }
   return applied;
+}
+
+/**
+ * Bases créées avant le passage aux chemins relatifs : les chemins absolus de sys_builds
+ * (souvent Windows, C:\dev\…) sont réécrits relativement à varDir. Sans effet ensuite.
+ */
+export function relativizeBuildPaths(db) {
+  const rows = db.prepare(`SELECT id, snapshot_path, release_path FROM sys_builds
+    WHERE snapshot_path GLOB '[/\\]*' OR snapshot_path GLOB '?:*' OR release_path GLOB '[/\\]*' OR release_path GLOB '?:*'`).all();
+  if (!rows.length) return 0;
+  const rel = (p) => {
+    if (!p) return p;
+    const abs = fromVarPath(p);
+    const r = toVarPath(abs);
+    return r.startsWith('..') || path.isAbsolute(r) ? p : r; // hors de varDir : laissé tel quel
+  };
+  const update = db.prepare('UPDATE sys_builds SET snapshot_path = ?, release_path = ? WHERE id = ?');
+  db.transaction(() => {
+    for (const r of rows) update.run(rel(r.snapshot_path), rel(r.release_path), r.id);
+  })();
+  return rows.length;
 }

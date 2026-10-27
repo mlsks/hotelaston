@@ -1,0 +1,14 @@
+**/node_modules
+**/.env
+**/.dev-credentials
+**/*.sqlite*
+**/*.db*
+Backend/storage
+Backend/media
+Backend/preview
+Backend/releases
+Backend/public-dist
+Backend/.build-*
+video/out
+.git
+.claude

@@ -142,14 +142,20 @@ function copyIfNeeded(from, to, overwrite) {
 
 /**
  * @param writeTemplates false : remplit seulement la base (les gabarits existants restent tels quels,
- *                       les clés étant déterministes) — utilisé par les tests.
+ *                       les clés étant déterministes) : tests, et d’office quand templates-src/ existe déjà.
  */
 export function importLegacy(db, { force = false, forceAssets = false, writeTemplates = true, log = console.log } = {}) {
   const src = path.join(config.legacyDir, 'index.html');
   const layoutFile = path.join(config.templatesDir, 'layout.html');
   const hasContent = db.prepare('SELECT COUNT(*) FROM cms_pages').pluck().get() > 0;
-  if (!force && (hasContent || (writeTemplates && fs.existsSync(layoutFile)))) {
-    throw new Error("Import déjà fait (gabarits ou contenus présents). Relancer avec --force pour tout réimporter.");
+  if (!force && hasContent) {
+    throw new Error("Import déjà fait (contenus présents). Relancer avec --force pour tout réimporter.");
+  }
+  // Dépôt cloné : les gabarits sont versionnés et restent tels quels ; la base et media/ sont remplis
+  let copyFiles = writeTemplates;
+  if (!force && writeTemplates && fs.existsSync(layoutFile)) {
+    writeTemplates = false;
+    log('Gabarits déjà présents dans templates-src/ : conservés, seules la base et media/ sont remplies.');
   }
 
   const raw = fs.readFileSync(src, 'utf8');
@@ -273,7 +279,8 @@ export function importLegacy(db, { force = false, forceAssets = false, writeTemp
     write(layoutFile, $.html());
     for (const p of pages) write(path.join(config.templatesDir, 'pages', `${p.key}.html`), p.html.trim() + '\n');
     for (const [name, html] of Object.entries(items)) write(path.join(config.templatesDir, 'items', `${name}.html`), html.trim() + '\n');
-
+  }
+  if (copyFiles) {
     const legacy = (f) => path.join(config.legacyDir, f);
     for (const f of ['styles.css', 'remotion-vanilla.js', 'sw.js']) {
       if (copyIfNeeded(legacy(f), path.join(config.templatesDir, 'assets', f), forceAssets)) copied.push(`assets/${f}`);

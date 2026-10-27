@@ -1,0 +1,79 @@
+# Caddyfile : hotel-aston.com
+# Projet installé dans /srv/hotelaston (dépôt cloné), back-office dans /srv/hotelaston/Backend.
+# HTTPS automatique (Let's Encrypt) dès que le DNS pointe sur le serveur.
+
+{
+	email webmaster@hotel-aston.com # À confirmer : adresse qui reçoit les alertes Let's Encrypt
+}
+
+# Adresse canonique : www (comme SITE_URL dans Backend/.env, utilisée par le sitemap et les balises canonical)
+hotel-aston.com {
+	redir https://www.hotel-aston.com{uri} permanent
+}
+
+www.hotel-aston.com {
+	encode zstd gzip
+
+	# L'admin pose déjà sa propre CSP : on ne la remplace pas ici
+	header {
+		Strict-Transport-Security "max-age=31536000; includeSubDomains"
+		X-Content-Type-Options "nosniff"
+		Referrer-Policy "strict-origin-when-cross-origin"
+		Permissions-Policy "camera=(), microphone=(), geolocation=()"
+		-Server
+	}
+
+	# Redirections générées à chaque publication (« / » vers la langue par défaut, puis les 301).
+	# Le fichier change avec la version en ligne : deploy/reload-redirects.sh recharge Caddy quand il bouge.
+	import /srv/hotelaston/Backend/public-dist/_meta/redirects*.caddy
+
+	# Fichiers internes de la version publiée
+	@meta path /_meta /_meta/*
+	respond @meta 404
+
+	# Partie dynamique : API (dont la réception des statistiques), admin, prévisualisation protégée.
+	# Fastify est en trustProxy : il lit X-Forwarded-For, que Caddy ajoute de lui-même.
+	@node path /api/* /admin /admin/* /preview /preview/*
+	handle @node {
+		reverse_proxy 127.0.0.1:3020
+	}
+
+	# Médias de la médiathèque : noms avec empreinte, donc immuables
+	handle_path /media/* {
+		root * /srv/hotelaston/Backend/media
+		header Cache-Control "public, max-age=31536000, immutable"
+		file_server
+	}
+
+	# Site public : public-dist est un lien vers releases/<id>/, remplacé d'un coup à chaque publication
+	handle {
+		root * /srv/hotelaston/Backend/public-dist
+		try_files {path} {path}/index.html {path}.html
+
+		# CSS et JS renommés avec leur empreinte par le générateur
+		@fingerprinted path /assets/*
+		header @fingerprinted Cache-Control "public, max-age=31536000, immutable"
+
+		@static path *.png *.ico *.webp *.avif *.jpg *.svg *.woff2 *.webmanifest
+		header @static Cache-Control "public, max-age=604800"
+
+		@html path *.html / */ /sitemap.xml /robots.txt /sw.js
+		header @html Cache-Control "public, max-age=0, must-revalidate"
+
+		file_server
+	}
+
+	handle_errors 404 {
+		root * /srv/hotelaston/Backend/public-dist
+		rewrite * /404.html
+		file_server
+	}
+
+	log {
+		output file /var/log/caddy/hotel-aston.log {
+			roll_size 20MiB
+			roll_keep 5
+		}
+		format json
+	}
+}
