@@ -35,6 +35,8 @@ Ajouté entre les briques 2 et 3 : un **éditeur limité au Live Music** (voir R
 
 Node.js 22 ou plus (24 LTS conseillé sur le serveur). `ffmpeg` et `ffprobe` pour les vidéos.
 
+Pas à pas pour un PC Windows, avec les problèmes courants : [docs/INSTALLATION-LOCALE.md](../docs/INSTALLATION-LOCALE.md). Sur un dépôt cloné, `npm run import` garde les gabarits versionnés de `templates-src/` et remplit seulement la base et `media/`.
+
 ```bash
 npm install
 cp .env.example .env
