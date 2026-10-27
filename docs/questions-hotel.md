@@ -4,7 +4,7 @@ Bonjour,
 
 Le nouveau site est prêt. Avant de le mettre en ligne, nous avons besoin de vos réponses sur les points ci-dessous. Nous n'avons rien inventé : chaque information que le site actuel ne précise pas reste marquée « à confirmer » tant que vous ne l'avez pas validée.
 
-Les blocs A à D sont nécessaires pour la mise en ligne. Les blocs E à H peuvent suivre.
+Les blocs A à D sont nécessaires pour la mise en ligne. Les blocs E à I peuvent suivre.
 
 ---
 
@@ -64,6 +64,18 @@ Les blocs A à D sont nécessaires pour la mise en ligne. Les blocs E à H peuve
 
 23. Qui traduira le site en anglais, puis en italien et en allemand ? Nous créerons un compte « traducteur » pour chaque personne (nom et adresse e-mail).
 24. Avez-vous accès à l'hébergement ou à la Search Console de hotel-aston.com ? La liste des adresses actuelles nous permet de rediriger chaque ancienne page vers la nouvelle et de conserver votre référencement Google.
+
+## I. Visibilité dans les assistants IA (ChatGPT, Perplexity, Google AI Overviews…)
+
+Ces assistants répondent avec les informations qu'ils trouvent, sur le site et dans les fiches publiques. Plus elles sont complètes et identiques partout, plus l'hôtel est cité. Nous ne publions que ce que vous confirmez.
+
+25. Nombre total de chambres (et de suites) de l'hôtel.
+26. Fourchette de prix d'une nuit (par exemple « de 150 € à 450 € selon la saison »), pour l'indication de prix des données structurées.
+27. Langues parlées à la réception (aujourd'hui : français et anglais ; italien, allemand, autres ?).
+28. Adresses officielles de l'hôtel à relier au site : fiche Google, Tripadvisor, Facebook, LinkedIn, Booking… (aujourd'hui seul Instagram est relié).
+29. Animaux : conditions et supplément éventuel (le site indique seulement qu'ils sont acceptés).
+30. Accessibilité : nombre de chambres adaptées PMR, accès de la piscine et des salles en fauteuil.
+31. Pouvons-nous indiquer les horaires de la réception (24 h / 24 ?) et du room service ?
 
 ---
 

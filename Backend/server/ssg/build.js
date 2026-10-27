@@ -14,6 +14,8 @@ import { renderPage } from './render.js';
 import { fillRoom, fillService } from './items.js';
 import { prepareAssets, webManifest, serviceWorker } from './assets.js';
 import { sitemapXml, robotsTxt, redirectsCaddy } from './sitemap.js';
+import { llmsTxt } from './llms.js';
+import { globalGraph } from './jsonld.js';
 import { createSnapshot, createScopedSnapshot } from './snapshot.js';
 import { activateRelease, pruneReleases, writeTree, currentBuild } from './release.js';
 import { withBuildLock } from './lock.js';
@@ -213,6 +215,7 @@ export function generateSite({ source, mode, now, previousState = new Map(), onl
         lang, path: urlPath, contentHash: out.contentHash, lastmod, changed: !prev || prev.content_hash !== out.contentHash,
         inSitemap: !isNotFound && !head.noindex && (t.type === 'item' || Boolean(t.page.in_sitemap)),
         alternates, xDefault, images: out.images, missingCount: out.missing.size,
+        title: out.title, description: out.description, kind: t.type === 'page' ? 'page' : t.collection,
       });
     }
   }
@@ -234,6 +237,14 @@ export function generateSite({ source, mode, now, previousState = new Map(), onl
   }));
   files.set('sitemap.xml', sitemapXml(sitemapEntries));
   files.set('robots.txt', robotsTxt(config.siteUrl));
+  // Résumé pour les assistants IA : /llms.txt dans la langue par défaut, /<langue>/llms.txt pour chaque langue publiée
+  const homes = pages.filter((p) => p.kind === 'page' && p.path === `/${p.lang}/`)
+    .map((p) => ({ lang: p.lang, name: source.lang(p.lang).native_name || p.lang, url: config.siteUrl + p.path }));
+  for (const lang of new Set(pages.map((p) => p.lang))) {
+    const txt = llmsTxt({ siteUrl: config.siteUrl, lang, graph: globalGraph(source, lang), pages, homes });
+    files.set(`${lang}/llms.txt`, txt);
+    if (lang === defaultLang) files.set('llms.txt', txt);
+  }
   files.set('site.webmanifest', webManifest({ templatesDir: config.templatesDir, assets, basePath, defaultLang }));
   const redirects = source.redirects.map((r) => {
     const page = r.to_page ? source.pagesById.get(r.to_page) : null;

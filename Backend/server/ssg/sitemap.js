@@ -27,8 +27,30 @@ export function sitemapXml(entries) {
   ].join('\n');
 }
 
+/**
+ * Robots des moteurs de réponse et des assistants IA (GEO), nommés un par un : un groupe propre à un robot
+ * remplace le groupe « * » pour lui, donc chacun reprend les mêmes interdictions.
+ * Recherche et citation (OAI-SearchBot, PerplexityBot, Claude-SearchBot…), lecture à la demande d'un utilisateur
+ * (ChatGPT-User, Perplexity-User, Claude-User…) et entraînement des modèles (GPTBot, ClaudeBot, Google-Extended,
+ * Applebot-Extended, CCBot…) : tous autorisés, pour que l'hôtel soit connu et cité. Retirer un robot de la liste
+ * ne suffit pas à le bloquer : il faut lui écrire un groupe « Disallow: / ».
+ */
+export const AI_BOTS = [
+  'OAI-SearchBot', 'ChatGPT-User', 'GPTBot',
+  'PerplexityBot', 'Perplexity-User',
+  'Claude-SearchBot', 'Claude-User', 'ClaudeBot',
+  'Google-Extended', 'Applebot-Extended', 'Bingbot',
+  'MistralAI-User', 'DuckAssistBot', 'Meta-ExternalAgent', 'Amazonbot', 'CCBot',
+];
+
 export function robotsTxt(siteUrl) {
-  return ['User-agent: *', 'Allow: /', 'Disallow: /preview/', 'Disallow: /admin/', 'Disallow: /api/', '', `Sitemap: ${siteUrl}/sitemap.xml`, ''].join('\n');
+  const rules = ['Allow: /', 'Disallow: /preview/', 'Disallow: /admin/', 'Disallow: /api/'];
+  return [
+    'User-agent: *', ...rules, '',
+    '# Moteurs de réponse et assistants IA : bienvenus (résumé du site pour eux : /llms.txt)',
+    ...AI_BOTS.map((bot) => `User-agent: ${bot}`), ...rules, '',
+    `Sitemap: ${siteUrl}/sitemap.xml`, '',
+  ].join('\n');
 }
 
 /** Directives importées par le Caddyfile (anciennes adresses → nouvelles, racine → langue par défaut). */

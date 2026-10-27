@@ -39,3 +39,4 @@ La conversation d'origine est restée sur le PC de développement ; voici ce qu'
 
 Voir [[hotel-aston-site]] et [[user-profile]].
 - 27/10/2026 : « ok on importe dans la médiathèque » : photos du site actuel téléchargées dans la médiathèque locale et gabarits basculés (point « Photos du site » du BILAN). Sauvegarde de la base avant l'import : `Backend/storage/backups/avant-photos-2026-10-27.sqlite`.
+- 27/10/2026 : « on attaque le SEO, mais également le GEO car aujourd'hui il est primordial ! » : 54 remarques SEO corrigées (titles et descriptions raccourcis dans la base par l'API, aucun fait ajouté), GEO : robots.txt nommant les robots IA (tous autorisés, entraînement compris), `llms.txt` généré, nœud `WebPage` par page, FAQ sans réponses « à confirmer », balise robots max-snippet. Relecture et suite : `docs/seo-geo.md` ; questions 25 à 31 ajoutées pour l'hôtel.

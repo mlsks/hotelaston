@@ -9,7 +9,7 @@ import { injectMedia } from './media-render.js';
 import { renderZones, renderPopup } from './banners.js';
 import { renderGigList } from './gigs.js';
 import { fillVars, sha } from '../lib/util.js';
-import { globalGraph, breadcrumbFromDom, faqFromDom, jsonForScript } from './jsonld.js';
+import { globalGraph, breadcrumbFromDom, faqFromDom, webPageNode, jsonForScript } from './jsonld.js';
 
 /** Attributs qui peuvent pointer vers un fichier du site. */
 const ASSET_ATTRS = { link: ['href'], script: ['src'], img: ['src', 'srcset'], source: ['src', 'srcset', 'data-src'], video: ['poster', 'src'], a: ['href'] };
@@ -140,6 +140,8 @@ export function renderPage(site, lang, target, head) {
   const viewport = $('head meta[name="viewport"]').first();
   const tags = [$('<title>').text(title), $('<meta name="description">').attr('content', description)];
   if (head.noindex || site.mode === 'preview') tags.push($('<meta name="robots" content="noindex">'));
+  // Extraits longs et grandes images autorisés : Google (AI Overviews compris) et Bing peuvent citer la page en entier
+  else tags.push($('<meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">'));
   tags.push($('<link rel="canonical">').attr('href', head.canonical));
   for (const alt of head.alternates) tags.push($('<link rel="alternate">').attr({ hreflang: alt.lang, href: alt.href }));
   if (head.xDefault) tags.push($('<link rel="alternate" hreflang="x-default">').attr('href', head.xDefault));
@@ -161,7 +163,20 @@ export function renderPage(site, lang, target, head) {
     const path = site.basePath && href.startsWith(`${site.basePath}/`) ? href.slice(site.basePath.length) : href;
     return site.siteUrl + path;
   };
-  const graph = [...globalGraph(source, lang), breadcrumbFromDom($, absolute), faqFromDom($), itemMeta?.ld, ...gigEvents].filter(Boolean);
+  const images = [...new Set($('main img[src]').map((i, el) => el.attribs.src).get())]
+    .filter((src) => !src.startsWith('data:'))
+    .slice(0, 10)
+    .map((src) => absolute(isRelative(src) ? site.assets.url(src) ?? src : src));
+  const homeUrl = absolute(site.routes.get(lang).get('') || `/${lang}/`);
+  const crumbs = breadcrumbFromDom($, absolute);
+  if (crumbs) crumbs['@id'] = `${head.canonical}#breadcrumb`;
+  const faq = faqFromDom($);
+  const entity = itemMeta?.ld ? { '@id': `${head.canonical}#${itemMeta.ld['@type'].toLowerCase()}`, url: head.canonical, ...itemMeta.ld } : null;
+  const webPage = webPageNode({
+    url: head.canonical, name: title, description, locale: langRow.locale, siteUrl: site.siteUrl, image: images[0],
+    breadcrumb: crumbs?.['@id'], mainEntity: entity?.['@id'], faq: faq?.mainEntity,
+  });
+  const graph = [...globalGraph(source, lang, homeUrl), webPage, crumbs, entity, ...gigEvents].filter(Boolean);
   $('head').append($('<script type="application/ld+json">').text(jsonForScript({ '@context': 'https://schema.org', '@graph': graph })));
 
   /* Mesure d'audience : site publié seulement */
@@ -196,11 +211,6 @@ export function renderPage(site, lang, target, head) {
     const label = missing.size ? ` · <b>${missing.size} texte(s) non traduit(s)</b>` : '';
     $('body').append(`<div class="cms-preview-ribbon">Prévisualisation · ${lang.toUpperCase()}${label}</div>`);
   }
-
-  const images = [...new Set($('main img[src]').map((i, el) => el.attribs.src).get())]
-    .filter((src) => !src.startsWith('data:'))
-    .slice(0, 10)
-    .map((src) => absolute(src));
 
   return {
     html: $.html().replace(/\n(?:[ \t]*\n)+/g, '\n'), // lignes vides laissées par les balises retirées

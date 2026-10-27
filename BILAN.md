@@ -13,7 +13,7 @@
 | Pages générées | 35 (25 pages + 6 fiches chambre + 4 fiches service) |
 | Textes gérés | 1 294, dont 57 textes affichés par le JavaScript |
 | Langues | Français en ligne · anglais activé, à traduire · italien et allemand préparés |
-| Tests automatiques | 36, tous réussis |
+| Tests automatiques | 44, tous réussis (1 sauté sans ffmpeg) |
 | Écrans d'administration | 22 |
 
 ## 1. Ce qui est fait
@@ -98,7 +98,7 @@ Documentation : [Backend/README.md](Backend/README.md) (commandes, rôles, écra
 | Fait (27/10) | Chemins en base | Chemins des versions et des snapshots relatifs au dossier des données : la base passe du PC Windows au serveur Linux sans retouche. |
 | Fait (27/10) | Photos du site | 72 photos du site actuel dans la médiathèque (WebP en plusieurs tailles), 63 emplacements des gabarits, photos des fiches, image de partage (JPEG 1200×630, lu par tous les réseaux sociaux) et JSON-LD basculés : plus aucun appel à l'ancien CDN. Photos modifiables dans l'admin (onglet Textes de chaque page, fiches). Commande `media:import-site` à relancer sur une base neuve. |
 | Avant mise en ligne | Comptes | Créer les vrais comptes sur le serveur ; les comptes de développement restent en local. |
-| Ensuite | SEO | Corriger les 54 remarques du dernier build (titles de plus de 60 caractères, descriptions de plus de 160…) depuis l'onglet « Référencement » de chaque page. |
+| Fait (27/10) | SEO et GEO | 54 remarques corrigées (titles et descriptions raccourcis, sans fait nouveau). Visibilité dans les assistants IA : robots.txt qui autorise les robots IA, `llms.txt` généré depuis la base, nœud `WebPage` relié à l'hôtel sur chaque page, FAQ balisée sans les réponses « à confirmer ». Textes à relire et suite : [docs/seo-geo.md](docs/seo-geo.md) ; questions 25 à 31 pour l'hôtel. |
 | Ensuite | Avis sur les pages restaurant et bars | Reporté à votre demande : L'Horloge, Moon Bar, L'Aston Club. |
 | Ensuite | Vidéos externes | Lecteur YouTube / Vimeo chargé au clic (aujourd'hui un simple lien). |
 | Option | Statistiques niveau 2 | Visiteurs qui reviennent (identifiant de 13 mois avec possibilité de refus). |
