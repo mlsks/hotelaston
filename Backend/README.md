@@ -15,11 +15,12 @@ Ajouté entre les briques 2 et 3 : un **éditeur limité au Live Music** (voir R
 
 **Vérifié** :
 - les 34 pages françaises générées ont le même texte, la même structure HTML, le même `<title>`, le même en-tête, pied de page, menu, bouton bas d'écran et bandeau Live Music que le site actuel ;
-- 36 tests automatiques (`npm test`) :
+- 44 tests automatiques (`npm test`) :
   - connexion, CSRF, rôles, traductions, médias (images et vidéo), bandeaux, popup, textes d'interface, publication et restauration, utilisateurs ;
   - éditeur Live Music : ce qu'il voit, ce qu'il modifie, publication limitée à son périmètre ;
   - statistiques : canaux, périodes, parcours simulé de ChatGPT jusqu'au moteur de réservation avec bandeau attribué, entonnoir, demande, Core Web Vitals, export CSV, agrégats, confidentialité, droits ;
   - interface : en-têtes de sécurité, bibliothèques locales et leur cache, chaque écran et son composant, messages d'erreur en français ;
+  - SEO et GEO : robots.txt ouvert aux robots IA, `llms.txt` tiré des données, FAQ structurée sans les réponses « à confirmer » ;
 - dans le navigateur :
   - connexion, prévisualisation protégée, fermeture d'un bandeau mémorisée ;
   - popup en fenêtre sur ordinateur et en panneau bas sur mobile (jamais avant un geste du visiteur) ;

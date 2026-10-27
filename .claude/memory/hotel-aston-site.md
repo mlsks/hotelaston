@@ -22,6 +22,8 @@ Résidence Aston La Scala : bâtiment voisin distinct (2 rue Chauvain, ancien Pe
 - Brique 4 : interface `admin/` = Alpine 3.17.4 (ESM) + Tailwind 4.3.3 (version navigateur) + Chart.js 4.5.1 servis depuis node_modules par `/admin/vendor/*` (`server/admin-assets.js`, CSP stricte, pas de CDN) ; routeur `#/…` dans `admin/lib/router.js`, un fragment `views/<nom>.html` + un composant `Alpine.data` par écran (22 écrans). 36 tests.
 - Reste : fichiers de déploiement (Caddyfile, PM2, Dockerfile), sauvegarde nocturne de la base, import des photos dans la médiathèque, comptes réels. Liste complète dans `BILAN.md`.
 
+**SEO / GEO** (27/10/2026) : titles ≤ 60 et descriptions ≤ 160 sur toutes les pages FR (0 remarque au build). Robots IA autorisés un par un (`AI_BOTS`, `server/ssg/sitemap.js`) : choix par défaut pour la visibilité, l'utilisateur peut décider de bloquer les robots d'entraînement. `llms.txt` (`server/ssg/llms.js`) construit depuis `jsonld_graph` et les title/description : corriger un fait dans l'admin suffit. Réponses `.verify` exclues du FAQPage. Pas d'`Offer` ni d'`AggregateRating` tant que prix et avis réels ne sont pas confirmés. Le graphe `jsonld_graph` n'existe qu'en français : à traduire avec l'anglais. Détails : `docs/seo-geo.md`.
+
 **Pièges rencontrés :**
 - Windows : remplacer une jonction par unlink puis rename ; fermer un fichier SQLite avant de le supprimer (EBUSY) ; clés étrangères désactivées pendant la copie d'un snapshot.
 - `snapshot_path` et `release_path` sont relatifs à `config.varDir` depuis le 27/10/2026 (`toVarPath` / `fromVarPath`, réécriture des anciens chemins Windows au démarrage) : le dossier peut changer d'emplacement.

@@ -774,6 +774,10 @@ Règle de publication par langue : une page n'est publiée dans une langue que s
   - `Event` pour les soirées Live Music, `BreadcrumbList` pour le fil d'Ariane, `FAQPage`, `BlogPosting` pour le journal.
 
   Pas de note moyenne (`AggregateRating`) tirée des avis publiés sur le site lui-même : Google ne l'affiche pas en étoiles pour un hôtel qui se note lui-même. Les résultats enrichis « FAQ » sont aujourd'hui réservés par Google à quelques sites officiels, mais ces données restent utiles aux assistants IA.
+- **Visibilité dans les assistants IA (GEO, 27/10/2026)** :
+  - nœud `WebPage` sur chaque page (titre, description, langue, image principale), relié par `@id` au site, à l'hôtel, au fil d'Ariane et au contenu principal ; pages à questions typées `FAQPage`, sans les réponses encore « à confirmer » (`.verify`) ;
+  - `robots.txt` qui nomme et autorise les robots IA (`AI_BOTS` dans `sitemap.js`) ; balise robots `max-snippet:-1, max-image-preview:large` sur le site publié ;
+  - `llms.txt` (`ssg/llms.js`) : faits tirés du graphe JSON-LD et liste des pages publiées avec leur title et leur description, à la racine dans la langue par défaut et sous `/<langue>/llms.txt`.
 - **Vitesse (Core Web Vitals)** :
   - HTML statique ; CSS et JS avec empreinte et cache long ;
   - image principale préchargée en priorité, WebP en tailles adaptées, `width`/`height` sur chaque image (pas de saut de mise en page) ;
