@@ -3,7 +3,8 @@
  * champs communs / champs traduits (même logique que server/ssg/collections.js).
  *
  * Types de champ : text, textarea, rich, number, date, time, month, select, checkbox,
- * list (liste de textes), pairs (liste de paires), objects (liste d'objets), tags (choix multiples), image, json.
+ * list (liste de textes), pairs (liste de paires), objects (liste d'objets), tags (choix multiples),
+ * image (photo de la médiathèque, identifiant du média), json.
  */
 
 const VENUES = [['selon-meteo', 'Selon la météo'], ['moon-bar', 'Moon Bar (rooftop)'], ['aston-club', 'L’Aston Club (7e étage)']];
@@ -46,8 +47,7 @@ export const SPECS = {
       { key: 'amenitiesFull', label: 'Liste complète des équipements', type: 'list' },
       { key: 'variants', label: 'Variantes de la chambre', type: 'objects', fields: [{ key: 'title', label: 'Titre', type: 'text' }, { key: 'text', label: 'Texte', type: 'textarea' }] },
       { key: 'gallery', label: 'Photos', type: 'objects', fields: [
-        { key: 'src', label: 'Fichier', type: 'image' }, { key: 'alt', label: 'Texte alternatif', type: 'text' }, { key: 'kind', label: 'Légende courte', type: 'text' },
-        { key: 'w', label: 'Largeur', type: 'number' }, { key: 'h', label: 'Hauteur', type: 'number' }] },
+        { key: 'media', label: 'Photo', type: 'image' }, { key: 'alt', label: 'Texte alternatif', type: 'text' }, { key: 'kind', label: 'Légende courte', type: 'text' }] },
       { key: 'reviewTopic', label: 'Thème des avis affichés sur la fiche', type: 'select', options: TOPICS },
     ],
   },
@@ -65,8 +65,7 @@ export const SPECS = {
       { key: 'facts', label: 'Informations pratiques', type: 'pairs', labels: ['Intitulé', 'Valeur'] },
       { key: 'faq', label: 'Questions fréquentes', type: 'pairs', labels: ['Question', 'Réponse'] },
       { key: 'photos', label: 'Photos', type: 'objects', fields: [
-        { key: 'src', label: 'Fichier', type: 'image' }, { key: 'alt', label: 'Texte alternatif', type: 'text' },
-        { key: 'w', label: 'Largeur', type: 'number' }, { key: 'h', label: 'Hauteur', type: 'number' }] },
+        { key: 'media', label: 'Photo', type: 'image' }, { key: 'alt', label: 'Texte alternatif', type: 'text' }] },
     ],
   },
   amenities: {

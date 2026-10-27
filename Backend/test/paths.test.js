@@ -15,6 +15,7 @@ process.env.ASTON_NO_DOTENV = '1';
 const { config, toVarPath, fromVarPath } = await import('../server/config.js');
 const { getDb, closeDb, relativizeBuildPaths } = await import('../server/db/connection.js');
 const { importLegacy } = await import('../server/db/import-legacy.js');
+const { seedSitePhotos } = await import('./helpers/site-photos.js');
 const { runBuild } = await import('../server/ssg/build.js');
 const { restoreRelease } = await import('../server/ssg/release.js');
 
@@ -51,6 +52,7 @@ test('les chemins absolus déjà en base sont réécrits en relatif', () => {
 test('publication et restauration fonctionnent avec les chemins relatifs', async () => {
   const db = getDb();
   importLegacy(db, { writeTemplates: false, log: () => {} });
+  await seedSitePhotos(db);
   const quiet = { log: () => {} };
   await runBuild({ kind: 'production', ...quiet });
   db.prepare(`UPDATE cms_page_i18n SET title = title || ' (2)' WHERE lang = 'fr' AND page_id = (SELECT MIN(page_id) FROM cms_page_i18n)`).run();

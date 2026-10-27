@@ -166,11 +166,12 @@ export function generateSite({ source, mode, now, previousState = new Map(), onl
           const all = source.collectionItems(t.collection, lang, now);
           const item = all.find((i) => i.key === t.itemKey);
           const cdn = settings.cdn_base;
+          const media = (id) => source.mediaFor(id, lang);
           if (t.collection === 'rooms') {
             const amenities = new Map(source.collectionItems('amenities', lang, now).map((a) => [a.key, a.data]));
-            return fillRoom($, view, { room: item, rooms: all, amenities, cdn, t: text, routeKey: t.parent.key });
+            return fillRoom($, view, { room: item, rooms: all, amenities, cdn, media, siteUrl: config.siteUrl, t: text, routeKey: t.parent.key });
           }
-          return fillService($, view, { service: item, cdn, t: text });
+          return fillService($, view, { service: item, cdn, media, t: text });
         },
       };
       const head = {

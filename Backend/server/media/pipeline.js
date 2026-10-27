@@ -2,7 +2,7 @@
  * Pipeline des médias à l'upload.
  *  - Contrôles : type réel (premiers octets), poids maximal par type, empreinte SHA-256 contre les doublons.
  *  - Images (sharp) : orientation EXIF appliquée, métadonnées retirées, WebP en 640 / 1024 / 1600 / 2400 px
- *    (jamais au-delà de l'original), recadrage portrait 900×1600 centré sur le point d'intérêt, miniature.
+ *    (jamais au-delà de l'original, dont la largeur est gardée aussi), recadrage portrait 900×1600 centré sur le point d'intérêt, miniature.
  *  - Vidéos et sons (ffprobe / ffmpeg) : durée et dimensions ; poster WebP extrait des vidéos.
  * Les originaux restent dans storage/uploads (jamais servis) ; les variantes vont dans media/v/
  * avec un nom tiré de l'empreinte, donc immuables.
@@ -132,8 +132,9 @@ export async function processMedia(db, id) {
     if (m.kind === 'image') {
       const { info: oriented } = await sharp(src).rotate().toBuffer({ resolveWithObject: true });
       const { width, height } = oriented;
+      // Tailles standard, plus la largeur d'origine quand elle tombe entre deux (900 px → 640 et 900)
       const widths = WIDTHS.filter((w) => w <= width);
-      if (!widths.length) widths.push(width);
+      if (width < WIDTHS[WIDTHS.length - 1] && !widths.includes(width)) widths.push(width);
       for (const w of widths) {
         const rel = variantPath(m, `w${w}.webp`);
         const info = await sharp(src).rotate().resize({ width: w, withoutEnlargement: true }).webp({ quality: 78 }).toFile(absolute(rel));

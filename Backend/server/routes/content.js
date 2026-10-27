@@ -161,6 +161,7 @@ export default function contentRoutes(app, { db, defaultLang }) {
     const entries = db.prepare(`SELECT e.* FROM cms_entries e ${where.length ? `WHERE ${where.join(' AND ')}` : ''} ORDER BY e.position, e.id`).all(params);
     const values = db.prepare('SELECT * FROM cms_entry_values WHERE entry_id = ?');
     const langs = db.prepare('SELECT code FROM cms_languages ORDER BY position').pluck().all();
+    const thumbOf = db.prepare("SELECT '/media/' || path FROM cms_media_variants WHERE media_id = ? AND purpose = 'thumb'").pluck();
     return entries.map((e) => {
       const rows = Object.fromEntries(values.all(e.id).map((v) => [v.lang, v]));
       const source = rows[def] ? valueHash(rows[def].value) : null;
@@ -168,7 +169,7 @@ export default function contentRoutes(app, { db, defaultLang }) {
       return {
         ...e,
         values: Object.fromEntries(langs.map((l) => [l, rows[l]
-          ? { value: rows[l].value, media_id: rows[l].media_id, status: rows[l].status, state: translationState(rows[l], source, l === def, hasValue), updated_at: rows[l].updated_at }
+          ? { value: rows[l].value, media_id: rows[l].media_id, thumb: rows[l].media_id ? thumbOf.get(rows[l].media_id) ?? null : undefined, status: rows[l].status, state: translationState(rows[l], source, l === def, hasValue), updated_at: rows[l].updated_at }
           : { state: 'missing' }])),
       };
     });

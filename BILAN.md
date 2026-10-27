@@ -96,7 +96,7 @@ Documentation : [Backend/README.md](Backend/README.md) (commandes, rôles, écra
 | Fait (27/10) | Fichiers de déploiement | Caddyfile, PM2, Dockerfile dans [deploy/](deploy/README.md). Restent l'hébergeur et l'adresse des alertes Let's Encrypt. |
 | Fait (27/10) | Sauvegardes | `deploy/backup-db.sh` (base et snapshots, 7 jours) et `deploy/sync-media.sh` (rclone). Reste à choisir le stockage externe. |
 | Fait (27/10) | Chemins en base | Chemins des versions et des snapshots relatifs au dossier des données : la base passe du PC Windows au serveur Linux sans retouche. |
-| Avant mise en ligne | Photos du site | Importer les photos (encore lues sur le CDN du site actuel) dans la médiathèque et basculer les gabarits. |
+| Fait (27/10) | Photos du site | 72 photos du site actuel dans la médiathèque (WebP en plusieurs tailles), 63 emplacements des gabarits, photos des fiches, image de partage et JSON-LD basculés : plus aucun appel à l'ancien CDN. Photos modifiables dans l'admin (onglet Textes de chaque page, fiches). Commande `media:import-site` à relancer sur une base neuve. |
 | Avant mise en ligne | Comptes | Créer les vrais comptes sur le serveur ; les comptes de développement restent en local. |
 | Ensuite | SEO | Corriger les 54 remarques du dernier build (titles de plus de 60 caractères, descriptions de plus de 160…) depuis l'onglet « Référencement » de chaque page. |
 | Ensuite | Avis sur les pages restaurant et bars | Reporté à votre demande : L'Horloge, Moon Bar, L'Aston Club. |

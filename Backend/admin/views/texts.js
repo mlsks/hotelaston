@@ -49,6 +49,7 @@ Alpine.data('entriesEditor', (source) => ({
   source(e) { return e.values[this.def]?.value ?? ''; },
   state(e) { return e.values[this.lang]?.state || 'missing'; },
   matches(e) {
+    if (this.translating && e.type === 'media') return false; // une photo vaut pour toutes les langues
     if (this.onlyTodo && this.state(e) === 'ready') return false;
     if (!this.q) return true;
     const q = this.q.toLowerCase();
@@ -70,8 +71,9 @@ Alpine.data('entriesEditor', (source) => ({
   get summary() {
     if (this.loading) return '';
     if (!this.translating) return `${this.entries.length} textes`;
-    const todo = this.entries.filter((e) => this.state(e) !== 'ready').length;
-    return todo ? `${todo} texte(s) à traduire ou à revoir sur ${this.entries.length}` : 'Tout est traduit';
+    const texts = this.entries.filter((e) => e.type !== 'media');
+    const todo = texts.filter((e) => this.state(e) !== 'ready').length;
+    return todo ? `${todo} texte(s) à traduire ou à revoir sur ${texts.length}` : 'Tout est traduit';
   },
   rows(e) {
     const len = Math.max(String(e.draft || '').length, String(this.source(e)).length);
@@ -88,6 +90,21 @@ Alpine.data('entriesEditor', (source) => ({
       if (lang !== this.def) body.status = status || (this.asDraft ? 'draft' : 'ready');
       const updated = await put(`/entries/${e.id}/${lang}`, body);
       e.values = updated.values;
+      e.saveState = 'saved';
+      setTimeout(() => { if (e.saveState === 'saved') e.saveState = null; }, 2500);
+    } catch (err) {
+      e.saveState = 'error';
+      this.$store.toast.error(err);
+    }
+  },
+  /** Image d'un emplacement photo (langue de travail, sinon langue d'origine). */
+  mediaThumb(e) { return e.values[this.lang]?.thumb || e.values[this.def]?.thumb || ''; },
+  async pickMedia(e) {
+    const m = await this.$store.picker.show({ kinds: ['image'] });
+    if (!m || !this.canEdit) return;
+    e.saveState = 'saving';
+    try {
+      e.values = (await put(`/entries/${e.id}/${this.lang}`, { media_id: m.id })).values;
       e.saveState = 'saved';
       setTimeout(() => { if (e.saveState === 'saved') e.saveState = null; }, 2500);
     } catch (err) {

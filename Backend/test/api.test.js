@@ -18,6 +18,7 @@ process.env.SITE_URL = 'https://www.hotel-aston.com';
 
 const { getDb, closeDb } = await import('../server/db/connection.js');
 const { importLegacy } = await import('../server/db/import-legacy.js');
+const { seedSitePhotos } = await import('./helpers/site-photos.js');
 const { hashPassword } = await import('../server/auth/auth.js');
 const { buildApp } = await import('../server/app.js');
 const { Source } = await import('../server/ssg/source.js');
@@ -69,6 +70,7 @@ async function upload(who, filename, buffer) {
 before(async () => {
   db = getDb();
   importLegacy(db, { writeTemplates: false, log: () => {} });
+  await seedSitePhotos(db);
   const add = db.prepare(`INSERT INTO sys_users (email, name, password_hash, role, langs, is_active, created_at) VALUES (?, ?, ?, ?, ?, 1, ?)`);
   const hash = await hashPassword(PASSWORD);
   add.run('admin@test.fr', 'Admin', hash, 'admin', null, new Date().toISOString());
@@ -152,7 +154,7 @@ test('médias : variantes WebP, recadrage portrait, doublon, type refusé', asyn
   const media = res.json().media;
   assert.equal(media.status, 'ready');
   const purposes = media.variants.map((v) => v.purpose).sort();
-  assert.deepEqual(purposes, ['portrait', 'thumb', 'w1024', 'w1600', 'w640']);
+  assert.deepEqual(purposes, ['portrait', 'thumb', 'w1024', 'w1600', 'w2000', 'w640']); // 2000 px : largeur d'origine gardée
   for (const v of media.variants) assert.ok(fs.existsSync(path.join(config.mediaDir, v.path)), v.path);
   assert.equal(media.variants.find((v) => v.purpose === 'portrait').height, 1200);
 
@@ -181,7 +183,7 @@ test('médias : vidéo mesurée, poster extrait', { skip: (() => { try { execFil
 });
 
 test('image de la médiathèque injectée dans un gabarit (data-cms-media)', async () => {
-  const media = db.prepare("SELECT id FROM cms_media WHERE kind = 'image' ORDER BY id LIMIT 1").pluck().get();
+  const media = db.prepare("SELECT id FROM cms_media WHERE original_name = 'piscine.png'").pluck().get();
   db.prepare(`INSERT INTO cms_entries (key, section, type, label, translatable, required, position, created_at, updated_at) VALUES ('test.hero', 'Test', 'media', 'Image', 1, 1, 0, '', '')`).run();
   const res = await call('editor', 'PUT', `/api/entries/${entryId('test.hero')}/fr`, { media_id: media });
   assert.equal(res.statusCode, 200, res.body);
@@ -235,7 +237,7 @@ test('bandeaux : programmés, placés, traduits, avec double sécurité des date
 });
 
 test('popup : fenêtre, configuration et script sur les pages ciblées seulement', async () => {
-  const media = db.prepare("SELECT id FROM cms_media WHERE kind = 'image' ORDER BY id LIMIT 1").pluck().get();
+  const media = db.prepare("SELECT id FROM cms_media WHERE original_name = 'piscine.png'").pluck().get();
   const p = (await call('editor', 'POST', '/api/popups', { name: 'Été', is_active: true, media_id: media, trigger_type: 'scroll', trigger_value: 40, frequency: 'days', frequency_days: 3 })).json();
   await call('editor', 'PUT', `/api/popups/${p.id}/i18n/fr`, { title: 'L’été sur le toit', body: '<p>Piscine et Moon Bar.</p>', cta_label: 'Réserver', cta_kind: 'booking', cta_target: 'offer:escapade-gourmande' });
   await call('editor', 'PUT', `/api/popups/${p.id}/pages`, [{ page_key: 'accueil' }]);

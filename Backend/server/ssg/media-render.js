@@ -66,7 +66,9 @@ export function mediaHtml(info, opts) {
 
 /**
  * Remplace un <img data-cms-media="clé"> par l'image de la médiathèque choisie pour cette clé.
- * Le gabarit garde ses classes et son chargement (loading, fetchpriority).
+ * Le gabarit garde ses classes et son chargement (loading, fetchpriority). Le texte alternatif
+ * écrit dans le gabarit (souvent traduit par data-cms-attr) l'emporte sur celui de la médiathèque ;
+ * data-cms-decorative force un alt vide, data-cms-portrait="off" retire le recadrage pour téléphone.
  */
 export function injectMedia($, source, lang, onMissing) {
   $('[data-cms-media]').each((i, el) => {
@@ -80,8 +82,10 @@ export function injectMedia($, source, lang, onMissing) {
       onMissing(key);
       return;
     }
-    const html = mediaHtml(info, {
+    const alt = 'data-cms-decorative' in el.attribs ? '' : el.attribs.alt || info.alt;
+    const html = mediaHtml({ ...info, alt }, {
       sizes: el.attribs['data-cms-sizes'] || el.attribs.sizes || '100vw',
+      portrait: el.attribs['data-cms-portrait'] !== 'off',
       className: el.attribs.class || '',
       loading: el.attribs.loading || (info.media.kind === 'image' ? 'lazy' : ''),
       fetchpriority: el.attribs.fetchpriority || '',
