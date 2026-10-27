@@ -33,6 +33,7 @@ Toujours dans `hotelaston\Backend` :
 npm install
 Copy-Item .env.example .env
 npm run import
+node server/cli.js media:import-site
 node server/cli.js user:add votre@adresse.fr admin --name="Votre nom"
 npm run publish
 ```
@@ -42,6 +43,7 @@ npm run publish
 | `npm install` | Télécharge les bibliothèques (`node_modules`, environ 2 minutes). |
 | `Copy-Item .env.example .env` | Crée les réglages locaux (port 3020 par défaut). |
 | `npm run import` | Remplit la base (`storage\db\aston.sqlite`) depuis la maquette : 25 pages, environ 1 300 textes, chambres, services. Copie les photos locales dans `media\`. |
+| `media:import-site` | Télécharge les 72 photos du site actuel dans la médiathèque (quelques minutes ; sans elles, la publication échoue sur des photos manquantes). |
 | `user:add` | Crée un compte administrateur. **Le mot de passe s'affiche une seule fois** : le noter. Nouveau mot de passe : `node server/cli.js user:password votre@adresse.fr`. |
 | `npm run publish` | Génère une première version du site public (sans elle, `/fr/` reste vide). |
 
@@ -76,7 +78,7 @@ Maquette d'origine, pour comparer : ajouter `SERVE_LEGACY=1` dans `Backend\.env`
 npm test
 ```
 
-40 tests, tous doivent réussir (une dizaine de secondes). Ils travaillent dans un dossier temporaire et ne touchent pas à la base locale.
+41 tests, tous doivent réussir (une dizaine de secondes). Ils travaillent dans un dossier temporaire et ne touchent pas à la base locale.
 
 ## 6. Problèmes courants sous Windows
 

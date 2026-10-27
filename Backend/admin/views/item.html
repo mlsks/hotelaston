@@ -113,10 +113,13 @@
                   <template x-for="(row, i) in form[f.key]" :key="i">
                     <div class="flex gap-3 rounded-lg bg-slate-50 p-3">
                       <template x-if="(f.fields || []).some((s) => s.type === 'image')">
-                        <img :src="imageUrl(row.src)" alt="" class="size-20 shrink-0 rounded-md bg-slate-200 object-cover" loading="lazy">
+                        <div class="flex shrink-0 flex-col items-center gap-1">
+                          <img :src="rowImage(f, i, row)" alt="" class="size-20 rounded-md bg-slate-200 object-cover" loading="lazy">
+                          <button type="button" x-show="!readOnly(f, { key: 'media' })" class="text-xs font-medium text-azure-700 hover:underline" @click="pickPhoto(row)">Changer</button>
+                        </div>
                       </template>
                       <div class="grid min-w-0 flex-1 gap-2 sm:grid-cols-2">
-                        <template x-for="s in (f.fields || []).filter((s) => s.type !== 'number' || !translating)" :key="s.key">
+                        <template x-for="s in (f.fields || []).filter((s) => s.type !== 'image' && (s.type !== 'number' || !translating))" :key="s.key">
                           <label class="block" :class="['textarea', 'text'].includes(s.type) && s.key !== 'kind' ? 'sm:col-span-2' : ''">
                             <span class="text-xs font-medium text-slate-500" x-text="s.label"></span>
                             <template x-if="s.type === 'textarea'">
@@ -125,8 +128,8 @@
                             <template x-if="s.type === 'number'">
                               <input class="input" type="number" x-model.number="row[s.key]" :disabled="readOnly(f, s)">
                             </template>
-                            <template x-if="['text', 'image'].includes(s.type)">
-                              <input class="input" :class="s.type === 'image' && 'font-mono text-xs'" x-model="row[s.key]" :disabled="readOnly(f, s)" :placeholder="sourceOf(f, i, s)">
+                            <template x-if="s.type === 'text'">
+                              <input class="input" x-model="row[s.key]" :disabled="readOnly(f, s)" :placeholder="sourceOf(f, i, s)">
                             </template>
                           </label>
                         </template>

@@ -3,6 +3,7 @@
  * Portage côté serveur de renderRoom() / renderService() du site actuel :
  * même structure HTML, mais écrite dans la page au lieu d'être construite par le navigateur.
  */
+import { pictureHtml } from './media-render.js';
 
 /** Récupère un emplacement data-f du gabarit et retire le marqueur (comme fill() côté client). */
 const slot = ($, view, name) => {
@@ -13,7 +14,26 @@ const slot = ($, view, name) => {
 
 const icon = (id) => `<svg class="icon" aria-hidden="true"><use href="#${id}"></use></svg>`;
 
-export function fillRoom($, view, { room, rooms, amenities, cdn, t, routeKey }) {
+/**
+ * Photo d'une fiche : média de la médiathèque (row.media) en <picture> WebP,
+ * sinon ancienne photo du CDN (row.src). Le texte alternatif de la fiche l'emporte.
+ */
+function photoHtml($, row, { cdn, media, sizes, loading }) {
+  const info = row.media ? media(row.media) : null;
+  if (info) return pictureHtml({ ...info, alt: row.alt ?? info.alt }, { sizes, loading, portrait: false });
+  if (!row.src) return '';
+  return $('<img>').attr({ src: cdn + row.src, alt: row.alt, width: String(row.w), height: String(row.h), loading, decoding: 'async' });
+}
+
+/** Adresse absolue d'une photo de fiche (données structurées). */
+function photoUrl(row, { cdn, media, siteUrl }) {
+  const info = row.media ? media(row.media) : null;
+  if (!info) return row.src ? cdn + row.src : null;
+  const ws = info.variants.filter((v) => /^w\d+$/.test(v.purpose)).sort((a, b) => b.width - a.width);
+  return ws.length ? `${siteUrl}/media/${ws[0].path}` : null;
+}
+
+export function fillRoom($, view, { room, rooms, amenities, cdn, media, siteUrl, t, routeKey }) {
   const r = room.data;
   slot($, view, 'name').text(r.name);
   slot($, view, 'category').text(r.category);
@@ -23,7 +43,7 @@ export function fillRoom($, view, { room, rooms, amenities, cdn, t, routeKey }) 
   const track = slot($, view, 'galleryLabel');
   track.attr('aria-label', t('item-chambre.galerie', { name: r.name }));
   r.gallery.forEach((g, i) => {
-    const img = $('<img>').attr({ src: cdn + g.src, alt: g.alt, width: String(g.w), height: String(g.h), loading: i ? 'lazy' : 'eager', decoding: 'async' });
+    const img = photoHtml($, g, { cdn, media, sizes: '(min-width: 1100px) 60vw, 100vw', loading: i ? 'lazy' : 'eager' });
     track.append($('<figure>').append(img, $('<figcaption>').text(g.kind)));
   });
   slot($, view, 'description').text(r.description);
@@ -55,19 +75,19 @@ export function fillRoom($, view, { room, rooms, amenities, cdn, t, routeKey }) 
       floorSize: { '@type': 'QuantitativeValue', value: r.sizeM2, unitCode: 'MTK' },
       occupancy: { '@type': 'QuantitativeValue', maxValue: r.maxGuests },
       amenityFeature: r.amenitiesFull.map((name) => ({ '@type': 'LocationFeatureSpecification', name, value: true })),
-      image: r.gallery.map((g) => cdn + g.src),
+      image: r.gallery.map((g) => photoUrl(g, { cdn, media, siteUrl })).filter(Boolean),
       containedInPlace: { '@id': 'https://www.hotel-aston.com/#hotel' },
     },
   };
 }
 
-export function fillService($, view, { service, cdn, t }) {
+export function fillService($, view, { service, cdn, media, t }) {
   const s = service.data;
   slot($, view, 'name').text(s.name);
   slot($, view, 'h1').text(s.h1);
   slot($, view, 'lede').text(s.lede);
   slot($, view, 'photos').empty().append(s.photos.map((p) => $('<figure>').append(
-    $('<img>').attr({ src: cdn + p.src, alt: p.alt, width: String(p.w), height: String(p.h), decoding: 'async' }))));
+    photoHtml($, p, { cdn, media, sizes: '(min-width: 1100px) 50vw, 100vw', loading: '' }))));
   slot($, view, 'body').html(s.body); // contenu éditorial interne, nettoyé à l'enregistrement (brique 2)
   slot($, view, 'facts').empty().append(s.facts.map(([dt, dd]) => $('<div>').append($('<dt>').text(dt), $('<dd>').text(dd))));
   const faq = slot($, view, 'faq');

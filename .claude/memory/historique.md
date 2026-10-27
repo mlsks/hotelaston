@@ -38,3 +38,4 @@ La conversation d'origine est restée sur le PC de développement ; voici ce qu'
 - Informations à obtenir de l'hôtel : liste dans `BILAN.md`, section 2.1.
 
 Voir [[hotel-aston-site]] et [[user-profile]].
+- 27/10/2026 : « ok on importe dans la médiathèque » : photos du site actuel téléchargées dans la médiathèque locale et gabarits basculés (point « Photos du site » du BILAN). Sauvegarde de la base avant l'import : `Backend/storage/backups/avant-photos-2026-10-27.sqlite`.

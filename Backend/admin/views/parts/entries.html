@@ -43,7 +43,14 @@
               <template x-if="e.type === 'richtext'">
                 <div x-data="richtext({ disabled: !canEdit })" x-modelable="html" x-model="e.draft" @rich-change="save(e)"></div>
               </template>
-              <template x-if="e.type !== 'richtext'">
+              <template x-if="e.type === 'media'">
+                <div class="flex items-center gap-3">
+                  <img :src="mediaThumb(e)" alt="" class="h-20 w-28 shrink-0 rounded-md bg-slate-200 object-cover" x-show="mediaThumb(e)">
+                  <span x-show="!mediaThumb(e)" class="text-sm text-slate-500">Aucune image choisie</span>
+                  <button type="button" class="btn btn-secondary btn-sm" @click="pickMedia(e)" :disabled="!canEdit">Changer l’image</button>
+                </div>
+              </template>
+              <template x-if="!['richtext', 'media'].includes(e.type)">
                 <textarea class="input resize-y" :rows="rows(e)" x-model="e.draft" @change="save(e)" :disabled="!canEdit"
                   :placeholder="translating ? source(e) : ''"></textarea>
               </template>

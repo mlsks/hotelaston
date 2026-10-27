@@ -11,6 +11,7 @@
  *   node server/cli.js builds                   liste les derniers builds
  *   node server/cli.js user:add <email> <rôle>  crée un compte (mot de passe généré, affiché une fois)
  *   node server/cli.js user:password <email>    nouveau mot de passe
+ *   node server/cli.js media:import-site        range les photos du site actuel (CDN) dans la médiathèque
  *   node server/cli.js media:gc                 supprime définitivement les médias supprimés inutilisés
  *   node server/cli.js stats:aggregate          agrégats quotidiens et purge des statistiques (fait chaque nuit)
  *   node server/cli.js geoip:update [--city]    télécharge la base de géolocalisation DB-IP Lite du mois
@@ -31,6 +32,11 @@ async function main() {
     case 'import': {
       const { importLegacy } = await import('./db/import-legacy.js');
       importLegacy(db, { force: flags.has('--force'), forceAssets: flags.has('--force-assets') });
+      break;
+    }
+    case 'media:import-site': {
+      const { importSitePhotos } = await import('./media/site-photos.js');
+      await importSitePhotos(db, { log: console.log });
       break;
     }
     case 'preview':

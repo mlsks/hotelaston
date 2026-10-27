@@ -41,6 +41,7 @@ Pas à pas pour un PC Windows, avec les problèmes courants : [docs/INSTALLATION
 npm install
 cp .env.example .env
 npm run import                                   # une seule fois : importe le site actuel
+node server/cli.js media:import-site             # télécharge les photos du site actuel dans la médiathèque
 node server/cli.js user:add vous@exemple.fr admin --name="Votre nom"
 npm start
 ```
@@ -59,6 +60,7 @@ La commande `user:add` affiche le mot de passe une seule fois. Se connecter ensu
 | `npm run builds` | Liste les derniers builds et la version en ligne. |
 | `node server/cli.js user:add <email> <admin\|editor\|translator> [--name=…] [--langs=en,it] [--scopes=live-music]` | Crée un compte (`--scopes` : éditeur limité à un périmètre). |
 | `node server/cli.js user:password <email>` | Nouveau mot de passe (les sessions ouvertes sont fermées). |
+| `node server/cli.js media:import-site` | Range les photos du site actuel (encore sur son CDN) dans la médiathèque et relie les gabarits, les fiches chambre et service, l'image de partage et le JSON-LD. Relançable : ne télécharge que ce qui manque. Les emplacements sont listés dans `templates-src/photos.json`. |
 | `node server/cli.js media:gc` | Efface les médias supprimés que plus aucune version conservée n'utilise (fait aussi chaque nuit). |
 | `node server/cli.js stats:aggregate` | Agrégats quotidiens des statistiques et purge des données anciennes (fait aussi chaque nuit). |
 | `node server/cli.js geoip:update [--city]` | Télécharge la base de géolocalisation DB-IP Lite du mois dans `storage/geoip/` (pays ; pays et région avec `--city`, environ 130 Mo). À relancer chaque mois. |
@@ -158,7 +160,6 @@ Paramètres des statistiques :
 
 - **Base GeoIP** : pas encore téléchargée (`node server/cli.js geoip:update`, puis chaque mois). La licence CC BY 4.0 demande la mention « IP Geolocation by DB-IP » avec un lien vers db-ip.com : le tableau de bord l'affiche dès que la base est installée.
 - **Politique de confidentialité** : paragraphe sur la mesure d'audience prêt dans [`docs/confidentialite-mesure-audience.md`](../docs/confidentialite-mesure-audience.md), à faire valider par l'hôtel.
-- **Photos du site** : encore servies par le CDN actuel. Le mécanisme `data-cms-media` est prêt ; reste à importer les photos dans la médiathèque et à basculer les gabarits.
 - **Redirections des anciennes adresses** de hotel-aston.com : la table est prête, la liste des pages en ligne reste à relever.
 - **Liens externes (YouTube, Vimeo…)** : enregistrés dans la médiathèque, affichés pour l'instant comme un simple lien (lecteur chargé au clic à venir).
 - **Déploiement** : fichiers prêts dans [`deploy/`](../deploy/README.md) (Caddyfile, PM2, Dockerfile, sauvegardes) ; restent l'hébergeur et le stockage externe des sauvegardes.

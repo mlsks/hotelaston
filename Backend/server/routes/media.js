@@ -29,6 +29,8 @@ export default function mediaRoutes(app, { db, defaultLang }) {
   const references = (id) => [
     ...db.prepare('SELECT e.key FROM cms_entry_values v JOIN cms_entries e ON e.id = v.entry_id WHERE v.media_id = ?').pluck().all(id).map((k) => `texte ${k}`),
     ...db.prepare('SELECT i.collection || \'/\' || i.key FROM cms_item_media im JOIN cms_items i ON i.id = im.item_id WHERE im.media_id = ?').pluck().all(id).map((k) => `fiche ${k}`),
+    ...db.prepare("SELECT DISTINCT i.collection || '/' || i.key FROM cms_items i, json_tree(i.data) t WHERE t.key = 'media' AND t.value = ?").pluck().all(id).map((k) => `photo de la fiche ${k}`),
+    ...db.prepare("SELECT s.key FROM cms_settings s, cms_media m WHERE m.id = ? AND s.value LIKE '%/media/v/' || substr(m.sha256, 1, 16) || '-%'").pluck().all(id).map((k) => `réglage ${k}`),
     ...db.prepare('SELECT name FROM cms_popups WHERE media_id = ?').pluck().all(id).map((n) => `popup « ${n} »`),
     ...db.prepare('SELECT p.key || \' (\' || pi.lang || \')\' FROM cms_page_i18n pi JOIN cms_pages p ON p.id = pi.page_id WHERE pi.og_image_id = ?').pluck().all(id).map((k) => `image de partage ${k}`),
   ];

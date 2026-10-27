@@ -91,6 +91,7 @@ Alpine.data('itemView', () => ({
   meta: { key: '', is_active: true, start_at: '', end_at: '', slug: '' },
   options: { amenities: [] },
   cdnBase: '',
+  thumbs: {},
   saving: false,
   asDraft: false,
   jsonErrors: {},
@@ -212,10 +213,27 @@ Alpine.data('itemView', () => ({
     }
     this.$store.ui.dirty = true;
   },
-  imageUrl(src) {
-    if (!src) return '';
-    if (/^(https?:)?\//.test(src)) return src;
-    return this.cdnBase ? `${this.cdnBase}${src}` : '';
+  /** Vignette d'une photo de fiche : média de la médiathèque, sinon ancienne adresse du CDN. */
+  rowImage(f, i, row) {
+    const ref = row.media || row.src ? row : this.source[f.key]?.[i] || {};
+    if (ref.media) {
+      if (!(ref.media in this.thumbs)) {
+        this.thumbs[ref.media] = '';
+        get(`/media/${ref.media}`).then((m) => { this.thumbs[ref.media] = m.thumb || ''; }).catch(() => {});
+      }
+      return this.thumbs[ref.media];
+    }
+    if (!ref.src) return '';
+    if (/^(https?:)?\//.test(ref.src)) return ref.src;
+    return this.cdnBase ? `${this.cdnBase}${ref.src}` : '';
+  },
+  async pickPhoto(row) {
+    const m = await this.$store.picker.show({ kinds: ['image'] });
+    if (!m) return;
+    row.media = m.id;
+    delete row.src;
+    this.thumbs[m.id] = m.thumb || '';
+    this.$store.ui.dirty = true;
   },
   /* ---------- Enregistrement ---------- */
   cleaned() {

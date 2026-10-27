@@ -16,6 +16,7 @@ process.env.ASTON_NO_DOTENV = '1';
 
 const { getDb, closeDb } = await import('../server/db/connection.js');
 const { importLegacy } = await import('../server/db/import-legacy.js');
+const { seedSitePhotos } = await import('./helpers/site-photos.js');
 const { hashPassword } = await import('../server/auth/auth.js');
 const { buildApp } = await import('../server/app.js');
 const { config } = await import('../server/config.js');
@@ -48,6 +49,7 @@ function multipart(filename, buffer, folder) {
 before(async () => {
   db = getDb();
   importLegacy(db, { writeTemplates: false, log: () => {} });
+  await seedSitePhotos(db);
   const hash = await hashPassword(PASSWORD);
   const add = db.prepare(`INSERT INTO sys_users (email, name, password_hash, role, langs, scopes, is_active, created_at) VALUES (?, ?, ?, ?, NULL, ?, 1, ?)`);
   add.run('admin@test.fr', 'Admin', hash, 'admin', null, new Date().toISOString());

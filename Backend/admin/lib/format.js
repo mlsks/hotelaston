@@ -68,6 +68,7 @@ const ATTRS = {
   title: 'Infobulle', content: 'Valeur', value: 'Valeur', 'data-label': 'Libellé',
 };
 export function entryKind(entry) {
+  if (entry.type === 'media') return 'Photo';
   if (entry.key.startsWith('ui.')) return 'Texte du site (JavaScript)';
   const part = entry.key.split('.').slice(1).join('.').replace(/^\d+-/, '');
   const [tag, attr] = part.split('@');

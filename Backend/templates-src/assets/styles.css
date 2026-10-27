@@ -488,6 +488,8 @@ p { margin: 0 0 1em; }
   will-change: transform;
   background: #2a4a72;
 }
+/* Photos de la médiathèque : <picture> ne crée pas de boîte, l'image se place comme avant */
+picture { display: contents; }
 .hero__media picture { display: block; width: 100%; height: 100%; }
 /* Photo du Hero : cadrée sur le clocher et la piscine ; la vidéo (quand elle reviendra) se pose par-dessus */
 .hero__image { display: block; width: 100%; height: 100%; object-fit: cover; object-position: 42% 38%; }
@@ -1048,7 +1050,7 @@ p { margin: 0 0 1em; }
 .page-head { padding-top: calc(var(--header-h) + var(--strip-h) + clamp(28px, 5vw, 56px)); padding-bottom: clamp(20px, 3vw, 36px); }
 .page-head h1 { max-width: 22ch; }
 .page-head--image { position: relative; isolation: isolate; padding: 0; min-height: min(78svh, 680px); display: flex; align-items: flex-end; color: #fff; }
-.page-head--image > img { position: absolute; inset: 0; z-index: -1; width: 100%; height: 100%; object-fit: cover; }
+.page-head--image > img, .page-head--image > picture > img { position: absolute; inset: 0; z-index: -1; width: 100%; height: 100%; object-fit: cover; }
 .page-head--image::before { content: ""; position: absolute; inset: 0; z-index: -1; background: linear-gradient(0deg, rgba(11, 31, 52, 0.82), rgba(11, 31, 52, 0.15) 60%, rgba(11, 31, 52, 0.45)); }
 .page-head__overlay { padding-top: calc(var(--header-h) + var(--strip-h) + 40px); padding-bottom: clamp(28px, 5vw, 56px); }
 .page-head--image h1 { color: #fff; }
@@ -1237,7 +1239,7 @@ p { margin: 0 0 1em; }
   overflow: hidden;
 }
 .offer-card[hidden] { display: none; }
-.offer-card > img { width: 100%; aspect-ratio: 16 / 10; object-fit: cover; }
+.offer-card > img, .offer-card > picture > img { width: 100%; aspect-ratio: 16 / 10; object-fit: cover; }
 .offer-card__body { display: flex; flex-direction: column; gap: 8px; padding: 22px; flex: 1; }
 .offer-card h2 { font-size: 1.7rem; margin: 0; }
 .offer-card .tag { align-self: flex-start; margin: 0; }
