@@ -21,7 +21,7 @@ Tenir les notes de `.claude/memory/` à jour quand une décision importante est 
 
 ## Lancer et vérifier
 - Back-office : `npm --prefix Backend start`, puis http://localhost:3020/admin/ (site publié sur `/fr/`, prévisualisation sur `/preview/fr/`, maquette d'origine sur `/legacy/` quand `SERVE_LEGACY=1` dans `Backend/.env`).
-- Tests : `npm --prefix Backend test` (36 tests, tous verts au 26/10/2026).
+- Tests : `npm --prefix Backend test` (40 tests, tous verts au 27/10/2026).
 - Maquette seule : `python tools/serve.py --port 8765`.
 - Configurations de lancement du navigateur intégré : `.claude/launch.json` (dossier `hotelaston` ouvert comme projet).
 - Ouvrir `/fr/` en local ajoute des visites aux statistiques de développement : les effacer après les tests (tables `an_events`, `an_visits`, `an_salts`, `an_daily`).
