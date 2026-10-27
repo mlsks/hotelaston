@@ -27,7 +27,8 @@ Tenir les notes de `.claude/memory/` à jour quand une décision importante est 
 - Ouvrir `/fr/` en local ajoute des visites aux statistiques de développement : les effacer après les tests (tables `an_events`, `an_visits`, `an_salts`, `an_daily`).
 
 ## Après la copie sur un nouvel ordinateur
-- **Même emplacement obligatoire** : `C:\dev\Claude\Remotion\hotelaston`. La base enregistre le chemin absolu des versions publiées et de leurs copies de contenu ; ailleurs, la restauration et la régénération de nuit chercheraient au mauvais endroit.
+- **Emplacement libre** depuis le 27/10/2026 : la base enregistre les chemins des versions et des snapshots relativement au dossier des données (`config.js`, `toVarPath` / `fromVarPath`) ; les anciens chemins `C:\…` sont réécrits au démarrage (`relativizeBuildPaths`).
+- Code sur GitHub : `mlsks/hotelaston`. Ne jamais ignorer un dossier par un motif libre dans un `.gitignore` (`media/` excluait `server/media/`) : ancrer avec `/`.
 - `node_modules` : s'ils n'ont pas été copiés, lancer `npm install` dans `Backend/` (et dans `video/` pour rendre les boucles Remotion). Il faut Node.js 22 ou plus ; ffmpeg pour les vidéos ; Python 3 pour la maquette et `video/make_hero_loop.py`.
 - `Backend/public-dist` est un lien vers la version en ligne ; une copie Windows en fait souvent un dossier ordinaire. Rien à faire : le serveur le sert tel quel et le remplace par un lien à la prochaine publication ou restauration (`server/ssg/release.js`, `pointPublicDist`).
 - Fichiers cachés à vérifier après la copie : `.claude/`, `Backend/.env`, `Backend/.dev-credentials`.

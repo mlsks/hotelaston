@@ -155,10 +155,8 @@ Paramètres des statistiques :
 ## Pas encore fait
 
 - **Base GeoIP** : pas encore téléchargée (`node server/cli.js geoip:update`, puis chaque mois). La licence CC BY 4.0 demande la mention « IP Geolocation by DB-IP » avec un lien vers db-ip.com : le tableau de bord l'affiche dès que la base est installée.
-- **Politique de confidentialité** : à compléter.
-  - Y décrire la mesure d'audience : sans cookie, données agrégées, conservation 13 mois, pas de transfert.
-  - Expliquer comment s'y opposer : *Do Not Track* ou *Global Privacy Control*.
+- **Politique de confidentialité** : paragraphe sur la mesure d'audience prêt dans [`docs/confidentialite-mesure-audience.md`](../docs/confidentialite-mesure-audience.md), à faire valider par l'hôtel.
 - **Photos du site** : encore servies par le CDN actuel. Le mécanisme `data-cms-media` est prêt ; reste à importer les photos dans la médiathèque et à basculer les gabarits.
 - **Redirections des anciennes adresses** de hotel-aston.com : la table est prête, la liste des pages en ligne reste à relever.
 - **Liens externes (YouTube, Vimeo…)** : enregistrés dans la médiathèque, affichés pour l'instant comme un simple lien (lecteur chargé au clic à venir).
-- **Déploiement** : Caddyfile, PM2 et Dockerfile. Caddy devra servir `/media/`, importer `_meta/redirects.caddy`, bloquer `/_meta/` et transmettre `/api`, `/admin` et `/preview` à Node.
+- **Déploiement** : fichiers prêts dans [`deploy/`](../deploy/README.md) (Caddyfile, PM2, Dockerfile, sauvegardes) ; restent l'hébergeur et le stockage externe des sauvegardes.

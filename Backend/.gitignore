@@ -1,9 +1,10 @@
-node_modules/
-.env
-storage/
-media/
-preview/
-releases/
-public-dist
-.build-*/
-.dev-credentials
+# Chemins ancrés à Backend/ : un motif libre comme « media/ » exclurait aussi server/media/ (code)
+/node_modules/
+/.env
+/storage/
+/media/
+/preview/
+/releases/
+/public-dist
+/.build-*/
+/.dev-credentials

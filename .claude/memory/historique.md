@@ -28,9 +28,10 @@ La conversation d'origine est restée sur le PC de développement ; voici ce qu'
 12. Brique 4 (interface d'administration). Écart assumé avec le cahier des charges : Tailwind, Alpine et Chart.js servis par le serveur depuis node_modules plutôt que par un CDN (plus sûr, versions figées).
 13. **« No stop here »** : ne pas enchaîner sur les fichiers de déploiement. Bilan demandé : `BILAN.md` et `BILAN.html` à la racine de `hotelaston/`.
 14. L'utilisateur ferme le PC et copie `hotelaston/` sur son portable : mémoire et consignes recopiées dans `hotelaston/.claude/`.
+15. 27/10/2026 : code mis sur GitHub (`mlsks/hotelaston`), travail depuis le dépôt. Intégrés par PR : fichiers de déploiement (`deploy/`), questions pour l'hôtel et paragraphe de confidentialité (`docs/`), chemins relatifs en base. `Backend/server/media/` manquait (exclu par le `.gitignore`).
 
 ## En attente d'une décision de l'utilisateur
-- Fichiers de déploiement : à faire quand il le demandera.
+- Déploiement : choisir l'hébergeur, le stockage externe des sauvegardes et l'adresse des alertes Let's Encrypt.
 - Téléchargement de la base DB-IP (géolocalisation) : son accord est nécessaire.
 - Avis sur L'Horloge, Moon Bar, L'Aston Club : reportés à sa demande.
 - Informations à obtenir de l'hôtel : liste dans `BILAN.md`, section 2.1.

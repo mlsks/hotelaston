@@ -24,7 +24,8 @@ Résidence Aston La Scala : bâtiment voisin distinct (2 rue Chauvain, ancien Pe
 
 **Pièges rencontrés :**
 - Windows : remplacer une jonction par unlink puis rename ; fermer un fichier SQLite avant de le supprimer (EBUSY) ; clés étrangères désactivées pendant la copie d'un snapshot.
-- La base enregistre des chemins absolus (`snapshot_path`, `release_path`) : le dossier doit garder le même emplacement d'un ordinateur à l'autre.
+- `snapshot_path` et `release_path` sont relatifs à `config.varDir` depuis le 27/10/2026 (`toVarPath` / `fromVarPath`, réécriture des anciens chemins Windows au démarrage) : le dossier peut changer d'emplacement.
+- Déploiement : `deploy/` (Caddyfile canonique `www`, PM2, Dockerfile avec `ASTON_VAR_DIR=/data`, sauvegardes). Documents pour l'hôtel : `docs/`.
 - Tests : le runner de node lance les fichiers en parallèle, donc tout fichier temporaire doit vivre sous `ASTON_VAR_DIR` (`config.varDir`).
 - Alpine : un `this.x = …` dans un composant enfant, sur une propriété non déclarée, écrit dans le composant parent (toujours déclarer les propriétés) ; `structuredClone` échoue sur les objets réactifs (copie JSON).
 - Navigateur de prévisualisation masqué : `requestAnimationFrame` y est suspendu, donc `x-show` ne réaffiche plus rien ; ce n'est pas un bug de l'admin, vérifier l'état par JavaScript.
