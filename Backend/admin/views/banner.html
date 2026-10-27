@@ -1,0 +1,124 @@
+<div x-data="bannerView" class="space-y-6">
+  <template x-if="form">
+    <form class="space-y-6" @submit.prevent="save" @input="$store.ui.dirty = true">
+      <div class="flex flex-wrap items-end justify-between gap-4">
+        <div>
+          <a href="#/bandeaux" class="text-sm text-azure-700 hover:underline">← Bandeaux</a>
+          <h1 class="page-title mt-1" x-text="isNew ? 'Nouveau bandeau' : form.name"></h1>
+          <span class="badge mt-1 ring-0" :class="state.cls" x-text="state.label"></span>
+        </div>
+        <template data-include="lang-tabs"></template>
+      </div>
+
+      <!-- Aperçu -->
+      <div class="overflow-hidden rounded-xl shadow-sm" :style="`background: ${colors.bg}; color: ${colors.fg}`">
+        <div class="flex flex-wrap items-center gap-x-5 gap-y-2 px-5 py-4">
+          <svg x-show="form.icon" class="size-6 shrink-0" :style="`color: ${form.variant === 'promo' ? '#0f2a45' : '#c9a45e'}`"><use :href="'#' + form.icon"></use></svg>
+          <div class="banner-preview prose-lite min-w-0 flex-1 text-[0.95rem]" x-html="texts[lang].text || texts[def].text || '<em>Texte du bandeau</em>'"></div>
+          <span x-show="form.cta_kind !== 'none' && (texts[lang].cta_label || texts[def].cta_label)" class="rounded px-4 py-2 text-xs font-semibold tracking-wider uppercase"
+            :style="form.variant === 'promo' ? 'background:#0f2a45;color:#fff' : 'background:#c9a45e;color:#0b1f34'" x-text="texts[lang].cta_label || texts[def].cta_label"></span>
+          <span x-show="form.dismissible" class="text-lg opacity-70">✕</span>
+        </div>
+      </div>
+      <p class="-mt-4 text-xs text-slate-500">Aperçu approximatif (style des zones sous le module et entre les sections). Le bandeau du haut garde la présentation fine du site.</p>
+
+      <div class="grid gap-6 lg:grid-cols-2">
+        <!-- Texte -->
+        <section class="card space-y-4 p-5">
+          <div class="flex items-center gap-2">
+            <h2 class="section-title flex-1">Texte · <span x-text="$store.session.langName(lang)"></span></h2>
+            <span class="badge" :class="$fmt.stateClass(texts[lang].state)" x-text="$fmt.stateLabel(texts[lang].state)"></span>
+          </div>
+          <p x-show="lang !== def" class="rounded-md bg-slate-50 px-3 py-2 text-sm text-slate-600"><span class="font-semibold" x-text="$store.session.langName(def) + ' : '"></span><span x-text="$fmt.plain(texts[def].text) || '—'"></span></p>
+          <div>
+            <span class="label">Message</span>
+            <div x-data="richtext({ inline: true, disabled: !canText })" x-modelable="html" x-model="texts[lang].text" @rich-change="$store.ui.dirty = true"></div>
+          </div>
+          <label class="block" x-show="form.cta_kind !== 'none'"><span class="label">Texte du bouton</span>
+            <input class="input" x-model="texts[lang].cta_label" :disabled="!canText" :placeholder="lang !== def ? texts[def].cta_label : 'ex. Réserver une table'"></label>
+          <label class="block" x-show="form.cta_kind === 'url'"><span class="label">Adresse propre à cette langue (facultatif)</span>
+            <input class="input" type="url" x-model="texts[lang].cta_url" :disabled="!canText" placeholder="https://…"></label>
+        </section>
+
+        <!-- Réglages -->
+        <section class="card space-y-4 p-5">
+          <h2 class="section-title">Réglages</h2>
+          <label class="block"><span class="label">Nom interne</span><input class="input" x-model="form.name" required :disabled="!canEdit" placeholder="ex. Live Music de novembre"></label>
+          <div class="grid gap-4 sm:grid-cols-2">
+            <label class="block"><span class="label">Style</span>
+              <select class="input" x-model="form.variant" :disabled="!canEdit">
+                <template x-for="v in VARIANTS" :key="v[0]"><option :value="v[0]" x-text="v[1]" :selected="v[0] === form.variant"></option></template>
+              </select></label>
+            <label class="block"><span class="label">Pictogramme</span>
+              <select class="input" x-model="form.icon" :disabled="!canEdit">
+                <option value="">Aucun</option>
+                <template x-for="i in $store.icons.list" :key="i.id"><option :value="i.id" x-text="i.id.replace(/^i-/, '')" :selected="i.id === form.icon"></option></template>
+              </select></label>
+          </div>
+          <details class="text-sm" :open="form.bg_color || form.text_color">
+            <summary class="cursor-pointer font-medium text-slate-700">Couleurs personnalisées</summary>
+            <div class="mt-3 flex flex-wrap items-center gap-4">
+              <label class="flex items-center gap-2">Fond <input type="color" :value="colors.bg" @input="form.bg_color = $event.target.value" :disabled="!canEdit"></label>
+              <label class="flex items-center gap-2">Texte <input type="color" :value="colors.fg" @input="form.text_color = $event.target.value" :disabled="!canEdit"></label>
+              <button type="button" class="text-azure-700 hover:underline" @click="form.bg_color = ''; form.text_color = ''" x-show="form.bg_color || form.text_color">Couleurs du style</button>
+            </div>
+          </details>
+          <div class="grid gap-4 sm:grid-cols-2">
+            <label class="block"><span class="label">Bouton vers</span>
+              <select class="input" x-model="form.cta_kind" :disabled="!canEdit" @change="form.cta_target = ''">
+                <template x-for="k in kinds" :key="k[0]"><option :value="k[0]" x-text="k[1]" :selected="k[0] === form.cta_kind"></option></template>
+              </select></label>
+            <label class="block" x-show="['page', 'item', 'booking'].includes(form.cta_kind)"><span class="label">Destination</span>
+              <select class="input" x-model="form.cta_target" :disabled="!canEdit">
+                <option value="" x-show="form.cta_kind !== 'booking'">Choisir…</option>
+                <template x-for="c in ctaChoices" :key="c.value"><option :value="c.value" x-text="c.label" :selected="c.value === form.cta_target"></option></template>
+              </select></label>
+            <label class="block" x-show="form.cta_kind === 'url'"><span class="label">Adresse</span>
+              <input class="input" type="url" x-model="form.cta_target" :disabled="!canEdit" placeholder="https://…"></label>
+          </div>
+          <div class="grid gap-4 sm:grid-cols-2">
+            <label class="block"><span class="label">Afficher à partir du</span><input type="datetime-local" class="input" x-model="form.start_at" :disabled="!canEdit"></label>
+            <label class="block"><span class="label">Jusqu’au</span><input type="datetime-local" class="input" x-model="form.end_at" :disabled="!canEdit"></label>
+          </div>
+          <p class="hint -mt-2">Heure de Paris. Sans date, le bandeau reste affiché tant qu’il est actif.</p>
+          <div class="flex flex-wrap gap-x-6 gap-y-2 text-sm">
+            <label class="flex items-center gap-2"><input type="checkbox" x-model="form.is_active" :disabled="!canEdit"> Actif</label>
+            <label class="flex items-center gap-2"><input type="checkbox" x-model="form.dismissible" :disabled="!canEdit"> Le visiteur peut le fermer</label>
+            <label class="flex items-center gap-2">Priorité <input type="number" class="input w-20" x-model="form.priority" :disabled="!canEdit"></label>
+          </div>
+        </section>
+      </div>
+
+      <!-- Emplacements -->
+      <section class="card p-5" x-show="canEdit">
+        <h2 class="section-title">Emplacements</h2>
+        <p class="hint">Où le bandeau apparaît. Une zone n’affiche qu’un nombre limité de bandeaux à la fois : le plus prioritaire passe devant.</p>
+        <p x-show="foreign" class="mt-2 rounded-md bg-slate-50 px-3 py-2 text-sm text-slate-600">Ce bandeau est aussi placé sur <span x-text="foreign"></span> autre(s) page(s) hors de votre périmètre : ces emplacements sont conservés.</p>
+        <div class="mt-4 grid gap-4 md:grid-cols-2">
+          <template x-for="z in zones" :key="z.key">
+            <div class="rounded-lg p-4 ring-1 ring-slate-200">
+              <p class="font-medium" x-text="z.label"></p>
+              <p class="text-xs text-slate-500" x-text="z.description"></p>
+              <div class="mt-3 flex flex-wrap gap-4 text-sm">
+                <label class="flex items-center gap-1.5"><input type="radio" :name="'zone-' + z.key" value="none" x-model="placements[z.key].mode"> Nulle part</label>
+                <label class="flex items-center gap-1.5" x-show="!scoped"><input type="radio" :name="'zone-' + z.key" value="all" x-model="placements[z.key].mode"> Toutes les pages</label>
+                <label class="flex items-center gap-1.5"><input type="radio" :name="'zone-' + z.key" value="pages" x-model="placements[z.key].mode"> Pages choisies</label>
+              </div>
+              <div x-show="placements[z.key].mode === 'pages'" class="mt-3 grid max-h-48 gap-1 overflow-y-auto text-sm sm:grid-cols-2">
+                <template x-for="p in pages" :key="p.id">
+                  <label class="flex items-center gap-2"><input type="checkbox" :checked="placements[z.key].pages.includes(p.id)" @change="togglePage(z.key, p.id)"><span class="truncate" x-text="pageName(p)"></span></label>
+                </template>
+              </div>
+            </div>
+          </template>
+        </div>
+      </section>
+
+      <div class="flex flex-wrap items-center gap-3">
+        <button class="btn btn-primary" :disabled="saving || (!canEdit && !canText)" x-text="saving ? 'Enregistrement…' : 'Enregistrer'"></button>
+        <span x-show="$store.ui.dirty" class="text-sm text-amber-700">Modifications non enregistrées</span>
+        <button type="button" x-show="!isNew && canEdit" class="btn btn-danger ml-auto" @click="remove()">Supprimer</button>
+      </div>
+    </form>
+  </template>
+</div>

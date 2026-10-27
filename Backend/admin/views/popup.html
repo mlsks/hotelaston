@@ -1,0 +1,103 @@
+<div x-data="popupView" class="space-y-6">
+  <template x-if="form">
+    <form class="space-y-6" @submit.prevent="save" @input="$store.ui.dirty = true">
+      <div class="flex flex-wrap items-end justify-between gap-4">
+        <div>
+          <a href="#/popups" class="text-sm text-azure-700 hover:underline">← Popup</a>
+          <h1 class="page-title mt-1" x-text="isNew ? 'Nouveau popup' : form.name"></h1>
+          <span class="badge mt-1 ring-0" :class="state.cls" x-text="state.label"></span>
+        </div>
+        <template data-include="lang-tabs"></template>
+      </div>
+
+      <div class="grid gap-6 lg:grid-cols-[minmax(0,1fr)_22rem]">
+        <section class="card space-y-4 p-5">
+          <div class="flex items-center gap-2">
+            <h2 class="section-title flex-1">Contenu · <span x-text="$store.session.langName(lang)"></span></h2>
+            <span class="badge" :class="$fmt.stateClass(t.state)" x-text="$fmt.stateLabel(t.state)"></span>
+          </div>
+          <label class="block"><span class="label">Titre</span>
+            <input class="input" x-model="t.title" :disabled="!canText" :placeholder="lang !== def ? texts[def].title : ''"></label>
+          <div><span class="label">Texte</span>
+            <div x-data="richtext({ disabled: !canText })" x-modelable="html" x-model="t.body" @rich-change="$store.ui.dirty = true"></div>
+            <p x-show="lang !== def && texts[def].body" class="mt-1.5 rounded-md bg-slate-50 px-2.5 py-1.5 text-xs text-slate-600"><span class="font-semibold" x-text="$store.session.langName(def) + ' : '"></span><span x-text="$fmt.plain(texts[def].body)"></span></p>
+          </div>
+          <div class="grid gap-4 sm:grid-cols-2">
+            <label class="block"><span class="label">Bouton vers</span>
+              <select class="input" x-model="t.cta_kind" :disabled="!canText" @change="t.cta_target = ''">
+                <template x-for="k in CTA_KINDS" :key="k[0]"><option :value="k[0]" x-text="k[1]" :selected="k[0] === t.cta_kind"></option></template>
+              </select></label>
+            <label class="block" x-show="t.cta_kind !== 'none'"><span class="label">Texte du bouton</span>
+              <input class="input" x-model="t.cta_label" :disabled="!canText" :placeholder="lang !== def ? texts[def].cta_label : 'ex. Découvrir l’offre'"></label>
+            <label class="block sm:col-span-2" x-show="['page', 'item', 'booking'].includes(t.cta_kind)"><span class="label">Destination</span>
+              <select class="input" x-model="t.cta_target" :disabled="!canText">
+                <option value="" x-show="t.cta_kind !== 'booking'">Choisir…</option>
+                <template x-for="c in ctaChoices(t.cta_kind)" :key="c.value"><option :value="c.value" x-text="c.label" :selected="c.value === t.cta_target"></option></template>
+              </select></label>
+            <label class="block sm:col-span-2" x-show="t.cta_kind === 'url'"><span class="label">Adresse</span>
+              <input class="input" type="url" x-model="t.cta_target" :disabled="!canText" placeholder="https://…"></label>
+          </div>
+          <div>
+            <span class="label">Image, vidéo ou son</span>
+            <div class="flex items-center gap-3">
+              <img x-show="media?.thumb" :src="media?.thumb" alt="" class="size-16 rounded-lg object-cover ring-1 ring-slate-200">
+              <span x-show="media && !media.thumb" class="text-sm text-slate-600" x-text="media?.original_name"></span>
+              <button type="button" class="btn btn-secondary btn-sm" @click="pickMedia()" :disabled="!canEdit">Choisir</button>
+              <button type="button" class="btn btn-ghost btn-sm" x-show="form.media_id" @click="clearMedia()" :disabled="!canEdit">Retirer</button>
+            </div>
+          </div>
+        </section>
+
+        <aside class="space-y-6">
+          <section class="card space-y-4 p-5">
+            <h2 class="section-title">Réglages</h2>
+            <label class="block"><span class="label">Nom interne</span><input class="input" x-model="form.name" required :disabled="!canEdit"></label>
+            <label class="block"><span class="label">S’ouvre sur ordinateur</span>
+              <select class="input" x-model="form.trigger_type" :disabled="!canEdit">
+                <option value="delay">Après un délai</option><option value="scroll">Après un défilement</option><option value="exit_intent">Quand le visiteur s’apprête à partir</option>
+              </select></label>
+            <label class="block" x-show="form.trigger_type !== 'exit_intent'"><span class="label" x-text="form.trigger_type === 'delay' ? 'Délai (secondes)' : 'Défilement (% de la page)'"></span>
+              <input type="number" min="0" max="600" class="input w-28" x-model="form.trigger_value" :disabled="!canEdit"></label>
+            <label class="block"><span class="label">Sur mobile</span>
+              <select class="input" x-model="form.mobile_trigger" :disabled="!canEdit">
+                <option value="scroll">Après un défilement</option><option value="delay">Après un délai</option><option value="none">Jamais</option>
+              </select></label>
+            <label class="block"><span class="label">Fréquence</span>
+              <select class="input" x-model="form.frequency" :disabled="!canEdit">
+                <option value="once">Une seule fois par visiteur</option><option value="session">Une fois par visite</option><option value="days">Au plus tous les N jours</option>
+              </select></label>
+            <label class="block" x-show="form.frequency === 'days'"><span class="label">Nombre de jours</span>
+              <input type="number" min="1" max="365" class="input w-28" x-model="form.frequency_days" :disabled="!canEdit"></label>
+            <div class="grid grid-cols-2 gap-3">
+              <label class="block"><span class="label">Du</span><input type="datetime-local" class="input text-xs" x-model="form.start_at" :disabled="!canEdit"></label>
+              <label class="block"><span class="label">Au</span><input type="datetime-local" class="input text-xs" x-model="form.end_at" :disabled="!canEdit"></label>
+            </div>
+            <label class="flex items-center gap-2 text-sm"><input type="checkbox" x-model="form.is_active" :disabled="!canEdit"> Actif</label>
+            <label class="flex items-center gap-2 text-sm">Priorité <input type="number" class="input w-20" x-model="form.priority" :disabled="!canEdit"></label>
+            <label x-show="!isNew" class="flex items-start gap-2 text-sm"><input type="checkbox" class="mt-0.5" x-model="form.reshow" :disabled="!canEdit">
+              <span>Le montrer à nouveau aux visiteurs qui l’avaient déjà fermé</span></label>
+          </section>
+          <section class="card space-y-3 p-5">
+            <h2 class="section-title">Pages</h2>
+            <div class="space-y-1.5 text-sm">
+              <label class="flex items-center gap-2"><input type="radio" value="all" x-model="scope.mode" :disabled="!canEdit"> Toutes les pages</label>
+              <label class="flex items-center gap-2"><input type="radio" value="include" x-model="scope.mode" :disabled="!canEdit"> Seulement sur…</label>
+              <label class="flex items-center gap-2"><input type="radio" value="exclude" x-model="scope.mode" :disabled="!canEdit"> Partout sauf…</label>
+            </div>
+            <div x-show="scope.mode !== 'all'" class="max-h-56 space-y-1 overflow-y-auto text-sm">
+              <template x-for="p in pages" :key="p.id">
+                <label class="flex items-center gap-2"><input type="checkbox" :checked="scope.pages.includes(p.id)" @change="togglePage(p.id)" :disabled="!canEdit"><span class="truncate" x-text="pageName(p)"></span></label>
+              </template>
+            </div>
+          </section>
+        </aside>
+      </div>
+
+      <div class="flex flex-wrap items-center gap-3">
+        <button class="btn btn-primary" :disabled="saving || (!canEdit && !canText)" x-text="saving ? 'Enregistrement…' : 'Enregistrer'"></button>
+        <span x-show="$store.ui.dirty" class="text-sm text-amber-700">Modifications non enregistrées</span>
+        <button type="button" x-show="!isNew && canEdit" class="btn btn-danger ml-auto" @click="remove()">Supprimer</button>
+      </div>
+    </form>
+  </template>
+</div>

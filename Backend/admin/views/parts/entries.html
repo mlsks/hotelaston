@@ -1,0 +1,61 @@
+<div class="space-y-4">
+  <div class="flex flex-wrap items-center gap-3">
+    <input type="search" class="input max-w-xs" placeholder="Rechercher un texte…" x-model.debounce.250ms="q">
+    <label x-show="translating" class="flex items-center gap-2 text-sm text-slate-700">
+      <input type="checkbox" x-model="onlyTodo"> Seulement les textes à traduire ou à revoir
+    </label>
+    <label x-show="translating && canEdit" class="flex items-center gap-2 text-sm text-slate-700" title="Les textes enregistrés restent en brouillon : ils ne sont publiés qu’une fois marqués prêts">
+      <input type="checkbox" x-model="asDraft"> Enregistrer en brouillon (à relire)
+    </label>
+    <span class="ml-auto text-sm text-slate-500" x-text="summary"></span>
+  </div>
+
+  <p x-show="!canEdit && !loading" class="rounded-lg bg-amber-50 px-4 py-3 text-sm text-amber-900 ring-1 ring-amber-200">
+    Lecture seule : votre compte ne permet pas de modifier les textes en <span x-text="$store.session.langName(lang)"></span>.
+  </p>
+  <p x-show="loading" class="py-10 text-center text-slate-500">Chargement des textes…</p>
+  <p x-show="!loading && !sections.length" class="card p-8 text-center text-slate-500">Aucun texte ne correspond.</p>
+
+  <template x-for="(sec, si) in sections" :key="sec.name">
+    <details class="card group" :open="q || onlyTodo || si < openCount">
+      <summary class="flex cursor-pointer list-none items-center gap-3 px-5 py-3.5">
+        <svg class="size-4 shrink-0 text-slate-400 transition group-open:rotate-90" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 6 6 6-6 6"/></svg>
+        <span class="flex-1 font-medium" x-text="sec.name"></span>
+        <span x-show="translating && sec.todo" class="badge bg-rose-50 text-rose-700 ring-rose-200" x-text="sec.todo + ' à traduire'"></span>
+        <span class="text-xs text-slate-500" x-text="sec.entries.length + ' texte(s)'"></span>
+      </summary>
+      <div class="divide-y divide-slate-100 border-t border-slate-100 px-5">
+        <template x-for="e in sec.entries" :key="e.id">
+          <div class="grid gap-x-6 gap-y-2 py-4" :class="translating && 'lg:grid-cols-2'" :id="'entry-' + e.id">
+            <div x-show="translating" class="min-w-0">
+              <p class="mb-1 text-xs font-medium tracking-wide text-slate-500 uppercase" x-text="$store.session.langName(def)"></p>
+              <div class="prose-lite rounded-lg bg-slate-50 px-3 py-2 text-sm text-slate-700" x-show="e.type === 'richtext'" x-html="source(e)"></div>
+              <p class="rounded-lg bg-slate-50 px-3 py-2 text-sm whitespace-pre-line text-slate-700" x-show="e.type !== 'richtext'" x-text="source(e) || '—'"></p>
+            </div>
+            <div class="min-w-0">
+              <div class="mb-1 flex flex-wrap items-center gap-2">
+                <span class="text-sm font-medium text-slate-800" x-text="$fmt.entryKind(e)"></span>
+                <span x-show="translating" class="badge" :class="$fmt.stateClass(state(e))" x-text="$fmt.stateLabel(state(e))"></span>
+                <span class="hidden font-mono text-[0.7rem] text-slate-400 md:inline" x-text="e.key"></span>
+                <span class="ml-auto text-xs" :class="e.saveState === 'error' ? 'text-rose-700' : 'text-slate-500'"
+                  x-text="{ saving: 'Enregistrement…', saved: 'Enregistré ✓', error: 'Non enregistré' }[e.saveState] || ''"></span>
+              </div>
+              <template x-if="e.type === 'richtext'">
+                <div x-data="richtext({ disabled: !canEdit })" x-modelable="html" x-model="e.draft" @rich-change="save(e)"></div>
+              </template>
+              <template x-if="e.type !== 'richtext'">
+                <textarea class="input resize-y" :rows="rows(e)" x-model="e.draft" @change="save(e)" :disabled="!canEdit"
+                  :placeholder="translating ? source(e) : ''"></textarea>
+              </template>
+              <p x-show="e.help" class="hint" x-text="e.help"></p>
+              <div x-show="translating && canEdit" class="mt-1.5 flex flex-wrap gap-4 text-xs font-medium text-azure-700">
+                <button type="button" class="hover:underline" @click="copySource(e)">Reprendre le texte <span x-text="$store.session.langName(def).toLowerCase()"></span></button>
+                <button type="button" class="hover:underline" x-show="['outdated', 'draft'].includes(state(e)) && e.draft" @click="save(e, { status: 'ready', force: true })">Marquer comme prêt</button>
+              </div>
+            </div>
+          </div>
+        </template>
+      </div>
+    </details>
+  </template>
+</div>

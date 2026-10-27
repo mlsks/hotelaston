@@ -1,0 +1,33 @@
+<div x-data="auditView" class="space-y-6">
+  <div class="flex flex-wrap items-end justify-between gap-4">
+    <div>
+      <h1 class="page-title">Journal des modifications</h1>
+      <p class="mt-1 text-slate-600">Qui a modifié quoi, et quand : les 500 dernières actions.</p>
+    </div>
+    <input type="search" class="input max-w-xs" placeholder="Filtrer (personne, action…)" x-model.debounce.200ms="q">
+  </div>
+  <div class="card overflow-x-auto">
+    <table class="table">
+      <thead class="bg-slate-50"><tr><th>Date</th><th>Personne</th><th>Action</th><th>Élément</th><th>Langue</th><th></th></tr></thead>
+      <tbody>
+        <template x-for="r in filtered" :key="r.id">
+          <tr>
+            <td class="whitespace-nowrap text-xs text-slate-500" x-text="$fmt.fmtDateTime(r.at)"></td>
+            <td class="text-sm" x-text="r.email || '—'"></td>
+            <td class="text-sm" x-text="action(r)"></td>
+            <td class="text-sm"><span x-text="entity(r)"></span> <span class="font-mono text-xs text-slate-500" x-text="r.entity_id ?? ''"></span>
+              <template x-if="open === r.id">
+                <div class="mt-2 grid gap-2 md:grid-cols-2">
+                  <pre class="max-h-64 overflow-auto rounded bg-slate-50 p-2 text-[0.7rem]" x-text="'Avant : ' + pretty(r.data_before)"></pre>
+                  <pre class="max-h-64 overflow-auto rounded bg-slate-50 p-2 text-[0.7rem]" x-text="'Après : ' + pretty(r.data_after)"></pre>
+                </div>
+              </template>
+            </td>
+            <td class="text-xs uppercase" x-text="r.lang || ''"></td>
+            <td><button x-show="r.data_before || r.data_after" class="text-xs font-medium text-azure-700 hover:underline" @click="open = open === r.id ? null : r.id" x-text="open === r.id ? 'Masquer' : 'Détail'"></button></td>
+          </tr>
+        </template>
+      </tbody>
+    </table>
+  </div>
+</div>

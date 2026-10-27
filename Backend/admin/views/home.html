@@ -1,0 +1,113 @@
+<div x-data="homeView" class="space-y-6">
+  <div>
+    <h1 class="page-title"><span x-text="greeting"></span> <span x-text="$store.session.user.name.split(' ')[0]"></span></h1>
+    <p class="mt-1 text-slate-600" x-text="$store.session.roleLabel()"></p>
+  </div>
+
+  <div class="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
+    <!-- Site en ligne -->
+    <section class="card p-5">
+      <h2 class="section-title">Site en ligne</h2>
+      <template x-if="builds?.current">
+        <div class="mt-3 text-sm text-slate-600">
+          <p>Version <strong class="text-slate-900" x-text="'#' + builds.current.id"></strong> publiée le <span x-text="$fmt.fmtDateTime(builds.current.finished_at)"></span>.</p>
+          <p class="mt-1"><span x-text="builds.current.pages_count"></span> pages · <span x-text="builds.current.langs.join(', ').toUpperCase()"></span></p>
+        </div>
+      </template>
+      <p x-show="builds && !builds.current" class="mt-3 text-sm text-slate-600">Le site n’a pas encore été publié depuis le back-office.</p>
+      <div class="mt-4 flex flex-wrap gap-2">
+        <a href="/fr/" target="_blank" rel="noopener" class="btn btn-secondary btn-sm">Voir le site ↗</a>
+        <a href="#/versions" class="btn btn-ghost btn-sm">Versions</a>
+      </div>
+    </section>
+
+    <!-- Prévisualisation -->
+    <section class="card p-5">
+      <h2 class="section-title">Prévisualisation</h2>
+      <p class="mt-3 text-sm text-slate-600">Le site tel qu’il sera publié, brouillons et langues incomplètes compris. Réservée aux personnes connectées.</p>
+      <p x-show="lastPreview" class="mt-2 text-xs text-slate-500">Dernière génération : <span x-text="$fmt.fmtDateTime(lastPreview?.finished_at)"></span></p>
+      <div class="mt-4 flex flex-wrap gap-2">
+        <button class="btn btn-primary btn-sm" @click="$store.build.preview()" :disabled="$store.build.busy">Générer et ouvrir</button>
+        <a x-show="lastPreview" :href="'/preview/' + $store.ui.lang + '/'" target="_blank" rel="noopener" class="btn btn-ghost btn-sm">Ouvrir la dernière ↗</a>
+      </div>
+    </section>
+
+    <!-- Statistiques de la semaine -->
+    <template x-if="stats">
+      <section class="card p-5">
+        <div class="flex items-baseline justify-between">
+          <h2 class="section-title">Cette semaine</h2>
+          <a href="#/statistiques" class="text-sm font-medium text-azure-700 hover:underline">Statistiques</a>
+        </div>
+        <dl class="mt-3 grid grid-cols-3 gap-3">
+          <template x-for="k in [['visitors', 'Visiteurs'], ['booking_clicks', 'Clics réservation'], ['conversion_rate', 'Conversion']]" :key="k[0]">
+            <div>
+              <dt class="text-xs text-slate-500" x-text="k[1]"></dt>
+              <dd class="mt-0.5 text-xl font-semibold" x-text="k[0] === 'conversion_rate' ? $fmt.fmtPercent(stats.current[k[0]]) : $fmt.fmtNumber(stats.current[k[0]])"></dd>
+              <dd class="text-xs" x-show="delta(k[0]) !== null" :class="delta(k[0]) >= 0 ? 'text-emerald-700' : 'text-rose-700'"
+                x-text="(delta(k[0]) >= 0 ? '+' : '') + delta(k[0]) + ' %'"></dd>
+            </div>
+          </template>
+        </dl>
+      </section>
+    </template>
+
+    <!-- Traductions -->
+    <template x-if="translations">
+      <section class="card p-5">
+        <div class="flex items-baseline justify-between">
+          <h2 class="section-title">Traductions</h2>
+          <a href="#/traductions" class="text-sm font-medium text-azure-700 hover:underline">Détail</a>
+        </div>
+        <ul class="mt-3 space-y-3">
+          <template x-for="l in translations.langs" :key="l.code">
+            <li>
+              <div class="flex justify-between text-sm">
+                <span><span class="font-medium" x-text="l.name"></span> <span x-show="!l.is_active" class="text-xs text-slate-500">(pas encore en ligne)</span></span>
+                <span class="text-slate-600" x-text="l.percent + ' %'"></span>
+              </div>
+              <div class="mt-1 h-1.5 overflow-hidden rounded-full bg-slate-100"><div class="h-full rounded-full bg-azure-700" :style="`width: ${l.percent}%`"></div></div>
+            </li>
+          </template>
+        </ul>
+      </section>
+    </template>
+
+    <!-- SEO -->
+    <template x-if="seo">
+      <section class="card p-5">
+        <div class="flex items-baseline justify-between">
+          <h2 class="section-title">SEO</h2>
+          <a href="#/seo" class="text-sm font-medium text-azure-700 hover:underline">Rapport</a>
+        </div>
+        <p class="mt-3 text-sm text-slate-600" x-show="seo.production">
+          <strong class="text-slate-900" x-text="seo.production?.warnings.length"></strong> point(s) à vérifier sur le site en ligne.
+        </p>
+        <p class="mt-3 text-sm text-slate-600" x-show="!seo.production">Pas encore de rapport : publiez le site une première fois.</p>
+      </section>
+    </template>
+
+    <!-- Live Music -->
+    <template x-if="$store.session.isScoped">
+      <section class="card p-5 md:col-span-2 xl:col-span-1">
+        <div class="flex items-baseline justify-between">
+          <h2 class="section-title">Prochains concerts</h2>
+          <a href="#/collections/gigs" class="text-sm font-medium text-azure-700 hover:underline">Programme</a>
+        </div>
+        <ul class="mt-3 divide-y divide-slate-100">
+          <template x-for="g in gigs" :key="g.id">
+            <li class="py-2 text-sm">
+              <a :href="'#/collections/gigs/' + g.id" class="flex justify-between gap-3 hover:text-azure-700">
+                <span><strong x-text="g.artist"></strong> <span class="text-slate-500" x-text="g.style ? '· ' + g.style : ''"></span></span>
+                <span class="shrink-0 text-slate-500" x-text="$fmt.fmtDay(g.date) + (g.time ? ' · ' + g.time : '')"></span>
+              </a>
+              <p class="text-xs text-slate-500" x-text="venue(g.venue)"></p>
+            </li>
+          </template>
+        </ul>
+        <p x-show="!loading && !gigs.length" class="mt-3 text-sm text-slate-600">Aucun concert programmé.</p>
+        <a href="#/collections/gigs/nouveau" class="btn btn-primary btn-sm mt-4">Ajouter un concert</a>
+      </section>
+    </template>
+  </div>
+</div>

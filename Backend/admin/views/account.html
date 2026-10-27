@@ -1,0 +1,22 @@
+<div x-data="accountView" class="max-w-2xl space-y-6">
+  <div>
+    <h1 class="page-title">Mon compte</h1>
+    <p class="mt-1 text-slate-600"><span x-text="$store.session.user.name"></span> · <span x-text="$store.session.user.email"></span> · <span class="text-brass" x-text="$store.session.roleLabel()"></span></p>
+  </div>
+
+  <form class="card space-y-4 p-5" @submit.prevent="changePassword">
+    <h2 class="section-title">Changer de mot de passe</h2>
+    <label class="block"><span class="label">Mot de passe actuel</span><input class="input" type="password" x-model="current" autocomplete="current-password" required></label>
+    <label class="block"><span class="label">Nouveau mot de passe</span><input class="input" type="password" x-model="next" autocomplete="new-password" minlength="12" required>
+      <span class="hint block">12 caractères au moins. Une phrase de quelques mots est facile à retenir et difficile à deviner.</span></label>
+    <label class="block"><span class="label">Confirmer</span><input class="input" type="password" x-model="confirm" autocomplete="new-password" minlength="12" required></label>
+    <button class="btn btn-primary" :disabled="saving">Changer le mot de passe</button>
+  </form>
+
+  <section class="card space-y-3 p-5">
+    <h2 class="section-title">Statistiques</h2>
+    <label class="flex items-start gap-2 text-sm"><input type="checkbox" class="mt-0.5" :checked="noStats" @change="setNoStats($event.target.checked)">
+      <span><span class="font-medium">Ne pas compter mes visites sur le site depuis ce navigateur</span>
+        <span class="block text-slate-500">À cocher sur les ordinateurs de l’hôtel (réception, bureaux), pour que les statistiques ne mesurent que les vrais visiteurs.</span></span></label>
+  </section>
+</div>

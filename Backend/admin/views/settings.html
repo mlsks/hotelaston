@@ -1,0 +1,64 @@
+<div x-data="settingsView" class="space-y-6">
+  <div>
+    <h1 class="page-title">Réglages</h1>
+    <p class="mt-1 text-slate-600">Paramètres communs à tout le site. Ils s’appliquent à la prochaine publication.</p>
+  </div>
+  <template x-if="form">
+    <form class="space-y-6" @submit.prevent="save" @input="$store.ui.dirty = true">
+      <section class="card grid gap-5 p-5 md:grid-cols-2">
+        <h2 class="section-title md:col-span-2">Site</h2>
+        <label class="block"><span class="label">Nom du site (partages sur les réseaux)</span><input class="input" x-model="form.og_site_name"></label>
+        <label class="block"><span class="label">Langue proposée aux autres visiteurs (x-default)</span>
+          <select class="input" x-model="form.x_default_lang">
+            <template x-for="l in $store.session.languages" :key="l.code"><option :value="l.code" x-text="l.name" :selected="l.code === form.x_default_lang"></option></template>
+          </select>
+          <span class="hint block">Version montrée par Google aux internautes dont la langue n’est pas proposée.</span></label>
+        <label class="block md:col-span-2"><span class="label">Image de partage par défaut</span>
+          <div class="flex items-center gap-3"><img x-show="form.og_image_default" :src="form.og_image_default" alt="" class="h-14 rounded ring-1 ring-slate-200"><input class="input" type="url" x-model="form.og_image_default"></div></label>
+        <label class="block md:col-span-2"><span class="label">Adresse des photos hébergées par l’ancien site (CDN)</span>
+          <input class="input font-mono text-xs" x-model="form.cdn_base">
+          <span class="hint block">Les photos des chambres et services sont encore servies depuis cette adresse, en attendant leur import dans la médiathèque.</span></label>
+      </section>
+
+      <section class="card grid gap-5 p-5 md:grid-cols-2">
+        <h2 class="section-title md:col-span-2">Moteur de réservation (D-Edge)</h2>
+        <label class="block md:col-span-2"><span class="label">Adresse du moteur</span><input class="input font-mono text-xs" x-model="form.booking_base" required>
+          <span class="hint block"><code>{lang}</code> est remplacé par la langue de la page. Les dates, voyageurs, chambre et offre sont ajoutés par le site.</span></label>
+        <label class="block md:col-span-2"><span class="label">Début commun des adresses du moteur</span><input class="input font-mono text-xs" x-model="form.booking_prefix">
+          <span class="hint block">Sert à reconnaître, dans les textes, les liens qui mènent au moteur.</span></label>
+      </section>
+
+      <section class="card grid gap-5 p-5 md:grid-cols-2">
+        <h2 class="section-title md:col-span-2">Avis clients</h2>
+        <label class="block"><span class="label">Avis affichés</span>
+          <select class="input" x-model="form.reviews_source"><option value="demo">Exemples (marqués « Exemple » sur le site)</option><option value="real">Avis réels de clients</option></select></label>
+        <label class="block"><span class="label">Note Google</span><input class="input w-32" type="number" step="0.1" min="0" max="5" x-model="form.google_rating"></label>
+        <label class="block"><span class="label">Lien vers la fiche Google</span><input class="input" type="url" x-model="form.google_url"></label>
+        <label class="block"><span class="label">Note minimale pour l’afficher sur l’accueil</span><input class="input w-32" type="number" step="0.1" min="0" max="5" x-model="form.home_threshold"></label>
+      </section>
+
+      <details class="card p-5">
+        <summary class="cursor-pointer section-title">Données structurées (JSON-LD) — réservé aux personnes à l’aise avec le format</summary>
+        <p class="hint mt-2">Description de l’hôtel lue par Google (adresse, téléphone, équipements, étoiles…), une par langue.</p>
+        <div class="mt-4 space-y-4">
+          <template x-for="(text, lang) in jsonld" :key="lang">
+            <label class="block"><span class="label" x-text="$store.session.langName(lang)"></span>
+              <textarea class="input font-mono text-xs" rows="10" x-model="jsonld[lang]" @change="checkJson(lang)"></textarea>
+              <span class="hint block text-rose-700" x-show="jsonErrors[lang]" x-text="jsonErrors[lang]"></span></label>
+          </template>
+        </div>
+      </details>
+
+      <div class="flex items-center gap-3">
+        <button class="btn btn-primary" :disabled="saving" x-text="saving ? 'Enregistrement…' : 'Enregistrer'"></button>
+        <span x-show="$store.ui.dirty" class="text-sm text-amber-700">Modifications non enregistrées</span>
+      </div>
+
+      <section class="card p-5">
+        <h2 class="section-title">Maintenance</h2>
+        <p class="mt-1 text-sm text-slate-600">Les médias mis à la corbeille sont effacés chaque nuit, sauf ceux qu’une version conservée du site utilise encore.</p>
+        <button type="button" class="btn btn-secondary btn-sm mt-3" @click="mediaGc()">Effacer la corbeille maintenant</button>
+      </section>
+    </form>
+  </template>
+</div>

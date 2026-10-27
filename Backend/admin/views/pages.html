@@ -1,0 +1,53 @@
+<div x-data="pagesView" class="space-y-6">
+  <div class="flex flex-wrap items-end justify-between gap-4">
+    <div>
+      <h1 class="page-title">Pages</h1>
+      <p class="mt-1 text-slate-600">Textes, adresse et référencement de chaque page, dans chaque langue.</p>
+    </div>
+    <input type="search" class="input max-w-xs" placeholder="Rechercher une page…" x-model.debounce.200ms="q">
+  </div>
+
+  <div class="card overflow-x-auto">
+    <table class="table">
+      <thead class="bg-slate-50">
+        <tr>
+          <th>Page</th>
+          <th class="hidden md:table-cell">Adresse</th>
+          <template x-for="l in $store.session.languages" :key="l.code"><th class="text-center" x-text="l.code.toUpperCase()"></th></template>
+          <th class="hidden lg:table-cell">Plan du site</th>
+        </tr>
+      </thead>
+      <tbody>
+        <template x-for="p in rows" :key="p.id">
+          <tr class="hover:bg-slate-50" :class="!p.is_active && 'opacity-60'">
+            <td class="min-w-56">
+              <a :href="'#/pages/' + p.id" class="font-medium text-azure-800 hover:underline" :style="`padding-left: ${p.depth * 1.25}rem`">
+                <span x-show="p.depth" class="text-slate-300">└ </span><span x-text="label(p)"></span>
+              </a>
+              <span x-show="!p.is_active" class="ml-2 text-xs text-slate-500">désactivée</span>
+            </td>
+            <td class="hidden font-mono text-xs text-slate-500 md:table-cell" x-text="p.i18n[$store.session.defaultLang]?.path || '—'"></td>
+            <template x-for="l in $store.session.languages" :key="l.code">
+              <td class="text-center">
+                <a :href="`#/pages/${p.id}?lang=${l.code}`" class="badge" :class="$fmt.stateClass(p.i18n[l.code]?.state)" x-text="$fmt.stateLabel(p.i18n[l.code]?.state)"></a>
+              </td>
+            </template>
+            <td class="hidden text-slate-500 lg:table-cell" x-text="p.in_sitemap ? 'Oui' : 'Non'"></td>
+          </tr>
+        </template>
+      </tbody>
+    </table>
+    <p x-show="loading" class="p-8 text-center text-slate-500">Chargement…</p>
+  </div>
+
+  <div class="grid gap-4 md:grid-cols-2">
+    <a href="#/textes/global" class="card block p-5 hover:ring-azure-700">
+      <p class="section-title">Textes communs</p>
+      <p class="mt-1 text-sm text-slate-600">En-tête, menus, pied de page, fil d’Ariane des fiches : présents sur toutes les pages.</p>
+    </a>
+    <a href="#/textes/ui" class="card block p-5 hover:ring-azure-700">
+      <p class="section-title">Textes de l’interface</p>
+      <p class="mt-1 text-sm text-slate-600">Module de réservation, avis, formulaires, chat : les textes affichés par le JavaScript.</p>
+    </a>
+  </div>
+</div>

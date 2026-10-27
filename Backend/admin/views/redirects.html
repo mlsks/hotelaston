@@ -1,0 +1,49 @@
+<div x-data="redirectsView" class="space-y-6">
+  <div>
+    <h1 class="page-title">Redirections</h1>
+    <p class="mt-1 max-w-3xl text-slate-600">Une ancienne adresse renvoie vers une page du site (ou une adresse externe) : les favoris, les liens et Google suivent. Quand l’adresse d’une page publiée change, la redirection est créée automatiquement.</p>
+  </div>
+
+  <form x-show="$store.session.canContent" class="card grid gap-4 p-5 md:grid-cols-[minmax(0,1.2fr)_minmax(0,1.6fr)_auto_auto]" @submit.prevent="add">
+    <label class="block"><span class="label">Ancienne adresse</span><input class="input font-mono text-xs" x-model="draft.from_path" required placeholder="/fr/ancienne-page.html"></label>
+    <div>
+      <span class="label flex gap-4">Vers
+        <label class="flex items-center gap-1 font-normal"><input type="radio" value="page" x-model="draft.kind"> une page</label>
+        <label class="flex items-center gap-1 font-normal"><input type="radio" value="url" x-model="draft.kind"> une adresse</label></span>
+      <div x-show="draft.kind === 'page'" class="flex gap-2">
+        <select class="input" x-model="draft.to_page" :required="draft.kind === 'page'">
+          <option value="">Choisir une page…</option>
+          <template x-for="p in pages" :key="p.id"><option :value="p.id" x-text="pageName(p)"></option></template>
+        </select>
+        <select class="input w-20" x-model="draft.to_lang">
+          <template x-for="l in $store.session.languages" :key="l.code"><option :value="l.code" x-text="l.code.toUpperCase()" :selected="l.code === draft.to_lang"></option></template>
+        </select>
+      </div>
+      <input x-show="draft.kind === 'url'" class="input" x-model="draft.to_url" :required="draft.kind === 'url'" placeholder="https://… ou /chemin">
+    </div>
+    <label class="block"><span class="label">Type</span>
+      <select class="input" x-model="draft.code"><option value="301">Définitive (301)</option><option value="302">Temporaire (302)</option></select></label>
+    <div class="self-end"><button class="btn btn-primary">Ajouter</button></div>
+  </form>
+
+  <div class="flex items-center gap-3">
+    <input type="search" class="input max-w-xs" placeholder="Rechercher…" x-model.debounce.200ms="q">
+    <span class="text-sm text-slate-500" x-text="redirects.length + ' redirection(s)'"></span>
+  </div>
+  <div class="card overflow-x-auto">
+    <table class="table">
+      <thead class="bg-slate-50"><tr><th>Ancienne adresse</th><th>Vers</th><th>Type</th><th></th></tr></thead>
+      <tbody>
+        <template x-for="r in filtered" :key="r.id">
+          <tr>
+            <td class="font-mono text-xs" x-text="r.from_path"></td>
+            <td class="text-sm" x-text="target(r)"></td>
+            <td x-text="r.code"></td>
+            <td class="text-right"><button x-show="$store.session.canContent" class="btn btn-ghost btn-sm text-rose-700" @click="remove(r)">Supprimer</button></td>
+          </tr>
+        </template>
+        <tr x-show="!filtered.length"><td colspan="4" class="py-8 text-center text-slate-500">Aucune redirection.</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>

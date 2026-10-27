@@ -1,0 +1,3 @@
+- [Profil de l'utilisateur](user-profile.md) — francophone, questions décisives d'abord puis travail autonome ; « Ne code pas » = répondre seulement
+- [Projet Hôtel Aston La Scala](hotel-aston-site.md) — maquette du site + back-office (briques 1 à 4 terminées), décisions, pièges techniques
+- [Historique des demandes](historique.md) — ce que l'utilisateur a demandé et décidé, dans l'ordre (conversation du 25–26/10/2026)

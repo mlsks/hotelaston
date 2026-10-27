@@ -1,0 +1,250 @@
+<div x-data="statsView" class="space-y-6">
+  <div class="flex flex-wrap items-end justify-between gap-4">
+    <div>
+      <h1 class="page-title">Statistiques</h1>
+      <p class="mt-1 text-slate-600">Mesure d’audience sans cookie : aucune donnée personnelle conservée, rien n’est transmis à un tiers.</p>
+    </div>
+    <div class="flex flex-wrap items-center gap-2">
+      <div class="inline-flex rounded-lg bg-white p-1 ring-1 ring-slate-200">
+        <template x-for="p in [['week', 'Semaine'], ['month', 'Mois'], ['year', 'Année']]" :key="p[0]">
+          <button class="rounded-md px-3 py-1.5 text-sm font-medium" :class="period === p[0] ? 'bg-azure-800 text-white' : 'text-slate-600 hover:bg-slate-100'" @click="setPeriod(p[0])" x-text="p[1]"></button>
+        </template>
+      </div>
+      <div class="inline-flex items-center rounded-lg bg-white ring-1 ring-slate-200">
+        <button class="px-3 py-2 text-slate-600 hover:text-slate-900" @click="shift(-1)" aria-label="Période précédente">‹</button>
+        <span class="min-w-40 text-center text-sm font-medium capitalize" x-text="rangeLabel"></span>
+        <button class="px-3 py-2 text-slate-600 hover:text-slate-900 disabled:opacity-30" @click="shift(1)" :disabled="isCurrent" aria-label="Période suivante">›</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Filtres -->
+  <div class="flex flex-wrap items-center gap-2 text-sm">
+    <span class="text-slate-500">Filtrer :</span>
+    <select class="input w-auto py-1.5" x-model="filters.channel" @change="load()">
+      <option value="">Tous les canaux</option><template x-for="(label, k) in CHANNELS" :key="k"><option :value="k" x-text="label"></option></template>
+    </select>
+    <select class="input w-auto py-1.5" x-model="filters.device" @change="load()">
+      <option value="">Tous les appareils</option><template x-for="(label, k) in DEVICES" :key="k"><option :value="k" x-text="label"></option></template>
+    </select>
+    <select class="input w-auto py-1.5" x-model="filters.lang" @change="load()">
+      <option value="">Toutes les langues du site</option><template x-for="l in $store.session.languages" :key="l.code"><option :value="l.code" x-text="l.name"></option></template>
+    </select>
+    <input class="input w-28 py-1.5 uppercase" maxlength="2" placeholder="Pays (FR…)" x-model.lazy="filters.country" @change="filters.country = filters.country.toUpperCase(); load()">
+    <button x-show="hasFilters" class="font-medium text-azure-700 hover:underline" @click="clearFilters()">Effacer les filtres</button>
+    <span x-show="loading" class="text-slate-500">Mise à jour…</span>
+  </div>
+
+  <!-- Indicateurs -->
+  <div class="grid grid-cols-2 gap-3 md:grid-cols-4">
+    <template x-for="k in kpis()" :key="k[0]">
+      <div class="card p-4" :title="k[3] || ''">
+        <p class="text-xs text-slate-500" x-text="k[1]"></p>
+        <p class="mt-1 text-2xl font-semibold text-azure-950" x-text="k[2]"></p>
+        <p class="text-xs" :class="delta(k[0]) === null ? 'text-slate-400' : delta(k[0]) >= 0 ? 'text-emerald-700' : 'text-rose-700'"
+          x-text="delta(k[0]) === null ? 'pas de comparaison' : deltaText(k[0]) + ' vs période précédente'"></p>
+      </div>
+    </template>
+  </div>
+
+  <section class="card p-5">
+    <div class="flex items-center justify-between"><h2 class="section-title">Évolution</h2>
+      <a :href="exportUrl('timeseries')" class="text-sm font-medium text-azure-700 hover:underline">Export CSV</a></div>
+    <div class="mt-4 h-72"><canvas x-ref="timeline" aria-label="Visiteurs, visites et clics vers le moteur sur la période"></canvas></div>
+  </section>
+
+  <!-- Acquisition -->
+  <div class="grid gap-6 lg:grid-cols-2">
+    <section class="card p-5">
+      <div class="flex items-center justify-between"><h2 class="section-title">Canaux d’arrivée</h2>
+        <a :href="exportUrl('top', 'channel')" class="text-sm font-medium text-azure-700 hover:underline">CSV</a></div>
+      <table class="table mt-3">
+        <thead><tr><th>Canal</th><th class="text-right">Visites</th><th class="text-right">Conversion</th></tr></thead>
+        <tbody>
+          <template x-for="r in top.channel || []" :key="r.key">
+            <tr class="cursor-pointer hover:bg-slate-50" @click="setFilter('channel', r.key)" title="Filtrer sur ce canal">
+              <td><div class="relative"><div class="absolute inset-y-0 left-0 rounded bg-azure-100" :style="`width: ${share(top.channel, 'visits', r)}`"></div>
+                <span class="relative px-1.5" :class="r.key === 'ai' && 'font-semibold text-azure-900'" x-text="channel(r.key)"></span></div></td>
+              <td class="text-right" x-text="$fmt.fmtNumber(r.visits)"></td>
+              <td class="text-right" x-text="$fmt.fmtPercent(r.conversion_rate)"></td>
+            </tr>
+          </template>
+        </tbody>
+      </table>
+      <p x-show="!(top.channel || []).length" class="py-6 text-center text-sm text-slate-500">Pas encore de visites sur cette période.</p>
+    </section>
+    <section class="card p-5">
+      <h2 class="section-title">Sites référents et campagnes</h2>
+      <table class="table mt-3">
+        <thead><tr><th>Site</th><th class="text-right">Visites</th><th class="text-right">Clics moteur</th></tr></thead>
+        <tbody>
+          <template x-for="r in (top.referrer || []).filter((r) => r.key !== '(aucun)')" :key="r.key">
+            <tr><td class="truncate" x-text="r.key"></td><td class="text-right" x-text="r.visits"></td><td class="text-right" x-text="r.booking_clicks"></td></tr>
+          </template>
+          <template x-for="r in (top.utm_campaign || []).filter((r) => r.key !== '(aucun)')" :key="'c' + r.key">
+            <tr><td class="truncate"><span class="badge mr-1 bg-pebble text-slate-700 ring-0">campagne</span><span x-text="r.key"></span></td><td class="text-right" x-text="r.visits"></td><td class="text-right" x-text="r.booking_clicks"></td></tr>
+          </template>
+        </tbody>
+      </table>
+    </section>
+  </div>
+
+  <!-- Réservation -->
+  <div class="grid gap-6 lg:grid-cols-2">
+    <section class="card p-5">
+      <div class="flex items-center justify-between"><h2 class="section-title">Du visiteur au moteur de réservation</h2>
+        <a :href="exportUrl('funnel')" class="text-sm font-medium text-azure-700 hover:underline">CSV</a></div>
+      <ol class="mt-4 space-y-3">
+        <template x-for="s in funnel" :key="s.step">
+          <li>
+            <div class="flex justify-between text-sm"><span x-text="s.label"></span><span class="font-medium"><span x-text="$fmt.fmtNumber(s.count)"></span> <span class="text-slate-500" x-text="'(' + $fmt.fmtPercent(s.rate) + ')'"></span></span></div>
+            <div class="mt-1 h-3 overflow-hidden rounded bg-slate-100"><div class="h-full rounded bg-azure-800" :style="`width: ${s.rate}%`"></div></div>
+          </li>
+        </template>
+      </ol>
+      <p class="hint mt-4">La réservation elle-même se fait sur le moteur D-Edge : on mesure le clic qui y mène, pas la réservation confirmée.</p>
+      <h3 class="mt-6 text-sm font-semibold">D’où partent les clics vers le moteur</h3>
+      <ul class="mt-2 space-y-1 text-sm">
+        <template x-for="r in top.source || []" :key="r.key">
+          <li class="flex justify-between gap-3"><span class="truncate" x-text="source(r.key)"></span><span class="font-medium" x-text="r.booking_clicks"></span></li>
+        </template>
+      </ul>
+    </section>
+    <section class="card p-5">
+      <h2 class="section-title">Calendrier de la demande</h2>
+      <p class="hint">Semaines d’arrivée choisies dans le module de réservation (<span x-text="demand?.searches || 0"></span> recherche(s)).</p>
+      <div class="mt-3 h-48"><canvas x-ref="arrivals" aria-label="Recherches par semaine d’arrivée"></canvas></div>
+      <div class="mt-4 grid gap-4 sm:grid-cols-2">
+        <div>
+          <h3 class="text-sm font-semibold">Délai avant l’arrivée</h3>
+          <ul class="mt-1 space-y-0.5 text-sm"><template x-for="r in demand?.lead_time || []" :key="r.key"><li class="flex justify-between"><span x-text="r.key"></span><span x-text="r.searches"></span></li></template></ul>
+        </div>
+        <div>
+          <h3 class="text-sm font-semibold">Durée du séjour</h3>
+          <ul class="mt-1 space-y-0.5 text-sm"><template x-for="r in demand?.nights || []" :key="r.key"><li class="flex justify-between"><span x-text="r.key + ' nuit(s)'"></span><span x-text="r.searches"></span></li></template></ul>
+        </div>
+        <div>
+          <h3 class="text-sm font-semibold">Voyageurs</h3>
+          <ul class="mt-1 space-y-0.5 text-sm"><template x-for="r in (demand?.party || []).slice(0, 6)" :key="r.key"><li class="flex justify-between"><span x-text="r.key"></span><span x-text="r.searches"></span></li></template></ul>
+        </div>
+        <div>
+          <h3 class="text-sm font-semibold">Chambres et offres demandées</h3>
+          <ul class="mt-1 space-y-0.5 text-sm">
+            <template x-for="r in demand?.room_types || []" :key="'r' + r.key"><li class="flex justify-between"><span x-text="r.key"></span><span x-text="r.searches"></span></li></template>
+            <template x-for="r in demand?.offers || []" :key="'o' + r.key"><li class="flex justify-between"><span x-text="'Offre ' + r.key"></span><span x-text="r.searches"></span></li></template>
+          </ul>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- Audience -->
+  <div class="grid gap-6 lg:grid-cols-3">
+    <section class="card p-5">
+      <h2 class="section-title">Pays</h2>
+      <ul class="mt-3 space-y-1 text-sm">
+        <template x-for="r in top.country || []" :key="r.key">
+          <li class="flex cursor-pointer justify-between hover:text-azure-700" @click="r.key !== '(aucun)' && setFilter('country', r.key)"><span x-text="r.key === '(aucun)' ? 'Inconnu' : r.key"></span><span x-text="r.visits"></span></li>
+        </template>
+      </ul>
+      <h3 x-show="(top.region || []).some((r) => r.key !== '(aucun)')" class="mt-4 text-sm font-semibold">Régions</h3>
+      <ul class="mt-1 space-y-0.5 text-sm"><template x-for="r in (top.region || []).filter((r) => r.key !== '(aucun)').slice(0, 8)" :key="r.key"><li class="flex justify-between"><span x-text="r.key"></span><span x-text="r.visits"></span></li></template></ul>
+      <p x-show="summary && !summary.geoip" class="hint mt-3">Pays non mesurés : la base de géolocalisation n’est pas installée sur le serveur.</p>
+    </section>
+    <section class="card p-5">
+      <h2 class="section-title">Langues</h2>
+      <p class="hint">Langue du navigateur des visiteurs : révèle les traductions qui manquent.</p>
+      <ul class="mt-2 space-y-1 text-sm"><template x-for="r in top.browser_lang || []" :key="r.key"><li class="flex justify-between"><span class="uppercase" x-text="r.key === '(aucun)' ? '?' : r.key"></span><span x-text="r.visits"></span></li></template></ul>
+      <h3 class="mt-4 text-sm font-semibold">Langue des pages visitées</h3>
+      <ul class="mt-1 space-y-0.5 text-sm"><template x-for="r in top.lang || []" :key="r.key"><li class="flex justify-between"><span class="uppercase" x-text="r.key"></span><span x-text="r.visits"></span></li></template></ul>
+    </section>
+    <section class="card p-5">
+      <h2 class="section-title">Appareils</h2>
+      <ul class="mt-3 space-y-2 text-sm">
+        <template x-for="r in top.device || []" :key="r.key">
+          <li class="cursor-pointer" @click="setFilter('device', r.key)">
+            <div class="flex justify-between"><span x-text="device(r.key)"></span><span><span x-text="r.visits"></span> · <span class="text-slate-500" x-text="$fmt.fmtPercent(r.conversion_rate)"></span></span></div>
+            <div class="mt-1 h-1.5 rounded bg-slate-100"><div class="h-full rounded bg-azure-700" :style="`width: ${share(top.device, 'visits', r)}`"></div></div>
+          </li>
+        </template>
+      </ul>
+    </section>
+  </div>
+
+  <!-- Comportement -->
+  <div class="grid gap-6 lg:grid-cols-2">
+    <section class="card p-5">
+      <div class="flex items-center justify-between"><h2 class="section-title">Pages les plus vues</h2>
+        <a :href="exportUrl('top', 'page')" class="text-sm font-medium text-azure-700 hover:underline">CSV</a></div>
+      <table class="table mt-3">
+        <thead><tr><th>Page</th><th class="text-right">Vues</th><th class="text-right">Temps actif</th><th class="text-right">Défilement</th></tr></thead>
+        <tbody>
+          <template x-for="r in top.page || []" :key="r.key">
+            <tr><td class="max-w-56 truncate font-mono text-xs" x-text="r.key"></td><td class="text-right" x-text="r.views"></td>
+              <td class="text-right" x-text="r.avg_engaged_ms ? duration(r.avg_engaged_ms) : '—'"></td><td class="text-right" x-text="r.avg_scroll_pct !== null ? r.avg_scroll_pct + ' %' : '—'"></td></tr>
+          </template>
+        </tbody>
+      </table>
+      <h3 class="mt-5 text-sm font-semibold">Pages d’entrée</h3>
+      <ul class="mt-1 space-y-0.5 text-sm"><template x-for="r in (top.entry || []).slice(0, 8)" :key="r.key"><li class="flex justify-between gap-3"><span class="truncate font-mono text-xs" x-text="r.key"></span><span><span x-text="r.visits"></span> · <span class="text-slate-500" x-text="$fmt.fmtPercent(r.conversion_rate)"></span></span></li></template></ul>
+    </section>
+    <section class="card space-y-5 p-5">
+      <div>
+        <h2 class="section-title">Bandeaux et popup</h2>
+        <table class="table mt-2">
+          <thead><tr><th>Élément</th><th class="text-right">Vues</th><th class="text-right">Clics</th><th class="text-right">Réservations*</th></tr></thead>
+          <tbody>
+            <template x-for="r in top.element || []" :key="r.key">
+              <tr><td x-text="source(r.key)"></td><td class="text-right" x-text="r.views"></td><td class="text-right"><span x-text="r.clicks"></span> <span class="text-xs text-slate-500" x-text="'(' + $fmt.fmtPercent(r.click_rate) + ')'"></span></td><td class="text-right" x-text="r.booking_clicks"></td></tr>
+            </template>
+          </tbody>
+        </table>
+        <p class="hint">* Clics vers le moteur dans les 30 minutes suivant un clic sur l’élément.</p>
+      </div>
+      <div class="grid gap-4 sm:grid-cols-2">
+        <div>
+          <h3 class="text-sm font-semibold">Contacts</h3>
+          <ul class="mt-1 space-y-0.5 text-sm"><template x-for="r in top.contact || []" :key="r.key"><li class="flex justify-between gap-2"><span class="truncate" x-text="contact(r.key)"></span><span x-text="r.contacts"></span></li></template></ul>
+        </div>
+        <div>
+          <h3 class="text-sm font-semibold">Questions posées au chat</h3>
+          <ul class="mt-1 space-y-0.5 text-sm"><template x-for="r in top.chat || []" :key="r.key"><li class="flex justify-between gap-2"><span class="truncate" x-text="r.key"></span><span x-text="r.questions"></span></li></template></ul>
+        </div>
+        <div class="sm:col-span-2" x-show="(top.not_found || []).length">
+          <h3 class="text-sm font-semibold">Pages introuvables (404)</h3>
+          <ul class="mt-1 space-y-0.5 text-sm"><template x-for="r in top.not_found || []" :key="r.key"><li class="flex justify-between gap-2"><span class="truncate font-mono text-xs" x-text="r.key"></span><span x-text="r.hits"></span></li></template></ul>
+          <a href="#/redirections" class="mt-1 inline-block text-xs font-medium text-azure-700 hover:underline">Créer une redirection</a>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- Performance -->
+  <section class="card p-5">
+    <div class="flex items-center justify-between"><h2 class="section-title">Vitesse ressentie par les visiteurs (Core Web Vitals)</h2>
+      <a :href="exportUrl('vitals')" class="text-sm font-medium text-azure-700 hover:underline">CSV</a></div>
+    <p class="hint">75e centile : 3 visiteurs sur 4 ont eu au moins aussi bien. Ce sont les mesures que Google prend en compte.</p>
+    <div class="mt-3 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+      <template x-for="r in vitalsOverall" :key="r.metric">
+        <div class="rounded-lg p-3 ring-1" :class="{ bon: 'bg-emerald-50 ring-emerald-200', 'à améliorer': 'bg-amber-50 ring-amber-200', mauvais: 'bg-rose-50 ring-rose-200' }[r.rating]">
+          <p class="text-xs text-slate-600" x-text="vitalLabel(r.metric) + ' (' + r.metric + ')'"></p>
+          <p class="text-xl font-semibold" x-text="vitalValue(r)"></p>
+          <p class="text-xs text-slate-600"><span x-text="r.rating"></span> · <span x-text="r.samples"></span> mesure(s)</p>
+        </div>
+      </template>
+    </div>
+    <p x-show="!vitals.length" class="py-6 text-center text-sm text-slate-500">Pas encore de mesure sur cette période.</p>
+    <details x-show="vitalsDetail.length" class="mt-4 text-sm">
+      <summary class="cursor-pointer font-medium text-slate-700">Par type de page et appareil</summary>
+      <table class="table mt-2"><thead><tr><th>Mesure</th><th>Page</th><th>Appareil</th><th class="text-right">75e centile</th><th class="text-right">Mesures</th></tr></thead>
+        <tbody><template x-for="r in vitalsDetail" :key="r.metric + r.template + r.device"><tr><td x-text="r.metric"></td><td x-text="r.template"></td><td x-text="device(r.device)"></td><td class="text-right" x-text="vitalValue(r)"></td><td class="text-right" x-text="r.samples"></td></tr></template></tbody>
+      </table>
+    </details>
+  </section>
+
+  <div class="space-y-1 text-xs text-slate-500">
+    <p>Visiteurs : exacts sur une journée. Sur une semaine ou plus, c’est la somme des visiteurs de chaque jour (sans cookie, une personne revenue deux jours compte deux fois).</p>
+    <p>Les visites de robots et celles des postes marqués « ne pas compter mes visites » sont exclues.</p>
+    <p x-show="summary?.geoip">Pays et régions : <a href="https://db-ip.com" target="_blank" rel="noopener" class="underline">IP Geolocation by DB-IP</a> (licence CC BY 4.0).</p>
+  </div>
+</div>

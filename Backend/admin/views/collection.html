@@ -1,0 +1,51 @@
+<div x-data="collectionView" class="space-y-6">
+  <template x-if="collection">
+    <div class="space-y-6">
+      <div class="flex flex-wrap items-end justify-between gap-4">
+        <div>
+          <a href="#/collections" x-show="!$store.session.isScoped" class="text-sm text-azure-700 hover:underline">← Fiches et listes</a>
+          <h1 class="page-title mt-1" x-text="collection.label"></h1>
+          <p class="mt-1 max-w-2xl text-slate-600" x-show="spec.help" x-text="spec.help"></p>
+        </div>
+        <div class="flex flex-wrap items-center gap-3">
+          <input type="search" class="input w-56" placeholder="Rechercher…" x-model.debounce.200ms="q">
+          <a x-show="$store.session.canContent" :href="`#/collections/${collection.key}/nouveau`" class="btn btn-primary">
+            <span x-text="spec.addLabel || 'Ajouter'"></span>
+          </a>
+        </div>
+      </div>
+
+      <template x-for="group in groups" :key="group.label || 'all'">
+        <section class="space-y-2" x-show="group.items.length || !group.muted">
+          <h2 x-show="group.label" class="text-sm font-semibold tracking-wide text-slate-500 uppercase" x-text="group.label"></h2>
+          <div class="card divide-y divide-slate-100" :class="group.muted && 'opacity-70'">
+            <template x-for="it in group.items" :key="it.id">
+              <div class="flex flex-wrap items-center gap-3 px-4 py-3 hover:bg-slate-50 sm:flex-nowrap">
+                <a :href="`#/collections/${collection.key}/${it.id}`" class="min-w-0 flex-1">
+                  <p class="truncate font-medium text-azure-800" x-text="title(it)"></p>
+                  <p class="truncate text-sm text-slate-500" x-text="subtitle(it)"></p>
+                </a>
+                <div class="flex shrink-0 flex-wrap items-center gap-1.5" x-show="translatable">
+                  <template x-for="l in $store.session.otherLangs" :key="l.code">
+                    <a :href="`#/collections/${collection.key}/${it.id}?lang=${l.code}`" class="badge" :class="$fmt.stateClass(it.i18n[l.code]?.state)"
+                      :title="l.name + ' : ' + $fmt.stateLabel(it.i18n[l.code]?.state)" x-text="l.code.toUpperCase()"></a>
+                  </template>
+                </div>
+                <button x-show="$store.session.canContent" class="badge cursor-pointer" @click="toggle(it)"
+                  :class="it.is_active ? 'bg-emerald-50 text-emerald-800 ring-emerald-200' : 'bg-slate-100 text-slate-600 ring-slate-200'"
+                  :title="it.is_active ? 'Visible sur le site : cliquer pour masquer' : 'Masqué : cliquer pour afficher'"
+                  x-text="it.is_active ? 'Visible' : 'Masqué'"></button>
+                <div x-show="canReorder" class="flex shrink-0">
+                  <button class="btn btn-ghost btn-sm" @click="move(it, -1)" aria-label="Monter">↑</button>
+                  <button class="btn btn-ghost btn-sm" @click="move(it, 1)" aria-label="Descendre">↓</button>
+                </div>
+              </div>
+            </template>
+            <p x-show="!group.items.length" class="px-4 py-8 text-center text-sm text-slate-500"
+              x-text="loading ? 'Chargement…' : collection.key === 'gigs' ? 'Aucun concert à venir.' : 'Aucun élément.'"></p>
+          </div>
+        </section>
+      </template>
+    </div>
+  </template>
+</div>

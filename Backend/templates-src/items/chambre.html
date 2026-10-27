@@ -1,0 +1,55 @@
+<article class="room-page">
+      <header class="page-head container">
+        <nav class="breadcrumb" aria-label="Fil d'Ariane" data-cms-attr="aria-label:item-chambre.001-nav@aria-label"><a href="#/" data-cms-key="item-chambre.002-a">Accueil</a><span aria-hidden="true">›</span><a href="#/chambres" data-cms-key="item-chambre.003-a">Chambres &amp; suites</a><span aria-hidden="true">›</span><span aria-current="page" data-f="name"></span></nav>
+        <p class="eyebrow" data-f="category"></p>
+        <h1 data-f="h1"></h1>
+        <p class="room-page__facts" data-f="facts"></p>
+      </header>
+      <div class="container">
+        <div class="gallery" data-slider="">
+          <div class="slider__track" data-slider-track="" tabindex="0" role="region" data-f="galleryLabel"></div>
+          <div class="slider__controls">
+            <button class="slider__arrow" type="button" data-slider-prev="" aria-label="Photo précédente" data-cms-attr="aria-label:item-chambre.004-button@aria-label"><svg class="icon" aria-hidden="true"><use href="#i-prev"></use></svg></button>
+            <div class="slider__progress" aria-hidden="true"><span data-slider-progress=""></span></div>
+            <button class="slider__arrow" type="button" data-slider-next="" aria-label="Photo suivante" data-cms-attr="aria-label:item-chambre.005-button@aria-label"><svg class="icon" aria-hidden="true"><use href="#i-next"></use></svg></button>
+          </div>
+        </div>
+        <div class="venue-layout">
+          <div class="venue-layout__main">
+            <p class="lede" data-f="description"></p>
+            <div data-f="variants"></div>
+            <h2 data-cms-key="item-chambre.006-h2">Équipements</h2>
+            <ul class="amenities" data-f="amenities"></ul>
+            <h3 class="h4" data-cms-key="item-chambre.007-h3">Liste complète</h3>
+            <ul class="amenities-full" data-f="amenitiesFull"></ul>
+          </div>
+          <aside class="venue-layout__aside" aria-label="Réserver cette chambre" data-cms-attr="aria-label:item-chambre.008-aside@aria-label">
+            <div class="info-card info-card--book">
+              <h2 class="info-card__title" data-cms-text="item-chambre.009-h2">Réserver <span data-f="shortName"></span></h2>
+              <form class="booking booking--aside" data-booking-form="" data-room-fixed="" action="https://www.secure-hotel-booking.com/smart/redirect/2ARI-19552/fr/" method="get" target="_blank" novalidate="">
+                <div class="booking__field"><label data-cms-text="item-chambre.010-label">Arrivée<input name="checkin" type="date" required="" data-checkin=""></label></div>
+                <div class="booking__field"><label data-cms-text="item-chambre.011-label">Départ<input name="checkout" type="date" required="" data-checkout=""></label></div>
+                <div class="booking__field booking__field--small"><label data-cms-text="item-chambre.012-label">Adultes<select name="adults" data-adults=""><option>1</option><option selected="">2</option><option>3</option><option>4</option></select></label></div>
+                <div class="booking__field booking__field--small"><label data-cms-text="item-chambre.013-label">Enfants<select name="children" data-children=""><option selected="">0</option><option>1</option><option>2</option></select></label></div>
+                <input type="hidden" name="roomType" data-room-select="">
+                <input type="hidden" name="offerId" value="" data-offer-input="">
+                <button class="btn btn--gold booking__submit" type="submit" data-cms-key="item-chambre.014-button">Voir les tarifs de cette chambre</button>
+                <p class="booking__error" data-booking-error="" role="alert" hidden=""></p>
+              </form>
+              <p class="best-rate" data-cms-text="item-chambre.015-p"><svg class="icon" aria-hidden="true"><use href="#i-check"></use></svg>Meilleur prix garanti en direct</p>
+              <p class="best-rate" data-cms-text="item-chambre.016-p"><svg class="icon" aria-hidden="true"><use href="#i-coffee"></use></svg>Petit-déjeuner offert sur ce site</p>
+              <p class="info-card__contacts"><a href="tel:+33497202524">04 97 20 25 24</a></p>
+            </div>
+          </aside>
+        </div>
+        <section class="section section--tight" aria-label="Avis sur cette chambre" data-cms-attr="aria-label:item-chambre.017-section@aria-label">
+          <h2 data-cms-key="item-chambre.018-h2">Avis de clients sur cette chambre</h2>
+          <div class="reviews" data-reviews="" data-limit="3" data-summary="none" data-f="reviews"></div>
+        </section>
+        <div data-house-rules=""></div>
+        <nav class="other-rooms" aria-label="Autres chambres" data-cms-attr="aria-label:item-chambre.019-nav@aria-label">
+          <h2 class="h3" data-cms-key="item-chambre.020-h2">Les autres chambres</h2>
+          <ul data-f="otherRooms"></ul>
+        </nav>
+      </div>
+    </article>

@@ -1,0 +1,59 @@
+<div x-data="translationsView" class="space-y-6">
+  <div>
+    <h1 class="page-title">Traductions</h1>
+    <p class="mt-1 max-w-3xl text-slate-600">Une page n’est publiée dans une langue que lorsque tous ses textes y sont prêts : jamais de page à moitié traduite. Quand le texte français change, la traduction passe « à revoir ».</p>
+  </div>
+
+  <div class="grid gap-4 md:grid-cols-3">
+    <template x-for="l in status?.langs || []" :key="l.code">
+      <button class="card p-5 text-left transition" :class="lang === l.code ? 'ring-2 ring-azure-700' : 'hover:ring-azure-700'" @click="choose(l.code)">
+        <div class="flex items-baseline justify-between">
+          <p class="section-title" x-text="l.name"></p>
+          <p class="text-2xl font-semibold text-azure-900" x-text="l.percent + ' %'"></p>
+        </div>
+        <p class="text-xs text-slate-500" x-text="l.is_active ? 'En ligne' : 'Préparée, pas encore en ligne'"></p>
+        <div class="mt-3 flex h-2 overflow-hidden rounded-full bg-slate-100">
+          <div class="bg-emerald-500" :style="`width: ${l.total ? (l.ready / l.total) * 100 : 0}%`"></div>
+          <div class="bg-amber-400" :style="`width: ${l.total ? (l.draft / l.total) * 100 : 0}%`"></div>
+          <div class="bg-orange-500" :style="`width: ${l.total ? (l.outdated / l.total) * 100 : 0}%`"></div>
+        </div>
+        <p class="mt-2 text-xs text-slate-600">
+          <span x-text="l.ready"></span> prêts · <span x-text="l.draft"></span> brouillons · <span x-text="l.outdated"></span> à revoir · <span x-text="l.missing"></span> à traduire
+        </p>
+      </button>
+    </template>
+  </div>
+
+  <template x-if="current">
+    <section class="card overflow-hidden">
+      <div class="grid gap-px bg-slate-100 sm:grid-cols-3 lg:grid-cols-6">
+        <template x-for="(label, key) in MODULES" :key="key">
+          <button class="bg-white px-4 py-3 text-left hover:bg-slate-50" :class="module === key && 'bg-azure-100'" @click="module = module === key ? '' : key; loadTodo()">
+            <p class="text-xs text-slate-500" x-text="label"></p>
+            <p class="font-semibold"><span x-text="current.modules[key].percent + ' %'"></span>
+              <span class="text-xs font-normal text-slate-500" x-text="'(' + (current.modules[key].total - current.modules[key].ready) + ' restants)'"></span></p>
+          </button>
+        </template>
+      </div>
+      <div class="flex flex-wrap items-center gap-3 border-t border-slate-200 px-4 py-3">
+        <p class="flex-1 text-sm font-medium"><span x-text="todo.length"></span> élément(s) en <span x-text="current.name.toLowerCase()"></span><span x-show="module" x-text="' · ' + MODULES[module]"></span></p>
+        <select class="input w-44" x-model="state" @change="loadTodo()">
+          <option value="">Tous les états</option><option value="missing">À traduire</option><option value="outdated">À revoir</option><option value="draft">Brouillons</option>
+        </select>
+      </div>
+      <ul class="max-h-[32rem] divide-y divide-slate-100 overflow-y-auto">
+        <template x-for="u in todo" :key="u.module + u.id">
+          <li>
+            <a :href="link(u)" class="flex items-center gap-3 px-4 py-2.5 text-sm hover:bg-slate-50">
+              <span class="badge shrink-0" :class="$fmt.stateClass(u.state)" x-text="$fmt.stateLabel(u.state)"></span>
+              <span class="w-20 shrink-0 text-xs text-slate-500" x-text="MODULES[u.module]"></span>
+              <span class="min-w-0 flex-1 truncate" x-text="u.label"></span>
+              <span class="hidden truncate font-mono text-[0.7rem] text-slate-400 md:block" x-text="u.ref"></span>
+            </a>
+          </li>
+        </template>
+        <li x-show="!loading && !todo.length" class="px-4 py-10 text-center text-sm text-slate-500">Rien à traduire ici.</li>
+      </ul>
+    </section>
+  </template>
+</div>

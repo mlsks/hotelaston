@@ -1,0 +1,146 @@
+<div x-data="pageView" class="space-y-6">
+  <template x-if="page">
+    <div class="space-y-6">
+      <div class="flex flex-wrap items-end justify-between gap-4">
+        <div class="min-w-0">
+          <a href="#/pages" x-show="!$store.session.isScoped" class="text-sm text-azure-700 hover:underline">← Pages</a>
+          <h1 class="page-title mt-1" x-text="label(page)"></h1>
+          <p class="mt-1 flex flex-wrap items-center gap-2 text-sm text-slate-600">
+            <span class="font-mono" x-text="row.path || '(pas encore d’adresse dans cette langue)'"></span>
+            <span class="badge" :class="$fmt.stateClass(row.state)" x-text="$fmt.stateLabel(row.state)"></span>
+            <a x-show="$store.route.previewPath" :href="'/preview' + $store.route.previewPath" target="_blank" rel="noopener" class="text-azure-700 hover:underline">Dernière prévisualisation ↗</a>
+          </p>
+        </div>
+        <template data-include="lang-tabs"></template>
+      </div>
+
+      <div class="flex gap-2 border-b border-slate-200">
+        <button class="tab" :class="tab === 'texts' && 'tab-active'" @click="tab = 'texts'">Textes</button>
+        <button class="tab" :class="tab === 'seo' && 'tab-active'" @click="tab = 'seo'">Référencement (SEO)</button>
+        <button class="tab" x-show="$store.session.canContent && !$store.session.isScoped" :class="tab === 'settings' && 'tab-active'" @click="tab = 'settings'">Réglages</button>
+      </div>
+
+      <!-- Textes -->
+      <div x-show="tab === 'texts'">
+        <div x-data="entriesEditor({ page: page.id })">
+          <template data-include="entries"></template>
+        </div>
+      </div>
+
+      <!-- SEO -->
+      <div x-show="tab === 'seo'" class="grid gap-6 lg:grid-cols-[minmax(0,1fr)_24rem]">
+        <form class="card space-y-5 p-5" @submit.prevent="saveSeo" @input="$store.ui.dirty = true">
+          <div>
+            <span class="label">Adresse de la page</span>
+            <div class="flex items-center rounded-lg ring-1 ring-slate-300 focus-within:ring-2 focus-within:ring-azure-700">
+              <span class="pl-3 font-mono text-sm text-slate-500" x-text="`/${lang}/`"></span>
+              <input class="w-full min-w-0 rounded-lg border-0 bg-transparent px-1 py-2 font-mono text-sm focus:outline-none disabled:text-slate-500" x-model="seo.slug"
+                :disabled="isHome || !canEdit" :placeholder="page.i18n[def]?.slug || page.key">
+              <span class="pr-3 font-mono text-sm text-slate-500" x-show="!isHome">/</span>
+            </div>
+            <p class="hint">Minuscules, chiffres et tirets. Changer l’adresse d’une page déjà publiée crée une redirection 301 depuis l’ancienne.</p>
+          </div>
+          <label class="block"><span class="label">Libellé dans le menu et le fil d’Ariane</span>
+            <input class="input" x-model="seo.nav_label" :disabled="!canEdit" :placeholder="translating ? page.i18n[def]?.nav_label || '' : ''"></label>
+          <label class="block">
+            <span class="label flex justify-between">Title (onglet du navigateur et titre dans Google)
+              <span class="font-normal" :class="$fmt.counterClass(seo.title?.length, [30, 60])" x-text="(seo.title?.length || 0) + ' / 60'"></span></span>
+            <input class="input" x-model="seo.title" required :disabled="!canEdit" :placeholder="translating ? page.i18n[def]?.title : ''">
+          </label>
+          <label class="block">
+            <span class="label flex justify-between">Description (texte sous le titre dans Google)
+              <span class="font-normal" :class="$fmt.counterClass(seo.meta_description?.length, [70, 160])" x-text="(seo.meta_description?.length || 0) + ' / 160'"></span></span>
+            <textarea class="input" rows="3" x-model="seo.meta_description" :disabled="!canEdit" :placeholder="translating ? page.i18n[def]?.meta_description : ''"></textarea>
+          </label>
+          <label class="block"><span class="label">Mot-clé principal</span>
+            <input class="input" x-model="seo.focus_keyword" :disabled="!canEdit" placeholder="ex. hôtel centre Nice">
+            <span class="hint block">L’expression que cette page doit porter dans Google. Les contrôles vérifient sa présence dans le title, le H1, la description, l’adresse et le premier paragraphe.</span>
+          </label>
+          <details class="rounded-lg bg-slate-50 p-4">
+            <summary class="cursor-pointer text-sm font-medium text-slate-700">Partage sur les réseaux sociaux (facultatif)</summary>
+            <div class="mt-4 space-y-4">
+              <label class="block"><span class="label">Titre du partage</span><input class="input" x-model="seo.og_title" :disabled="!canEdit" :placeholder="seo.title"></label>
+              <label class="block"><span class="label">Description du partage</span><textarea class="input" rows="2" x-model="seo.og_description" :disabled="!canEdit" :placeholder="seo.meta_description"></textarea></label>
+              <div>
+                <span class="label">Image du partage</span>
+                <div class="flex items-center gap-3">
+                  <img x-show="ogImage?.thumb" :src="ogImage?.thumb" alt="" class="size-16 rounded-lg object-cover ring-1 ring-slate-200">
+                  <button type="button" class="btn btn-secondary btn-sm" @click="pickOgImage()" :disabled="!canEdit">Choisir une image</button>
+                  <button type="button" class="btn btn-ghost btn-sm" x-show="seo.og_image_id" @click="clearOgImage()">Retirer</button>
+                </div>
+                <p class="hint">Sans image choisie, l’image par défaut du site est utilisée (1200 × 630 px conseillés).</p>
+              </div>
+            </div>
+          </details>
+          <label class="flex items-start gap-2 text-sm"><input type="checkbox" class="mt-0.5" x-model="seo.noindex" :disabled="!canEdit">
+            <span>Ne pas faire apparaître cette page dans Google (<code>noindex</code>, retirée du plan du site)</span></label>
+          <label x-show="translating" class="flex items-start gap-2 text-sm"><input type="checkbox" class="mt-0.5" x-model="seo.draft" :disabled="!canEdit">
+            <span>Traduction à relire (brouillon) : la page n’est pas publiée dans cette langue tant qu’elle est en brouillon</span></label>
+          <div class="flex items-center gap-3 border-t border-slate-100 pt-4">
+            <button class="btn btn-primary" :disabled="saving || !canEdit" x-text="saving ? 'Enregistrement…' : 'Enregistrer'"></button>
+            <span x-show="$store.ui.dirty" class="text-sm text-amber-700">Modifications non enregistrées</span>
+          </div>
+        </form>
+
+        <div class="space-y-6">
+          <section class="card p-5">
+            <h2 class="text-sm font-semibold text-slate-500">Aperçu dans Google</h2>
+            <div class="mt-3 font-[arial,sans-serif]">
+              <p class="truncate text-xs text-slate-600" x-text="preview.display"></p>
+              <p class="mt-1 text-lg leading-snug text-[#1a0dab]" x-text="preview.title || 'Title manquant'"></p>
+              <p class="mt-1 text-sm leading-snug text-[#4d5156]" x-text="preview.description || 'Description manquante : Google choisira un extrait de la page.'"></p>
+            </div>
+          </section>
+          <section class="card p-5">
+            <div class="flex items-center justify-between">
+              <h2 class="text-sm font-semibold text-slate-500">Contrôles sur la page générée</h2>
+              <button class="text-sm font-medium text-azure-700 hover:underline" @click="runChecks()" :disabled="checking">Relancer</button>
+            </div>
+            <p x-show="checking" class="mt-3 text-sm text-slate-500">Analyse…</p>
+            <p x-show="checks?.error" class="mt-3 text-sm text-rose-700" x-text="checks?.error"></p>
+            <template x-if="checks && !checks.error && !checking">
+              <div>
+                <p class="mt-3 text-3xl font-semibold" :class="checks.score >= 80 ? 'text-emerald-700' : checks.score >= 50 ? 'text-amber-700' : 'text-rose-700'" x-text="checks.score + ' / 100'"></p>
+                <ul class="mt-3 space-y-2 text-sm">
+                  <template x-for="c in checks.checks" :key="c.id">
+                    <li class="flex gap-2">
+                      <span class="mt-0.5 size-4 shrink-0 rounded-full" :class="{ ok: 'bg-emerald-500', warn: 'bg-amber-400', error: 'bg-rose-500' }[c.status]"></span>
+                      <span><span class="font-medium" x-text="c.label"></span><span class="block text-xs text-slate-500" x-text="c.detail"></span></span>
+                    </li>
+                  </template>
+                </ul>
+                <p class="hint mt-3">Les contrôles portent sur le contenu enregistré, brouillons compris.</p>
+              </div>
+            </template>
+          </section>
+        </div>
+      </div>
+
+      <!-- Réglages -->
+      <form x-show="tab === 'settings'" class="card max-w-2xl space-y-5 p-5" @submit.prevent="saveSettings" @input="$store.ui.dirty = true">
+        <label class="flex items-start gap-2 text-sm"><input type="checkbox" class="mt-0.5" x-model="settings.is_active">
+          <span><span class="font-medium">Page active</span><span class="block text-slate-500">Une page désactivée n’est plus générée ni publiée.</span></span></label>
+        <label class="flex items-start gap-2 text-sm"><input type="checkbox" class="mt-0.5" x-model="settings.in_sitemap">
+          <span><span class="font-medium">Dans le plan du site (sitemap.xml)</span></span></label>
+        <div class="grid gap-4 sm:grid-cols-3">
+          <label class="block sm:col-span-2"><span class="label">Page parente</span>
+            <select class="input" x-model="settings.parent_id">
+              <option value="">Aucune (premier niveau)</option>
+              <template x-for="p in pages.filter((x) => x.id !== page.id)" :key="p.id">
+                <option :value="p.id" x-text="label(p)" :selected="p.id === settings.parent_id"></option>
+              </template>
+            </select>
+          </label>
+          <label class="block"><span class="label">Ordre</span><input type="number" class="input" x-model="settings.position"></label>
+        </div>
+        <label class="block max-w-xs"><span class="label">Priorité dans le plan du site</span>
+          <select class="input" x-model="settings.priority">
+            <option value="">Automatique</option>
+            <template x-for="v in ['1.0', '0.9', '0.8', '0.7', '0.6', '0.5', '0.4', '0.3']"><option :value="v" x-text="v" :selected="Number(v) === settings.priority"></option></template>
+          </select>
+        </label>
+        <div class="border-t border-slate-100 pt-4"><button class="btn btn-primary" :disabled="saving">Enregistrer</button></div>
+      </form>
+    </div>
+  </template>
+</div>

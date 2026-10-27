@@ -1,0 +1,39 @@
+{
+  "name": "aston-backoffice",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Back-office de l'hôtel Aston La Scala : CMS, générateur de site statique et statistiques",
+  "type": "module",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "migrate": "node server/cli.js migrate",
+    "import": "node server/cli.js import",
+    "build:preview": "node server/cli.js preview",
+    "publish": "node server/cli.js publish",
+    "rebuild": "node server/cli.js rebuild",
+    "restore": "node server/cli.js restore",
+    "builds": "node server/cli.js builds",
+    "start": "node server/index.js",
+    "test": "node --test \"test/*.test.js\""
+  },
+  "dependencies": {
+    "@fastify/cookie": "11.1.3",
+    "@fastify/multipart": "10.1.6",
+    "@fastify/rate-limit": "11.2.1",
+    "@fastify/static": "10.1.7",
+    "@node-rs/argon2": "2.2.2",
+    "@tailwindcss/browser": "4.3.3",
+    "alpinejs": "3.17.4",
+    "better-sqlite3": "13.0.3",
+    "chart.js": "4.5.1",
+    "cheerio": "1.2.0",
+    "fastify": "5.12.7",
+    "maxmind": "5.0.7",
+    "node-cron": "4.6.0",
+    "sanitize-html": "2.18.1",
+    "sharp": "0.35.5",
+    "web-vitals": "6.2.3"
+  }
+}

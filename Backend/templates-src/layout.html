@@ -1,0 +1,377 @@
+<!DOCTYPE html><html lang="fr"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  
+  
+  
+  
+  
+  <meta name="theme-color" content="#14385c">
+  <!-- Favicon : pastille bleue Aston et couronne blanche du logo -->
+  <link rel="icon" href="favicon.ico" sizes="16x16 32x32 48x48">
+  <link rel="icon" href="img/favicon-32.png" type="image/png" sizes="32x32">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
+  <link rel="manifest" href="site.webmanifest">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Hôtel Aston La Scala">
+  
+  
+  
+  
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+  <link rel="preconnect" href="https://d1i8cf9j7dueks.cloudfront.net" crossorigin="">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&amp;family=Jost:wght@400;500;600&amp;display=swap">
+  <link rel="stylesheet" href="styles.css">
+  <script>
+    document.documentElement.classList.add('js');
+    // Filet de sécurité : si le moteur ne démarre pas, tout le contenu redevient visible
+    setTimeout(function () { if (!(window.RemotionVanilla && window.RemotionVanilla.ready)) document.documentElement.classList.remove('js'); }, 2500);
+  </script>
+  <script>
+    window.__cmsZone = function (zone) {
+      var now = Date.now(), strip = false;
+      zone.querySelectorAll('[data-banner]').forEach(function (b) {
+        var s = b.getAttribute('data-start'), e = b.getAttribute('data-end'), closed = false;
+        try { closed = localStorage.getItem('aston.banner.' + b.getAttribute('data-banner') + '.' + b.getAttribute('data-banner-version')) === '1'; } catch (x) {}
+        var on = !(s && Date.parse(s) > now) && !(e && Date.parse(e) <= now) && !closed;
+        b.hidden = !on;
+        if (on && b.classList.contains('live-strip')) strip = true;
+      });
+      if (zone.getAttribute('data-zone') === 'top-bar') document.documentElement.style.setProperty('--strip-h', strip ? '36px' : '0px');
+    };
+    document.addEventListener('click', function (ev) {
+      var btn = ev.target.closest && ev.target.closest('[data-banner-close]');
+      if (!btn) return;
+      var b = btn.closest('[data-banner]'), zone = b.closest('[data-zone]');
+      try { localStorage.setItem('aston.banner.' + b.getAttribute('data-banner') + '.' + b.getAttribute('data-banner-version'), '1'); } catch (x) {}
+      b.hidden = true;
+      if (zone) window.__cmsZone(zone);
+    });
+  </script>
+
+  <!-- ============ Données structurées (GEO / SEO local) ============ -->
+  
+  <!-- Pas d'AggregateRating ici : Google n'affiche pas les avis « auto-déclarés » d'un établissement sur ses propres pages (risque d'action manuelle). La note est servie par la fiche Google Business Profile. -->
+</head>
+
+<body data-cta-mode="room">
+  <a class="skip-link" href="#main" data-cms-key="global.001-a">Aller au contenu</a>
+
+  <!-- ============ Pictogrammes (sprite SVG) ============ -->
+  <svg class="sprite" aria-hidden="true" focusable="false">
+    <defs>
+      <symbol id="i-wifi" viewBox="0 0 24 24"><path d="M2 8.5a15 15 0 0 1 20 0M5 12a10 10 0 0 1 14 0M8.5 15.5a5 5 0 0 1 7 0"></path><circle cx="12" cy="19" r="1"></circle></symbol>
+      <symbol id="i-clim" viewBox="0 0 24 24"><path d="M12 2v20M3.5 7l17 10M20.5 7l-17 10M9.5 3.5 12 6l2.5-2.5M9.5 20.5 12 18l2.5 2.5"></path></symbol>
+      <symbol id="i-minibar" viewBox="0 0 24 24"><rect x="6" y="2.5" width="12" height="19" rx="2"></rect><path d="M6 9h12M9 5.2v1.6M9 12v3"></path></symbol>
+      <symbol id="i-safe" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="15" rx="2"></rect><circle cx="12" cy="11.5" r="3.5"></circle><path d="M12 8v1.2M15.5 11.5h-1.2M7 19v2M17 19v2"></path></symbol>
+      <symbol id="i-bath" viewBox="0 0 24 24"><path d="M3 12h18v2a5 5 0 0 1-5 5H8a5 5 0 0 1-5-5v-2ZM6 12V5.5a2 2 0 0 1 3.6-1.2M7 19l-1 2M17 19l1 2"></path></symbol>
+      <symbol id="i-shower" viewBox="0 0 24 24"><path d="M5 21V8a5 5 0 0 1 9.6-2M11.5 8.5a3.5 3.5 0 0 1 6 0Z"></path><path d="M13 12v1M16 12v1M14.5 15v1M17.5 15v1M13 18v1M16 18v1"></path></symbol>
+      <symbol id="i-tv" viewBox="0 0 24 24"><rect x="2.5" y="4" width="19" height="13" rx="2"></rect><path d="M8 21h8M12 17v4"></path></symbol>
+      <symbol id="i-bed" viewBox="0 0 24 24"><path d="M2 19V6M2 14h20v5M22 14v-2.5a3 3 0 0 0-3-3h-8V14"></path><circle cx="6.5" cy="10.5" r="2"></circle></symbol>
+      <symbol id="i-area" viewBox="0 0 24 24"><path d="M4 4h16v16H4zM4 9h2.5M4 14h2.5M9 4v2.5M14 4v2.5"></path></symbol>
+      <symbol id="i-window" viewBox="0 0 24 24"><rect x="4" y="3" width="16" height="18" rx="1"></rect><path d="M12 3v18M4 12h16"></path></symbol>
+      <symbol id="i-terrace" viewBox="0 0 24 24"><path d="M12 3a9 9 0 0 1 9 9H3a9 9 0 0 1 9-9ZM12 12v9M8 21h8"></path></symbol>
+      <symbol id="i-pool" viewBox="0 0 24 24"><path d="M8 15V5.5a2 2 0 0 1 4 0M16 15V5.5a2 2 0 0 0-4 0M8 9h8M8 12.5h8"></path><path d="M2 18c1.7 0 1.7-1.3 3.3-1.3S7 18 8.7 18s1.6-1.3 3.3-1.3 1.6 1.3 3.3 1.3 1.6-1.3 3.4-1.3S20.3 18 22 18M2 21.5c1.7 0 1.7-1.3 3.3-1.3s1.7 1.3 3.4 1.3 1.6-1.3 3.3-1.3 1.6 1.3 3.3 1.3 1.6-1.3 3.4-1.3 1.6 1.3 3.3 1.3"></path></symbol>
+      <symbol id="i-cocktail" viewBox="0 0 24 24"><path d="M4 4h16l-8 9-8-9ZM12 13v7M8 20h8M15 4l3-2"></path></symbol>
+      <symbol id="i-pin" viewBox="0 0 24 24"><path d="M12 21s-7-6.2-7-11.5a7 7 0 0 1 14 0C19 14.8 12 21 12 21Z"></path><circle cx="12" cy="9.5" r="2.5"></circle></symbol>
+      <symbol id="i-landmark" viewBox="0 0 24 24"><path d="M3 21h18M5 21v-10M9.5 21v-10M14.5 21v-10M19 21v-10M2 10.5h20L12 3 2 10.5Z"></path></symbol>
+      <symbol id="i-dining" viewBox="0 0 24 24"><path d="M7 2v8a2 2 0 0 0 2 2v10M11 2v6a2 2 0 0 1-2 2M7 2v6M17 22V2c-1.8 1-3 3.6-3 7 0 2 1 3 3 3"></path></symbol>
+      <symbol id="i-fitness" viewBox="0 0 24 24"><path d="M6.5 6.5v11M17.5 6.5v11M3 9.5v5M21 9.5v5M6.5 12h11"></path></symbol>
+      <symbol id="i-bell" viewBox="0 0 24 24"><path d="M4 18h16M5 18a7 7 0 0 1 14 0M12 9V7M10 7h4M2 21h20"></path></symbol>
+      <symbol id="i-coffee" viewBox="0 0 24 24"><path d="M4 9h13v5a5 5 0 0 1-5 5H9a5 5 0 0 1-5-5V9ZM17 11h1.5a2.5 2.5 0 0 1 0 5H17M7 3v3M10.5 3v3M14 3v3"></path></symbol>
+      <symbol id="i-cloche" viewBox="0 0 24 24"><path d="M3 17h18M4.5 17a7.5 7.5 0 0 1 15 0M12 9.5V8M12 8a1 1 0 1 0 0-2 1 1 0 0 0 0 2M2 20.5h20"></path></symbol>
+      <symbol id="i-meeting" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="12" rx="1"></rect><path d="M12 15v3M8 21l4-3 4 3M7 11l3-3 2 2 4-4"></path></symbol>
+      <symbol id="i-parking" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="3"></rect><path d="M9 17V7h4a3 3 0 0 1 0 6H9"></path></symbol>
+      <symbol id="i-paw" viewBox="0 0 24 24"><circle cx="6.5" cy="10" r="1.8"></circle><circle cx="10" cy="6" r="1.8"></circle><circle cx="14.5" cy="6" r="1.8"></circle><circle cx="18" cy="10" r="1.8"></circle><path d="M8 17c0-2.8 1.8-5 4.3-5s4.2 2.2 4.2 4.6c0 1.6-1.2 2.9-2.7 2.9-1 0-1.4-.6-1.6-.6s-.7.6-1.7.6C9 19.5 8 18.6 8 17Z"></path></symbol>
+      <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"></circle><path d="M12 7v5l3 2"></path></symbol>
+      <symbol id="i-card" viewBox="0 0 24 24"><rect x="2.5" y="5" width="19" height="14" rx="2"></rect><path d="M2.5 10h19M6 15h4"></path></symbol>
+      <symbol id="i-child" viewBox="0 0 24 24"><circle cx="12" cy="5" r="2.5"></circle><path d="M12 8v7M7.5 11.5 12 9l4.5 2.5M9 21l3-6 3 6"></path></symbol>
+      <symbol id="i-phone" viewBox="0 0 24 24"><path d="M5 3h3.5L10 7.5 8 8.8a11 11 0 0 0 7.2 7.2l1.3-2L21 15.5V19a2 2 0 0 1-2 2A17 17 0 0 1 3 5a2 2 0 0 1 2-2Z"></path></symbol>
+      <symbol id="i-mail" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"></rect><path d="m3 7 9 6 9-6"></path></symbol>
+      <symbol id="i-star" viewBox="0 0 24 24"><path d="M12 3l2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1-4.4-4.3 6.1-.9L12 3Z"></path></symbol>
+      <symbol id="i-check" viewBox="0 0 24 24"><path d="M5 12.5 9.5 17 19 7.5"></path></symbol>
+      <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"></path></symbol>
+      <symbol id="i-back" viewBox="0 0 24 24"><path d="M19 12H5M11 6l-6 6 6 6"></path></symbol>
+      <symbol id="i-prev" viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"></path></symbol>
+      <symbol id="i-next" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"></path></symbol>
+      <symbol id="i-close" viewBox="0 0 24 24"><path d="M5 5l14 14M19 5 5 19"></path></symbol>
+      <symbol id="i-menu" viewBox="0 0 24 24"><path d="M3 7h18M3 12h18M3 17h18"></path></symbol>
+      <symbol id="i-chat" viewBox="0 0 24 24"><path d="M4 5h16v11H9l-5 4V5ZM8 9.5h8M8 12.5h5"></path></symbol>
+      <symbol id="i-calendar" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="2"></rect><path d="M3 10h18M8 3v4M16 3v4"></path></symbol>
+      <symbol id="i-users" viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.5"></circle><path d="M2.5 20a6.5 6.5 0 0 1 13 0M16 4.5a3.5 3.5 0 0 1 0 7M18 14a6 6 0 0 1 3.5 6"></path></symbol>
+      <symbol id="i-plane" viewBox="0 0 24 24"><path d="M21 15.5 13 11V4.5a1.5 1.5 0 0 0-3 0V11l-8 4.5V17l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-4.5l8 2.5v-1.5Z"></path></symbol>
+      <symbol id="i-train" viewBox="0 0 24 24"><rect x="5" y="3" width="14" height="14" rx="3"></rect><path d="M5 10h14M8 21l2-4M16 21l-2-4"></path><circle cx="9" cy="13.5" r=".8"></circle><circle cx="15" cy="13.5" r=".8"></circle></symbol>
+      <symbol id="i-car" viewBox="0 0 24 24"><path d="M3 16v-4l2-5h14l2 5v4H3ZM3 16v3h3v-3M18 16v3h3v-3"></path><circle cx="7" cy="12.5" r="1"></circle><circle cx="17" cy="12.5" r="1"></circle></symbol>
+      <symbol id="i-tram" viewBox="0 0 24 24"><rect x="6" y="5" width="12" height="13" rx="2"></rect><path d="M6 12h12M9 21l1.5-3M15 21l-1.5-3M9 2h6M12 2v3"></path></symbol>
+      <symbol id="i-walk" viewBox="0 0 24 24"><circle cx="13" cy="4" r="2"></circle><path d="M10 21l2-6-2.5-3 1-5 3 2 3 1M9 12l-2 3M12.5 15l2.5 6"></path></symbol>
+      <symbol id="i-music" viewBox="0 0 24 24"><path d="M9 18V5l11-2v13"></path><circle cx="6" cy="18" r="3"></circle><circle cx="17" cy="16" r="3"></circle></symbol>
+      <symbol id="i-access" viewBox="0 0 24 24"><circle cx="12" cy="4" r="2"></circle><path d="M10 8h5l-1 5h4l2 6M14 13H9.5"></path><path d="M8 11.5a5 5 0 1 0 6.5 7"></path></symbol>
+      <symbol id="i-robe" viewBox="0 0 24 24"><path d="M8 3l4 3 4-3 4 4-2 3v11H6V10L4 7l4-4ZM12 6v15"></path></symbol>
+      <symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"></path></symbol>
+      <symbol id="i-luggage" viewBox="0 0 24 24"><rect x="5" y="7" width="14" height="13" rx="2"></rect><path d="M9 7V4h6v3M9 11v5M15 11v5M8 20v1.5M16 20v1.5"></path></symbol>
+      <symbol id="i-water" viewBox="0 0 24 24"><path d="M10 2h4v3l2 3v12a2 2 0 0 1-2 2h-4a2 2 0 0 1-2-2V8l2-3V2ZM8 12h8"></path></symbol>
+      <symbol id="i-qr" viewBox="0 0 24 24"><path d="M3 3h7v7H3zM14 3h7v7h-7zM3 14h7v7H3zM14 14h3v3h-3zM20 14v1M14 20h3M20 18v3"></path></symbol>
+      <symbol id="i-external" viewBox="0 0 24 24"><path d="M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"></path></symbol>
+      <symbol id="i-leaf" viewBox="0 0 24 24"><path d="M5 19c0-8 6-14 15-14 0 9-6 15-14 15H5ZM5 19l8-8"></path></symbol>
+      <symbol id="i-insta" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="5"></rect><circle cx="12" cy="12" r="4"></circle><circle cx="17.5" cy="6.5" r=".8"></circle></symbol>
+      <symbol id="i-globe" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"></circle><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"></path></symbol>
+      <symbol id="i-send" viewBox="0 0 24 24"><path d="M4 12 20 4l-4 16-4-6-8-2ZM12 14l8-10"></path></symbol>
+      <symbol id="i-building" viewBox="0 0 24 24"><path d="M4 21V5l8-3v19M12 8h8v13M2 21h20M7 8v.01M7 12v.01M7 16v.01M16 12v.01M16 16v.01"></path></symbol>
+      <symbol id="i-sparkle" viewBox="0 0 24 24"><path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8L12 3ZM19 16l.8 2.2L22 19l-2.2.8L19 22l-.8-2.2L16 19l2.2-.8L19 16Z"></path></symbol>
+    </defs>
+  </svg>
+
+  <!-- ============ Bandeau Live Music (fine ligne refermable, pages Restaurant & bar uniquement) ============ -->
+  <div data-cms-zone="top-bar"></div>
+
+  <!-- ============ En-tête : barre horizontale (desktop) / logo + menu + Réserver (mobile) ============ -->
+  <header class="site-header" data-header="">
+    <div class="container site-header__inner">
+      <a class="brand" href="#/" aria-label="Hôtel Aston La Scala, retour à l'accueil" data-cms-attr="aria-label:global.002-a@aria-label">
+        <span class="brand__name" data-cms-key="global.003-span">Aston La Scala</span>
+        <span class="brand__sub" data-cms-html="global.004-span">Hôtel <span class="brand__stars" aria-label="4 étoiles">★★★★</span> Nice</span>
+      </a>
+
+      <!-- Logo de l'hôtel : blanc sur le Hero, or quand l'en-tête devient clair -->
+      <a class="header-logo" href="#/" aria-hidden="true" tabindex="-1">
+        <img class="header-logo__light" src="img/logo-aston-blanc.png" alt="" width="222" height="180">
+        <img class="header-logo__dark" src="img/logo-aston-or.png" alt="" width="216" height="180">
+      </a>
+
+      <nav class="main-nav" aria-label="Navigation principale" data-cms-attr="aria-label:global.005-nav@aria-label">
+        <ul>
+          <li><a href="#/chambres" data-nav="chambres" data-cms-key="global.006-a">Chambres</a></li>
+          <li><a href="#/restaurant-bar" data-nav="restaurant-bar" data-cms-key="global.007-a">Restaurant &amp; bar</a></li>
+          <li><a href="#/seminaires" data-nav="seminaires" data-cms-key="global.008-a">Séminaires</a></li>
+          <li><a href="#/offres" data-nav="offres" data-cms-key="global.009-a">Offres</a></li>
+          <li><a href="#/acces-contact" data-nav="acces-contact" data-cms-key="global.010-a">Accès</a></li>
+        </ul>
+      </nav>
+
+      <div class="site-header__actions">
+        <a class="header-phone" href="tel:+33497202524"><svg class="icon" aria-hidden="true"><use href="#i-phone"></use></svg><span>04 97 20 25 24</span></a>
+        <a class="btn btn--gold btn--book" href="#/reserver" data-book="" data-cms-key="global.011-a">Réserver</a>
+        <button class="burger" type="button" data-menu-open="" aria-expanded="false" aria-controls="mobile-menu">
+          <svg class="icon" aria-hidden="true"><use href="#i-menu"></use></svg>
+          <span class="sr-only" data-cms-key="global.012-span">Ouvrir le menu</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- ============ Menu mobile (au-dessus de tout : z-index --z-menu) ============ -->
+  <div class="menu-backdrop" data-menu-backdrop="" hidden=""></div>
+  <nav class="mobile-menu" id="mobile-menu" aria-label="Menu" data-menu="" hidden="" data-cms-attr="aria-label:global.013-nav@aria-label">
+    <div class="mobile-menu__head">
+      <a class="brand brand--dark" href="#/" data-menu-close-link="">
+        <span class="brand__name" data-cms-key="global.014-span">Aston La Scala</span>
+        <span class="brand__sub" data-cms-key="global.015-span">Hôtel ★★★★ Nice</span>
+      </a>
+      <button class="mobile-menu__close" type="button" data-menu-close="">
+        <svg class="icon" aria-hidden="true"><use href="#i-close"></use></svg>
+        <span class="sr-only" data-cms-key="global.016-span">Fermer le menu</span>
+      </button>
+    </div>
+    <ul class="mobile-menu__list">
+      <li><a href="#/" data-cms-key="global.017-a">Accueil</a></li>
+      <li><a href="#/chambres" data-cms-key="global.018-a">Chambres &amp; suites</a></li>
+      <li><a href="#/restaurant-bar" data-cms-key="global.019-a">Restaurant &amp; bar</a>
+        <ul>
+          <li><a href="#/restaurant-horloge" data-cms-key="global.020-a">Restaurant L'Horloge</a></li>
+          <li><a href="#/aston-club" data-cms-key="global.021-a">L'Aston Club</a></li>
+          <li><a href="#/moon-bar" data-cms-key="global.022-a">Le Moon Bar (rooftop)</a></li>
+        </ul>
+      </li>
+      <li><a href="#/rooftop-piscine-nice" data-cms-key="global.023-a">Rooftop &amp; piscine</a></li>
+      <li><a href="#/seminaires" data-cms-key="global.024-a">Séminaires &amp; réunions</a></li>
+      <li><a href="#/offres" data-cms-key="global.025-a">Offres spéciales</a></li>
+      <li><a href="#/services" data-cms-key="global.026-a">Services</a></li>
+      <li><a href="#/avis" data-cms-key="global.027-a">Avis clients</a></li>
+      <li><a href="#/acces-contact" data-cms-key="global.028-a">Accès &amp; contact</a></li>
+      <li><a href="#/faq" data-cms-key="global.029-a">FAQ</a></li>
+    </ul>
+    <a class="residence-link" href="#/appartements">
+      <svg class="icon" aria-hidden="true"><use href="#i-building"></use></svg>
+      <span data-cms-html="global.030-span"><strong>Nos appartements</strong> — Résidence Aston La Scala, la formule appartement pour les longs séjours</span>
+      <svg class="icon" aria-hidden="true"><use href="#i-arrow"></use></svg>
+    </a>
+    <div class="mobile-menu__foot">
+      <div class="lang-switch" role="group" aria-label="Langue" data-cms-attr="aria-label:global.031-div@aria-label">
+        <svg class="icon" aria-hidden="true"><use href="#i-globe"></use></svg>
+        <a href="https://www.hotel-aston.com/fr/" aria-current="true" hreflang="fr" lang="fr" data-cms-key="global.032-a">Français</a>
+        <a href="https://www.hotel-aston.com/" hreflang="en" lang="en" data-cms-key="global.033-a">English</a>
+      </div>
+      <a class="btn btn--ghost btn--block" href="tel:+33497202524"><svg class="icon" aria-hidden="true"><use href="#i-phone"></use></svg>04 97 20 25 24</a>
+      <a class="btn btn--gold btn--block" href="#/reserver" data-book="" data-cms-key="global.034-a">Réserver une chambre</a>
+    </div>
+  </nav>
+
+  <main id="main" tabindex="-1" data-cms-page=""></main>
+
+  <!-- ============ Pied de page ============ -->
+  <div data-cms-zone="footer-cta"></div>
+
+  <footer class="site-footer">
+    <div class="container site-footer__grid">
+      <div class="site-footer__brand">
+        <img src="https://d1i8cf9j7dueks.cloudfront.net/cache/img/hotel-aston-la-scala-234599-500-406-landscape.png" alt="Hôtel Aston La Scala" width="160" height="130" loading="lazy" data-cms-attr="alt:global.035-img@alt">
+        <address data-cms-html="global.036-address">
+          12 avenue Félix Faure<br>06000 Nice, France<br>
+          <a href="tel:+33492175300">Standard : 04 92 17 53 00</a><br>
+          <a href="tel:+33497202524">Réservations : 04 97 20 25 24</a><br>
+          <a href="tel:+33492175394">Groupes &amp; séminaires : 04 92 17 53 94</a><br>
+          <a href="mailto:aston@3ahotels.com">aston@3ahotels.com</a>
+        </address>
+      </div>
+      <nav aria-label="L'hôtel" data-cms-attr="aria-label:global.037-nav@aria-label">
+        <h2 class="site-footer__title" data-cms-key="global.038-h2">L'hôtel</h2>
+        <ul>
+          <li><a href="#/chambres" data-cms-key="global.039-a">Chambres &amp; suites</a></li>
+          <li><a href="#/rooftop-piscine-nice" data-cms-key="global.040-a">Hôtel avec piscine et rooftop à Nice</a></li>
+          <li><a href="#/restaurant-bar" data-cms-key="global.041-a">Restaurant &amp; bar</a></li>
+          <li><a href="#/services" data-cms-key="global.042-a">Services</a></li>
+          <li><a href="#/avis" data-cms-key="global.043-a">Avis clients</a></li>
+          <li><a href="#/notre-histoire" data-cms-key="global.044-a">Notre histoire</a></li>
+        </ul>
+      </nav>
+      <nav aria-label="Séminaires et groupes" data-cms-attr="aria-label:global.045-nav@aria-label">
+        <h2 class="site-footer__title" data-cms-key="global.046-h2">Séminaires &amp; groupes</h2>
+        <ul>
+          <li><a href="#/salle-seminaire-nice" data-cms-key="global.047-a">Salle de séminaire à Nice</a></li>
+          <li><a href="#/seminaire-residentiel-nice" data-cms-key="global.048-a">Séminaire résidentiel</a></li>
+          <li><a href="#/comite-entreprise-nice" data-cms-key="global.049-a">Comités d'entreprise</a></li>
+          <li><a href="#/devis" data-cms-key="global.050-a">Demande de devis</a></li>
+        </ul>
+      </nav>
+      <nav aria-label="Nice" data-cms-attr="aria-label:global.051-nav@aria-label">
+        <h2 class="site-footer__title" data-cms-key="global.052-h2">Nice</h2>
+        <ul>
+          <li><a href="#/hotel-vieille-ville-nice" data-cms-key="global.053-a">Hôtel près de la Vieille Ville</a></li>
+          <li><a href="#/acces-contact" data-cms-key="global.054-a">Accès &amp; contact</a></li>
+          <li><a href="#/blog" data-cms-key="global.055-a">Le journal</a></li>
+          <li><a href="#/faq" data-cms-key="global.056-a">FAQ</a></li>
+        </ul>
+      </nav>
+      <div class="site-footer__residence">
+        <h2 class="site-footer__title" data-cms-key="global.057-h2">Nos appartements</h2>
+        <p data-cms-html="global.058-p">Pour un long séjour, la <strong>Résidence Aston La Scala</strong>, voisine de l'hôtel, propose 17 appartements avec cuisine.</p>
+        <a class="link-arrow" href="#/appartements" data-cms-text="global.059-a">Découvrir nos appartements<svg class="icon" aria-hidden="true"><use href="#i-arrow"></use></svg></a>
+      </div>
+    </div>
+    <div class="container site-footer__bottom">
+      <p class="site-footer__labels">
+        <a href="https://www.laclefverte.org/" rel="noopener" data-cms-text="global.060-a"><svg class="icon" aria-hidden="true"><use href="#i-leaf"></use></svg>Clef Verte</a>
+        <a href="https://www.hotelspreference.com/fr/hotel-aston-la-scala_455" rel="noopener" data-cms-key="global.061-a">Hôtels &amp; Préférence</a>
+        <a href="https://hotels3alacollection.com/" rel="noopener" data-cms-key="global.062-a">3A Collection</a>
+        <a href="https://www.instagram.com/hotelastonlascalanice/" rel="noopener" data-cms-text="global.063-a"><svg class="icon" aria-hidden="true"><use href="#i-insta"></use></svg>@hotelastonlascalanice</a>
+      </p>
+      <p class="site-footer__legal">
+        <a href="https://www.hotel-aston.com/fr/mentions-legales" data-cms-key="global.064-a">Mentions légales</a>
+        <a href="https://www.hotel-aston.com/fr/politique-de-confidentialite" data-cms-key="global.065-a">Confidentialité</a>
+        <a href="https://www.hotel-aston.com/" hreflang="en" lang="en" data-cms-key="global.066-a">English</a>
+        <span data-cms-key="global.067-span">© Hôtel Aston La Scala</span>
+      </p>
+    </div>
+  </footer>
+
+  <!-- ============ Barre fixe inférieure (mobile) : chambre / table / devis selon la page ============ -->
+  <div class="bottom-bar" data-bottom-bar="">
+    <a class="bottom-bar__call" href="tel:+33497202524" data-bottom-call="">
+      <svg class="icon" aria-hidden="true"><use href="#i-phone"></use></svg><span class="sr-only" data-cms-key="global.068-span">Appeler</span>
+    </a>
+    <a class="btn btn--gold bottom-bar__cta" href="#/reserver" data-bottom-cta="" data-book="" data-cms-key="global.069-a">Réserver une chambre</a>
+  </div>
+
+  <!-- ============ Module de réservation (dialog) ============ -->
+  <dialog class="booking-dialog" id="booking-dialog" aria-labelledby="booking-dialog-title" data-booking-dialog="">
+    <div class="booking-dialog__head">
+      <h2 id="booking-dialog-title" data-cms-key="global.070-h2">Vos dates</h2>
+      <button class="booking-dialog__close" type="button" data-dialog-close="">
+        <svg class="icon" aria-hidden="true"><use href="#i-close"></use></svg><span class="sr-only" data-cms-key="global.071-span">Fermer</span>
+      </button>
+    </div>
+    <p class="booking-dialog__context" data-booking-context="" hidden=""></p>
+    <form class="booking booking--dialog" data-booking-form="" action="https://www.secure-hotel-booking.com/smart/redirect/2ARI-19552/fr/" method="get" target="_blank" novalidate="">
+      <div class="booking__field"><label for="dlg-checkin" data-cms-key="global.072-label">Arrivée</label><input id="dlg-checkin" name="checkin" type="date" required="" data-checkin=""></div>
+      <div class="booking__field"><label for="dlg-checkout" data-cms-key="global.073-label">Départ</label><input id="dlg-checkout" name="checkout" type="date" required="" data-checkout=""></div>
+      <div class="booking__field booking__field--small"><label for="dlg-adults" data-cms-key="global.074-label">Adultes</label>
+        <select id="dlg-adults" name="adults" data-adults=""><option>1</option><option selected="">2</option><option>3</option><option>4</option></select></div>
+      <div class="booking__field booking__field--small"><label for="dlg-children" data-cms-key="global.075-label">Enfants</label>
+        <select id="dlg-children" name="children" data-children=""><option selected="">0</option><option>1</option><option>2</option></select></div>
+      <div class="booking__field booking__field--room"><label for="dlg-room" data-cms-key="global.076-label">Chambre</label>
+        <select id="dlg-room" name="roomType" data-room-select="">
+          <option value="" data-cms-key="global.077-option">Toutes les chambres</option><option value="confort" data-cms-key="global.078-option">Confort</option><option value="privilege" data-cms-key="global.079-option">Privilège</option><option value="premium" data-cms-key="global.080-option">Premium</option><option value="exclusive" data-cms-key="global.081-option">Exclusive</option><option value="deluxe" data-cms-key="global.082-option">Deluxe Terrasse</option><option value="suites" data-cms-key="global.083-option">Suites familiales</option>
+        </select></div>
+      <input type="hidden" name="offerId" value="" data-offer-input="">
+      <button class="btn btn--gold booking__submit" type="submit" data-cms-key="global.084-button">Voir les tarifs</button>
+      <p class="booking__error" data-booking-error="" role="alert" hidden=""></p>
+      <p class="booking__promise">
+        <span data-cms-text="global.085-span"><svg class="icon" aria-hidden="true"><use href="#i-check"></use></svg>Meilleur prix garanti en direct</span>
+        <span data-cms-text="global.086-span"><svg class="icon" aria-hidden="true"><use href="#i-coffee"></use></svg>Petit-déjeuner offert</span>
+      </p>
+    </form>
+  </dialog>
+
+  <!-- ============ Chat non bloquant (réponse immédiate, sans nom ni e-mail) ============ -->
+  <div class="chat" data-chat="">
+    <button class="chat__toggle" type="button" data-chat-toggle="" aria-expanded="false" aria-controls="chat-panel">
+      <svg class="icon" aria-hidden="true"><use href="#i-chat"></use></svg><span class="sr-only" data-cms-key="global.087-span">Une question ? Écrire à la réception</span>
+    </button>
+    <section class="chat__panel" id="chat-panel" aria-labelledby="chat-title" data-chat-panel="" hidden="">
+      <header class="chat__head">
+        <div>
+          <p class="chat__title" id="chat-title" data-cms-key="global.088-p">Réception · Aston La Scala</p>
+          <p class="chat__status" data-cms-key="global.089-p">Réponse immédiate, sans inscription</p>
+        </div>
+        <button class="chat__close" type="button" data-chat-close=""><svg class="icon" aria-hidden="true"><use href="#i-close"></use></svg><span class="sr-only" data-cms-key="global.090-span">Fermer la discussion</span></button>
+      </header>
+      <div class="chat__log" data-chat-log="" role="log" aria-live="polite"></div>
+      <div class="chat__chips" data-chat-chips="">
+        <button type="button" data-ask="parking" data-cms-key="global.091-button">Parking</button>
+        <button type="button" data-ask="horaires" data-cms-key="global.092-button">Arrivée / départ</button>
+        <button type="button" data-ask="aeroport" data-cms-key="global.093-button">Depuis l'aéroport</button>
+        <button type="button" data-ask="petit-dejeuner" data-cms-key="global.094-button">Petit-déjeuner</button>
+        <button type="button" data-ask="piscine" data-cms-key="global.095-button">Piscine</button>
+        <button type="button" data-ask="rappel" data-cms-key="global.096-button">Être rappelé</button>
+      </div>
+      <form class="chat__form" data-chat-form="">
+        <label class="sr-only" for="chat-input" data-cms-key="global.097-label">Votre question</label>
+        <input id="chat-input" name="q" autocomplete="off" placeholder="Parking, horaires, accès…" maxlength="300" data-cms-attr="placeholder:global.098-input@placeholder">
+        <button type="submit"><svg class="icon" aria-hidden="true"><use href="#i-send"></use></svg><span class="sr-only" data-cms-key="global.099-span">Envoyer</span></button>
+      </form>
+    </section>
+  </div>
+
+  <!-- =====================================================================
+       GABARITS
+       ===================================================================== -->
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  <!--
+    Avis : données de démonstration. À brancher sur la fiche Google Business Profile
+    (API Places « reviews » ou widget certifié) avant mise en ligne. Tant que "source"
+    vaut "demo", chaque carte affiche une étiquette « Exemple ».
+  -->
+  <script type="application/json" id="data-reviews" data-cms-json="reviews"></script>
+
+  <!-- Base de connaissances du chat : réponses immédiates, coordonnées demandées seulement pour un devis ou un rappel -->
+  <script type="application/json" id="data-chat" data-cms-json="chat"></script>
+
+  
+
+  <script type="application/json" id="site-config" data-cms-json="site-config"></script>
+  <script src="remotion-vanilla.js" defer=""></script>
+
+
+</body></html>

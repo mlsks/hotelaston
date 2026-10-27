@@ -1,0 +1,44 @@
+<div x-data="languagesView" class="space-y-6">
+  <div class="flex flex-wrap items-end justify-between gap-4">
+    <div>
+      <h1 class="page-title">Langues du site</h1>
+      <p class="mt-1 max-w-2xl text-slate-600">Une langue inactive se prépare (ses textes se traduisent et se prévisualisent) sans apparaître sur le site.</p>
+    </div>
+    <button class="btn btn-primary" @click="adding = !adding">Ajouter une langue</button>
+  </div>
+
+  <form x-show="adding" class="card grid gap-4 p-5 sm:grid-cols-5" @submit.prevent="add">
+    <label class="block"><span class="label">Code</span><input class="input" x-model="draft.code" required pattern="[a-z]{2}" maxlength="2" placeholder="es"></label>
+    <label class="block"><span class="label">Nom</span><input class="input" x-model="draft.name" required placeholder="Espagnol"></label>
+    <label class="block"><span class="label">Nom dans la langue</span><input class="input" x-model="draft.native_name" required placeholder="Español"></label>
+    <label class="block"><span class="label">Locale</span><input class="input" x-model="draft.locale" required pattern="[a-z]{2}-[A-Z]{2}" placeholder="es-ES"></label>
+    <label class="block"><span class="label">Langue du moteur</span><input class="input" x-model="draft.booking_lang" pattern="[a-z]{2}" maxlength="2" placeholder="es"></label>
+    <div class="sm:col-span-5"><button class="btn btn-primary">Ajouter</button></div>
+  </form>
+
+  <div class="card overflow-x-auto">
+    <table class="table">
+      <thead class="bg-slate-50"><tr><th>Langue</th><th>Nom dans la langue</th><th>Locale</th><th>Moteur</th><th>État</th><th></th></tr></thead>
+      <tbody>
+        <template x-for="l in languages" :key="l.code">
+          <tr>
+            <td><span class="font-mono text-xs text-slate-500" x-text="l.code"></span> <input class="input inline-block w-36" x-model="l.name" @change="save(l)"></td>
+            <td><input class="input w-36" x-model="l.native_name" @change="save(l)"></td>
+            <td><input class="input w-24 font-mono text-xs" x-model="l.locale" @change="save(l)"></td>
+            <td><input class="input w-16 font-mono text-xs" x-model="l.booking_lang" @change="save(l)"></td>
+            <td>
+              <span x-show="l.is_default" class="badge bg-azure-100 text-azure-900 ring-azure-200">Par défaut</span>
+              <button x-show="!l.is_default" class="badge cursor-pointer" @click="toggle(l)"
+                :class="l.is_active ? 'bg-emerald-50 text-emerald-800 ring-emerald-200' : 'bg-slate-100 text-slate-600 ring-slate-200'" x-text="l.is_active ? 'En ligne' : 'Inactive'"></button>
+            </td>
+            <td class="whitespace-nowrap">
+              <button class="btn btn-ghost btn-sm" @click="move(l, -1)" aria-label="Monter">↑</button>
+              <button class="btn btn-ghost btn-sm" @click="move(l, 1)" aria-label="Descendre">↓</button>
+            </td>
+          </tr>
+        </template>
+      </tbody>
+    </table>
+  </div>
+  <p class="text-sm text-slate-500">« Moteur » : la langue passée au moteur de réservation D-Edge. La langue « x-default » (visiteurs dont la langue n’est pas proposée) se règle dans les Réglages.</p>
+</div>

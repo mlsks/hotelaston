@@ -1,0 +1,15 @@
+<div x-data="textsView" class="space-y-6">
+  <div class="flex flex-wrap items-end justify-between gap-4">
+    <div class="max-w-3xl">
+      <h1 class="page-title" x-text="title"></h1>
+      <p class="mt-1 text-slate-600" x-show="scope === 'global'">En-tête, menus, pied de page, bouton du bas, chat : les textes présents sur toutes les pages.</p>
+      <p class="mt-1 text-slate-600" x-show="scope === 'ui'">Les textes affichés par le JavaScript du site : module de réservation, avis, formulaires, chat, bandeaux, popup. Les éléments entre accolades, comme <code class="rounded bg-slate-100 px-1">{n}</code>, sont remplacés par une valeur : gardez-les tels quels.</p>
+    </div>
+    <template data-include="lang-tabs"></template>
+  </div>
+  <template x-if="['global', 'ui'].includes(scope)">
+    <div x-data="entriesEditor({ scope: scope })">
+      <template data-include="entries"></template>
+    </div>
+  </template>
+</div>

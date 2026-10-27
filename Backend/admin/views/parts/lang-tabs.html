@@ -1,0 +1,12 @@
+<div class="inline-flex flex-wrap items-center gap-1 rounded-lg bg-white p-1 ring-1 ring-slate-200" role="tablist" aria-label="Langue">
+  <template x-for="l in $store.session.languages" :key="l.code">
+    <button type="button" role="tab" class="flex items-center gap-1.5 rounded-md px-3 py-1.5 text-sm font-medium transition"
+      :aria-selected="$store.ui.lang === l.code"
+      :class="$store.ui.lang === l.code ? 'bg-azure-800 text-white shadow-sm' : 'text-slate-600 hover:bg-slate-100'"
+      @click="$store.ui.setLang(l.code)" :title="$store.session.canTranslate(l.code) ? l.name : l.name + ' (lecture seule)'">
+      <span x-text="l.code.toUpperCase()"></span>
+      <span class="hidden sm:inline" x-text="l.name"></span>
+      <svg x-show="!$store.session.canTranslate(l.code)" class="size-3.5 opacity-70" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>
+    </button>
+  </template>
+</div>

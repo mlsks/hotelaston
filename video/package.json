@@ -1,0 +1,29 @@
+{
+  "name": "hotel-aston-video-loops",
+  "version": "1.0.0",
+  "description": "Boucles vidéo du site Hôtel Aston La Scala (Hero rooftop + Moon Bar Live Music), rendues avec Remotion",
+  "license": "UNLICENSED",
+  "private": true,
+  "dependencies": {
+    "@remotion/cli": "4.0.535",
+    "react": "19.2.3",
+    "react-dom": "19.2.3",
+    "remotion": "4.0.535"
+  },
+  "devDependencies": {
+    "@types/react": "19.2.7",
+    "typescript": "5.9.3"
+  },
+  "scripts": {
+    "dev": "remotion studio src/index.ts",
+    "typecheck": "tsc --noEmit",
+    "render:hero:mp4": "remotion render src/index.ts HeroRooftop ../media/hero-rooftop.mp4 --codec=h264 --crf=31 --muted --pixel-format=yuv420p",
+    "render:hero:webm": "remotion render src/index.ts HeroRooftop ../media/hero-rooftop.webm --codec=vp9 --crf=46 --muted",
+    "render:hero-portrait:mp4": "remotion render src/index.ts HeroRooftopPortrait ../media/hero-rooftop-portrait.mp4 --codec=h264 --crf=27 --muted --pixel-format=yuv420p",
+    "render:hero-portrait:webm": "remotion render src/index.ts HeroRooftopPortrait ../media/hero-rooftop-portrait.webm --codec=vp9 --crf=35 --muted",
+    "render:moonbar:mp4": "remotion render src/index.ts MoonBarLive ../media/moonbar-live.mp4 --codec=h264 --crf=26 --muted --pixel-format=yuv420p",
+    "render:moonbar:webm": "remotion render src/index.ts MoonBarLive ../media/moonbar-live.webm --codec=vp9 --crf=34 --muted",
+    "render:posters": "remotion still src/index.ts HeroRooftop ../media/hero-rooftop-poster.webp --frame=0 && remotion still src/index.ts HeroRooftopPortrait ../media/hero-rooftop-portrait-poster.webp --frame=0 && remotion still src/index.ts MoonBarLive ../media/moonbar-live-poster.webp --frame=0",
+    "render:all": "npm run render:hero:mp4 && npm run render:hero:webm && npm run render:hero-portrait:mp4 && npm run render:hero-portrait:webm && npm run render:moonbar:mp4 && npm run render:moonbar:webm && npm run render:posters"
+  }
+}

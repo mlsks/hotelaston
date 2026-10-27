@@ -1,0 +1,33 @@
+<div x-data="seoView" class="space-y-6">
+  <div class="flex flex-wrap items-end justify-between gap-4">
+    <div>
+      <h1 class="page-title">Rapport SEO</h1>
+      <p class="mt-1 max-w-3xl text-slate-600">Les points relevés à chaque génération du site : longueur des titles et descriptions, doublons, liens cassés, textes non traduits… Le détail et l’aperçu Google de chaque page sont dans son onglet « Référencement ».</p>
+    </div>
+    <div class="flex flex-wrap items-center gap-2">
+      <div class="inline-flex rounded-lg bg-white p-1 ring-1 ring-slate-200">
+        <button class="rounded-md px-3 py-1.5 text-sm font-medium" :class="which === 'production' ? 'bg-azure-800 text-white' : 'text-slate-600'" @click="which = 'production'" :disabled="!report?.production">Site en ligne</button>
+        <button class="rounded-md px-3 py-1.5 text-sm font-medium" :class="which === 'preview' ? 'bg-azure-800 text-white' : 'text-slate-600'" @click="which = 'preview'" :disabled="!report?.preview">Prévisualisation</button>
+      </div>
+      <input type="search" class="input w-56" placeholder="Filtrer…" x-model.debounce.200ms="q">
+    </div>
+  </div>
+
+  <p x-show="build" class="text-sm text-slate-600">Génération <span class="font-mono" x-text="'#' + build?.id"></span> du <span x-text="$fmt.fmtDateTime(build?.finished_at)"></span> :
+    <strong x-text="build?.warnings.length"></strong> point(s) sur <strong x-text="groups.length"></strong> page(s).</p>
+  <p x-show="report && !build" class="card p-8 text-center text-slate-500">Pas encore de rapport : lancez une prévisualisation ou une publication.</p>
+
+  <div class="grid gap-4 lg:grid-cols-2">
+    <template x-for="g in groups" :key="g.path">
+      <section class="card p-4">
+        <div class="flex items-center justify-between gap-3">
+          <p class="truncate font-mono text-sm font-medium" x-text="g.path"></p>
+          <a x-show="g.page" :href="g.page ? `#/pages/${g.page.id}?lang=${g.page.lang}&tab=seo` : '#'" class="shrink-0 text-sm font-medium text-azure-700 hover:underline">Corriger</a>
+        </div>
+        <ul class="mt-2 list-disc space-y-0.5 pl-5 text-sm text-slate-600">
+          <template x-for="t in g.items"><li x-text="t"></li></template>
+        </ul>
+      </section>
+    </template>
+  </div>
+</div>

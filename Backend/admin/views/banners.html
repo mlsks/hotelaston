@@ -1,0 +1,27 @@
+<div x-data="bannersView" class="space-y-6">
+  <div class="flex flex-wrap items-end justify-between gap-4">
+    <div>
+      <h1 class="page-title">Bandeaux</h1>
+      <p class="mt-1 max-w-2xl text-slate-600">Messages placés en haut des pages, sous le module de réservation, entre deux sections ou avant le pied de page. Ils s’affichent et disparaissent seuls aux dates choisies.</p>
+    </div>
+    <a x-show="$store.session.canContent" href="#/bandeaux/nouveau" class="btn btn-primary">Nouveau bandeau</a>
+  </div>
+  <div class="card divide-y divide-slate-100">
+    <template x-for="b in banners" :key="b.id">
+      <a :href="'#/bandeaux/' + b.id" class="flex flex-wrap items-center gap-3 px-4 py-3 hover:bg-slate-50 sm:flex-nowrap">
+        <div class="min-w-0 flex-1">
+          <p class="font-medium text-azure-800" x-text="b.name"></p>
+          <p class="truncate text-sm text-slate-500" x-text="$fmt.plain(text(b)) || 'Pas encore de texte'"></p>
+          <p class="text-xs text-slate-500" x-text="where(b)"></p>
+        </div>
+        <div class="flex shrink-0 gap-1.5">
+          <template x-for="l in $store.session.otherLangs" :key="l.code">
+            <span class="badge" :class="$fmt.stateClass(b.i18n[l.code]?.state)" :title="l.name" x-text="l.code.toUpperCase()"></span>
+          </template>
+        </div>
+        <span class="badge shrink-0 ring-0" :class="schedule(b).cls" x-text="schedule(b).label"></span>
+      </a>
+    </template>
+    <p x-show="!loading && !banners.length" class="px-4 py-10 text-center text-sm text-slate-500">Aucun bandeau.</p>
+  </div>
+</div>

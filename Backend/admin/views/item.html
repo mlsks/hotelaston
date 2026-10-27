@@ -1,0 +1,188 @@
+<div x-data="itemView" class="space-y-6">
+  <template x-if="collection">
+    <form class="space-y-6" @submit.prevent="save" @input="$store.ui.dirty = true">
+      <div class="flex flex-wrap items-end justify-between gap-4">
+        <div class="min-w-0">
+          <a :href="'#/collections/' + collection.key" class="text-sm text-azure-700 hover:underline">← <span x-text="collection.label"></span></a>
+          <h1 class="page-title mt-1" x-text="heading"></h1>
+          <p x-show="!isNew && paths.length" class="mt-1 flex items-center gap-2 text-sm text-slate-600">
+            <span x-text="$store.session.langName(lang)"></span>
+            <span class="badge" :class="$fmt.stateClass(state)" x-text="$fmt.stateLabel(state)"></span>
+          </p>
+        </div>
+        <div x-show="paths.length && !isNew"><template data-include="lang-tabs"></template></div>
+      </div>
+
+      <p x-show="translating" class="rounded-lg bg-azure-100 px-4 py-3 text-sm text-azure-900">
+        Traduction en <strong x-text="$store.session.langName(lang)"></strong> : le texte <span x-text="$store.session.langName(def).toLowerCase()"></span> est rappelé sous chaque champ.
+        Une traduction incomplète est enregistrée en brouillon et n’est pas publiée.
+      </p>
+      <p x-show="!canEdit" class="rounded-lg bg-amber-50 px-4 py-3 text-sm text-amber-900 ring-1 ring-amber-200">Lecture seule pour votre compte dans cette langue.</p>
+
+      <div class="grid gap-6 lg:grid-cols-[minmax(0,1fr)_18rem]">
+        <div class="card grid gap-5 p-5 sm:grid-cols-2">
+          <template x-for="f in fields" :key="f.key">
+            <div :class="f.half ? '' : 'sm:col-span-2'">
+              <div class="label flex items-baseline justify-between gap-2">
+                <span><span x-text="f.label"></span><span x-show="f.required" class="text-rose-700"> *</span></span>
+                <span x-show="f.seo" class="text-xs font-normal" :class="$fmt.counterClass(String(form[f.key] || '').length, f.seo || [0, 0])"
+                  x-text="String(form[f.key] || '').length + ' / ' + (f.seo || [])[1]"></span>
+              </div>
+
+              <!-- Texte, nombre, date, heure, mois -->
+              <template x-if="['text', 'date', 'time', 'month'].includes(f.type)">
+                <input class="input" :type="f.type" x-model="form[f.key]" :required="f.required && !translating" :disabled="readOnly(f)" :placeholder="f.placeholder || ''">
+              </template>
+              <template x-if="f.type === 'number'">
+                <input class="input max-w-40" type="number" step="any" x-model.number="form[f.key]" :disabled="readOnly(f)">
+              </template>
+              <template x-if="f.type === 'textarea'">
+                <textarea class="input" rows="4" x-model="form[f.key]" :disabled="readOnly(f)"></textarea>
+              </template>
+              <template x-if="f.type === 'rich'">
+                <div x-data="richtext({ disabled: readOnly(f) })" x-modelable="html" x-model="form[f.key]" @rich-change="$store.ui.dirty = true"></div>
+              </template>
+              <template x-if="f.type === 'checkbox'">
+                <input type="checkbox" x-model="form[f.key]" :disabled="readOnly(f)">
+              </template>
+              <template x-if="f.type === 'select'">
+                <select class="input" :value="selectValue(f)" @change="setSelect(f, $event.target.value)" :disabled="readOnly(f)">
+                  <template x-for="o in f.options" :key="String(o[0])">
+                    <option :value="String(o[0] ?? '')" :selected="String(o[0] ?? '') === selectValue(f)" x-text="o[1]"></option>
+                  </template>
+                </select>
+              </template>
+              <template x-if="f.type === 'icon'">
+                <div class="flex items-center gap-3">
+                  <svg class="size-8 shrink-0 rounded-lg bg-slate-50 p-1.5 text-azure-800 ring-1 ring-slate-200"><use :href="'#' + form[f.key]"></use></svg>
+                  <select class="input" x-model="form[f.key]" :disabled="readOnly(f)">
+                    <template x-for="i in $store.icons.list" :key="i.id"><option :value="i.id" x-text="i.id.replace(/^i-/, '')" :selected="i.id === form[f.key]"></option></template>
+                  </select>
+                </div>
+              </template>
+              <template x-if="f.type === 'tags'">
+                <div class="flex flex-wrap gap-2">
+                  <template x-for="o in tagOptions(f)" :key="o[0]">
+                    <label class="badge cursor-pointer px-2.5 py-1 text-sm" :class="hasTag(f, o[0]) ? 'bg-azure-800 text-white ring-azure-800' : 'bg-white text-slate-600 ring-slate-300'">
+                      <input type="checkbox" class="sr-only" :checked="hasTag(f, o[0])" @change="toggleTag(f, o[0])" :disabled="readOnly(f)"><span x-text="o[1]"></span>
+                    </label>
+                  </template>
+                </div>
+              </template>
+              <template x-if="f.type === 'json'">
+                <div>
+                  <textarea class="input font-mono text-xs" rows="6" :value="jsonText(f)" @change="setJson(f, $event.target.value)" :disabled="readOnly(f)"></textarea>
+                  <p class="hint text-rose-700" x-show="jsonErrors[f.key]" x-text="jsonErrors[f.key]"></p>
+                </div>
+              </template>
+
+              <!-- Liste de textes -->
+              <template x-if="f.type === 'list'">
+                <div class="space-y-2">
+                  <template x-for="(v, i) in form[f.key]" :key="i">
+                    <div class="flex gap-2">
+                      <input class="input" x-model="form[f.key][i]" :disabled="readOnly(f)" :placeholder="sourceOf(f, i)">
+                      <button type="button" x-show="!readOnly(f)" class="btn btn-ghost btn-sm" @click="moveRow(f, i, -1)" aria-label="Monter">↑</button>
+                      <button type="button" x-show="!readOnly(f)" class="btn btn-ghost btn-sm text-rose-700" @click="removeRow(f, i)" aria-label="Retirer">✕</button>
+                    </div>
+                  </template>
+                  <button type="button" x-show="!readOnly(f)" class="text-sm font-medium text-azure-700 hover:underline" @click="addRow(f)">+ Ajouter une ligne</button>
+                </div>
+              </template>
+
+              <!-- Paires (intitulé / valeur, question / réponse) -->
+              <template x-if="f.type === 'pairs'">
+                <div class="space-y-3">
+                  <template x-for="(p, i) in form[f.key]" :key="i">
+                    <div class="grid gap-2 rounded-lg bg-slate-50 p-3 sm:grid-cols-[minmax(0,1fr)_minmax(0,1.6fr)_auto]">
+                      <input class="input" x-model="form[f.key][i][0]" :disabled="readOnly(f)" :placeholder="(f.labels || [])[0] + (translating ? ' : ' + (source[f.key]?.[i]?.[0] || '') : '')">
+                      <textarea class="input" rows="2" x-model="form[f.key][i][1]" :disabled="readOnly(f)" :placeholder="(f.labels || [])[1] + (translating ? ' : ' + (source[f.key]?.[i]?.[1] || '') : '')"></textarea>
+                      <div class="flex gap-1 sm:flex-col" x-show="!readOnly(f)">
+                        <button type="button" class="btn btn-ghost btn-sm" @click="moveRow(f, i, -1)" aria-label="Monter">↑</button>
+                        <button type="button" class="btn btn-ghost btn-sm text-rose-700" @click="removeRow(f, i)" aria-label="Retirer">✕</button>
+                      </div>
+                    </div>
+                  </template>
+                  <button type="button" x-show="!readOnly(f)" class="text-sm font-medium text-azure-700 hover:underline" @click="addRow(f)">+ Ajouter</button>
+                </div>
+              </template>
+
+              <!-- Liste d'objets (photos, variantes) -->
+              <template x-if="f.type === 'objects'">
+                <div class="space-y-3">
+                  <template x-for="(row, i) in form[f.key]" :key="i">
+                    <div class="flex gap-3 rounded-lg bg-slate-50 p-3">
+                      <template x-if="(f.fields || []).some((s) => s.type === 'image')">
+                        <img :src="imageUrl(row.src)" alt="" class="size-20 shrink-0 rounded-md bg-slate-200 object-cover" loading="lazy">
+                      </template>
+                      <div class="grid min-w-0 flex-1 gap-2 sm:grid-cols-2">
+                        <template x-for="s in (f.fields || []).filter((s) => s.type !== 'number' || !translating)" :key="s.key">
+                          <label class="block" :class="['textarea', 'text'].includes(s.type) && s.key !== 'kind' ? 'sm:col-span-2' : ''">
+                            <span class="text-xs font-medium text-slate-500" x-text="s.label"></span>
+                            <template x-if="s.type === 'textarea'">
+                              <textarea class="input" rows="2" x-model="row[s.key]" :disabled="readOnly(f, s)" :placeholder="sourceOf(f, i, s)"></textarea>
+                            </template>
+                            <template x-if="s.type === 'number'">
+                              <input class="input" type="number" x-model.number="row[s.key]" :disabled="readOnly(f, s)">
+                            </template>
+                            <template x-if="['text', 'image'].includes(s.type)">
+                              <input class="input" :class="s.type === 'image' && 'font-mono text-xs'" x-model="row[s.key]" :disabled="readOnly(f, s)" :placeholder="sourceOf(f, i, s)">
+                            </template>
+                          </label>
+                        </template>
+                      </div>
+                      <div class="flex flex-col gap-1" x-show="!structureLocked(f) && !readOnly(f)">
+                        <button type="button" class="btn btn-ghost btn-sm" @click="moveRow(f, i, -1)" aria-label="Monter">↑</button>
+                        <button type="button" class="btn btn-ghost btn-sm text-rose-700" @click="removeRow(f, i)" aria-label="Retirer">✕</button>
+                      </div>
+                    </div>
+                  </template>
+                  <button type="button" x-show="!structureLocked(f) && !readOnly(f)" class="text-sm font-medium text-azure-700 hover:underline" @click="addRow(f)">+ Ajouter</button>
+                </div>
+              </template>
+
+              <p x-show="f.hint" class="hint" x-text="f.hint"></p>
+              <p x-show="translating && ['text', 'textarea', 'rich', 'list'].includes(f.type) && sourceOf(f)" class="mt-1.5 rounded-md bg-slate-50 px-2.5 py-1.5 text-xs text-slate-600">
+                <span class="font-semibold" x-text="$store.session.langName(def) + ' : '"></span><span x-text="$fmt.plain(sourceOf(f))"></span>
+              </p>
+            </div>
+          </template>
+        </div>
+
+        <aside class="space-y-4">
+          <div class="card space-y-4 p-5">
+            <template x-if="!translating">
+              <div class="space-y-4">
+                <label class="flex items-center gap-2 text-sm"><input type="checkbox" x-model="meta.is_active" :disabled="!canEdit"> Visible sur le site</label>
+                <label class="block" x-show="isNew"><span class="label">Identifiant</span>
+                  <input class="input font-mono text-xs" x-model="meta.key" placeholder="créé automatiquement">
+                  <span class="hint block" x-show="collection.item_template">Sert d’adresse à la page de la fiche.</span></label>
+                <p x-show="!isNew" class="text-xs text-slate-500">Identifiant : <span class="font-mono" x-text="item?.key"></span></p>
+                <details x-show="collection.key !== 'gigs'" class="text-sm" :open="meta.start_at || meta.end_at">
+                  <summary class="cursor-pointer font-medium text-slate-700">Afficher seulement entre deux dates</summary>
+                  <div class="mt-3 space-y-3">
+                    <label class="block"><span class="label">À partir du</span><input type="datetime-local" class="input" x-model="meta.start_at" :disabled="!canEdit"></label>
+                    <label class="block"><span class="label">Jusqu’au</span><input type="datetime-local" class="input" x-model="meta.end_at" :disabled="!canEdit"></label>
+                    <p class="hint">Heure de Paris.</p>
+                  </div>
+                </details>
+              </div>
+            </template>
+            <template x-if="translating">
+              <div class="space-y-4">
+                <label class="block" x-show="collection.item_template"><span class="label">Adresse de la fiche</span>
+                  <input class="input font-mono text-xs" x-model="meta.slug" :placeholder="item?.key" :disabled="!canEdit"></label>
+                <label class="flex items-start gap-2 text-sm"><input type="checkbox" class="mt-0.5" x-model="asDraft" :disabled="!canEdit">
+                  <span>Enregistrer en brouillon (à relire)</span></label>
+              </div>
+            </template>
+            <button class="btn btn-primary w-full" :disabled="saving || !canEdit" x-text="saving ? 'Enregistrement…' : isNew ? 'Créer' : 'Enregistrer'"></button>
+            <p x-show="$store.ui.dirty" class="text-center text-xs text-amber-700">Modifications non enregistrées</p>
+          </div>
+          <button type="button" x-show="!isNew && !translating && $store.session.canContent" class="btn btn-danger w-full" @click="remove()">Supprimer</button>
+          <p class="px-1 text-xs text-slate-500">Les modifications sont visibles dans la prévisualisation, puis sur le site après publication.</p>
+        </aside>
+      </div>
+    </form>
+  </template>
+</div>

@@ -1,0 +1,66 @@
+<div x-data="usersView" class="space-y-6">
+  <div class="flex flex-wrap items-end justify-between gap-4">
+    <div>
+      <h1 class="page-title">Utilisateurs</h1>
+      <p class="mt-1 max-w-2xl text-slate-600">Administrateur : tout. Éditeur : contenus, médias, bandeaux, popup, publication (éventuellement limité à une partie du site). Traducteur : ses langues seulement, sans publication.</p>
+    </div>
+    <button class="btn btn-primary" @click="creating = !creating">Nouveau compte</button>
+  </div>
+
+  <form x-show="creating" class="card grid gap-4 p-5 sm:grid-cols-3" @submit.prevent="create">
+    <label class="block"><span class="label">Nom</span><input class="input" x-model="draft.name" required></label>
+    <label class="block"><span class="label">E-mail</span><input class="input" type="email" x-model="draft.email" required></label>
+    <label class="block"><span class="label">Rôle</span>
+      <select class="input" x-model="draft.role"><option value="editor">Éditeur</option><option value="translator">Traducteur</option><option value="admin">Administrateur</option></select></label>
+    <div x-show="draft.role === 'translator'" class="sm:col-span-3"><span class="label">Langues traduites</span>
+      <div class="flex flex-wrap gap-4 text-sm"><template x-for="l in $store.session.otherLangs" :key="l.code">
+        <label class="flex items-center gap-2"><input type="checkbox" :checked="draft.langs.includes(l.code)" @change="draft.langs = toggleIn(draft.langs, l.code)"><span x-text="l.name"></span></label>
+      </template></div></div>
+    <div x-show="draft.role === 'editor'" class="sm:col-span-3"><span class="label">Limiter à une partie du site (facultatif)</span>
+      <template x-for="s in SCOPES" :key="s[0]">
+        <label class="flex items-center gap-2 text-sm"><input type="checkbox" :checked="draft.scopes.includes(s[0])" @change="draft.scopes = toggleIn(draft.scopes, s[0])"><span x-text="s[1]"></span></label>
+      </template></div>
+    <div class="sm:col-span-3"><button class="btn btn-primary">Créer le compte</button>
+      <span class="ml-3 text-sm text-slate-500">Un mot de passe est généré et affiché une seule fois.</span></div>
+  </form>
+
+  <div class="card divide-y divide-slate-100">
+    <template x-for="u in users" :key="u.id">
+      <div class="px-4 py-3" :class="!u.is_active && 'opacity-60'">
+        <div class="flex flex-wrap items-center gap-3">
+          <div class="min-w-0 flex-1">
+            <p class="font-medium"><span x-text="u.name"></span> <span x-show="!u.is_active" class="text-xs text-slate-500">(désactivé)</span></p>
+            <p class="text-sm text-slate-500" x-text="u.email"></p>
+          </div>
+          <div class="text-right text-sm">
+            <p class="font-medium text-brass" x-text="roleLabel(u)"></p>
+            <p class="text-xs text-slate-500" x-show="u.langs.length" x-text="'Langues : ' + u.langs.join(', ').toUpperCase()"></p>
+            <p class="text-xs text-slate-500" x-text="u.last_login_at ? 'Dernière connexion : ' + $fmt.fmtDateTime(u.last_login_at) : 'Jamais connecté'"></p>
+          </div>
+          <div class="flex gap-1">
+            <button class="btn btn-ghost btn-sm" @click="editing?.id === u.id ? editing = null : edit(u)">Modifier</button>
+            <button class="btn btn-ghost btn-sm" @click="resetPassword(u)">Mot de passe</button>
+            <button class="btn btn-ghost btn-sm text-rose-700" x-show="u.id !== $store.session.user.id" @click="remove(u)">Supprimer</button>
+          </div>
+        </div>
+        <template x-if="editing?.id === u.id">
+          <form class="mt-3 grid gap-4 rounded-lg bg-slate-50 p-4 sm:grid-cols-3" @submit.prevent="saveEdit">
+            <label class="block"><span class="label">Nom</span><input class="input" x-model="editing.name" required></label>
+            <label class="block"><span class="label">Rôle</span>
+              <select class="input" x-model="editing.role"><option value="editor">Éditeur</option><option value="translator">Traducteur</option><option value="admin">Administrateur</option></select></label>
+            <label class="flex items-center gap-2 self-end pb-2 text-sm"><input type="checkbox" x-model="editing.is_active"> Compte actif</label>
+            <div x-show="editing.role === 'translator'" class="sm:col-span-3"><span class="label">Langues traduites</span>
+              <div class="flex flex-wrap gap-4 text-sm"><template x-for="l in $store.session.otherLangs" :key="l.code">
+                <label class="flex items-center gap-2"><input type="checkbox" :checked="editing.langs.includes(l.code)" @change="editing.langs = toggleIn(editing.langs, l.code)"><span x-text="l.name"></span></label>
+              </template></div></div>
+            <div x-show="editing.role === 'editor'" class="sm:col-span-3"><span class="label">Limité à</span>
+              <template x-for="s in SCOPES" :key="s[0]">
+                <label class="flex items-center gap-2 text-sm"><input type="checkbox" :checked="editing.scopes.includes(s[0])" @change="editing.scopes = toggleIn(editing.scopes, s[0])"><span x-text="s[1]"></span></label>
+              </template></div>
+            <div class="sm:col-span-3 flex gap-2"><button class="btn btn-primary btn-sm">Enregistrer</button><button type="button" class="btn btn-ghost btn-sm" @click="editing = null">Annuler</button></div>
+          </form>
+        </template>
+      </div>
+    </template>
+  </div>
+</div>

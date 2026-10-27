@@ -1,0 +1,27 @@
+<div x-data="popupsView" class="space-y-6">
+  <div class="flex flex-wrap items-end justify-between gap-4">
+    <div>
+      <h1 class="page-title">Popup</h1>
+      <p class="mt-1 max-w-2xl text-slate-600">Une fenêtre au plus par page (la plus prioritaire). Sur mobile, elle ne s’ouvre jamais avant un geste du visiteur et s’affiche en panneau bas.</p>
+    </div>
+    <a x-show="$store.session.canContent" href="#/popups/nouveau" class="btn btn-primary">Nouveau popup</a>
+  </div>
+  <div class="card divide-y divide-slate-100">
+    <template x-for="p in popups" :key="p.id">
+      <a :href="'#/popups/' + p.id" class="flex flex-wrap items-center gap-3 px-4 py-3 hover:bg-slate-50 sm:flex-nowrap">
+        <div class="min-w-0 flex-1">
+          <p class="font-medium text-azure-800" x-text="p.name"></p>
+          <p class="truncate text-sm text-slate-500" x-text="p.i18n[$store.session.defaultLang]?.title || 'Pas encore de titre'"></p>
+          <p class="text-xs text-slate-500" x-text="trigger(p)"></p>
+        </div>
+        <div class="flex shrink-0 gap-1.5">
+          <template x-for="l in $store.session.otherLangs" :key="l.code">
+            <span class="badge" :class="$fmt.stateClass(p.i18n[l.code]?.state)" :title="l.name" x-text="l.code.toUpperCase()"></span>
+          </template>
+        </div>
+        <span class="badge shrink-0 ring-0" :class="schedule(p).cls" x-text="schedule(p).label"></span>
+      </a>
+    </template>
+    <p x-show="!loading && !popups.length" class="px-4 py-10 text-center text-sm text-slate-500">Aucun popup.</p>
+  </div>
+</div>

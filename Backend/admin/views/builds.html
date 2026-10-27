@@ -1,0 +1,49 @@
+<div x-data="buildsView" class="space-y-6">
+  <div>
+    <h1 class="page-title">Publication et versions</h1>
+    <p class="mt-1 max-w-3xl text-slate-600">Publier fige le contenu enregistré et génère le site. Les trois dernières versions publiées sont conservées : on peut revenir à l’une d’elles en un clic. Le site est aussi régénéré chaque nuit (bandeaux et popup programmés, concerts passés).</p>
+  </div>
+
+  <div class="grid gap-4 md:grid-cols-[minmax(0,1fr)_auto]">
+    <section class="card p-5">
+      <h2 class="section-title">En ligne</h2>
+      <template x-if="data?.current">
+        <p class="mt-2 text-sm text-slate-600">Version <strong class="text-slate-900" x-text="'#' + data.current.id"></strong> du <span x-text="$fmt.fmtDateTime(data.current.finished_at)"></span>
+          · <span x-text="data.current.pages_count"></span> pages · <span x-text="data.current.langs.join(', ').toUpperCase()"></span></p>
+      </template>
+      <p x-show="data && !data.current" class="mt-2 text-sm text-slate-600">Aucune version publiée depuis le back-office.</p>
+    </section>
+    <div class="flex flex-wrap items-center gap-2">
+      <button class="btn btn-secondary" @click="$store.build.preview()" :disabled="$store.build.busy">Prévisualiser</button>
+      <button x-show="$store.session.canPublish" class="btn btn-primary" @click="$store.build.publish()" :disabled="$store.build.busy">Publier</button>
+    </div>
+  </div>
+
+  <div class="flex items-center justify-between">
+    <h2 class="section-title">Historique</h2>
+    <label class="flex items-center gap-2 text-sm text-slate-600"><input type="checkbox" x-model="showPreviews"> Afficher les prévisualisations</label>
+  </div>
+  <div class="card divide-y divide-slate-100">
+    <template x-for="b in rows" :key="b.id">
+      <div class="px-4 py-3">
+        <div class="flex flex-wrap items-center gap-3">
+          <span class="w-12 font-mono text-sm text-slate-500" x-text="'#' + b.id"></span>
+          <div class="min-w-0 flex-1">
+            <p class="text-sm font-medium"><span x-text="kind(b)"></span>
+              <span x-show="b.is_current" class="badge ml-2 bg-azure-100 text-azure-900 ring-azure-200">En ligne</span></p>
+            <p class="text-xs text-slate-500"><span x-text="$fmt.fmtDateTime(b.finished_at || b.started_at)"></span>
+              <span x-show="b.pages_count" x-text="' · ' + b.pages_count + ' pages · ' + b.langs.join(', ').toUpperCase()"></span></p>
+            <p x-show="b.error" class="text-xs text-rose-700" x-text="b.error"></p>
+          </div>
+          <span class="badge" :class="status(b)[1]" x-text="status(b)[0]"></span>
+          <button x-show="b.warnings.length" class="text-xs font-medium text-azure-700 hover:underline" @click="open = open === b.id ? null : b.id" x-text="b.warnings.length + ' remarque(s)'"></button>
+          <button x-show="canRestore(b)" class="btn btn-secondary btn-sm" @click="restore(b)">Restaurer</button>
+        </div>
+        <ul x-show="open === b.id" class="mt-2 max-h-64 list-disc space-y-0.5 overflow-y-auto pl-16 text-xs text-slate-600">
+          <template x-for="w in b.warnings"><li x-text="w"></li></template>
+        </ul>
+      </div>
+    </template>
+    <p x-show="data && !rows.length" class="px-4 py-10 text-center text-sm text-slate-500">Aucune génération.</p>
+  </div>
+</div>

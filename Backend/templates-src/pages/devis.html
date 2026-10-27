@@ -1,0 +1,55 @@
+<section class="view" data-route="devis" data-view="devis" data-cta="devis">
+      <header class="page-head container container--narrow">
+        <nav class="breadcrumb" aria-label="Fil d'Ariane" data-cms-attr="aria-label:devis.001-nav@aria-label"><a href="#/" data-cms-key="devis.002-a">Accueil</a><span aria-hidden="true">›</span><a href="#/seminaires" data-cms-key="devis.003-a">Séminaires</a><span aria-hidden="true">›</span><span aria-current="page" data-cms-key="devis.004-span">Devis</span></nav>
+        <h1 data-cms-key="devis.005-h1">Demande de devis à Nice</h1>
+        <p class="lede" data-cms-key="devis.006-p">Décrivez votre événement : l'équipe événements vous répond avec une proposition détaillée.</p>
+      </header>
+      <div class="container container--narrow">
+        <form class="form" data-quote-form="" data-endpoint="" data-mailto="events@hotelastonlascala.com" novalidate="">
+          <fieldset>
+            <legend data-cms-key="devis.007-legend">Votre événement</legend>
+            <div class="form__row">
+              <label for="q-offer" data-cms-key="devis.008-label">Offre ou salle</label>
+              <select id="q-offer" name="offre" data-quote-offer="">
+                <option value="" data-cms-key="devis.009-option">Je ne sais pas encore</option>
+                <option value="seminaire-residentiel" data-cms-key="devis.010-option">Séminaire résidentiel</option>
+                <option value="journee-etude" data-cms-key="devis.011-option">Journée d'étude</option>
+                <option value="soiree-entreprise" data-cms-key="devis.012-option">Soirée d'entreprise au 7e étage</option>
+                <option value="chagall" data-cms-key="devis.013-option">Salon Chagall</option>
+                <option value="renoir-dufy" data-cms-key="devis.014-option">Salons Renoir + Dufy</option>
+                <option value="cesar-klein" data-cms-key="devis.015-option">Salons César + Klein</option>
+                <option value="vigny" data-cms-key="devis.016-option">Salon Vigny</option>
+                <option value="mezzanine" data-cms-key="devis.017-option">Mezzanine de L'Horloge</option>
+                <option value="matisse" data-cms-key="devis.018-option">Salle panoramique Matisse</option>
+                <option value="aston-club" data-cms-key="devis.019-option">L'Aston Club</option>
+                <option value="comite-entreprise" data-cms-key="devis.020-option">Comité d'entreprise / groupe</option>
+              </select>
+            </div>
+            <div class="form__grid">
+              <div class="form__row"><label for="q-date" data-cms-key="devis.021-label">Date souhaitée</label><input id="q-date" name="date" type="date"></div>
+              <div class="form__row"><label for="q-people" data-cms-key="devis.022-label">Participants</label><input id="q-people" name="participants" type="number" min="1" max="300" inputmode="numeric"></div>
+            </div>
+            <div class="form__row">
+              <label for="q-setup" data-cms-key="devis.023-label">Configuration</label>
+              <select id="q-setup" name="configuration">
+                <option value="" data-cms-key="devis.024-option">Indifférent</option><option data-cms-key="devis.025-option">Théâtre</option><option data-cms-key="devis.026-option">Classe</option><option data-cms-key="devis.027-option">En U</option><option data-cms-key="devis.028-option">Cabaret</option><option data-cms-key="devis.029-option">Banquet</option><option data-cms-key="devis.030-option">Cocktail</option>
+              </select>
+            </div>
+            <div class="form__row form__row--check"><input id="q-rooms" name="hebergement" type="checkbox" value="oui"><label for="q-rooms" data-cms-key="devis.031-label">Nous aurons besoin de chambres</label></div>
+          </fieldset>
+          <fieldset>
+            <legend data-cms-key="devis.032-legend">Vos coordonnées</legend>
+            <div class="form__grid">
+              <div class="form__row"><label for="q-name" data-cms-key="devis.033-label">Nom et prénom</label><input id="q-name" name="nom" autocomplete="name" required=""></div>
+              <div class="form__row"><label for="q-company" data-cms-key="devis.034-label">Société</label><input id="q-company" name="societe" autocomplete="organization"></div>
+              <div class="form__row"><label for="q-email" data-cms-key="devis.035-label">E-mail</label><input id="q-email" name="email" type="email" autocomplete="email" required=""></div>
+              <div class="form__row"><label for="q-phone" data-cms-key="devis.036-label">Téléphone</label><input id="q-phone" name="telephone" type="tel" autocomplete="tel"></div>
+            </div>
+            <div class="form__row"><label for="q-msg" data-cms-key="devis.037-label">Votre message</label><textarea id="q-msg" name="message" rows="4"></textarea></div>
+          </fieldset>
+          <button class="btn btn--primary" type="submit" data-cms-text="devis.038-button"><svg class="icon" aria-hidden="true"><use href="#i-send"></use></svg>Envoyer ma demande</button>
+          <p class="form__status" data-form-status="" role="status" hidden=""></p>
+          <p class="small muted" data-cms-html="devis.039-p">Vos données servent uniquement à traiter votre demande. <a href="https://www.hotel-aston.com/fr/politique-de-confidentialite">Politique de confidentialité</a>.</p>
+        </form>
+      </div>
+    </section>

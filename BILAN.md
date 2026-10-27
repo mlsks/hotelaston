@@ -1,0 +1,130 @@
+# Hôtel Aston La Scala — bilan du projet
+
+État au 26 octobre 2026. Version HTML du même document : [BILAN.html](BILAN.html).
+
+## En bref
+
+- **Le nouveau site est prêt en maquette fonctionnelle** : toutes les pages, le module de réservation, le chat, les formulaires, les données structurées pour Google. Il suit la revue UX (35 recommandations sur 36 appliquées).
+- **Le back-office est terminé et testé en local** (`hotelaston/Backend/`) : gestion des contenus et des traductions, médiathèque, bandeaux, popup, génération du site en pages statiques, publication et retour arrière, statistiques sans cookie, interface d'administration complète.
+- **Rien n'est encore en ligne.** Restent les fichiers de déploiement, quelques développements secondaires, et surtout des informations à obtenir de l'hôtel.
+
+| Repère | Valeur |
+|---|---|
+| Pages générées | 35 (25 pages + 6 fiches chambre + 4 fiches service) |
+| Textes gérés | 1 294, dont 57 textes affichés par le JavaScript |
+| Langues | Français en ligne · anglais activé, à traduire · italien et allemand préparés |
+| Tests automatiques | 36, tous réussis |
+| Écrans d'administration | 22 |
+
+## 1. Ce qui est fait
+
+### 1.1 Le site
+
+Maquette HTML / CSS / JavaScript dans `hotelaston/` (`index.html`, `styles.css`, `remotion-vanilla.js`).
+
+- **Pages** :
+  - accueil ;
+  - chambres et leurs 6 fiches ;
+  - restaurant et bars : L'Horloge, Moon Bar, L'Aston Club, cartes ;
+  - rooftop et piscine, Live Music ;
+  - séminaires avec demande de devis, offres ;
+  - services et leurs 4 fiches ;
+  - accès et contact, avis, FAQ, notre histoire ;
+  - pages de recherche locales (hôtel vieille ville, salle de séminaire, comité d'entreprise…), blog ;
+  - page passerelle « Appartements » vers la Résidence.
+- **Réservation** :
+  - module visible dès l'arrivée ;
+  - bouton fixe en bas d'écran sur mobile ;
+  - liens directs vers le moteur D-Edge avec dates, voyageurs, chambre ou offre.
+- **Revue UX** (`revue-ux-hotel-aston-relecture.pdf`) : 35 recommandations sur 36 appliquées. La dernière, des avis sur les pages L'Horloge, Moon Bar et L'Aston Club, est reportée à votre demande.
+- **Hero** : photo de la piscine du toit (WebP, recadrage portrait pour mobile). La boucle vidéo est prête mais désactivée, en attendant la prise de vue définitive. Boucle du Moon Bar rendue avec Remotion.
+- **Corrections demandées en cours de route** :
+  - un seul bar ouvert à la fois : le Moon Bar quand le temps le permet, sinon L'Aston Club ;
+  - plus de mention « jazz » ;
+  - page passerelle Appartements avec liens suivis ;
+  - texte du QR code en chambre ;
+  - phrase de la plage.
+- **Prudence sur les données** :
+  - ce que le site actuel ne dit pas n'a pas été inventé : 32 passages sont marqués « à confirmer », visibles avec `?audit` ;
+  - les avis de démonstration sont étiquetés « Exemple ».
+
+### 1.2 Le back-office (`hotelaston/Backend/`)
+
+Node.js, Fastify, SQLite. Le site public reste 100 % statique : rapide, sûr, peu coûteux à héberger.
+
+| Brique | Contenu |
+|---|---|
+| 1. Base et générateur | Import du site actuel (les 34 pages françaises générées sont identiques à la maquette). Une page par adresse et par langue, prévisualisation privée, publication figée, 3 versions conservées et restauration en un clic, régénération chaque nuit. Plan du site avec dates de mise à jour fiables, IndexNow, balises hreflang, données structurées, redirections 301 automatiques quand une adresse change. |
+| 2. API, rôles, médias | Connexion sécurisée (mots de passe argon2id, jeton CSRF, limite de tentatives, journal des modifications). Rôles administrateur, éditeur et traducteur. Médias : WebP en 4 tailles, recadrage portrait centré sur le point d'intérêt, poster des vidéos, doublons détectés, corbeille. Bandeaux programmés sur 4 emplacements, popup (fenêtre sur ordinateur, panneau bas sur mobile, jamais avant un geste du visiteur). Textes du JavaScript traduisibles. |
+| Éditeur Live Music | Compte limité à la page Live Music, au programme des concerts, à ses bandeaux et à ses médias. Il publie sa partie sans emporter les brouillons des autres. |
+| 3. Statistiques | Sans cookie ni bandeau de consentement ; ni adresse IP ni identifiant conservés. Canaux d'arrivée, dont les assistants IA et les comparateurs. Du visiteur au moteur de réservation, calendrier de la demande (dates d'arrivée recherchées), efficacité des bandeaux et du popup, vitesse ressentie (Core Web Vitals). Purge après 13 mois, exports CSV. |
+| 4. Interface d'administration | 22 écrans sur `/admin/` : pages et SEO (aperçu Google, contrôles), textes, fiches, médiathèque, bandeaux, popup, traductions, langues, publication et versions, rapport SEO, statistiques, redirections, utilisateurs, réglages, journal, compte. Utilisable sur téléphone. |
+
+**Vérifié** :
+- **Tests automatiques** : 36 tests (connexion et droits, traductions, médias, bandeaux, popup, publication et restauration, éditeur Live Music, statistiques, sécurité de l'admin).
+- **Dans le navigateur, parcours complet** : modifier un texte, le traduire, prévisualiser, publier, puis revenir à la version précédente.
+- **Dans le navigateur, autres essais** :
+  - ajout d'un concert ;
+  - envoi d'une photo ;
+  - compte traducteur et compte Live Music ;
+  - affichage sur téléphone.
+- **Sécurité** : les bibliothèques de l'admin (Alpine.js 3.17.4, Tailwind 4.3.3, Chart.js 4.5.1) sont servies par le serveur lui-même, sans CDN tiers, avec une politique de sécurité stricte.
+
+Documentation : [Backend/README.md](Backend/README.md) (commandes, rôles, écrans, API) et [Backend/ARCHITECTURE.md](Backend/ARCHITECTURE.md) (architecture et modèle de données).
+
+## 2. Ce qu'il reste à faire
+
+### 2.1 À obtenir ou à décider côté hôtel
+
+| # | Sujet | Détail |
+|---|---|---|
+| 1 | Données « à confirmer » | Prix, économies et conditions des offres (séjour, séminaire) ; politique d'annulation et moyens de paiement ; capacités des salons (cabaret, banquet), de Matisse et de L'Aston Club ; itinéraire en tram depuis la gare ; programme Live Music. |
+| 2 | Incohérences du site actuel | Saison du Moon Bar (mai–octobre ou juin–septembre) ; heure de fermeture (00 h 30 ou minuit) ; étage (7e ou 8e) ; numéro de réservation du rooftop (04 92 17 53 09 ou 04 89 22 20 06). |
+| 3 | Moteur de réservation D-Edge | Valider les noms de paramètres et les codes chambre et tarif avec D-Edge. |
+| 4 | Avis clients | Passer aux avis réels (fiche Google), puis basculer le réglage « Avis affichés » sur « Avis réels ». |
+| 5 | Vidéo du Hero | Fournir la prise de vue définitive : elle sera traitée en boucle et la vidéo réactivée. |
+| 6 | Résidence Aston La Scala | Ajouter sur residenceastonlascala.com le lien vers l'hôtel (extrait prêt en bas de `index.html`). 17 appartements annoncés, 16 détaillés. Les clients de la Résidence ont-ils accès à la piscine ? Valider son moteur de réservation (D-Edge `J1P3`, `hotelId=29961`). |
+| 7 | Géolocalisation des statistiques | Donner l'accord pour télécharger la base gratuite DB-IP (pays et régions), à renouveler chaque mois. |
+| 8 | Politique de confidentialité | Ajouter un paragraphe sur la mesure d'audience : sans cookie, données agrégées, 13 mois, et comment s'y opposer. |
+| 9 | Traductions | L'anglais est activé mais aucune page n'est encore entièrement traduite : seul le français sera publié tant que ce n'est pas fait. Désigner les traducteurs (comptes à créer), puis l'italien et l'allemand. |
+| 10 | Anciennes adresses | Relever les adresses actuelles de hotel-aston.com pour créer les redirections 301 et ne pas perdre le référencement. |
+
+### 2.2 Développement restant
+
+| Priorité | Sujet | Détail |
+|---|---|---|
+| Avant mise en ligne | Fichiers de déploiement | Caddyfile (HTTPS, fichiers statiques, cache, redirections, `/api`, `/admin` et `/preview` vers Node), PM2, Dockerfile. |
+| Avant mise en ligne | Sauvegardes | Copie nocturne de la base sur 7 jours (pour l'instant, une sauvegarde n'est faite qu'avant une restauration) et script de synchronisation de `media/` hors du serveur. |
+| Avant mise en ligne | Photos du site | Importer les photos (encore lues sur le CDN du site actuel) dans la médiathèque et basculer les gabarits. |
+| Avant mise en ligne | Comptes | Créer les vrais comptes sur le serveur ; les comptes de développement restent en local. |
+| Ensuite | SEO | Corriger les 54 remarques du dernier build (titles de plus de 60 caractères, descriptions de plus de 160…) depuis l'onglet « Référencement » de chaque page. |
+| Ensuite | Avis sur les pages restaurant et bars | Reporté à votre demande : L'Horloge, Moon Bar, L'Aston Club. |
+| Ensuite | Vidéos externes | Lecteur YouTube / Vimeo chargé au clic (aujourd'hui un simple lien). |
+| Option | Statistiques niveau 2 | Visiteurs qui reviennent (identifiant de 13 mois avec possibilité de refus). |
+| Option | Statistiques niveau 3 | Import des réservations D-Edge et de Google Search Console : chiffre d'affaires par canal, positions dans Google. |
+| Option | Rapport hebdomadaire | Résumé des statistiques par e-mail (il faut un serveur d'envoi). |
+
+## 3. Ordre conseillé pour la mise en ligne
+
+1. Réponses de l'hôtel sur les points 1 à 4 de la section 2.1, corrections dans l'admin.
+2. Fichiers de déploiement et sauvegardes, installation du serveur (Node.js 24, ffmpeg, Caddy).
+3. Import des photos, création des comptes, redirections des anciennes adresses.
+4. Prévisualisation complète, puis publication.
+5. Bascule du nom de domaine, déclaration du plan du site dans Google Search Console, clé IndexNow.
+6. Traductions anglaises au fil de l'eau (publiées page par page dès qu'elles sont complètes), puis italien et allemand.
+
+## 4. Pour reprendre le travail
+
+```bash
+npm --prefix hotelaston/Backend start
+```
+
+L'admin est sur http://localhost:3020/admin/. Les identifiants de développement sont dans `Backend/.dev-credentials` (non versionné).
+
+```bash
+npm --prefix hotelaston/Backend test
+```
+
+La maquette d'origine se lance avec `python -m http.server 8765 --directory hotelaston`.
+
+Sur un autre ordinateur, garder le même emplacement (`C:\dev\Claude\Remotion\hotelaston`) : la base enregistre des chemins absolus. Le contexte pour Claude (consignes et mémoire du projet) est dans `.claude/`.

@@ -1,0 +1,17 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "aston-backend",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["--prefix", "Backend", "start"],
+      "port": 3020
+    },
+    {
+      "name": "hotel-aston-site",
+      "runtimeExecutable": "python",
+      "runtimeArgs": ["tools/serve.py", "--port", "8765", "--bind", "127.0.0.1"],
+      "port": 8765
+    }
+  ]
+}
