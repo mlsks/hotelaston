@@ -30,7 +30,7 @@
               </div>
 
               <!-- Texte, nombre, date, heure, mois -->
-              <template x-if="['text', 'date', 'time', 'month'].includes(f.type)">
+              <template x-if="['text', 'url', 'date', 'time', 'month'].includes(f.type)">
                 <input class="input" :type="f.type" x-model="form[f.key]" :required="f.required && !translating" :disabled="readOnly(f)" :placeholder="f.placeholder || ''">
               </template>
               <template x-if="f.type === 'number'">
@@ -51,6 +51,33 @@
                     <option :value="String(o[0] ?? '')" :selected="String(o[0] ?? '') === selectValue(f)" x-text="o[1]"></option>
                   </template>
                 </select>
+              </template>
+              <!-- Fiche d'une autre collection : artiste du concert, avec création sur place -->
+              <template x-if="f.type === 'ref'">
+                <div class="space-y-2">
+                  <div class="flex flex-wrap gap-2 sm:flex-nowrap">
+                    <select class="input" :value="form[f.key] || ''" @change="setRef(f, $event.target.value)" :required="f.required && !translating" :disabled="readOnly(f)">
+                      <option value="" :selected="!form[f.key]">— Choisir dans la liste —</option>
+                      <template x-for="o in refOptions(f)" :key="o[0]">
+                        <option :value="o[0]" :selected="o[0] === form[f.key]" x-text="o[1]"></option>
+                      </template>
+                    </select>
+                    <button type="button" x-show="!readOnly(f)" class="btn btn-secondary shrink-0" @click="createRef(f)">+ Nouvel artiste</button>
+                  </div>
+                  <p x-show="form[f.key] && !refItem(f)" class="text-sm text-rose-700">Fiche introuvable : choisissez un artiste dans la liste.</p>
+                  <a x-show="refItem(f)" :href="`#/collections/${f.source}/${refItem(f)?.id}`" class="text-sm font-medium text-azure-700 hover:underline">Ouvrir la fiche de l’artiste (photo, site, présentation) →</a>
+                </div>
+              </template>
+              <!-- Photo seule de la médiathèque -->
+              <template x-if="f.type === 'image'">
+                <div class="flex items-center gap-4">
+                  <img x-show="form[f.key]" :src="imageThumb(f)" alt="" class="size-24 rounded-full bg-slate-200 object-cover">
+                  <div x-show="!form[f.key]" class="grid size-24 place-items-center rounded-full bg-slate-100 text-xs text-slate-500">Aucune</div>
+                  <div class="flex flex-col items-start gap-1" x-show="!readOnly(f)">
+                    <button type="button" class="btn btn-secondary btn-sm" @click="pickImage(f)" x-text="form[f.key] ? 'Changer la photo' : 'Choisir dans la médiathèque'"></button>
+                    <button type="button" x-show="form[f.key]" class="text-xs font-medium text-rose-700 hover:underline" @click="clearImage(f)">Retirer</button>
+                  </div>
+                </div>
               </template>
               <template x-if="f.type === 'icon'">
                 <div class="flex items-center gap-3">
@@ -161,7 +188,7 @@
                   <input class="input font-mono text-xs" x-model="meta.key" placeholder="créé automatiquement">
                   <span class="hint block" x-show="collection.item_template">Sert d’adresse à la page de la fiche.</span></label>
                 <p x-show="!isNew" class="text-xs text-slate-500">Identifiant : <span class="font-mono" x-text="item?.key"></span></p>
-                <details x-show="collection.key !== 'gigs'" class="text-sm" :open="meta.start_at || meta.end_at">
+                <details x-show="!['gigs', 'artists'].includes(collection.key)" class="text-sm" :open="meta.start_at || meta.end_at">
                   <summary class="cursor-pointer font-medium text-slate-700">Afficher seulement entre deux dates</summary>
                   <div class="mt-3 space-y-3">
                     <label class="block"><span class="label">À partir du</span><input type="datetime-local" class="input" x-model="meta.start_at" :disabled="!canEdit"></label>

@@ -349,6 +349,7 @@ export function importLegacy(db, { force = false, forceAssets = false, writeTemp
       reviews: data.reviews.items.map((r, i) => [`avis-${String(i + 1).padStart(2, '0')}`, r]),
       chat: data.chat.intents.map((it) => [it.id, it]),
       gigs: [], // programme saisi dans le back-office
+      artists: [],
     };
     for (const [key, def] of Object.entries(COLLECTIONS)) {
       insCollection.run(key, def.label, def.itemTemplate || null, def.parentPage ? pageIds.get(def.parentPage) : null, JSON.stringify({ translatable: def.translatable }));

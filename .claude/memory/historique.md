@@ -30,6 +30,7 @@ La conversation d'origine est restée sur le PC de développement ; voici ce qu'
 14. L'utilisateur ferme le PC et copie `hotelaston/` sur son portable : mémoire et consignes recopiées dans `hotelaston/.claude/`.
 15. 27/10/2026 : code mis sur GitHub (`mlsks/hotelaston`), travail depuis le dépôt. Intégrés par PR : fichiers de déploiement (`deploy/`), questions pour l'hôtel et paragraphe de confidentialité (`docs/`), chemins relatifs en base. `Backend/server/media/` manquait (exclu par le `.gitignore`).
 16. 27/10/2026 : copie locale de foupax2 vérifiée identique à `origin/main` (rien à supprimer, seules les données locales ignorées restent : `.env`, `.dev-credentials`, `media/`, `storage/`, `releases/`, `preview/`, `public-dist/`). Règle : toute modification est poussée sur GitHub.
+17. 28/10/2026 : **fiches artistes du Live Music** (collection `artists` : nom, style, présentation, site internet facultatif, photo de la médiathèque). Le concert choisit son artiste dans la liste ou le crée sur place ; photo, lien et `performer` MusicGroup sur le site. L'affiche d'octobre 2026 (Moana Folks, The Soulmate, Alex Tales, Habanita, Festival de Forrò, Jude Todd, Romain & Cley…) montrée en exemple : **pas importée**, à proposer à l'utilisateur.
 
 ## En attente d'une décision de l'utilisateur
 - Déploiement : choisir l'hébergeur, le stockage externe des sauvegardes et l'adresse des alertes Let's Encrypt.

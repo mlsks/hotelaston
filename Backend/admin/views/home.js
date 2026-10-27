@@ -22,9 +22,13 @@ Alpine.data('homeView', () => ({
     }
     if (s.canStats) tasks.push(get(`/analytics/summary${qs({ period: 'week', date: todayParis() })}`).then((r) => { this.stats = r; }));
     if (s.isScoped && s.user.scopes.includes('live-music')) {
-      tasks.push(get('/collections/gigs/items').then((items) => {
+      tasks.push(Promise.all([get('/collections/gigs/items'), get('/collections/artists/items')]).then(([items, artists]) => {
         const today = todayParis();
-        this.gigs = items.map((it) => ({ ...it.merged, id: it.id, is_active: it.is_active }))
+        const byKey = new Map(artists.map((a) => [a.key, a.merged]));
+        this.gigs = items.map((it) => {
+          const a = byKey.get(it.merged.artist) || {};
+          return { ...it.merged, artist: a.name || it.merged.artist, style: it.merged.style || a.style, id: it.id, is_active: it.is_active };
+        })
           .filter((g) => g.date >= today).sort((a, b) => `${a.date}${a.time}`.localeCompare(`${b.date}${b.time}`)).slice(0, 6);
       }));
     }

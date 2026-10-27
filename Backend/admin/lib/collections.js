@@ -4,7 +4,9 @@
  *
  * Types de champ : text, textarea, rich, number, date, time, month, select, checkbox,
  * list (liste de textes), pairs (liste de paires), objects (liste d'objets), tags (choix multiples),
- * image (photo de la médiathèque, identifiant du média), json.
+ * image (photo de la médiathèque, identifiant du média), ref (fiche d'une autre collection, par sa clé), json.
+ * onlyIfSet : champ montré seulement s'il a une valeur (données anciennes).
+ * ctx (titres, sous-titres, clés) : { artists: Map clé → fiche } pour nommer l'artiste d'un concert.
  */
 
 const VENUES = [['selon-meteo', 'Selon la météo'], ['moon-bar', 'Moon Bar (rooftop)'], ['aston-club', 'L’Aston Club (7e étage)']];
@@ -13,20 +15,36 @@ const TOPICS = [['sejour', 'Séjour'], ['chambres', 'Chambres'], ['rooftop', 'Ro
 export const SPECS = {
   gigs: {
     noun: 'concert', addLabel: 'Ajouter un concert',
-    title: (d) => d.artist || 'Nouveau concert',
+    title: (d, fmt, ctx) => ctx?.artists?.get(d.artist)?.name || d.artist || 'Nouveau concert',
     subtitle: (d, fmt) => [d.date ? fmt.fmtDay(d.date) : '', d.time, VENUES.find((v) => v[0] === d.venue)?.[1]].filter(Boolean).join(' · '),
     sort: (a, b) => `${a.merged.date || ''}${a.merged.time || ''}`.localeCompare(`${b.merged.date || ''}${b.merged.time || ''}`),
     key: (d) => [d.date, d.artist].filter(Boolean).join(' '),
-    blank: () => ({ date: '', time: '21:00', venue: 'selon-meteo', artist: '', style: '', description: '' }),
+    blank: () => ({ date: '', time: '21:00', venue: 'selon-meteo', artist: '', description: '' }),
     fields: [
       { key: 'date', label: 'Date', type: 'date', required: true, half: true },
       { key: 'time', label: 'Heure', type: 'time', half: true },
       { key: 'venue', label: 'Lieu', type: 'select', options: VENUES, hint: '« Selon la météo » : au Moon Bar sur le toit quand le temps le permet, sinon à L’Aston Club.' },
-      { key: 'artist', label: 'Artiste ou groupe', type: 'text', required: true },
-      { key: 'style', label: 'Style', type: 'text', placeholder: 'ex. soul, pop acoustique, bossa nova' },
-      { key: 'description', label: 'Présentation (facultatif)', type: 'textarea' },
+      { key: 'artist', label: 'Artiste ou groupe', type: 'ref', source: 'artists', required: true, hint: 'Le style, la présentation, la photo et le site viennent de la fiche artiste.' },
+      { key: 'style', label: 'Style de cette soirée', type: 'text', onlyIfSet: true, hint: 'Remplace le style de la fiche artiste pour ce concert. Videz-le pour reprendre celui de la fiche.' },
+      { key: 'description', label: 'Précisions sur la soirée (facultatif)', type: 'textarea', hint: 'Vide : la présentation de la fiche artiste est affichée.' },
     ],
-    help: 'Les concerts passés disparaissent du site d’eux-mêmes. Chaque concert à venir est aussi déclaré à Google (événement musical).',
+    help: 'Les concerts passés disparaissent du site d’eux-mêmes. Chaque concert à venir est aussi déclaré à Google (événement musical, avec l’artiste).',
+  },
+  artists: {
+    noun: 'artiste', addLabel: 'Ajouter un artiste',
+    title: (d) => d.name || 'Nouvel artiste',
+    subtitle: (d) => [d.style, d.website ? d.website.replace(/^https?:\/\/(www\.)?/, '').replace(/\/$/, '') : ''].filter(Boolean).join(' · '),
+    sort: (a, b) => String(a.merged.name || '').localeCompare(String(b.merged.name || ''), 'fr'),
+    key: (d) => d.name,
+    blank: () => ({ name: '', style: '', bio: '', website: '', media: null }),
+    fields: [
+      { key: 'name', label: 'Nom de l’artiste ou du groupe', type: 'text', required: true },
+      { key: 'style', label: 'Style', type: 'text', placeholder: 'ex. soul, pop acoustique, bossa nova' },
+      { key: 'bio', label: 'Présentation', type: 'textarea' },
+      { key: 'website', label: 'Site internet (facultatif)', type: 'url', placeholder: 'https://…' },
+      { key: 'media', label: 'Photo', type: 'image', hint: 'Choisie dans la médiathèque ; affichée en vignette ronde dans le programme.' },
+    ],
+    help: 'Chaque concert du programme désigne un artiste de cette liste. Masquer un artiste retire aussi ses concerts du site.',
   },
   rooms: {
     noun: 'chambre', addLabel: 'Ajouter une chambre',
@@ -125,8 +143,9 @@ export function inferField(key, value) {
 
 /** Champs du formulaire : ceux de la description, puis ceux trouvés dans les données. */
 export function fieldsFor(collection, data) {
-  const spec = SPECS[collection]?.fields || [];
-  const known = new Set(spec.map((f) => f.key));
+  const all = SPECS[collection]?.fields || [];
+  const known = new Set(all.map((f) => f.key));
+  const spec = all.filter((f) => !f.onlyIfSet || String(data?.[f.key] ?? '').trim());
   return [...spec, ...Object.keys(data || {}).filter((k) => !known.has(k)).map((k) => inferField(k, data[k]))];
 }
 

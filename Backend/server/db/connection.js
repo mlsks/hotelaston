@@ -7,6 +7,7 @@ import { fileURLToPath } from 'node:url';
 import Database from 'better-sqlite3';
 import { config, fromVarPath, toVarPath } from '../config.js';
 import { ensureUiStrings } from '../ssg/ui-strings.js';
+import { migrateGigArtists } from './gig-artists.js';
 
 const MIGRATIONS_DIR = path.join(path.dirname(fileURLToPath(import.meta.url)), 'migrations');
 
@@ -31,6 +32,7 @@ export function getDb() {
     shared = openDb();
     migrate(shared);
     relativizeBuildPaths(shared);
+    migrateGigArtists(shared);
     ensureUiStrings(shared);
   }
   return shared;

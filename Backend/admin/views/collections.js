@@ -1,5 +1,5 @@
 /**
- * Fiches et listes : chambres, services, équipements, avis, réponses du chat, programme Live Music.
+ * Fiches et listes : chambres, services, équipements, avis, réponses du chat, programme Live Music, artistes.
  * Formulaire décrit par lib/collections.js ; en traduction, seuls les champs traduisibles sont modifiables.
  */
 import Alpine from '/admin/vendor/alpine.js';
@@ -18,9 +18,20 @@ Alpine.data('collectionsView', () => ({
   translatable(c) { return c.schema.translatable?.length > 0; },
 }));
 
+/** Fiches désignées par un champ « ref » (artistes d'un concert) : clé → fiche fusionnée, avec son id. */
+async function loadRefs(fields) {
+  const ctx = {};
+  for (const source of new Set((fields || []).filter((f) => f.type === 'ref').map((f) => f.source))) {
+    const list = await get(`/collections/${source}/items`);
+    ctx[source] = new Map(list.map((it) => [it.key, { ...it.merged, id: it.id, is_active: it.is_active }]));
+  }
+  return ctx;
+}
+
 Alpine.data('collectionView', () => ({
   collection: null,
   items: [],
+  ctx: {},
   loading: true,
   q: '',
   async init() {
@@ -36,16 +47,16 @@ Alpine.data('collectionView', () => ({
     this.loading = false;
   },
   async load() {
-    this.items = await get(`/collections/${this.collection.key}/items`);
+    [this.items, this.ctx] = await Promise.all([get(`/collections/${this.collection.key}/items`), loadRefs(this.spec.fields)]);
   },
   get spec() { return spec(this.collection?.key); },
-  title(it) { return this.spec.title(it.merged, fmt) || it.key; },
-  subtitle(it) { return this.spec.subtitle?.(it.merged, fmt) || ''; },
+  title(it) { return this.spec.title(it.merged, fmt, this.ctx) || it.key; },
+  subtitle(it) { return this.spec.subtitle?.(it.merged, fmt, this.ctx) || ''; },
   get sorted() {
     const list = [...this.items];
     if (this.spec.sort) list.sort(this.spec.sort);
     const q = this.q.toLowerCase();
-    return q ? list.filter((it) => JSON.stringify(it.merged).toLowerCase().includes(q)) : list;
+    return q ? list.filter((it) => `${this.title(it)} ${JSON.stringify(it.merged)}`.toLowerCase().includes(q)) : list;
   },
   /** Programme : à venir d'abord, concerts passés à part. */
   get groups() {
@@ -90,6 +101,7 @@ Alpine.data('itemView', () => ({
   form: {},
   meta: { key: '', is_active: true, start_at: '', end_at: '', slug: '' },
   options: { amenities: [] },
+  ctx: {},
   cdnBase: '',
   thumbs: {},
   saving: false,
@@ -109,6 +121,7 @@ Alpine.data('itemView', () => ({
         this.options.amenities = list.map((a) => [a.key, a.merged.label || a.key]);
       }
       if (this.spec.fields?.some((f) => f.type === 'icon')) this.$store.icons.load();
+      await this.loadRefs();
       if (!this.$store.session.isScoped) {
         try { this.cdnBase = (await get('/settings')).cdn_base || ''; } catch { /* réglages non lisibles */ }
       }
@@ -132,8 +145,8 @@ Alpine.data('itemView', () => ({
     return this.translating ? all.filter((f) => fieldTranslatable(this.paths, f.key)) : all;
   },
   get heading() {
-    if (this.isNew) return `Nouveau ${this.spec.noun || 'élément'}`;
-    return this.spec.title(this.source, fmt) || this.item?.key;
+    if (this.isNew) return `${this.spec.noun === 'artiste' ? 'Nouvel' : 'Nouveau'} ${this.spec.noun || 'élément'}`;
+    return this.spec.title(this.source, fmt, this.ctx) || this.item?.key;
   },
   reset() {
     if (!this.collection) return;
@@ -177,6 +190,68 @@ Alpine.data('itemView', () => ({
   setSelect(f, value) {
     const opt = f.options.find((o) => String(o[0] ?? '') === value);
     this.form[f.key] = opt ? opt[0] : value;
+    this.$store.ui.dirty = true;
+  },
+  /* ---------- Fiche d'une autre collection (artiste d'un concert) ---------- */
+  async loadRefs() {
+    this.ctx = await loadRefs(this.spec.fields);
+  },
+  refOptions(f) {
+    return [...(this.ctx[f.source]?.entries() || [])]
+      .sort((a, b) => String(a[1].name || a[0]).localeCompare(String(b[1].name || b[0]), 'fr'))
+      .map(([key, it]) => [key, `${it.name || key}${it.style ? ` · ${it.style}` : ''}${it.is_active ? '' : ' (masqué)'}`]);
+  },
+  refItem(f) { return this.ctx[f.source]?.get(this.form[f.key]) || null; },
+  setRef(f, value) {
+    this.form[f.key] = value;
+    this.$store.ui.dirty = true;
+  },
+  /** Nouvel artiste depuis le formulaire du concert : nom seulement, le reste se complète sur sa fiche. */
+  async createRef(f) {
+    const name = (await this.$store.dialog.prompt({
+      title: 'Nouvel artiste', inputLabel: 'Nom de l’artiste ou du groupe', confirmLabel: 'Créer la fiche',
+      body: 'Le style, la présentation, la photo et le site internet se complètent ensuite sur sa fiche.',
+    }))?.trim();
+    if (!name) return;
+    try {
+      const existing = [...(this.ctx[f.source]?.entries() || [])].find(([, it]) => String(it.name || '').toLowerCase() === name.toLowerCase());
+      if (existing) {
+        this.setRef(f, existing[0]);
+        this.$store.toast.push('Cet artiste a déjà une fiche : il est sélectionné.');
+        return;
+      }
+      const taken = new Set(this.ctx[f.source]?.keys() || []);
+      const stem = fmt.slugify(name) || 'artiste';
+      let key = stem;
+      for (let i = 2; taken.has(key); i++) key = `${stem}-${i}`;
+      const blank = SPECS[f.source]?.blank?.() || {};
+      await post(`/collections/${f.source}/items`, { key, data: { ...blank, name } });
+      await this.loadRefs();
+      this.setRef(f, key);
+      this.$store.toast.push('Fiche artiste créée.');
+    } catch (err) {
+      this.$store.toast.error(err);
+    }
+  },
+  /* ---------- Photo seule (fiche artiste) ---------- */
+  imageThumb(f) {
+    const id = this.form[f.key];
+    if (!id) return '';
+    if (!(id in this.thumbs)) {
+      this.thumbs[id] = '';
+      get(`/media/${id}`).then((m) => { this.thumbs[id] = m.thumb || ''; }).catch(() => {});
+    }
+    return this.thumbs[id];
+  },
+  async pickImage(f) {
+    const m = await this.$store.picker.show({ kinds: ['image'] });
+    if (!m) return;
+    this.form[f.key] = m.id;
+    this.thumbs[m.id] = m.thumb || '';
+    this.$store.ui.dirty = true;
+  },
+  clearImage(f) {
+    this.form[f.key] = null;
     this.$store.ui.dirty = true;
   },
   tagOptions(f) { return f.options || this.options[f.source] || []; },
@@ -240,6 +315,7 @@ Alpine.data('itemView', () => ({
     const data = fmt.clone(this.form);
     for (const f of fieldsFor(this.collection.key, data)) {
       if (f.type === 'number' && (data[f.key] === '' || data[f.key] === undefined)) data[f.key] = null;
+      if (f.type === 'url' || f.type === 'text') data[f.key] = typeof data[f.key] === 'string' ? data[f.key].trim() : data[f.key];
       if (f.type === 'list') data[f.key] = (data[f.key] || []).map((v) => String(v).trim()).filter(Boolean);
       if (f.type === 'pairs') data[f.key] = (data[f.key] || []).filter((p) => String(p[0] || '').trim() || String(p[1] || '').trim());
       if (f.type === 'objects') {
@@ -258,10 +334,10 @@ Alpine.data('itemView', () => ({
       const data = this.cleaned();
       const dates = { start_at: this.meta.start_at || null, end_at: this.meta.end_at || null };
       if (this.isNew) {
-        const key = fmt.slugify(this.meta.key || this.spec.key?.(data) || this.spec.title(data, fmt)) || `element-${Date.now().toString(36)}`;
+        const key = fmt.slugify(this.meta.key || this.spec.key?.(data) || this.spec.title(data, fmt, this.ctx)) || `element-${Date.now().toString(36)}`;
         const created = await post(`/collections/${this.collection.key}/items`, { key, data, is_active: this.meta.is_active, ...dates });
         this.$store.ui.dirty = false;
-        this.$store.toast.push(this.collection.key === 'gigs' ? 'Concert ajouté.' : 'Élément créé.');
+        this.$store.toast.push({ gigs: 'Concert ajouté.', artists: 'Artiste ajouté.' }[this.collection.key] || 'Élément créé.');
         go(`#/collections/${this.collection.key}/${created.id}`);
         return;
       }

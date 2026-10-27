@@ -2,7 +2,7 @@
  * Périmètres : un éditeur peut être limité à une partie du site.
  * Sans périmètre, un éditeur voit et modifie tout le contenu.
  *
- * « live-music » : la page Live Music (textes, SEO), le programme des concerts (collection gigs),
+ * « live-music » : la page Live Music (textes, SEO), le programme des concerts (collection gigs) et les fiches artistes (artists),
  * les bandeaux du périmètre (dont « Soirées Live Music ») placés sur la page Live Music,
  * et les médias du dossier /live-music. Sa publication ne met en ligne que ce périmètre.
  */
@@ -10,7 +10,7 @@ export const SCOPES = {
   'live-music': {
     label: 'Live Music',
     pages: ['live-music'],
-    collections: ['gigs'],
+    collections: ['gigs', 'artists'],
     mediaFolder: '/live-music',
   },
 };

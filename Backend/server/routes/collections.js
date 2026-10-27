@@ -20,11 +20,17 @@ function cleanHtml(collection, data) {
 
 /** Contrôles propres à certaines collections, sur l'élément complet (champs communs + langue par défaut). */
 const VALIDATE = {
-  gigs(item) {
+  gigs(item, db) {
     if (!/^\d{4}-\d{2}-\d{2}$/.test(item.date || '') || Number.isNaN(Date.parse(item.date))) throw badRequest('Concert : date au format AAAA-MM-JJ.');
     if (item.time && !/^([01]\d|2[0-3]):[0-5]\d$/.test(item.time)) throw badRequest('Concert : heure au format HH:MM.');
     if (item.venue && !['selon-meteo', 'moon-bar', 'aston-club'].includes(item.venue)) throw badRequest('Concert : lieu « selon-meteo », « moon-bar » ou « aston-club ».');
-    if (item.artist !== undefined && !String(item.artist).trim()) throw badRequest('Concert : nom de l’artiste obligatoire.');
+    if (!String(item.artist ?? '').trim()) throw badRequest('Concert : choisissez l’artiste.');
+    if (!db.prepare("SELECT 1 FROM cms_items WHERE collection = 'artists' AND key = ?").get(item.artist)) throw badRequest(`Concert : artiste « ${item.artist} » introuvable.`);
+  },
+  artists(item, db) {
+    if (!String(item.name ?? '').trim()) throw badRequest('Artiste : nom obligatoire.');
+    if (item.website && !/^https?:\/\/[^\s/]+\.[^\s]+$/i.test(String(item.website).trim())) throw badRequest('Artiste : site internet au format https://…');
+    if (item.media != null && !db.prepare("SELECT 1 FROM cms_media WHERE id = ? AND kind = 'image' AND deleted_at IS NULL").get(item.media)) throw badRequest('Artiste : photo introuvable dans la médiathèque.');
   },
 };
 
@@ -47,13 +53,16 @@ export default function collectionRoutes(app, { db, defaultLang }) {
     const source = rows[def]?.data ? sha(rows[def].data) : null;
     const langs = db.prepare('SELECT code FROM cms_languages ORDER BY position').pluck().all();
     const base = JSON.parse(item.data);
+    // Rien à traduire (ex. concert sans précisions) : les autres langues n'attendent rien
+    const filled = (v) => (typeof v === 'string' ? v.trim() !== '' : Array.isArray(v) ? v.some(filled) : isPlainObject(v) ? Object.values(v).some(filled) : false);
+    const nothing = !filled(rows[def] ? JSON.parse(rows[def].data) : {});
     return {
       ...item,
       data: base,
       merged: mergeTranslation(base, rows[def] ? JSON.parse(rows[def].data) : undefined),
       i18n: Object.fromEntries(langs.map((l) => [l, rows[l]
         ? { slug: rows[l].slug, data: JSON.parse(rows[l].data), status: rows[l].status, state: translationState(rows[l], source, l === def, (r) => r.data && r.data !== '{}'), updated_at: rows[l].updated_at }
-        : { state: 'missing' }])),
+        : { state: nothing && l !== def ? 'ready' : 'missing' }])),
     };
   }
 
@@ -78,7 +87,7 @@ export default function collectionRoutes(app, { db, defaultLang }) {
     collectionInScope(req, c.key);
     if (!KEY.test(req.body.key)) throw badRequest('Identifiant invalide : lettres minuscules, chiffres et tirets.');
     if (db.prepare('SELECT 1 FROM cms_items WHERE collection = ? AND key = ?').get(c.key, req.body.key)) throw badRequest('Cet identifiant existe déjà.');
-    VALIDATE[c.key]?.(req.body.data);
+    VALIDATE[c.key]?.(req.body.data, db);
     const { base, translated } = splitTranslatable(cleanHtml(c.key, req.body.data), c.schema.translatable);
     const now = nowIso();
     const position = req.body.position ?? db.prepare('SELECT COALESCE(MAX(position), -1) + 1 FROM cms_items WHERE collection = ?').pluck().get(c.key);
@@ -112,7 +121,7 @@ export default function collectionRoutes(app, { db, defaultLang }) {
     collectionInScope(req, c.key);
     if (req.body.data && VALIDATE[c.key]) {
       const current = present(item).merged;
-      VALIDATE[c.key]({ ...current, ...req.body.data });
+      VALIDATE[c.key]({ ...current, ...req.body.data }, db);
     }
     const fields = pick(req.body, ['is_active', 'position']);
     if ('is_active' in fields) fields.is_active = bool(fields.is_active);
@@ -140,6 +149,10 @@ export default function collectionRoutes(app, { db, defaultLang }) {
   app.delete('/items/:id', { preHandler: guard('content'), schema: { params: ID } }, async (req) => {
     const item = getItem(req.params.id);
     collectionInScope(req, item.collection);
+    if (item.collection === 'artists') {
+      const used = db.prepare("SELECT COUNT(*) FROM cms_items WHERE collection = 'gigs' AND json_extract(data, '$.artist') = ?").pluck().get(item.key);
+      if (used) throw badRequest(`Cet artiste est programmé dans ${used} concert${used > 1 ? 's' : ''} : changez ou supprimez ${used > 1 ? 'ces concerts' : 'ce concert'} d’abord.`);
+    }
     db.prepare('DELETE FROM cms_items WHERE id = ?').run(item.id);
     audit(db, req, 'delete', 'item', item.id, { before: item });
     return { ok: true };

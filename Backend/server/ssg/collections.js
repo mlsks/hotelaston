@@ -25,8 +25,11 @@ export const COLLECTIONS = {
   amenities: { label: 'Équipements (pictogrammes)', translatable: ['label'] },
   reviews: { label: 'Avis clients', translatable: [] }, // les avis restent dans leur langue d'origine
   chat: { label: 'Réponses du chat', translatable: ['keywords[]', 'answer'] },
-  // Programme Live Music : date (AAAA-MM-JJ), heure (HH:MM), lieu (selon-meteo | moon-bar | aston-club) + textes traduits
-  gigs: { label: 'Programme Live Music', translatable: ['artist', 'style', 'description'] },
+  // Programme Live Music : date (AAAA-MM-JJ), heure (HH:MM), lieu (selon-meteo | moon-bar | aston-club),
+  // artiste (clé d'une fiche « artists ») + précisions traduites ; style : seulement s'il diffère de la fiche artiste
+  gigs: { label: 'Programme Live Music', translatable: ['style', 'description'] },
+  // Artistes du Live Music : nom, site internet, photo (media = identifiant de la médiathèque) + style et présentation traduits
+  artists: { label: 'Artistes (Live Music)', translatable: ['style', 'bio'] },
 };
 
 function move(src, dst, segs) {
