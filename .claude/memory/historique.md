@@ -29,6 +29,7 @@ La conversation d'origine est restée sur le PC de développement ; voici ce qu'
 13. **« No stop here »** : ne pas enchaîner sur les fichiers de déploiement. Bilan demandé : `BILAN.md` et `BILAN.html` à la racine de `hotelaston/`.
 14. L'utilisateur ferme le PC et copie `hotelaston/` sur son portable : mémoire et consignes recopiées dans `hotelaston/.claude/`.
 15. 27/10/2026 : code mis sur GitHub (`mlsks/hotelaston`), travail depuis le dépôt. Intégrés par PR : fichiers de déploiement (`deploy/`), questions pour l'hôtel et paragraphe de confidentialité (`docs/`), chemins relatifs en base. `Backend/server/media/` manquait (exclu par le `.gitignore`).
+16. 27/10/2026 : copie locale de foupax2 vérifiée identique à `origin/main` (rien à supprimer, seules les données locales ignorées restent : `.env`, `.dev-credentials`, `media/`, `storage/`, `releases/`, `preview/`, `public-dist/`). Règle : toute modification est poussée sur GitHub.
 
 ## En attente d'une décision de l'utilisateur
 - Déploiement : choisir l'hébergeur, le stockage externe des sauvegardes et l'adresse des alertes Let's Encrypt.

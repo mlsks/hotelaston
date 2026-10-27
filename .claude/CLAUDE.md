@@ -13,6 +13,7 @@ Tenir les notes de `.claude/memory/` à jour quand une décision importante est 
 - L'utilisateur écrit en français : répondre en français ; la documentation du projet est en français.
 - « Ne code pas » / « Ne code rien » : répondre ou analyser seulement, sans modifier de fichier.
 - Gros chantier : quelques questions décisives ou une proposition d'architecture d'abord, attendre la validation, puis avancer seul.
+- Toute modification du code ou de la documentation est commitée et poussée sur GitHub (`mlsks/hotelaston`) dans la foulée : la copie locale ne doit jamais diverger du dépôt (règle du 27/10/2026).
 - Ne jamais publier le site de l'hôtel, ni un de ses écrans, en Artifact ou sur un service externe : il porte la marque d'un établissement réel.
 - Ne jamais recopier dans une réponse les mots de passe de `Backend/.dev-credentials`.
 - Ne rien télécharger d'externe sans l'accord de l'utilisateur (en particulier la base de géolocalisation DB-IP).
