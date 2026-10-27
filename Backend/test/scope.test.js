@@ -72,7 +72,7 @@ test('ne voit que la page, le programme, les bandeaux et les médias Live Music'
   const me = (await call('live', 'GET', '/api/auth/me')).json().user;
   assert.deepEqual(me.scopes, ['live-music']);
   assert.deepEqual((await call('live', 'GET', '/api/pages')).json().map((p) => p.key), ['live-music']);
-  assert.deepEqual((await call('live', 'GET', '/api/collections')).json().map((c) => c.key), ['gigs']);
+  assert.deepEqual((await call('live', 'GET', '/api/collections')).json().map((c) => c.key), ['artists', 'gigs']);
   assert.deepEqual((await call('live', 'GET', '/api/banners')).json().map((b) => b.name), ['Soirées Live Music']);
   const entries = (await call('live', 'GET', '/api/entries')).json();
   assert.ok(entries.length > 5 && entries.every((e) => e.key.startsWith('live-music.')));
@@ -92,22 +92,38 @@ test('modifie les textes de sa page, pas ceux des autres ni la structure', async
 });
 
 test('programme : concerts validés, écrits dans la page avec leurs données d’événement', async () => {
-  const bad = await call('live', 'POST', '/api/collections/gigs/items', { key: 'mauvais', data: { date: '06/11/2026', artist: 'X' } });
+  const artist = (key, data) => call('live', 'POST', '/api/collections/artists/items', { key, data: { style: '', bio: '', website: '', media: null, ...data } });
+  assert.equal((await artist('sans-nom', { name: ' ' })).statusCode, 400, 'nom obligatoire');
+  assert.equal((await artist('mauvais-site', { name: 'X', website: 'pas un site' })).statusCode, 400, 'site en https://');
+  assert.equal((await artist('groupe-passe', { name: 'Groupe passé', style: 'Blues' })).statusCode, 201);
+  assert.equal((await artist('trio-paillon', { name: 'Trio Paillon', style: 'Blues', bio: 'Trio niçois' })).statusCode, 201);
+  const duo = await artist('duo-massena', { name: 'Duo Masséna', style: 'Soul', bio: 'Duo voix et guitare', website: 'https://duo-massena.example' });
+  assert.equal(duo.statusCode, 201, duo.body);
+
+  const bad = await call('live', 'POST', '/api/collections/gigs/items', { key: 'mauvais', data: { date: '06/11/2026', artist: 'duo-massena' } });
   assert.equal(bad.statusCode, 400);
-  const add = (key, date, artist, extra = {}) => call('live', 'POST', '/api/collections/gigs/items', { key, data: { date, time: '21:00', venue: 'selon-meteo', artist, style: 'Blues', ...extra } });
-  assert.equal((await add('passe', inDays(-3), 'Groupe passé')).statusCode, 201);
-  assert.equal((await add('trio', inDays(5), 'Trio Paillon', { description: 'Standards blues et soul' })).statusCode, 201);
-  assert.equal((await add('duo', inDays(2), 'Duo Masséna', { venue: 'moon-bar', style: 'Soul' })).statusCode, 201);
+  const add = (key, date, artist, extra = {}) => call('live', 'POST', '/api/collections/gigs/items', { key, data: { date, time: '21:00', venue: 'selon-meteo', artist, ...extra } });
+  assert.equal((await add('inconnu', inDays(4), 'personne')).statusCode, 400, 'artiste sans fiche refusé');
+  assert.equal((await add('passe', inDays(-3), 'groupe-passe')).statusCode, 201);
+  assert.equal((await add('trio', inDays(5), 'trio-paillon', { description: 'Standards blues et soul' })).statusCode, 201);
+  assert.equal((await add('duo', inDays(2), 'duo-massena', { venue: 'moon-bar' })).statusCode, 201);
+
+  const used = await call('live', 'DELETE', `/api/items/${duo.json().id}`);
+  assert.equal(used.statusCode, 400, 'artiste programmé : suppression refusée');
 
   const build = (await call('live', 'POST', '/api/builds/preview')).json();
   assert.equal(build.status, 'success', build.error);
   const $ = cheerio.load(fs.readFileSync(path.join(config.previewDir, 'fr/live-music/index.html'), 'utf8'));
   const gigs = $('[data-gig-list] li').map((i, el) => $(el).find('strong').text()).get();
   assert.deepEqual(gigs, ['Duo Masséna', 'Trio Paillon'], 'à venir seulement, par date');
-  assert.match($('[data-gig-list] li').first().text(), /21h00 · Soul · Moon Bar, sur le toit/);
+  const first = $('[data-gig-list] li').first();
+  assert.match(first.text(), /21h00 · Soul · Moon Bar, sur le toit/);
+  assert.match(first.text(), /Duo voix et guitare/, 'présentation de la fiche artiste');
+  assert.equal(first.find('a.gig-list__site').attr('href'), 'https://duo-massena.example');
+  assert.match($('[data-gig-list] li').eq(1).text(), /Standards blues et soul/, 'précisions du concert prioritaires');
   const events = JSON.parse($('script[type="application/ld+json"]').text())['@graph'].filter((n) => n['@type'] === 'MusicEvent');
   assert.equal(events.length, 2);
-  assert.equal(events[0].performer.name, 'Duo Masséna');
+  assert.deepEqual(events[0].performer, { '@type': 'MusicGroup', name: 'Duo Masséna', genre: 'Soul', description: 'Duo voix et guitare', url: 'https://duo-massena.example', sameAs: ['https://duo-massena.example'] });
   assert.match(events[0].startDate, /T\d{2}:00:00\.000Z$/);
 });
 
@@ -122,6 +138,24 @@ test('médias : rangés dans /live-music, ceux des autres hors d’atteinte', as
   assert.equal((await call('live', 'PUT', `/api/media/${theirs.id}/i18n/fr`, { alt: 'x' })).statusCode, 403);
   assert.equal((await call('live', 'DELETE', `/api/media/${theirs.id}`)).statusCode, 403);
   assert.deepEqual((await call('live', 'GET', '/api/media')).json().items.map((m) => m.folder), ['/live-music']);
+});
+
+test('photo de l’artiste : vignette dans le programme, image du performer', async () => {
+  const photo = (await call('live', 'GET', '/api/media')).json().items[0];
+  const duo = (await call('live', 'GET', '/api/collections/artists/items')).json().find((a) => a.key === 'duo-massena');
+  assert.equal((await call('live', 'PATCH', `/api/items/${duo.id}`, { data: { media: 999999 } })).statusCode, 400, 'photo inconnue refusée');
+  const res = await call('live', 'PATCH', `/api/items/${duo.id}`, { data: { media: photo.id } });
+  assert.equal(res.statusCode, 200, res.body);
+  assert.match((await call('admin', 'DELETE', `/api/media/${photo.id}`)).body, /artists\/duo-massena/, 'photo signalée comme utilisée');
+  const build = (await call('live', 'POST', '/api/builds/preview')).json();
+  assert.equal(build.status, 'success', build.error);
+  const $ = cheerio.load(fs.readFileSync(path.join(config.previewDir, 'fr/live-music/index.html'), 'utf8'));
+  const li = $('[data-gig-list] li').first();
+  assert.ok(li.hasClass('has-photo'));
+  assert.match(li.find('img.gig-list__photo').attr('src'), /^\/media\/.+\.webp$/);
+  const event = JSON.parse($('script[type="application/ld+json"]').text())['@graph'].find((n) => n['@type'] === 'MusicEvent');
+  assert.match(event.performer.image, /^https?:\/\/.+\/media\/.+\.webp$/);
+  assert.equal(event.image[0], event.performer.image);
 });
 
 test('bandeau Live Music : texte modifiable, emplacements limités à sa page', async () => {

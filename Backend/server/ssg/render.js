@@ -83,7 +83,7 @@ export function renderPage(site, lang, target, head) {
   const pageId = target.type === 'page' ? target.page.id : target.parentId;
   renderZones($, { source, lang, pageId, now: site.now, uiText, preview: site.mode === 'preview' });
   renderPopup($, { source, lang, pageId, now: site.now, uiText, preview: site.mode === 'preview', popupScript: site.assets.url('popup.js') });
-  const gigEvents = renderGigList($, { source, lang, now: site.now, text: uiText, pageUrl: head.canonical });
+  const gigEvents = renderGigList($, { source, lang, now: site.now, text: uiText, pageUrl: head.canonical, siteUrl: site.siteUrl });
 
   /* 4. Liens internes « #/route » → adresses de la langue */
   const routes = site.routes.get(lang);

@@ -46,6 +46,7 @@ export const UI_STRINGS = {
   'ui.map.title': ['Carte Google : hôtel Aston La Scala, 12 avenue Félix Faure, Nice', 'Titre de la carte chargée à la demande'],
   'ui.gigs.line': ['Live Music · blues & soul · Moon Bar ou Aston Club selon la météo', 'Ligne de chaque soirée Live Music'],
   'ui.gigs.artist': ['Artiste annoncé prochainement', 'Artiste à venir'],
+  'ui.gigs.website': ['Site de l’artiste', 'Lien vers le site d’un artiste (programme Live Music)'],
   'ui.chat.name': ['Nom', 'Chat : champ'],
   'ui.chat.name-placeholder': ['Nom et société', 'Chat : exemple dans le champ'],
   'ui.chat.email': ['E-mail', 'Chat : champ'],

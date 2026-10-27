@@ -6,6 +6,8 @@
           <a href="#/collections" x-show="!$store.session.isScoped" class="text-sm text-azure-700 hover:underline">← Fiches et listes</a>
           <h1 class="page-title mt-1" x-text="collection.label"></h1>
           <p class="mt-1 max-w-2xl text-slate-600" x-show="spec.help" x-text="spec.help"></p>
+          <a x-show="collection.key === 'gigs'" href="#/collections/artists" class="mt-1 inline-block text-sm font-medium text-azure-700 hover:underline">Gérer les fiches artistes →</a>
+          <a x-show="collection.key === 'artists'" href="#/collections/gigs" class="mt-1 inline-block text-sm font-medium text-azure-700 hover:underline">← Programme des concerts</a>
         </div>
         <div class="flex flex-wrap items-center gap-3">
           <input type="search" class="input w-56" placeholder="Rechercher…" x-model.debounce.200ms="q">
@@ -42,7 +44,7 @@
               </div>
             </template>
             <p x-show="!group.items.length" class="px-4 py-8 text-center text-sm text-slate-500"
-              x-text="loading ? 'Chargement…' : collection.key === 'gigs' ? 'Aucun concert à venir.' : 'Aucun élément.'"></p>
+              x-text="loading ? 'Chargement…' : collection.key === 'gigs' ? 'Aucun concert à venir.' : collection.key === 'artists' ? 'Aucun artiste.' : 'Aucun élément.'"></p>
           </div>
         </section>
       </template>
