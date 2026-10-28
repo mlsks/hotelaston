@@ -7,7 +7,7 @@
  *     et note la photo d'origine dans templates-src/photos.json (versionné) ;
  *  2. télécharge chaque photo une seule fois (la plus grande taille utilisée sur le site),
  *     la fait passer par le pipeline (WebP, recadrage portrait) et la range dans la médiathèque ;
- *  3. relie les clés des gabarits, les photos des fiches chambre et service, l'image de partage
+ *  3. relie les clés des gabarits, les photos des fiches chambre, service et offre, l'image de partage
  *     et les images des données structurées aux médias.
  * Sur une base neuve (import sur un dépôt cloné), elle refait les étapes 2 et 3 depuis photos.json.
  */
@@ -124,6 +124,9 @@ export async function importSitePhotos(db, { dir = config.templatesDir, convert 
       if (!row.media && row.src) wanted.push({ url: /^https?:/.test(row.src) ? row.src : cdn + row.src, alt: altOf(it, i), folder: `/site/${it.collection === 'rooms' ? 'chambres' : 'services'}` });
     });
   }
+  // Offres : une photo par fiche (media), encore à l'adresse du CDN (src) sur une base neuve
+  const offers = db.prepare("SELECT id, data FROM cms_items WHERE collection = 'offers'").all().map((it) => ({ ...it, data: JSON.parse(it.data) }));
+  for (const it of offers) if (!it.data.media && it.data.src) wanted.push({ url: /^https?:/.test(it.data.src) ? it.data.src : cdn + it.data.src, alt: '', folder: '/site/offres' });
   const settingUrls = new Set();
   const collect = (v) => {
     if (typeof v === 'string' && CDN_RE.test(v)) settingUrls.add(v);
@@ -181,6 +184,12 @@ export async function importSitePhotos(db, { dir = config.templatesDir, convert 
         touched = true;
       }
       if (touched) saveItem.run(JSON.stringify(it.data), now, it.id);
+    }
+    for (const it of offers) {
+      const id = !it.data.media && it.data.src ? media(/^https?:/.test(it.data.src) ? it.data.src : cdn + it.data.src) : null;
+      if (!id) continue;
+      const { src, ...data } = it.data;
+      saveItem.run(JSON.stringify({ ...data, media: id }), now, it.id);
     }
     const swap = (v) => {
       if (typeof v === 'string') return CDN_RE.test(v) && media(v) ? publicUrl(db, media(v)) : v;

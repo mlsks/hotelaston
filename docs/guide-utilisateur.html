@@ -226,6 +226,7 @@ npm start</code></pre></li>
 <tbody>
 <tr><td>Chambres</td><td>Une fiche par catégorie : nom, titre, description, points clés, équipements, variantes, photos, thème des avis affichés, et ce qui s'affiche sur la page Chambres et dans le carrousel de l'accueil. Chaque fiche a sa propre page. Voir <a href="#les-chambres">Les chambres</a>.</td></tr>
 <tr><td>Services</td><td>Une fiche par service : chapeau, texte, informations pratiques, questions fréquentes, photos. Chaque fiche a sa propre page.</td></tr>
+<tr><td>Offres</td><td>Une fiche par offre : famille, photo, prix, ce qui est compris, économie, conditions, bouton, présence sur l'accueil. Voir <a href="#les-offres">Les offres</a>.</td></tr>
 <tr><td>Équipements</td><td>Les pictogrammes et libellés utilisés par les fiches chambre.</td></tr>
 <tr><td>Avis</td><td>Auteur, mois du séjour, note, chambre, thèmes, texte et réponse de l'hôtel.</td></tr>
 <tr><td>Réponses du chat</td><td>Les mots déclencheurs (si la question du visiteur en contient un, le chat donne cette réponse) et la réponse.</td></tr>
@@ -249,6 +250,24 @@ npm start</code></pre></li>
 <p>Pour <strong>ajouter une chambre</strong>, cliquer sur <strong>Ajouter une chambre</strong> et remplir la fiche : elle apparaît sur la page Chambres, dans le carrousel, dans « Les autres chambres » des fiches, dans la liste <strong>Chambre concernée</strong> des avis et, sous son nom, dans la fenêtre de réservation. Si D-Edge lui donne un code, l'ajouter dans les <a href="#reglages">Réglages</a> (codes chambre).</p>
 <p><strong>Masquer</strong> une chambre (case <strong>Visible sur le site</strong>) la retire partout ; les liens qui la citent dans les textes mènent alors à la page Chambres. <strong>Supprimer</strong> une chambre fait de même et ajoute une redirection de son ancienne adresse vers la page Chambres, visible dans <a href="#redirections">Redirections</a> : les favoris et Google suivent. Si une chambre est recréée plus tard à la même adresse, la redirection cesse de s’appliquer.</p>
 <p>Les textes des pages qui comptent les chambres (« Six catégories, de 18 à 50 m² » sur la page Chambres, par exemple) ne changent pas seuls : les revoir dans <strong>Pages</strong> après un ajout ou une suppression.</p>
+<h3 id="les-offres">Les offres</h3>
+<p>La page <strong>Offres</strong> et les aperçus « Offres spéciales » de l'accueil sont construits à partir des fiches <strong>Offres</strong>, dans l'ordre de la liste (flèches ↑ ↓). Une offre n'a pas de page à elle : c'est une carte de la page Offres. Dans une fiche :</p>
+<ul>
+<li><strong>Famille</strong> : Séjour, Restaurant ou Séminaires, pour les filtres de la page Offres. Un filtre sans offre disparaît ;</li>
+<li><strong>Étiquette</strong>, <strong>Titre</strong>, <strong>Photo</strong> et sa <strong>description</strong> ;</li>
+<li><strong>Prix</strong> en grand (« À partir de 239 € ») et <strong>Précision du prix</strong> en petit (« la nuit pour 2 ») ;</li>
+<li><strong>Ce qui est compris</strong> (une ligne par élément), <strong>Économie</strong>, <strong>Conditions</strong> ;</li>
+<li><strong>Prix et conditions à confirmer par l'hôtel</strong> : à cocher tant que l'hôtel ne les a pas validés ;</li>
+<li><strong>Bouton</strong> :
+<ul>
+<li><strong>Réserver</strong> ouvre le moteur avec le code de l'offre, et les dates proposées si elles sont remplies ;</li>
+<li><strong>Demander un devis</strong> ouvre le formulaire de devis, l'offre déjà choisie dans sa liste (une offre ajoutée y figure aussi) ;</li>
+<li><strong>Lien</strong> mène à une page du site (<code>#/restaurant-horloge?a=reserver-horloge</code> pour réserver une table à L'Horloge) ou à une adresse complète ;</li>
+</ul></li>
+<li><strong>Afficher sur l'accueil</strong>, avec un <strong>Titre</strong> et une <strong>Phrase</strong> propres à l'accueil. Sans aucune offre cochée, la rubrique disparaît de l'accueil.</li>
+</ul>
+<p>Pour une offre saisonnière, régler <strong>Afficher seulement entre deux dates</strong> (à droite) : elle apparaît et disparaît seule, à la régénération de chaque nuit. <strong>Masquer</strong> ou <strong>Supprimer</strong> la retire aussi de partout.</p>
+<p>Une offre réservable apparaît aussi dans le choix <strong>Le moteur de réservation</strong> des bandeaux et du popup. Son identifiant (sous la case <strong>Visible sur le site</strong>) est envoyé à D-Edge. Si D-Edge lui donne un autre code, l'ajouter dans les <a href="#reglages">Réglages</a> (codes tarif). Pour les trois offres d'origine, le nom affiché dans la fenêtre de réservation se règle dans <strong>Textes de l'interface</strong> (<code>ui.offer.…</code>) ; pour les autres, c'est le titre de la fiche.</p>
 <p>Les avis livrés avec le site sont des exemples, marqués « Exemple » sur le site. Le passage aux avis réels se fait dans les <a href="#reglages">Réglages</a>.</p>
 <h2 id="5-live-music-concerts-et-artistes">5. Live Music : concerts et artistes</h2>
 <p>Un seul bar est ouvert à la fois : le Moon Bar sur le toit quand le temps le permet, sinon L'Aston Club au 7e étage.</p>

@@ -9,6 +9,7 @@ import { audit } from '../lib/audit.js';
 import { splitTranslatable, mergeTranslation } from '../ssg/collections.js';
 import { scanLinkLists, LINKS } from '../ssg/link-lists.js';
 import { VENUES } from '../ssg/menus.js';
+import { FAMILIES, ACTIONS } from '../ssg/offer-cards.js';
 import { ID, ID_LANG, STATUS, DATE, assertLang, translationState, pick, updateRow, bool } from './helpers.js';
 
 /** Champs en texte riche, nettoyés à l'enregistrement. */
@@ -45,6 +46,16 @@ const VALIDATE = {
         for (const f of ['name', 'desc', 'price']) if (d[f] != null && (typeof d[f] !== 'string' || d[f].length > (f === 'desc' ? 600 : 160))) throw badRequest(`Carte : champ « ${f} » trop long.`);
       }
     }
+  },
+  offers(item, db) {
+    if (!String(item.title ?? '').trim()) throw badRequest('Offre : titre obligatoire.');
+    if (!FAMILIES.includes(item.family)) throw badRequest('Offre : famille « sejour », « restaurant » ou « seminaires ».');
+    if (!ACTIONS.includes(item.action ?? 'none')) throw badRequest('Offre : bouton inconnu.');
+    if (item.action === 'link' && !/^(#\/|\/|https?:\/\/|mailto:|tel:)\S*$/.test(String(item.link ?? '').trim())) throw badRequest('Offre : adresse du lien au format #/page, https://…, mailto: ou tel:.');
+    for (const f of ['checkin', 'checkout']) if (item[f] && (!/^\d{4}-\d{2}-\d{2}$/.test(item[f]) || Number.isNaN(Date.parse(item[f])))) throw badRequest('Offre : dates au format AAAA-MM-JJ.');
+    if (item.checkin && item.checkout && item.checkout <= item.checkin) throw badRequest('Offre : le départ doit suivre l’arrivée.');
+    if (item.media && !db.prepare("SELECT 1 FROM cms_media WHERE id = ? AND kind = 'image' AND deleted_at IS NULL").get(item.media)) throw badRequest('Offre : photo introuvable dans la médiathèque.');
+    if (!Array.isArray(item.includes ?? []) || (item.includes ?? []).length > 20) throw badRequest('Offre : 20 lignes au plus dans « Ce qui est compris ».');
   },
   links(item, db) {
     const list = scanLinkLists().find((l) => l.key === item.list);

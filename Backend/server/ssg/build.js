@@ -149,6 +149,7 @@ export function generateSite({ source, mode, now, previousState = new Map(), onl
       bookingBase: bookingBase(lang),
       booking: { params: settings.booking_engine?.params || null, rooms: settings.booking_engine?.rooms || null, offers: settings.booking_engine?.offers || null },
       roomNames: Object.fromEntries(source.collectionItems('rooms', lang, now).map((r) => [r.key, r.data.name || r.key])), // fenêtre de réservation, chambres ajoutées
+      offerNames: Object.fromEntries(source.collectionItems('offers', lang, now).map((o) => [o.key, o.data.title || o.key])),
       paths: Object.fromEntries(routes.get(lang)),
       sw: mode === 'production' ? `${basePath}/sw.js` : null,
       track: mode === 'production' ? '/api/track' : null, // la prévisualisation n'est jamais comptée

@@ -11,6 +11,7 @@ import { migrateGigArtists } from './gig-artists.js';
 import { ensureLinkLists } from '../ssg/link-lists.js';
 import { ensureMenus } from '../ssg/menus.js';
 import { ensureRoomCards } from '../ssg/room-cards.js';
+import { ensureOffers } from '../ssg/offer-cards.js';
 
 const MIGRATIONS_DIR = path.join(path.dirname(fileURLToPath(import.meta.url)), 'migrations');
 
@@ -41,6 +42,7 @@ export function getDb() {
     ensureLinkLists(shared);
     ensureMenus(shared);
     ensureRoomCards(shared);
+    ensureOffers(shared);
   }
   return shared;
 }
