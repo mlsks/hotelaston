@@ -76,20 +76,22 @@ test('réglage par défaut du gabarit, puis réglage de la page', async () => {
   const sem = (await call('GET', `/api/pages/${pageRow('seminaires').id}`)).json();
   assert.deepEqual(sem.hero, { default: { on: true, opacity: 0.5, width: 70 } });
   assert.deepEqual((await call('GET', `/api/pages/${pageRow('accueil').id}`)).json().hero, { default: { on: false, opacity: 0.5, width: 70 } });
-  assert.equal((await call('GET', `/api/pages/${pageRow('moon-bar').id}`)).json().hero, null);
+  assert.deepEqual((await call('GET', `/api/pages/${pageRow('moon-bar').id}`)).json().hero, { default: { on: true, opacity: 0.5, width: 70 } });
+  assert.equal((await call('GET', `/api/pages/${pageRow('aston-club').id}`)).json().hero, null);
 
   await preview();
   let head = page('fr/seminaires')('header.page-head--image');
   assert.ok(head.hasClass('hero-veil'));
   assert.equal(head.attr('style'), undefined);
   assert.ok(!page('fr')('section.hero').hasClass('hero-veil'));
-  assert.equal(page('fr/moon-bar')('.hero-veil').length, 0);
+  assert.ok(page('fr/moon-bar')('section.venue-video').hasClass('hero-veil'));
 
   // Accueil : dégradé posé, plus marqué ; Séminaires : retiré
   assert.equal((await call('PATCH', `/api/pages/${pageRow('accueil').id}`, { hero_veil: { on: true, opacity: 0.65, width: 55 } })).statusCode, 200);
   assert.equal((await call('PATCH', `/api/pages/${pageRow('seminaires').id}`, { hero_veil: { on: false, opacity: 0.5, width: 70 } })).statusCode, 200);
   assert.equal((await call('PATCH', `/api/pages/${pageRow('accueil').id}`, { hero_veil: { on: true, opacity: 2, width: 55 } })).statusCode, 400);
-  assert.equal((await call('PATCH', `/api/pages/${pageRow('moon-bar').id}`, { hero_veil: { on: true, opacity: 0.5, width: 70 } })).statusCode, 400);
+  assert.equal((await call('PATCH', `/api/pages/${pageRow('aston-club').id}`, { hero_veil: { on: true, opacity: 0.5, width: 70 } })).statusCode, 400);
+  assert.equal((await call('PATCH', `/api/pages/${pageRow('moon-bar').id}`, { hero_veil: { on: false, opacity: 0.5, width: 70 } })).statusCode, 200);
   await preview();
   const hero = page('fr')('section.hero');
   assert.ok(hero.hasClass('hero-veil'));
@@ -97,4 +99,5 @@ test('réglage par défaut du gabarit, puis réglage de la page', async () => {
   head = page('fr/seminaires')('header.page-head--image');
   assert.ok(!head.hasClass('hero-veil'));
   assert.equal(page('fr/seminaires')('[data-cms-hero]').length, 0);
+  assert.ok(!page('fr/moon-bar')('section.venue-video').hasClass('hero-veil')); // décoché : voile propre de la vidéo
 });

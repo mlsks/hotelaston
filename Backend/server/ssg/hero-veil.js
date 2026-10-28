@@ -3,7 +3,7 @@
  *
  * Dans un gabarit : data-cms-hero sur le bandeau ; data-cms-hero="veil" pose le dégradé par défaut,
  * data-cms-hero="" le laisse au voile propre du bandeau (accueil). Une page sans data-cms-hero
- * (Moon Bar) n'a pas de réglage. Le réglage de la page (cms_pages.hero_veil) l'emporte sur le gabarit.
+ * n'a pas de réglage. Le réglage de la page (cms_pages.hero_veil) l'emporte sur le gabarit.
  */
 import fs from 'node:fs';
 import path from 'node:path';
