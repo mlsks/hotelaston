@@ -30,6 +30,10 @@ export const COLLECTIONS = {
   gigs: { label: 'Programme Live Music', translatable: ['style', 'description'] },
   // Artistes du Live Music : nom, site internet, photo (media = identifiant de la médiathèque) + style et présentation traduits
   artists: { label: 'Artistes (Live Music)', translatable: ['style', 'bio'] },
+  // Menus et listes de liens (voir link-lists.js) : liste, parent, cible (page, document, adresse) + libellé traduit
+  links: { label: 'Menus et liens', translatable: ['label'] },
+  // Cartes du restaurant et des bars (voir menus.js) : une page par carte, rubriques et plats
+  menus: { label: 'Cartes du restaurant et des bars', translatable: ['title', 'subtitle', 'backLabel', 'note', 'sections[].title', 'sections[].dishes[].name', 'sections[].dishes[].desc'] },
 };
 
 function move(src, dst, segs) {

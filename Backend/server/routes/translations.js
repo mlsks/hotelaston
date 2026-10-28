@@ -46,13 +46,13 @@ function units(db, lang, def) {
     if (!rows[def]) continue;
     const source = JSON.parse(rows[def].data);
     if (!Object.values(source).some((v) => (typeof v === 'string' ? v.trim() : v && JSON.stringify(v) !== '[]' && JSON.stringify(v) !== '{}'))) continue; // rien à traduire
-    const name = source.name || JSON.parse(it.data).name;
+    const name = source.name || source.title || source.label || JSON.parse(it.data).name;
     out.push({ module: 'items', id: it.id, label: `${it.collection} · ${name || it.key}`, ref: `${it.collection}/${it.key}`,
       state: translationState(rows[lang], sha(rows[def].data), lang === def, (r) => Boolean(r?.data && r.data !== '{}')) });
   }
 
   const media = byLang('SELECT media_id AS k, * FROM cms_media_i18n');
-  for (const m of db.prepare("SELECT * FROM cms_media WHERE deleted_at IS NULL AND kind <> 'embed'").all()) {
+  for (const m of db.prepare("SELECT * FROM cms_media WHERE deleted_at IS NULL AND kind NOT IN ('embed', 'document')").all()) {
     const rows = media.get(m.id) || {};
     out.push({ module: 'media', id: m.id, label: m.original_name || `média ${m.id}`, ref: String(m.id),
       state: translationState(rows[lang], rows[def] ? sha(`${rows[def].alt ?? ''}\n${rows[def].title ?? ''}`) : null, lang === def, (r) => Boolean(r?.alt)) });

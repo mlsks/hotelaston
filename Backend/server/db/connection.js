@@ -8,6 +8,8 @@ import Database from 'better-sqlite3';
 import { config, fromVarPath, toVarPath } from '../config.js';
 import { ensureUiStrings } from '../ssg/ui-strings.js';
 import { migrateGigArtists } from './gig-artists.js';
+import { ensureLinkLists } from '../ssg/link-lists.js';
+import { ensureMenus } from '../ssg/menus.js';
 
 const MIGRATIONS_DIR = path.join(path.dirname(fileURLToPath(import.meta.url)), 'migrations');
 
@@ -31,9 +33,12 @@ export function getDb() {
   if (!shared) {
     shared = openDb();
     migrate(shared);
+    allowDocumentMedia(shared);
     relativizeBuildPaths(shared);
     migrateGigArtists(shared);
     ensureUiStrings(shared);
+    ensureLinkLists(shared);
+    ensureMenus(shared);
   }
   return shared;
 }
@@ -63,6 +68,30 @@ export function migrate(db) {
     applied.push(file);
   }
   return applied;
+}
+
+/**
+ * Médiathèque : type « document » (PDF des cartes du restaurant…) ajouté à la contrainte CHECK de cms_media.
+ * SQLite ne sait pas modifier une contrainte : la définition de la table est réécrite en place, ce qui est
+ * sans risque pour un CHECK élargi (le format des données ne change pas). Sans effet ensuite.
+ */
+export function allowDocumentMedia(db) {
+  const sql = db.prepare("SELECT sql FROM sqlite_master WHERE type = 'table' AND name = 'cms_media'").pluck().get();
+  if (!sql || sql.includes("'document'")) return false;
+  const next = sql.replace(/(kind\s+TEXT\s+NOT NULL\s+CHECK\s*\(kind IN \([^)]*'embed')\)/, "$1, 'document')");
+  if (next === sql) throw new Error('cms_media : contrainte sur le type de média introuvable.');
+  const version = db.pragma('schema_version', { simple: true });
+  db.unsafeMode(true);
+  try {
+    db.pragma('writable_schema = ON');
+    db.prepare("UPDATE sqlite_master SET sql = ? WHERE type = 'table' AND name = 'cms_media'").run(next);
+    db.pragma(`schema_version = ${version + 1}`);
+  } finally {
+    db.pragma('writable_schema = OFF');
+    db.unsafeMode(false);
+  }
+  if (db.pragma('quick_check', { simple: true }) !== 'ok') throw new Error('cms_media : base endommagée après la mise à jour.');
+  return true;
 }
 
 /**

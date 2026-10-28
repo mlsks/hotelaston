@@ -5,7 +5,7 @@
   </div>
   <div class="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
     <template x-for="c in collections" :key="c.key">
-      <a :href="'#/collections/' + c.key" class="card block p-5 transition hover:ring-azure-700">
+      <a :href="{ links: '#/menus', menus: '#/cartes' }[c.key] || '#/collections/' + c.key" class="card block p-5 transition hover:ring-azure-700">
         <p class="section-title" x-text="c.label"></p>
         <p class="mt-1 text-sm text-slate-600"><span x-text="c.items"></span> élément(s)</p>
         <p class="mt-3 text-xs text-slate-500" x-text="c.item_template ? 'Chaque élément a sa propre page' : 'Affichés dans les pages du site'"></p>

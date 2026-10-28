@@ -16,6 +16,7 @@ import { authPlugin } from './auth/auth.js';
 import authRoutes from './routes/auth.js';
 import contentRoutes from './routes/content.js';
 import collectionRoutes from './routes/collections.js';
+import menuRoutes from './routes/menus.js';
 import mediaRoutes from './routes/media.js';
 import bannerRoutes from './routes/banners.js';
 import translationRoutes from './routes/translations.js';
@@ -107,6 +108,7 @@ export async function buildApp({ logger = { level: 'info' }, ingestFlushMs = 200
     authRoutes(api, ctx);
     contentRoutes(api, ctx);
     collectionRoutes(api, ctx);
+    menuRoutes(api, ctx);
     mediaRoutes(api, ctx);
     bannerRoutes(api, ctx);
     translationRoutes(api, ctx);

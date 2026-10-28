@@ -49,14 +49,14 @@ export default function mediaRoutes(app, { db, defaultLang }) {
       warnings: warningsFor(m),
       i18n: Object.fromEntries(langs.map((l) => [l, rows[l]
         ? { alt: rows[l].alt, title: rows[l].title, caption: rows[l].caption, status: rows[l].status, state: translationState(rows[l], source, l === def, (r) => Boolean(r.alt)) }
-        : { state: m.kind === 'embed' ? 'ready' : 'missing' }])),
+        : { state: ['embed', 'document'].includes(m.kind) ? 'ready' : 'missing' }])),
     };
   }
 
   app.get('/media', {
     preHandler: guard(),
     schema: { querystring: { type: 'object', properties: {
-      folder: { type: 'string' }, kind: { type: 'string', enum: ['image', 'video', 'audio', 'embed'] }, q: { type: 'string', maxLength: 100 },
+      folder: { type: 'string' }, kind: { type: 'string', enum: ['image', 'video', 'audio', 'embed', 'document'] }, q: { type: 'string', maxLength: 100 },
       deleted: { type: 'boolean' }, limit: { type: 'integer', minimum: 1, maximum: 200 }, offset: { type: 'integer', minimum: 0 },
     } } },
   }, async (req) => {

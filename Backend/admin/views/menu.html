@@ -1,0 +1,114 @@
+<div x-data="menuView" class="space-y-6">
+  <template x-if="form">
+    <div class="space-y-6">
+      <div class="flex flex-wrap items-end justify-between gap-4">
+        <div class="max-w-3xl">
+          <a href="#/cartes" class="text-sm text-azure-700 hover:underline">← Toutes les cartes</a>
+          <h1 class="page-title mt-1" x-text="source.title || info.key"></h1>
+          <p class="mt-1 flex flex-wrap items-center gap-3 text-sm text-slate-600">
+            <span x-text="venueName(form.venue)"></span>
+            <span class="font-mono text-xs" x-text="info.path"></span>
+            <a x-show="info.page_id" :href="'#/pages/' + info.page_id" class="text-azure-700 hover:underline">Référencement de la page</a>
+            <span x-show="!info.is_active" class="badge bg-slate-100 text-slate-600 ring-slate-200">Masquée</span>
+            <span x-show="translating" class="badge" :class="$fmt.stateClass(state)" x-text="$fmt.stateLabel(state)"></span>
+          </p>
+        </div>
+        <template data-include="lang-tabs"></template>
+      </div>
+
+      <!-- En-tête de la carte -->
+      <section class="card space-y-4 p-5">
+        <p class="section-title">En-tête</p>
+        <template x-if="!translating">
+          <div class="grid gap-4 md:grid-cols-2">
+            <label class="block"><span class="label">Nom de la carte (titre de la page)</span><input class="input" x-model="form.title" @input="touch()" :disabled="!canEdit" required></label>
+            <label class="block"><span class="label">Sous-titre (facultatif)</span><input class="input" x-model="form.subtitle" @input="touch()" :disabled="!canEdit" placeholder="Prix nets en euros, service compris"></label>
+            <label class="block"><span class="label">Lieu</span>
+              <select class="input" x-model="form.venue" @change="touch()" :disabled="!canEdit">
+                <template x-for="v in venues" :key="v.key"><option :value="v.key" x-text="v.label" :selected="v.key === form.venue"></option></template>
+              </select></label>
+            <label class="block"><span class="label">Lien de retour vers le lieu</span><input class="input" x-model="form.backLabel" @input="touch()" :disabled="!canEdit" placeholder="Retour au restaurant"></label>
+            <label class="block md:col-span-2"><span class="label">Note en bas de carte (facultatif)</span><textarea class="input" rows="2" x-model="form.note" @input="touch()" :disabled="!canEdit" placeholder="Allergènes : liste disponible sur demande"></textarea></label>
+          </div>
+        </template>
+        <template x-if="translating">
+          <div class="space-y-3">
+            <template x-for="f in [['title', 'Nom de la carte'], ['subtitle', 'Sous-titre'], ['backLabel', 'Lien de retour'], ['note', 'Note en bas de carte']]" :key="f[0]">
+              <div x-show="source[f[0]]" class="grid gap-2 lg:grid-cols-2">
+                <p class="rounded-lg bg-slate-50 px-3 py-2 text-sm text-slate-700"><span class="block text-xs text-slate-500" x-text="f[1]"></span><span x-text="source[f[0]]"></span></p>
+                <input class="input self-end" x-model="tr[f[0]]" @input="touch()" :disabled="!canText" :placeholder="source[f[0]]">
+              </div>
+            </template>
+          </div>
+        </template>
+      </section>
+
+      <!-- Rubriques et plats -->
+      <template x-for="(s, si) in form.sections" :key="si">
+        <section class="card">
+          <div class="flex flex-wrap items-center gap-2 border-b border-slate-100 px-5 py-3">
+            <template x-if="!translating">
+              <input class="input max-w-md flex-1 font-medium" :id="'section-' + si" x-model="s.title" @input="touch()" :disabled="!canEdit" placeholder="Nom de la rubrique (Entrées, Vins rouges…)">
+            </template>
+            <template x-if="translating">
+              <div class="grid flex-1 gap-2 lg:grid-cols-2">
+                <p class="py-2 font-medium" x-text="s.title || '—'"></p>
+                <input class="input" x-model="tr.sections[si].title" @input="touch()" :disabled="!canText" :placeholder="s.title">
+              </div>
+            </template>
+            <div x-show="!translating && canEdit" class="ml-auto flex items-center gap-1">
+              <button type="button" class="btn btn-ghost btn-sm" aria-label="Monter la rubrique" title="Monter la rubrique" @click="move(form.sections, si, -1)" :disabled="si === 0">↑</button>
+              <button type="button" class="btn btn-ghost btn-sm" aria-label="Descendre la rubrique" title="Descendre la rubrique" @click="move(form.sections, si, 1)" :disabled="si === form.sections.length - 1">↓</button>
+              <button type="button" class="btn btn-ghost btn-sm text-rose-700" @click="removeSection(si)">Supprimer la rubrique</button>
+            </div>
+          </div>
+          <ul class="divide-y divide-slate-100">
+            <template x-for="(d, di) in s.dishes" :key="di">
+              <li class="px-5 py-3">
+                <template x-if="!translating">
+                  <div class="grid gap-2 md:grid-cols-[minmax(0,1.2fr)_8rem_minmax(0,2fr)_auto] md:items-start">
+                    <input class="input" :id="'dish-' + si + '-' + di" x-model="d.name" @input="touch()" :disabled="!canEdit" placeholder="Nom du plat" aria-label="Nom du plat">
+                    <input class="input" x-model="d.price" @input="touch()" :disabled="!canEdit" placeholder="12 €" aria-label="Prix">
+                    <textarea class="input" rows="1" x-model="d.desc" @input="touch()" :disabled="!canEdit" placeholder="Description (facultatif)" aria-label="Description"></textarea>
+                    <div x-show="canEdit" class="flex items-center gap-1">
+                      <button type="button" class="btn btn-ghost btn-sm" aria-label="Monter" title="Monter" @click="move(s.dishes, di, -1)" :disabled="di === 0">↑</button>
+                      <button type="button" class="btn btn-ghost btn-sm" aria-label="Descendre" title="Descendre" @click="move(s.dishes, di, 1)" :disabled="di === s.dishes.length - 1">↓</button>
+                      <button type="button" class="btn btn-ghost btn-sm text-rose-700" aria-label="Supprimer le plat" title="Supprimer le plat" @click="removeDish(s, di)">✕</button>
+                    </div>
+                  </div>
+                </template>
+                <template x-if="translating">
+                  <div class="grid gap-2 lg:grid-cols-2">
+                    <div class="text-sm text-slate-700">
+                      <p><span class="font-medium" x-text="d.name"></span> <span class="text-slate-500" x-text="d.price"></span></p>
+                      <p class="text-slate-500" x-text="d.desc"></p>
+                    </div>
+                    <div class="space-y-2">
+                      <input class="input" x-model="tr.sections[si].dishes[di].name" @input="touch()" :disabled="!canText" :placeholder="d.name" aria-label="Nom du plat traduit">
+                      <textarea x-show="d.desc" class="input" rows="1" x-model="tr.sections[si].dishes[di].desc" @input="touch()" :disabled="!canText" :placeholder="d.desc" aria-label="Description traduite"></textarea>
+                    </div>
+                  </div>
+                </template>
+              </li>
+            </template>
+            <li x-show="!s.dishes.length" class="px-5 py-4 text-sm text-slate-500">Aucun plat dans cette rubrique.</li>
+          </ul>
+          <div x-show="!translating && canEdit" class="border-t border-slate-100 px-5 py-3">
+            <button type="button" class="btn btn-secondary btn-sm" @click="addDish(s, si)">+ Ajouter un plat</button>
+          </div>
+        </section>
+      </template>
+      <button type="button" x-show="!translating && canEdit" class="btn btn-secondary" @click="addSection()">+ Ajouter une rubrique</button>
+
+      <!-- Enregistrer -->
+      <div class="sticky bottom-0 z-10 -mx-1 flex flex-wrap items-center gap-3 rounded-xl bg-white/95 p-3 shadow ring-1 ring-slate-200">
+        <button type="button" class="btn btn-primary" @click="save()" :disabled="saving || (translating ? !canText : !canEdit)" x-text="saving ? 'Enregistrement…' : 'Enregistrer'"></button>
+        <span x-show="$store.ui.dirty" class="text-sm text-amber-800">Modifications non enregistrées</span>
+        <label x-show="translating && canText" class="flex items-center gap-2 text-sm text-slate-700"><input type="checkbox" x-model="asDraft"> Enregistrer en brouillon (à relire)</label>
+        <button type="button" x-show="translating && canText" class="text-sm font-medium text-azure-700 hover:underline" @click="copyFrench()">Reprendre le texte <span x-text="$store.session.langName(def).toLowerCase()"></span></button>
+        <span x-show="!translating" class="hint">Supprimer ou déplacer un plat fait repasser ses traductions « à revoir ».</span>
+        <button type="button" x-show="!translating && canEdit" class="btn btn-ghost btn-sm ml-auto" @click="toggle()" x-text="info.is_active ? 'Masquer la carte' : 'Réafficher la carte'"></button>
+      </div>
+    </div>
+  </template>
+</div>

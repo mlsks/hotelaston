@@ -52,7 +52,12 @@ Alpine.data('translationsView', () => ({
       const page = this.pages.find((p) => p.key === u.ref.split('.')[0]);
       return page ? `#/pages/${page.id}?lang=${lang}&entry=${u.id}` : `#/textes/global?lang=${lang}&entry=${u.id}`;
     }
-    if (u.module === 'items') return `#/collections/${u.ref.split('/')[0]}/${u.id}?lang=${lang}`;
+    if (u.module === 'items') {
+      const [collection, key] = u.ref.split('/');
+      if (collection === 'links') return `#/menus?lang=${lang}`;
+      if (collection === 'menus') return `#/cartes/${key}?lang=${lang}`;
+      return `#/collections/${collection}/${u.id}?lang=${lang}`;
+    }
     if (u.module === 'media') return `#/medias?open=${u.id}`;
     if (u.module === 'banners') return `#/bandeaux/${u.id}?lang=${lang}`;
     if (u.module === 'popups') return `#/popups/${u.id}?lang=${lang}`;

@@ -204,7 +204,7 @@
         <h2 class="flex-1 text-lg font-semibold">Choisir dans la médiathèque</h2>
         <input class="input w-56" type="search" placeholder="Rechercher…" x-model.debounce.400ms="$store.picker.q" @input.debounce.400ms="$store.picker.load()">
         <label x-show="$store.session.canContent" class="btn btn-secondary cursor-pointer">Envoyer un fichier
-          <input type="file" class="sr-only" multiple :accept="$store.picker.kinds.map((k) => k + '/*').join(',')" @change="$store.picker.upload([...$event.target.files]); $event.target.value = ''">
+          <input type="file" class="sr-only" multiple :accept="$store.picker.kinds.map((k) => (k === 'document' ? 'application/pdf' : k + '/*')).join(',')" @change="$store.picker.upload([...$event.target.files]); $event.target.value = ''">
         </label>
         <button class="btn btn-ghost" @click="$store.picker.cancel()">Fermer</button>
       </div>
@@ -216,7 +216,7 @@
           <button class="group overflow-hidden rounded-lg text-left ring-1 ring-slate-200 hover:ring-2 hover:ring-azure-700" @click="$store.picker.choose(m)" :disabled="m.status !== 'ready'">
             <div class="aspect-square bg-slate-100">
               <img x-show="m.thumb" :src="m.thumb" alt="" class="size-full object-cover" loading="lazy">
-              <div x-show="!m.thumb" class="grid size-full place-items-center text-xs text-slate-500 uppercase" x-text="m.kind"></div>
+              <div x-show="!m.thumb" class="grid size-full place-items-center text-xs text-slate-500 uppercase" x-text="m.kind === 'document' ? 'PDF' : m.kind"></div>
             </div>
             <p class="truncate px-2 py-1.5 text-xs text-slate-600" x-text="m.original_name || m.embed_url"></p>
           </button>

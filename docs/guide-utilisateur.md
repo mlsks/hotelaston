@@ -62,7 +62,7 @@ Le menu de gauche est rangé en cinq groupes :
 | Groupe | Écrans |
 |---|---|
 | (en haut) | **Accueil** : version en ligne, prévisualisation, statistiques de la semaine, avancement des traductions, rapport SEO. |
-| Contenu | **Pages**, **Textes communs**, **Textes de l'interface**, **Fiches et listes**, **Médiathèque**, **Bandeaux**, **Popup**. |
+| Contenu | **Pages**, **Textes communs**, **Menus et liens**, **Cartes du restaurant**, **Textes de l'interface**, **Fiches et listes**, **Médiathèque**, **Bandeaux**, **Popup**. |
 | Langues | **Traductions**, **Langues du site**. |
 | Site | **Publication et versions**, **Rapport SEO**, **Statistiques**, **Redirections**. |
 | Administration | **Utilisateurs**, **Réglages**, **Journal des modifications**. |
@@ -93,7 +93,42 @@ Les écrans qui contiennent du texte (pages, textes, fiches, bandeaux, popup) on
 
 ### Textes communs
 
-L'en-tête, les menus, le pied de page, le fil d'Ariane des fiches, le bouton du bas sur mobile, le chat : les textes présents sur toutes les pages. Une modification ici change toutes les pages à la prochaine publication.
+L'en-tête, le pied de page, le fil d'Ariane des fiches, le bouton du bas sur mobile, le chat : les textes présents sur toutes les pages. Une modification ici change toutes les pages à la prochaine publication. Les liens des menus et du pied de page ne sont plus ici : voir [Menus et liens](#menus-et-liens).
+
+### Menus et liens
+
+**Menus et liens** regroupe toutes les listes de liens du site :
+
+- **Sur toutes les pages** : le menu principal (en-tête sur ordinateur), le menu mobile (bouton ☰) et les trois colonnes du pied de page ;
+- **Dans une page** : les cartes de L'Horloge, les cartes du Moon Bar, les liens « pour aller plus loin » de la page Séminaires. Le lien à droite du titre ouvre la page concernée.
+
+Pour chaque lien :
+
+- **Libellé** : le texte affiché, enregistré dès qu'on quitte le champ ;
+- **Le lien mène à** : **une page du site** (choisie dans la liste : son adresse suit la langue du visiteur), **un document (PDF)** choisi dans la médiathèque (il s'ouvre dans un nouvel onglet) ou **une adresse internet** (`https://…`, `mailto:…` ou `tel:…`) ;
+- **↑ ↓** : change l'ordre ;
+- **→ Sous-menu** (menu mobile seulement) : range le lien sous le lien principal du dessus, comme Restaurant L'Horloge sous Restaurant & bar ; **← Sortir** le remet au premier niveau ;
+- **Masquer** / **Afficher** : retire le lien du site sans le perdre ;
+- **Supprimer** : définitif ; un lien principal emporte ses sous-liens.
+
+**+ Ajouter un lien** ajoute un lien en fin de liste, vers l'accueil : changer son libellé et sa cible. Dans une autre langue que le français, seuls les libellés se traduisent ; l'ordre et les cibles valent pour toutes les langues. Un libellé pas encore traduit s'affiche en français.
+
+Pour un document à télécharger (plaquette, menu de groupe en PDF) : l'envoyer dans la **Médiathèque** (ou directement depuis **Choisir…**), puis choisir **Un document (PDF)** sur le lien. Les cartes du restaurant et des bars, elles, sont des pages du site : voir [Cartes du restaurant](#cartes-du-restaurant).
+
+### Cartes du restaurant
+
+**Cartes du restaurant** liste les cartes, rangées par lieu (L'Horloge, Moon Bar, L'Aston Club). Chaque carte est une page du site, avec ses rubriques et ses plats. Les trois cartes de L'Horloge (la carte, les vins, les desserts) ont été reprises de l'ancien site, aux mêmes adresses (`/fr/menu-restaurant-horloge/`, `/fr/carte-vin-restaurant-horloge/`, `/fr/carte-dessert/`) : Google et les liens existants y mènent toujours. Elles ne sont qu'en français pour l'instant.
+
+- **Créer une carte** : en bas de l'écran, donner son nom, son lieu et l'adresse de sa page (proposée à partir du nom), puis **Créer la carte**. Elle est ajoutée aux liens « Les cartes » de la page du lieu (modifiables dans [Menus et liens](#menus-et-liens)).
+- **Modifier une carte** : cliquer dessus.
+  - **En-tête** : nom (titre de la page), sous-titre, lieu, texte du lien de retour vers le lieu, note en bas de carte (allergènes, prix nets…). Les champs facultatifs vides n'apparaissent pas.
+  - **Rubriques** (Entrées, Vins rouges…) : renommer, monter ou descendre avec ↑ ↓, **Supprimer la rubrique**, **+ Ajouter une rubrique**.
+  - **Plats** : nom, prix (texte libre : « 12 € », « 6 € / 32 € »), description facultative ; ↑ ↓ pour l'ordre, ✕ pour retirer, **+ Ajouter un plat**. Un plat sans nom n'est pas enregistré.
+  - **Enregistrer** : rien n'est enregistré avant ce bouton ; l'admin prévient si on quitte l'écran avec des modifications en cours.
+- **Masquer la carte** : sa page et les liens qui y mènent disparaissent du site à la prochaine publication ; **Réafficher la carte** les remet. Une carte ne se supprime pas.
+- **Title et description pour Google** : lien **Référencement de la page** en haut de la carte.
+
+Dans une autre langue, la carte se traduit au même endroit : le français est en regard, seuls les libellés se traduisent (les prix et l'ordre valent pour toutes les langues). Un plat pas encore traduit s'affiche en français. Supprimer ou déplacer un plat en français fait repasser la traduction « à revoir ».
 
 ### Textes de l'interface
 
@@ -158,8 +193,9 @@ L'éditeur Live Music voit un menu réduit : sa page, le programme, les artistes
 ### Médiathèque
 
 - **Envoyer** : glisser-déposer des fichiers sur l'écran (ou **Envoyer des fichiers**), en choisissant le dossier d'envoi. Les photos sont optimisées automatiquement : WebP en plusieurs tailles, recadrage portrait pour mobile, miniature. Un doublon est signalé.
+- **Documents PDF** (cartes du restaurant, plaquettes…) : jusqu'à 20 Mo, au-delà de 5 Mo un avertissement signale qu'il sera long à ouvrir sur un téléphone. Le fichier garde un nom lisible tiré de son nom d'origine. On s'en sert dans [Menus et liens](#menus-et-liens).
 - **Liens externes** : coller une adresse YouTube, Vimeo, Spotify… puis **Ajouter**.
-- **Retrouver** : dossiers, filtre par type (images, vidéos, sons, liens externes), recherche par nom ou texte alternatif.
+- **Retrouver** : dossiers, filtre par type (images, vidéos, sons, documents PDF, liens externes), recherche par nom ou texte alternatif.
 - **Dans la fiche d'un média** :
   - cliquer sur le **sujet principal** de la photo : le recadrage portrait utilisé sur mobile se centre sur ce point ;
   - **Texte alternatif** dans chaque langue : il décrit l'image pour les personnes malvoyantes et pour Google (une pastille signale ceux qui manquent) ;
