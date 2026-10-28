@@ -78,7 +78,7 @@ Alpine.data('usersView', () => ({
 /* ---------- Réglages ---------- */
 /* Valeurs par défaut du site (templates-src/assets/remotion-vanilla.js, BOOKING_DEFAULTS) */
 const BOOKING_PARAMS = {
-  checkin: 'arrivalDate', checkout: 'departureDate', nights: '', adults: 'selectedAdultCount', children: '', guests: '', roomType: '', offerId: '',
+  checkin: 'arrivalDate', checkout: 'departureDate', nights: '', adults: 'selectedAdultCount', children: 'selectedChildCount', guests: '', roomType: '', offerId: '',
 };
 const BOOKING_ROOMS = { confort: 'confort', privilege: 'privilege', premium: 'premium', exclusive: 'exclusive', deluxe: 'deluxe', suites: 'suites' };
 const BOOKING_OFFERS = { 'escapade-gourmande': 'escapade-gourmande', 'nouvel-an': 'nouvel-an', carnaval: 'carnaval' };

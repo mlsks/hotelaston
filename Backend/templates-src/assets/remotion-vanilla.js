@@ -430,7 +430,8 @@
    * Noms des paramètres envoyés au moteur : les clés sont celles du site, les
    * valeurs les noms attendus par D-Edge. Valeur null : paramètre non envoyé.
    * Lien profond D-Edge relevé le 28/10/2026 : …/fr-FR/RoomSelection?arrivalDate=
-   * AAAA-MM-JJ&departureDate=AAAA-MM-JJ&selectedAdultCount=N ; le visiteur choisit
+   * AAAA-MM-JJ&departureDate=AAAA-MM-JJ&selectedAdultCount=N&selectedChildCount=N
+   * (absent sans enfant) ; le visiteur choisit
    * ensuite sa chambre chez D-Edge.
    * Les Réglages du back-office (booking_engine.params, .rooms, .offers) priment
    * sur ces valeurs par défaut, sans toucher au code.
@@ -442,7 +443,7 @@
       nights: null,
       guests: null,
       adults: 'selectedAdultCount',
-      children: null,
+      children: 'selectedChildCount',
       roomType: null,
       offerId: null,
     },
@@ -483,7 +484,7 @@
     set('checkout', checkout);
     if (a && b) set('nights', Math.round((b - a) / 86400000));
     set('adults', adults);
-    set('children', children);
+    set('children', Number(children) || ''); // comme D-Edge : rien sans enfant
     set('guests', Number(adults) + Number(children));
     set('roomType', BOOKING_ENGINE.rooms[roomType] || roomType);
     set('offerId', BOOKING_ENGINE.offers[offerId] || offerId);
