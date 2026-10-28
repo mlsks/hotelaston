@@ -104,41 +104,6 @@
     "alt": "Salon lounge du rooftop",
     "page": "moon-bar"
   },
-  "offres.photo-1": {
-    "url": "https://d1i8cf9j7dueks.cloudfront.net/cache/img/hotel-aston-la-scala-escapade-gourmande-242918-472-595-crop.jpg",
-    "alt": "Cocktail servi au coucher du soleil sur le rooftop",
-    "page": "offres"
-  },
-  "offres.photo-2": {
-    "url": "https://d1i8cf9j7dueks.cloudfront.net/cache/img/hotel-aston-la-scala-restaurant-bar-242405-1024-600-landscape.png",
-    "alt": "Feu d'artifice au-dessus des toits de Nice",
-    "page": "offres"
-  },
-  "offres.photo-3": {
-    "url": "https://d1i8cf9j7dueks.cloudfront.net/cache/img/hotel-aston-la-scala-escapade-gourmande-266999-472-595-crop.jpg",
-    "alt": "Affiche colorée du Carnaval de Nice",
-    "page": "offres"
-  },
-  "offres.photo-4": {
-    "url": "https://d1i8cf9j7dueks.cloudfront.net/cache/img/hotel-aston-la-scala-restaurant-bar-234719-800-383-portrait.png",
-    "alt": "Assiette signature de L'Horloge",
-    "page": "offres"
-  },
-  "offres.photo-5": {
-    "url": "https://d1i8cf9j7dueks.cloudfront.net/cache/img/hotel-aston-la-scala-restaurant-bar-234717-800-383-portrait.jpg",
-    "alt": "Salle du restaurant L'Horloge",
-    "page": "offres"
-  },
-  "offres.photo-6": {
-    "url": "https://d1i8cf9j7dueks.cloudfront.net/cache/img/hotel-aston-la-scala-seminaire-residentiel-234612-472-595-crop.jpg",
-    "alt": "Salle de réunion installée en théâtre",
-    "page": "offres"
-  },
-  "offres.photo-7": {
-    "url": "https://d1i8cf9j7dueks.cloudfront.net/cache/img/hotel-aston-la-scala-salon-cesar-234731-825-500-crop.jpg",
-    "alt": "Salon César installé en U",
-    "page": "offres"
-  },
   "restaurant-bar.photo-1": {
     "url": "https://d1i8cf9j7dueks.cloudfront.net/cache/img/hotel-aston-la-scala-restaurant-bar-242402-1024-768-landscape.jpg",
     "alt": "Terrasse et façade du restaurant L'Horloge",

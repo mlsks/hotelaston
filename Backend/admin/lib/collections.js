@@ -9,6 +9,8 @@
  * ctx (titres, sous-titres, clés) : { artists: Map clé → fiche } pour nommer l'artiste d'un concert.
  */
 
+const FAMILIES = [['sejour', 'Séjour'], ['restaurant', 'Restaurant'], ['seminaires', 'Séminaires']];
+const OFFER_ACTIONS = [['booking', 'Réserver (moteur, avec le code de l’offre)'], ['quote', 'Demander un devis'], ['link', 'Lien vers une page ou une adresse'], ['none', 'Pas de bouton']];
 const VENUES = [['selon-meteo', 'Selon la météo'], ['moon-bar', 'Moon Bar (rooftop)'], ['aston-club', 'L’Aston Club (7e étage)']];
 const TOPICS = [['sejour', 'Séjour'], ['chambres', 'Chambres'], ['rooftop', 'Rooftop'], ['petit-dejeuner', 'Petit-déjeuner'], ['restaurant', 'Restaurant'], ['seminaire', 'Séminaire']];
 
@@ -104,6 +106,36 @@ export const SPECS = {
       { key: 'shortLabel', label: 'Libellé court (cartes de l’accueil)', type: 'text', placeholder: 'ex. Clim' },
       { key: 'icon', label: 'Pictogramme', type: 'icon' },
     ],
+  },
+  offers: {
+    noun: 'offre', addLabel: 'Ajouter une offre',
+    title: (d) => d.title,
+    subtitle: (d) => [Object.fromEntries(FAMILIES)[d.family], [d.price, d.priceNote].filter(Boolean).join(' '), d.onHome ? 'sur l’accueil' : ''].filter(Boolean).join(' · '),
+    key: (d) => d.title,
+    fields: [
+      { key: 'family', label: 'Famille (filtre de la page Offres)', type: 'select', options: FAMILIES, half: true },
+      { key: 'tag', label: 'Étiquette', type: 'text', half: true, placeholder: 'ex. Séjour' },
+      { key: 'title', label: 'Titre', type: 'text', required: true },
+      { key: 'media', label: 'Photo', type: 'image' },
+      { key: 'src', label: 'Photo de l’ancien site (en attente d’import)', type: 'text', onlyIfSet: true, hint: 'Remplacée par la photo de la médiathèque au prochain « media:import-site », ou dès qu’une photo est choisie ci-dessus.' },
+      { key: 'alt', label: 'Description de la photo (texte alternatif)', type: 'text' },
+      { key: 'price', label: 'Prix', type: 'text', half: true, placeholder: 'ex. À partir de 239 €' },
+      { key: 'priceNote', label: 'Précision du prix (en petit)', type: 'text', half: true, placeholder: 'ex. la nuit pour 2' },
+      { key: 'includes', label: 'Ce qui est compris', type: 'list' },
+      { key: 'saving', label: 'Économie', type: 'text', placeholder: 'ex. Économie : 38 € par rapport à la réservation séparée' },
+      { key: 'conditions', label: 'Conditions', type: 'text', placeholder: 'ex. Valable toute l’année selon disponibilités · 1 nuit minimum' },
+      { key: 'toConfirm', label: 'Prix et conditions à confirmer par l’hôtel', type: 'checkbox', hint: 'Cochée : ces informations ne sont pas reprises dans les données lues par Google et les assistants IA.' },
+      { key: 'action', label: 'Bouton', type: 'select', options: OFFER_ACTIONS, half: true },
+      { key: 'button', label: 'Texte du bouton', type: 'text', half: true, placeholder: 'ex. Réserver cette offre' },
+      { key: 'link', label: 'Adresse du lien (bouton « Lien »)', type: 'text', placeholder: '#/restaurant-horloge?a=reserver-horloge ou https://…', hint: '#/ suivi du nom d’une page du site, ou une adresse complète.' },
+      { key: 'checkin', label: 'Arrivée proposée (bouton « Réserver »)', type: 'date', half: true },
+      { key: 'checkout', label: 'Départ proposé', type: 'date', half: true },
+      { key: 'onHome', label: 'Afficher sur l’accueil', type: 'checkbox' },
+      { key: 'teaserTitle', label: 'Titre sur l’accueil', type: 'text', half: true, placeholder: 'Vide : le titre de l’offre' },
+      { key: 'teaserText', label: 'Phrase sur l’accueil', type: 'text', half: true, placeholder: 'ex. À L’Horloge, midi et soir' },
+    ],
+    help: 'L’ordre des offres ici est celui de la page Offres et de l’accueil. Une offre masquée, supprimée ou hors de ses dates d’affichage disparaît du site à la prochaine publication. « Réserver » ouvre le moteur avec le code de l’offre (Réglages, codes tarif).',
+    blank: () => ({ family: 'sejour', tag: 'Séjour', title: '', includes: [], action: 'booking', button: 'Réserver cette offre', toConfirm: false, onHome: false }),
   },
   reviews: {
     noun: 'avis', addLabel: 'Ajouter un avis',

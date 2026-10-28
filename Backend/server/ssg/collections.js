@@ -34,6 +34,8 @@ export const COLLECTIONS = {
   // Menus et listes de liens (voir link-lists.js) : liste, parent, cible (page, document, adresse) + libellé traduit
   links: { label: 'Menus et liens', translatable: ['label'] },
   // Cartes du restaurant et des bars (voir menus.js) : une page par carte, rubriques et plats
+  // Offres de la page Offres et de l'accueil (voir offer-cards.js) : des cartes, sans page propre
+  offers: { label: 'Offres', translatable: ['tag', 'title', 'alt', 'price', 'priceNote', 'includes[]', 'saving', 'conditions', 'button', 'teaserTitle', 'teaserText'] },
   menus: { label: 'Cartes du restaurant et des bars', translatable: ['title', 'subtitle', 'backLabel', 'note', 'sections[].title', 'sections[].dishes[].name', 'sections[].dishes[].desc'] },
 };
 

@@ -1,0 +1,265 @@
+{
+  "_source": "Offres écrites dans pages/offres.html et aperçus de pages/accueil.html jusqu’au 28/10/2026 : reprises une fois dans les fiches Offres (server/ssg/offer-cards.js, ensureOffers).",
+  "offers": [
+    {
+      "key": "escapade-gourmande",
+      "family": "sejour",
+      "photo": "offres.photo-1",
+      "photoUrl": "https://d1i8cf9j7dueks.cloudfront.net/cache/img/hotel-aston-la-scala-escapade-gourmande-242918-472-595-crop.jpg",
+      "alt": "offres.011-img@alt",
+      "tag": "offres.012-p",
+      "title": "offres.013-h2",
+      "price": [
+        {
+          "key": "offres.014-span",
+          "tag": "span"
+        },
+        {
+          "text": " "
+        },
+        {
+          "key": "offres.015-small",
+          "tag": "small"
+        }
+      ],
+      "includes": [
+        "offres.016-li",
+        "offres.017-li",
+        "offres.018-li"
+      ],
+      "saving": "offres.019-span",
+      "conditions": "offres.020-span",
+      "toConfirm": true,
+      "button": "offres.021-a",
+      "action": "booking",
+      "link": "",
+      "checkin": "",
+      "checkout": "",
+      "home": {
+        "family": "sejour",
+        "tag": "accueil.170-span",
+        "title": "accueil.171-strong",
+        "text": "accueil.172-span"
+      }
+    },
+    {
+      "key": "nouvel-an",
+      "family": "sejour",
+      "photo": "offres.photo-2",
+      "photoUrl": "https://d1i8cf9j7dueks.cloudfront.net/cache/img/hotel-aston-la-scala-restaurant-bar-242405-1024-600-landscape.png",
+      "alt": "offres.022-img@alt",
+      "tag": "offres.023-p",
+      "title": "offres.024-h2",
+      "price": [
+        {
+          "key": "offres.025-span",
+          "tag": "span"
+        },
+        {
+          "text": " "
+        },
+        {
+          "key": "offres.026-small",
+          "tag": "small"
+        }
+      ],
+      "includes": [
+        "offres.027-li",
+        "offres.028-li",
+        "offres.029-li"
+      ],
+      "saving": "offres.030-span",
+      "conditions": "offres.031-span",
+      "toConfirm": true,
+      "button": "offres.032-a",
+      "action": "booking",
+      "link": "",
+      "checkin": "2026-12-30",
+      "checkout": "2027-01-01"
+    },
+    {
+      "key": "carnaval",
+      "family": "sejour",
+      "photo": "offres.photo-3",
+      "photoUrl": "https://d1i8cf9j7dueks.cloudfront.net/cache/img/hotel-aston-la-scala-escapade-gourmande-266999-472-595-crop.jpg",
+      "alt": "offres.033-img@alt",
+      "tag": "offres.034-p",
+      "title": "offres.035-h2",
+      "price": [
+        {
+          "key": "offres.036-span",
+          "tag": "span"
+        },
+        {
+          "text": " "
+        },
+        {
+          "key": "offres.037-small",
+          "tag": "small"
+        }
+      ],
+      "includes": [
+        "offres.038-li",
+        "offres.039-li",
+        "offres.040-li"
+      ],
+      "saving": "offres.041-span",
+      "conditions": "offres.042-span",
+      "toConfirm": true,
+      "button": "offres.043-a",
+      "action": "booking",
+      "link": "",
+      "checkin": "",
+      "checkout": ""
+    },
+    {
+      "key": "menu-horloge",
+      "family": "restaurant",
+      "photo": "offres.photo-4",
+      "photoUrl": "https://d1i8cf9j7dueks.cloudfront.net/cache/img/hotel-aston-la-scala-restaurant-bar-234719-800-383-portrait.png",
+      "alt": "offres.044-img@alt",
+      "tag": "offres.045-p",
+      "title": "offres.046-h2",
+      "price": [
+        {
+          "text": "34 € "
+        },
+        {
+          "key": "offres.047-small",
+          "tag": "small"
+        }
+      ],
+      "includes": [
+        "offres.048-li",
+        "offres.049-li"
+      ],
+      "saving": "offres.050-span",
+      "conditions": "offres.051-p",
+      "toConfirm": true,
+      "button": "offres.052-a",
+      "action": "link",
+      "link": "#/restaurant-horloge?a=reserver-horloge",
+      "checkin": "",
+      "checkout": "",
+      "home": {
+        "family": "restaurant",
+        "tag": "accueil.173-span",
+        "title": "accueil.174-strong",
+        "text": "accueil.175-span"
+      }
+    },
+    {
+      "key": "formule-express",
+      "family": "restaurant",
+      "photo": "offres.photo-5",
+      "photoUrl": "https://d1i8cf9j7dueks.cloudfront.net/cache/img/hotel-aston-la-scala-restaurant-bar-234717-800-383-portrait.jpg",
+      "alt": "offres.053-img@alt",
+      "tag": "offres.054-p",
+      "title": "offres.055-h2",
+      "price": [
+        {
+          "text": "15 € "
+        },
+        {
+          "key": "offres.056-small",
+          "tag": "small"
+        },
+        {
+          "text": " · 22 € "
+        },
+        {
+          "key": "offres.057-small",
+          "tag": "small"
+        }
+      ],
+      "includes": [
+        "offres.058-li",
+        "offres.059-li"
+      ],
+      "saving": "offres.060-span",
+      "conditions": "offres.061-span",
+      "toConfirm": true,
+      "button": "offres.062-a",
+      "action": "link",
+      "link": "#/restaurant-horloge?a=reserver-horloge",
+      "checkin": "",
+      "checkout": ""
+    },
+    {
+      "key": "seminaire-residentiel",
+      "family": "seminaires",
+      "photo": "offres.photo-6",
+      "photoUrl": "https://d1i8cf9j7dueks.cloudfront.net/cache/img/hotel-aston-la-scala-seminaire-residentiel-234612-472-595-crop.jpg",
+      "alt": "offres.063-img@alt",
+      "tag": "offres.064-p",
+      "title": "offres.065-h2",
+      "price": [
+        {
+          "key": "offres.066-span",
+          "tag": "span"
+        },
+        {
+          "text": " "
+        },
+        {
+          "key": "offres.067-small",
+          "tag": "small"
+        }
+      ],
+      "includes": [
+        "offres.068-li",
+        "offres.069-li",
+        "offres.070-li"
+      ],
+      "saving": "offres.071-span",
+      "conditions": "offres.072-span",
+      "toConfirm": true,
+      "button": "offres.073-a",
+      "action": "quote",
+      "link": "",
+      "checkin": "",
+      "checkout": "",
+      "home": {
+        "family": "seminaires",
+        "tag": "accueil.176-span",
+        "title": "accueil.177-strong",
+        "text": "accueil.178-span"
+      }
+    },
+    {
+      "key": "journee-etude",
+      "family": "seminaires",
+      "photo": "offres.photo-7",
+      "photoUrl": "https://d1i8cf9j7dueks.cloudfront.net/cache/img/hotel-aston-la-scala-salon-cesar-234731-825-500-crop.jpg",
+      "alt": "offres.074-img@alt",
+      "tag": "offres.075-p",
+      "title": "offres.076-h2",
+      "price": [
+        {
+          "key": "offres.077-span",
+          "tag": "span"
+        },
+        {
+          "text": " "
+        },
+        {
+          "key": "offres.078-small",
+          "tag": "small"
+        }
+      ],
+      "includes": [
+        "offres.079-li",
+        "offres.080-li",
+        "offres.081-li"
+      ],
+      "saving": "offres.082-span",
+      "conditions": "offres.083-span",
+      "toConfirm": true,
+      "button": "offres.084-a",
+      "action": "quote",
+      "link": "",
+      "checkin": "",
+      "checkout": ""
+    }
+  ]
+}

@@ -20,8 +20,10 @@ export async function loadTargets(session) {
   const out = { pages: [], items: [], rooms: [] };
   out.pages = (await get('/pages')).map((p) => ({ value: `page:${p.key}`, label: pageLabel(p, session.defaultLang) }));
   if (!session.isScoped) {
-    const [rooms, services] = await Promise.all([get('/collections/rooms/items'), get('/collections/services/items')]);
-    out.rooms = rooms.map((r) => ({ value: `room:${r.key}`, label: r.merged.name || r.key }));
+    const [rooms, services, offers] = await Promise.all([get('/collections/rooms/items'), get('/collections/services/items'), get('/collections/offers/items')]);
+    // Moteur de réservation : une chambre ou une offre présélectionnée
+    out.rooms = [...rooms.map((r) => ({ value: `room:${r.key}`, label: r.merged.name || r.key })),
+      ...offers.filter((o) => o.merged.action === 'booking').map((o) => ({ value: `offer:${o.key}`, label: `Offre · ${o.merged.title || o.key}` }))];
     out.items = [...rooms.map((r) => ({ value: `item:rooms/${r.key}`, label: `Chambre · ${r.merged.name || r.key}` })),
       ...services.map((s) => ({ value: `item:services/${s.key}`, label: `Service · ${s.merged.name || s.key}` }))];
   }

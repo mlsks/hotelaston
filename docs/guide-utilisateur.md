@@ -144,6 +144,7 @@ Les textes affichés par le JavaScript du site : module de réservation, avis, f
 |---|---|
 | Chambres | Une fiche par catégorie : nom, titre, description, points clés, équipements, variantes, photos, thème des avis affichés, et ce qui s'affiche sur la page Chambres et dans le carrousel de l'accueil. Chaque fiche a sa propre page. Voir [Les chambres](#les-chambres). |
 | Services | Une fiche par service : chapeau, texte, informations pratiques, questions fréquentes, photos. Chaque fiche a sa propre page. |
+| Offres | Une fiche par offre : famille, photo, prix, ce qui est compris, économie, conditions, bouton, présence sur l'accueil. Voir [Les offres](#les-offres). |
 | Équipements | Les pictogrammes et libellés utilisés par les fiches chambre. |
 | Avis | Auteur, mois du séjour, note, chambre, thèmes, texte et réponse de l'hôtel. |
 | Réponses du chat | Les mots déclencheurs (si la question du visiteur en contient un, le chat donne cette réponse) et la réponse. |
@@ -170,6 +171,25 @@ Pour **ajouter une chambre**, cliquer sur **Ajouter une chambre** et remplir la 
 **Masquer** une chambre (case **Visible sur le site**) la retire partout ; les liens qui la citent dans les textes mènent alors à la page Chambres. **Supprimer** une chambre fait de même et ajoute une redirection de son ancienne adresse vers la page Chambres, visible dans [Redirections](#redirections) : les favoris et Google suivent. Si une chambre est recréée plus tard à la même adresse, la redirection cesse de s’appliquer.
 
 Les textes des pages qui comptent les chambres (« Six catégories, de 18 à 50 m² » sur la page Chambres, par exemple) ne changent pas seuls : les revoir dans **Pages** après un ajout ou une suppression.
+
+### Les offres
+
+La page **Offres** et les aperçus « Offres spéciales » de l'accueil sont construits à partir des fiches **Offres**, dans l'ordre de la liste (flèches ↑ ↓). Une offre n'a pas de page à elle : c'est une carte de la page Offres. Dans une fiche :
+
+- **Famille** : Séjour, Restaurant ou Séminaires, pour les filtres de la page Offres. Un filtre sans offre disparaît ;
+- **Étiquette**, **Titre**, **Photo** et sa **description** ;
+- **Prix** en grand (« À partir de 239 € ») et **Précision du prix** en petit (« la nuit pour 2 ») ;
+- **Ce qui est compris** (une ligne par élément), **Économie**, **Conditions** ;
+- **Prix et conditions à confirmer par l'hôtel** : à cocher tant que l'hôtel ne les a pas validés ;
+- **Bouton** :
+  - **Réserver** ouvre le moteur avec le code de l'offre, et les dates proposées si elles sont remplies ;
+  - **Demander un devis** ouvre le formulaire de devis, l'offre déjà choisie dans sa liste (une offre ajoutée y figure aussi) ;
+  - **Lien** mène à une page du site (`#/restaurant-horloge?a=reserver-horloge` pour réserver une table à L'Horloge) ou à une adresse complète ;
+- **Afficher sur l'accueil**, avec un **Titre** et une **Phrase** propres à l'accueil. Sans aucune offre cochée, la rubrique disparaît de l'accueil.
+
+Pour une offre saisonnière, régler **Afficher seulement entre deux dates** (à droite) : elle apparaît et disparaît seule, à la régénération de chaque nuit. **Masquer** ou **Supprimer** la retire aussi de partout.
+
+Une offre réservable apparaît aussi dans le choix **Le moteur de réservation** des bandeaux et du popup. Son identifiant (sous la case **Visible sur le site**) est envoyé à D-Edge. Si D-Edge lui donne un autre code, l'ajouter dans les [Réglages](#reglages) (codes tarif). Pour les trois offres d'origine, le nom affiché dans la fenêtre de réservation se règle dans **Textes de l'interface** (`ui.offer.…`) ; pour les autres, c'est le titre de la fiche.
 
 Les avis livrés avec le site sont des exemples, marqués « Exemple » sur le site. Le passage aux avis réels se fait dans les [Réglages](#reglages).
 
