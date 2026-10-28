@@ -66,6 +66,7 @@ La commande `user:add` affiche le mot de passe une seule fois. Se connecter ensu
 | `node server/cli.js stats:aggregate` | Agrégats quotidiens des statistiques et purge des données anciennes (fait aussi chaque nuit). |
 | `node scripts/i18n-export.mjs` | Exporte tous les textes traduisibles du français (textes, pages et référencement, fiches, textes alternatifs, bandeaux, popups) dans `storage/translations/source.fr.json`, pour une traduction hors ligne. |
 | `node scripts/i18n-import.mjs <fichier.json> [--dry]` | Réimporte une traduction de même forme (champ `lang`) par l'API, serveur lancé : tout arrive en **brouillon** et figure au Journal. Signale d'abord les balises, liens, variables `{…}` ou nombres qui diffèrent du français ; `--dry` s'arrête là. |
+| `node scripts/i18n-ready.mjs <langue> [--dry]` | Passe en « prêt » tous les brouillons d'une langue (même valeur, seul le statut change), par l'API : chaque écriture figure au Journal. Il reste à publier. |
 | `node server/cli.js geoip:update [--city]` | Télécharge la base de géolocalisation DB-IP Lite du mois dans `storage/geoip/` (pays ; pays et région avec `--city`, environ 130 Mo). À relancer chaque mois. |
 | `npm start` | Serveur : API, prévisualisation protégée, site, réception des statistiques, cron de minuit (régénération, nettoyage des médias, agrégats des statistiques). |
 | `npm test` | Tests automatiques. |
