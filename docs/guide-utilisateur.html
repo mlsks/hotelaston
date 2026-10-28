@@ -153,7 +153,7 @@ npm start</code></pre></li>
 <thead><tr><th>Groupe</th><th>Écrans</th></tr></thead>
 <tbody>
 <tr><td>(en haut)</td><td><strong>Accueil</strong> : version en ligne, prévisualisation, statistiques de la semaine, avancement des traductions, rapport SEO.</td></tr>
-<tr><td>Contenu</td><td><strong>Pages</strong>, <strong>Textes communs</strong>, <strong>Textes de l'interface</strong>, <strong>Fiches et listes</strong>, <strong>Médiathèque</strong>, <strong>Bandeaux</strong>, <strong>Popup</strong>.</td></tr>
+<tr><td>Contenu</td><td><strong>Pages</strong>, <strong>Textes communs</strong>, <strong>Menus et liens</strong>, <strong>Textes de l'interface</strong>, <strong>Fiches et listes</strong>, <strong>Médiathèque</strong>, <strong>Bandeaux</strong>, <strong>Popup</strong>.</td></tr>
 <tr><td>Langues</td><td><strong>Traductions</strong>, <strong>Langues du site</strong>.</td></tr>
 <tr><td>Site</td><td><strong>Publication et versions</strong>, <strong>Rapport SEO</strong>, <strong>Statistiques</strong>, <strong>Redirections</strong>.</td></tr>
 <tr><td>Administration</td><td><strong>Utilisateurs</strong>, <strong>Réglages</strong>, <strong>Journal des modifications</strong>.</td></tr>
@@ -181,7 +181,24 @@ npm start</code></pre></li>
 </ul></li>
 </ul>
 <h3 id="textes-communs">Textes communs</h3>
-<p>L'en-tête, les menus, le pied de page, le fil d'Ariane des fiches, le bouton du bas sur mobile, le chat : les textes présents sur toutes les pages. Une modification ici change toutes les pages à la prochaine publication.</p>
+<p>L'en-tête, le pied de page, le fil d'Ariane des fiches, le bouton du bas sur mobile, le chat : les textes présents sur toutes les pages. Une modification ici change toutes les pages à la prochaine publication. Les liens des menus et du pied de page ne sont plus ici : voir <a href="#menus-et-liens">Menus et liens</a>.</p>
+<h3 id="menus-et-liens">Menus et liens</h3>
+<p><strong>Menus et liens</strong> regroupe toutes les listes de liens du site :</p>
+<ul>
+<li><strong>Sur toutes les pages</strong> : le menu principal (en-tête sur ordinateur), le menu mobile (bouton ☰) et les trois colonnes du pied de page ;</li>
+<li><strong>Dans une page</strong> : les cartes de L'Horloge, les cartes du Moon Bar, les liens « pour aller plus loin » de la page Séminaires. Le lien à droite du titre ouvre la page concernée.</li>
+</ul>
+<p>Pour chaque lien :</p>
+<ul>
+<li><strong>Libellé</strong> : le texte affiché, enregistré dès qu'on quitte le champ ;</li>
+<li><strong>Le lien mène à</strong> : <strong>une page du site</strong> (choisie dans la liste : son adresse suit la langue du visiteur), <strong>un document (PDF)</strong> choisi dans la médiathèque (il s'ouvre dans un nouvel onglet) ou <strong>une adresse internet</strong> (<code>https://…</code>, <code>mailto:…</code> ou <code>tel:…</code>) ;</li>
+<li><strong>↑ ↓</strong> : change l'ordre ;</li>
+<li><strong>→ Sous-menu</strong> (menu mobile seulement) : range le lien sous le lien principal du dessus, comme Restaurant L'Horloge sous Restaurant &amp; bar ; <strong>← Sortir</strong> le remet au premier niveau ;</li>
+<li><strong>Masquer</strong> / <strong>Afficher</strong> : retire le lien du site sans le perdre ;</li>
+<li><strong>Supprimer</strong> : définitif ; un lien principal emporte ses sous-liens.</li>
+</ul>
+<p><strong>+ Ajouter un lien</strong> ajoute un lien en fin de liste, vers l'accueil : changer son libellé et sa cible. Dans une autre langue que le français, seuls les libellés se traduisent ; l'ordre et les cibles valent pour toutes les langues. Un libellé pas encore traduit s'affiche en français.</p>
+<p>Pour mettre une carte en PDF : l'envoyer dans la <strong>Médiathèque</strong> (ou directement depuis <strong>Choisir…</strong>), puis choisir <strong>Un document (PDF)</strong> sur le lien.</p>
 <h3 id="textes-de-l-interface">Textes de l'interface</h3>
 <p>Les textes affichés par le JavaScript du site : module de réservation, avis, formulaires, chat, bandeaux, popup. Les éléments entre accolades, comme <code>{count}</code>, sont remplacés par une valeur au moment de l'affichage : <strong>il faut les garder tels quels</strong>, y compris dans les traductions.</p>
 <h2 id="4-fiches-et-listes">4. Fiches et listes</h2>
@@ -232,8 +249,9 @@ npm start</code></pre></li>
 <h3 id="mediatheque">Médiathèque</h3>
 <ul>
 <li><strong>Envoyer</strong> : glisser-déposer des fichiers sur l'écran (ou <strong>Envoyer des fichiers</strong>), en choisissant le dossier d'envoi. Les photos sont optimisées automatiquement : WebP en plusieurs tailles, recadrage portrait pour mobile, miniature. Un doublon est signalé.</li>
+<li><strong>Documents PDF</strong> (cartes du restaurant, plaquettes…) : jusqu'à 20 Mo, au-delà de 5 Mo un avertissement signale qu'il sera long à ouvrir sur un téléphone. Le fichier garde un nom lisible tiré de son nom d'origine. On s'en sert dans <a href="#menus-et-liens">Menus et liens</a>.</li>
 <li><strong>Liens externes</strong> : coller une adresse YouTube, Vimeo, Spotify… puis <strong>Ajouter</strong>.</li>
-<li><strong>Retrouver</strong> : dossiers, filtre par type (images, vidéos, sons, liens externes), recherche par nom ou texte alternatif.</li>
+<li><strong>Retrouver</strong> : dossiers, filtre par type (images, vidéos, sons, documents PDF, liens externes), recherche par nom ou texte alternatif.</li>
 <li><strong>Dans la fiche d'un média</strong> :
 <ul>
 <li>cliquer sur le <strong>sujet principal</strong> de la photo : le recadrage portrait utilisé sur mobile se centre sur ce point ;</li>

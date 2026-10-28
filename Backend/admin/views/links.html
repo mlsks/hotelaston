@@ -1,0 +1,85 @@
+<div x-data="linksView" class="space-y-6">
+  <div class="flex flex-wrap items-end justify-between gap-4">
+    <div class="max-w-3xl">
+      <h1 class="page-title">Menus et liens</h1>
+      <p class="mt-1 text-slate-600">Menu principal, menu mobile, pied de page et listes de liens des pages (cartes du restaurant et du bar…) : ajoutez, retirez, renommez et réordonnez les liens. Un lien mène à une page du site, à un document PDF de la médiathèque ou à une autre adresse.</p>
+      <p x-show="translating" class="mt-2 text-sm text-slate-600">Traduction : seuls les libellés changent d’une langue à l’autre ; l’ordre et les cibles se règlent en <span x-text="$store.session.langName(def).toLowerCase()"></span>.</p>
+    </div>
+    <template data-include="lang-tabs"></template>
+  </div>
+
+  <p x-show="loading" class="py-10 text-center text-slate-500">Chargement des menus…</p>
+
+  <template x-for="group in groups" :key="group.name">
+    <section class="space-y-4">
+      <h2 class="section-title" x-text="group.name"></h2>
+      <template x-for="list in group.lists" :key="list.key">
+        <details class="card group" open>
+          <summary class="flex cursor-pointer list-none flex-wrap items-center gap-3 px-5 py-3.5">
+            <svg class="size-4 shrink-0 text-slate-400 transition group-open:rotate-90" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 6 6 6-6 6"/></svg>
+            <span class="flex-1 font-medium" x-text="list.label"></span>
+            <a x-show="list.page_id" :href="'#/pages/' + list.page_id" class="text-xs text-azure-700 hover:underline" @click.stop x-text="listPlace(list)"></a>
+            <span x-show="translating && todo(list)" class="badge bg-rose-50 text-rose-700 ring-rose-200" x-text="todo(list) + ' à traduire'"></span>
+            <span class="text-xs text-slate-500" x-text="rows(list).length + ' lien(s)'"></span>
+          </summary>
+          <ul class="divide-y divide-slate-100 border-t border-slate-100">
+            <template x-for="it in rows(list)" :key="it.id">
+              <li class="grid gap-3 px-5 py-3 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.3fr)_20rem] lg:items-center" :class="{ 'lg:pl-12 bg-slate-50/60': it.data.parent, 'opacity-60': !it.is_active }">
+                <!-- Libellé -->
+                <div class="min-w-0">
+                  <div class="mb-1 flex flex-wrap items-center gap-2 text-xs text-slate-500">
+                    <span x-show="it.data.parent">↳ sous-menu</span>
+                    <span x-show="!it.is_active" class="badge bg-slate-100 text-slate-600 ring-slate-200">Masqué</span>
+                    <span x-show="translating" class="badge" :class="$fmt.stateClass(state(it))" x-text="$fmt.stateLabel(state(it))"></span>
+                    <span class="ml-auto" :class="it.saveState === 'error' ? 'text-rose-700' : ''" x-text="{ saving: 'Enregistrement…', saved: 'Enregistré ✓', error: 'Non enregistré' }[it.saveState] || ''"></span>
+                  </div>
+                  <input class="input" :id="'link-' + it.id" x-model="it.draft" @change="saveLabel(it)" :disabled="!canTranslate" :placeholder="translating ? source(it) : 'Libellé du lien'" :aria-label="'Libellé du lien ' + source(it)">
+                  <p x-show="translating" class="mt-1 truncate text-xs text-slate-500"><span x-text="$store.session.langName(def)"></span> : <span x-text="source(it)"></span></p>
+                  <button type="button" x-show="translating && canTranslate && ['draft', 'outdated'].includes(state(it)) && it.draft" class="mt-1 text-xs font-medium text-azure-700 hover:underline" @click="saveLabel(it, { status: 'ready' })">Marquer comme prêt</button>
+                </div>
+
+                <!-- Cible -->
+                <div class="min-w-0">
+                  <template x-if="!translating">
+                    <div class="flex flex-wrap gap-2">
+                      <select class="input w-auto" :value="it.data.kind" @change="setKind(it, $event.target.value)" :disabled="!canEdit" aria-label="Le lien mène à">
+                        <template x-for="[k, name] in kinds" :key="k"><option :value="k" x-text="name" :selected="it.data.kind === k"></option></template>
+                      </select>
+                      <select x-show="it.data.kind === 'page'" class="input min-w-0 flex-1" @change="saveTarget(it, { kind: 'page', page: $event.target.value })" :disabled="!canEdit" aria-label="Page">
+                        <template x-for="p in pageOptions" :key="p.key"><option :value="p.key" x-text="p.name" :selected="it.data.page === p.key"></option></template>
+                      </select>
+                      <div x-show="it.data.kind === 'media'" class="flex min-w-0 flex-1 items-center gap-2">
+                        <a x-show="mediaUrl(it)" :href="mediaUrl(it)" target="_blank" rel="noopener" class="min-w-0 truncate text-sm text-azure-700 underline" x-text="mediaName(it)"></a>
+                        <span x-show="!mediaUrl(it)" class="text-sm text-slate-500" x-text="mediaName(it)"></span>
+                        <button type="button" class="btn btn-secondary btn-sm shrink-0" @click="pickDocument(it)" :disabled="!canEdit">Choisir…</button>
+                      </div>
+                      <input x-show="it.data.kind === 'url'" class="input min-w-0 flex-1" type="url" :value="it.data.url || ''" placeholder="https://…" @change="saveUrl(it, $event.target.value)" :disabled="!canEdit" aria-label="Adresse">
+                    </div>
+                  </template>
+                  <p x-show="translating" class="truncate text-sm text-slate-500"
+                    x-text="it.data.kind === 'page' ? '→ ' + pageName(it.data.page) : it.data.kind === 'media' ? '→ ' + mediaName(it) : '→ ' + (it.data.url || '')"></p>
+                </div>
+
+                <!-- Actions -->
+                <div x-show="canEdit" class="flex flex-wrap items-center gap-1 lg:justify-end">
+                  <button type="button" class="btn btn-ghost btn-sm" title="Monter" aria-label="Monter" @click="move(list, it, -1)" :disabled="!canMove(list, it, -1)">↑</button>
+                  <button type="button" class="btn btn-ghost btn-sm" title="Descendre" aria-label="Descendre" @click="move(list, it, 1)" :disabled="!canMove(list, it, 1)">↓</button>
+                  <button type="button" x-show="canIndent(list, it)" class="btn btn-ghost btn-sm" title="Mettre dans le sous-menu du lien au-dessus" @click="indent(list, it)">→ Sous-menu</button>
+                  <button type="button" x-show="it.data.parent" class="btn btn-ghost btn-sm" title="Sortir du sous-menu" @click="outdent(list, it)">← Sortir</button>
+                  <button type="button" class="btn btn-ghost btn-sm" @click="toggle(it)" x-text="it.is_active ? 'Masquer' : 'Afficher'"></button>
+                  <button type="button" class="btn btn-ghost btn-sm text-rose-700" @click="remove(it)">Supprimer</button>
+                </div>
+              </li>
+            </template>
+            <li x-show="!rows(list).length" class="px-5 py-6 text-center text-sm text-slate-500">Aucun lien pour l’instant.</li>
+          </ul>
+          <div x-show="canEdit" class="border-t border-slate-100 px-5 py-3">
+            <button type="button" class="btn btn-secondary btn-sm" @click="add(list)">+ Ajouter un lien</button>
+          </div>
+        </details>
+      </template>
+    </section>
+  </template>
+
+  <p x-show="!loading" class="hint">Les changements apparaissent sur le site après « Prévisualiser » puis « Publier ». Un lien masqué reste dans la liste pour être réaffiché plus tard.</p>
+</div>

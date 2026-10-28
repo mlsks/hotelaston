@@ -88,6 +88,7 @@ Documentation : [Backend/README.md](Backend/README.md) (commandes, rôles, écra
 | 8 | Politique de confidentialité | Faire valider et ajouter le paragraphe sur la mesure d'audience, prêt dans [docs/confidentialite-mesure-audience.md](docs/confidentialite-mesure-audience.md). |
 | 9 | Traductions | L'anglais est activé mais aucune page n'est encore entièrement traduite : seul le français sera publié tant que ce n'est pas fait. Désigner les traducteurs (comptes à créer), puis l'italien et l'allemand. |
 | 10 | Anciennes adresses | Relever les adresses actuelles de hotel-aston.com pour créer les redirections 301 et ne pas perdre le référencement. |
+| 11 | Cartes de L'Horloge | Corrigées le 28/10/2026 (menu, vins, desserts), mais elles pointent vers les pages de l'ancien site hotel-aston.com, qui disparaîtront à la mise en ligne. Fournir les cartes en PDF (ou leur contenu) et les mettre dans **Menus et liens**. Vérifier aussi les cartes du Moon Bar. |
 
 ### 2.2 Développement restant
 
@@ -99,6 +100,7 @@ Documentation : [Backend/README.md](Backend/README.md) (commandes, rôles, écra
 | Fait (27/10) | Photos du site | 72 photos du site actuel dans la médiathèque (WebP en plusieurs tailles), 63 emplacements des gabarits, photos des fiches, image de partage (JPEG 1200×630, lu par tous les réseaux sociaux) et JSON-LD basculés : plus aucun appel à l'ancien CDN. Photos modifiables dans l'admin (onglet Textes de chaque page, fiches). Commande `media:import-site` à relancer sur une base neuve. |
 | Avant mise en ligne | Comptes | Créer les vrais comptes sur le serveur ; les comptes de développement restent en local. |
 | Fait (27/10) | SEO et GEO | 54 remarques corrigées (titles et descriptions raccourcis, sans fait nouveau). Visibilité dans les assistants IA : robots.txt qui autorise les robots IA, `llms.txt` généré depuis la base, nœud `WebPage` relié à l'hôtel sur chaque page, FAQ balisée sans les réponses « à confirmer ». Textes à relire et suite : [docs/seo-geo.md](docs/seo-geo.md) ; questions 25 à 31 pour l'hôtel. |
+| En cours (28/10) | Tout modifier dans l'admin | Plan en 4 étapes validé le 28/10/2026. **Étape 1 faite** : écran **Menus et liens** (menu principal, menu mobile avec sous-menus, pied de page, cartes du restaurant et du bar, liens de la page Séminaires : ajouter, retirer, renommer, réordonner, masquer ; cible page, PDF ou adresse) et documents PDF dans la médiathèque. Étapes suivantes : 2) catégories de chambres (ajouter, supprimer, réordonner), 3) offres en fiches, 4) blocs des pages Restaurant & bar et Séminaires. |
 | Ensuite | Avis sur les pages restaurant et bars | Reporté à votre demande : L'Horloge, Moon Bar, L'Aston Club. |
 | Ensuite | Vidéos externes | Lecteur YouTube / Vimeo chargé au clic (aujourd'hui un simple lien). |
 | Option | Statistiques niveau 2 | Visiteurs qui reviennent (identifiant de 13 mois avec possibilité de refus). |

@@ -74,7 +74,7 @@ export async function ingestUpload(db, { stream, filename, folder = '/', userId 
     }), fs.createWriteStream(tmp));
     if (stream.truncated) throw new HttpError(413, 'Fichier trop lourd.');
     const type = sniff(head);
-    if (!type) throw new HttpError(415, 'Type de fichier non pris en charge : images JPEG, PNG, WebP, AVIF, GIF ; vidéos MP4, WebM ; sons MP3, M4A, WAV, OGG, FLAC.');
+    if (!type) throw new HttpError(415, 'Type de fichier non pris en charge : images JPEG, PNG, WebP, AVIF, GIF ; vidéos MP4, WebM ; sons MP3, M4A, WAV, OGG, FLAC ; documents PDF.');
     if (type.mime === 'image/heic') throw new HttpError(415, 'Photo HEIC (iPhone) : exportez-la en JPEG avant de l’envoyer.');
     const max = config.uploadMaxMb[type.kind];
     if (size > max * MB) throw new HttpError(413, `Fichier trop lourd : ${(size / MB).toFixed(1)} Mo pour ${max} Mo au plus.`);
@@ -104,6 +104,9 @@ function saveVariant(db, mediaId, purpose, format, info, rel) {
     .run(mediaId, purpose, format, info.width ?? null, info.height ?? null, info.size, rel);
 }
 
+/** Nom de fichier lisible, sans accents ni extension : « Carte des vins (2026).pdf » → « carte-des-vins-2026 ». */
+const fileSlug = (name) => String(name || '').replace(/\.[a-z0-9]+$/i, '').normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+  .toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '').slice(0, 60);
 const variantPath = (m, suffix) => `${VARIANT_DIR}/${m.sha256.slice(0, 16)}-${suffix}`;
 const absolute = (rel) => path.join(config.mediaDir, ...rel.split('/'));
 
@@ -177,6 +180,15 @@ export async function processMedia(db, id) {
       return;
     }
 
+    // Document (PDF) : copie servie telle quelle, sous un nom lisible (carte-des-vins.pdf) précédé de l'empreinte
+    if (m.kind === 'document') {
+      const rel = variantPath(m, `${fileSlug(m.original_name) || 'document'}.${path.extname(m.storage_key).slice(1)}`);
+      fs.copyFileSync(src, absolute(rel));
+      saveVariant(db, m.id, 'original', path.extname(m.storage_key).slice(1), { size: m.bytes }, rel);
+      db.prepare("UPDATE cms_media SET status = 'ready', error = NULL WHERE id = ?").run(m.id);
+      return;
+    }
+
     // Vidéo ou son : copie servie telle quelle, mesures et poster si ffmpeg est disponible
     const rel = variantPath(m, `original${path.extname(m.storage_key)}`);
     fs.copyFileSync(src, absolute(rel));
@@ -229,6 +241,7 @@ export function warningsFor(m) {
   const w = [];
   if (m.kind === 'video' && m.bytes > config.warnMb.video * MB) w.push(`Vidéo de ${(m.bytes / MB).toFixed(1)} Mo : au-delà de ${config.warnMb.video} Mo, elle ralentit les connexions mobiles.`);
   if (m.kind === 'audio' && m.bytes > config.warnMb.audio * MB) w.push(`Son de ${(m.bytes / MB).toFixed(1)} Mo : au-delà de ${config.warnMb.audio} Mo conseillés.`);
+  if (m.kind === 'document' && m.bytes > config.warnMb.document * MB) w.push(`Document de ${(m.bytes / MB).toFixed(1)} Mo : au-delà de ${config.warnMb.document} Mo, il est long à ouvrir sur un téléphone.`);
   if (m.error && m.status === 'ready') w.push(m.error);
   return w;
 }

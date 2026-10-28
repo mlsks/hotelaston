@@ -52,7 +52,7 @@ function units(db, lang, def) {
   }
 
   const media = byLang('SELECT media_id AS k, * FROM cms_media_i18n');
-  for (const m of db.prepare("SELECT * FROM cms_media WHERE deleted_at IS NULL AND kind <> 'embed'").all()) {
+  for (const m of db.prepare("SELECT * FROM cms_media WHERE deleted_at IS NULL AND kind NOT IN ('embed', 'document')").all()) {
     const rows = media.get(m.id) || {};
     out.push({ module: 'media', id: m.id, label: m.original_name || `média ${m.id}`, ref: String(m.id),
       state: translationState(rows[lang], rows[def] ? sha(`${rows[def].alt ?? ''}\n${rows[def].title ?? ''}`) : null, lang === def, (r) => Boolean(r?.alt)) });

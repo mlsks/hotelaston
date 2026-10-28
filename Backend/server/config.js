@@ -45,8 +45,8 @@ export const config = {
   ffmpeg: env('FFMPEG_PATH', 'ffmpeg'),
   ffprobe: env('FFPROBE_PATH', 'ffprobe'),
   // Poids maximal accepté au téléversement, puis seuils d'alerte (Mo)
-  uploadMaxMb: { image: Number(env('UPLOAD_MAX_IMAGE_MB', 25)), video: Number(env('UPLOAD_MAX_VIDEO_MB', 200)), audio: Number(env('UPLOAD_MAX_AUDIO_MB', 30)) },
-  warnMb: { video: 8, audio: 5 },
+  uploadMaxMb: { image: Number(env('UPLOAD_MAX_IMAGE_MB', 25)), video: Number(env('UPLOAD_MAX_VIDEO_MB', 200)), audio: Number(env('UPLOAD_MAX_AUDIO_MB', 30)), document: Number(env('UPLOAD_MAX_DOCUMENT_MB', 20)) },
+  warnMb: { video: 8, audio: 5, document: 5 },
 };
 
 /**

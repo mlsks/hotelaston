@@ -83,9 +83,10 @@ Sur `/admin/`, sans étape de build : Alpine.js 3.17.4, Tailwind CSS 4.3.3 (vers
 |---|---|
 | Accueil | Version en ligne, prévisualisation, statistiques de la semaine, avancement des traductions, SEO ; prochains concerts pour l'éditeur Live Music. |
 | Pages | Arborescence et état de chaque langue. Par page : **textes** (le texte d'origine en regard pour traduire, enregistrement dès qu'on quitte le champ), **référencement** (adresse, title, description avec compteurs, mot-clé, partage, `noindex`, aperçu Google, contrôles sur la page générée), **réglages** (active, plan du site, page parente). |
-| Textes communs, Textes de l'interface | En-tête, menus, pied de page ; textes du JavaScript (réservation, avis, formulaires, chat). |
+| Textes communs, Textes de l'interface | En-tête, pied de page ; textes du JavaScript (réservation, avis, formulaires, chat). |
+| Menus et liens | Menu principal, menu mobile (avec sous-menus), pied de page, cartes du restaurant et du bar, liens de la page Séminaires : libellé par langue, cible (page, document PDF, adresse), ordre, masquer, ajouter, supprimer. |
 | Fiches et listes | Chambres, services, équipements, avis, réponses du chat, programme Live Music, artistes : formulaire adapté à chaque collection. En traduction, seuls les champs traduisibles sont modifiables ; une traduction incomplète part en brouillon. |
-| Médiathèque | Envoi par glisser-déposer, dossiers, recherche, corbeille ; textes alternatifs par langue, point d'intérêt du recadrage portrait (un clic sur la photo), crédit, liens YouTube / Vimeo. |
+| Médiathèque | Envoi par glisser-déposer, dossiers, recherche, corbeille ; textes alternatifs par langue, point d'intérêt du recadrage portrait (un clic sur la photo), crédit, liens YouTube / Vimeo ; documents PDF (cartes). |
 | Bandeaux, Popup | Texte par langue, aperçu, style et couleurs, lien (page, fiche, moteur de réservation, adresse), dates, emplacements ou pages concernées, déclenchement et fréquence du popup. |
 | Traductions, Langues | Avancement par langue et par module, liste de ce qui reste avec un lien vers le bon écran ; ajout, activation et ordre des langues. |
 | Publication et versions, Rapport SEO | Historique des générations, restauration d'une version conservée (avec ou sans le contenu) ; remarques SEO regroupées par page. |
@@ -117,6 +118,7 @@ Sécurité : mots de passe argon2id ; session en cookie `HttpOnly` / `SameSite=S
 | Pages et SEO | `GET /pages`, `GET/PATCH /pages/:id`, `PUT /pages/:id/i18n/:lang` (adresse, title, description, Open Graph, mot-clé principal ; une adresse publiée qui change crée une redirection 301) |
 | Textes | `GET /entries?page=&scope=global\|ui&q=`, `PUT /entries/:id/:lang` |
 | Collections | `GET /collections`, `GET/POST /collections/:key/items`, `GET/PATCH/DELETE /items/:id`, `PUT /items/:id/i18n/:lang`, `PUT /items/:id/media` |
+| Menus et liens | Collection `links` (`/collections/links/items`) : `list`, `parent` (clé du lien principal, sous-menu du menu mobile), `kind` = `page` (`page` = clé de page), `media` (`media` = identifiant d'un PDF ou d'une image) ou `url` (`https://`, `mailto:`, `tel:`, `/chemin`), `label` traduit. `GET /link-lists` (listes déclarées dans les gabarits), `PUT /link-lists/:key/order` (identifiants dans l'ordre). Supprimer un lien principal supprime ses sous-liens. |
 | Médias | `GET /media`, `GET /media/folders`, `POST /media` (multipart, champ `file`), `POST /media/embed`, `GET/PATCH/DELETE /media/:id`, `PUT /media/:id/i18n/:lang` |
 | Bandeaux | `GET /zones`, `GET/POST /banners`, `GET/PATCH/DELETE /banners/:id`, `PUT /banners/:id/i18n/:lang`, `PUT /banners/:id/placements` |
 | Popup | `GET/POST /popups`, `GET/PATCH/DELETE /popups/:id`, `PUT /popups/:id/i18n/:lang`, `PUT /popups/:id/pages` |
@@ -140,12 +142,12 @@ Paramètres des statistiques :
 
 ## Comment ça marche
 
-1. **Gabarits** (`templates-src/`) : chaque texte porte une clé (`data-cms-key`, `data-cms-html`, `data-cms-text`, `data-cms-attr`) dont la valeur est en base, par langue. Une image de la médiathèque se place avec `data-cms-media="clé"` sur un `<img>` : le build écrit le `<picture>` WebP. Les emplacements de bandeaux sont des `data-cms-zone` : `top-bar`, `hero-sub`, `section-intercalaire`, `footer-cta`.
+1. **Gabarits** (`templates-src/`) : chaque texte porte une clé (`data-cms-key`, `data-cms-html`, `data-cms-text`, `data-cms-attr`) dont la valeur est en base, par langue. Une image de la médiathèque se place avec `data-cms-media="clé"` sur un `<img>` : le build écrit le `<picture>` WebP. Les emplacements de bandeaux sont des `data-cms-zone` : `top-bar`, `hero-sub`, `section-intercalaire`, `footer-cta`. Une liste de liens modifiable est un `<ul data-cms-links="clé" data-cms-links-label="Nom dans l'admin">` : ses liens d'origine sont repris dans la collection `links` au démarrage, traductions comprises (`server/ssg/link-lists.js`), puis le build reconstruit la liste depuis la base en gardant le premier `<li>` comme modèle.
 2. **Prévisualiser** : génère toutes les langues actives dans `preview/` (réservé aux personnes connectées). Les textes non traduits retombent sur le français et sont entourés en orange.
 3. **Publier** : copie les tables `cms_*` dans un snapshot, génère depuis cette copie dans `releases/<id>/`, puis fait pointer `public-dist` vers cette version. Une page n'est publiée dans une langue que si tous ses textes, y compris ceux du JavaScript, y sont traduits.
 4. **Bandeaux** : rendus s'ils sont actifs dans les 25 prochaines heures, avec `data-start` / `data-end` ; un script du `<head>` les affiche ou les masque à la bonne heure et applique la fermeture choisie par le visiteur, avant l'affichage. Le bandeau Live Music du site actuel est devenu le bandeau n° 1 (zone `top-bar`, 6 pages restaurant et bar).
 5. **Popup** : un par page au plus (le plus prioritaire), `popup.js` chargé seulement là ; déclencheur délai, défilement ou intention de sortie ; fréquence mémorisée ; panneau bas sur mobile, après un geste du visiteur.
-6. **Médias** : type réel vérifié, doublons détectés, WebP 640 / 1024 / 1600 / 2400 px + recadrage portrait autour du point d'intérêt + miniature ; vidéos mesurées et poster extrait ; suppression douce, effacement définitif la nuit si aucune version conservée ne s'en sert.
+6. **Médias** : type réel vérifié, doublons détectés, WebP 640 / 1024 / 1600 / 2400 px + recadrage portrait autour du point d'intérêt + miniature ; vidéos mesurées et poster extrait ; PDF servis tels quels sous un nom lisible (`v/<empreinte>-carte-des-vins.pdf`) ; suppression douce, effacement définitif la nuit si aucune version conservée ne s'en sert.
 7. **Textes du JavaScript** : 57 entrées `ui.*` (module de réservation, avis, formulaires, chat, bouton du bas, bandeaux, popup), passées au navigateur dans `#site-config.i18n`.
 8. **Statistiques** (niveau 1, sans cookie ni bandeau de consentement) :
    - **Script** : `track.js` (17 Ko, 6,5 Ko compressé, `web-vitals` compris) est ajouté au site publié seulement, jamais à la prévisualisation. Il ne mesure rien dans trois cas :

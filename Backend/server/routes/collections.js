@@ -7,6 +7,7 @@ import { notFound, badRequest, sanitizeRich, toUtcIso } from '../lib/http.js';
 import { nowIso, sha, isPlainObject } from '../lib/util.js';
 import { audit } from '../lib/audit.js';
 import { splitTranslatable, mergeTranslation } from '../ssg/collections.js';
+import { scanLinkLists, LINKS } from '../ssg/link-lists.js';
 import { ID, ID_LANG, STATUS, DATE, assertLang, translationState, pick, updateRow, bool } from './helpers.js';
 
 /** Champs en texte riche, nettoyés à l'enregistrement. */
@@ -31,6 +32,25 @@ const VALIDATE = {
     if (!String(item.name ?? '').trim()) throw badRequest('Artiste : nom obligatoire.');
     if (item.website && !/^https?:\/\/[^\s/]+\.[^\s]+$/i.test(String(item.website).trim())) throw badRequest('Artiste : site internet au format https://…');
     if (item.media != null && !db.prepare("SELECT 1 FROM cms_media WHERE id = ? AND kind = 'image' AND deleted_at IS NULL").get(item.media)) throw badRequest('Artiste : photo introuvable dans la médiathèque.');
+  },
+  links(item, db) {
+    const list = scanLinkLists().find((l) => l.key === item.list);
+    if (!list) throw badRequest(`Lien : liste « ${item.list} » inconnue.`);
+    if (!String(item.label ?? '').trim()) throw badRequest('Lien : libellé obligatoire.');
+    if (item.parent) {
+      if (!list.nested) throw badRequest('Lien : cette liste n’a pas de sous-menu.');
+      const parent = db.prepare(`SELECT json_extract(data, '$.list') AS list, json_extract(data, '$.parent') AS parent FROM cms_items WHERE collection = '${LINKS}' AND key = ?`).get(item.parent);
+      if (!parent || parent.list !== item.list || parent.parent) throw badRequest('Lien : le lien parent doit être un lien principal de la même liste.');
+    }
+    if (item.kind === 'page') {
+      if (!db.prepare('SELECT 1 FROM cms_pages WHERE key = ?').get(item.page ?? '')) throw badRequest('Lien : choisissez une page du site.');
+    } else if (item.kind === 'media') {
+      if (!db.prepare("SELECT 1 FROM cms_media WHERE id = ? AND kind IN ('document', 'image') AND deleted_at IS NULL").get(item.media)) throw badRequest('Lien : choisissez un document de la médiathèque.');
+    } else if (item.kind === 'url') {
+      if (!/^(https?:\/\/[^\s/]+\.[^\s]+|mailto:\S+@\S+|tel:\+?[\d .-]+|\/\S*)$/i.test(String(item.url ?? '').trim())) throw badRequest('Lien : adresse au format https://…, mailto:… ou tel:…');
+    } else {
+      throw badRequest('Lien : type « page », « media » ou « url ».');
+    }
   },
 };
 
@@ -153,7 +173,11 @@ export default function collectionRoutes(app, { db, defaultLang }) {
       const used = db.prepare("SELECT COUNT(*) FROM cms_items WHERE collection = 'gigs' AND json_extract(data, '$.artist') = ?").pluck().get(item.key);
       if (used) throw badRequest(`Cet artiste est programmé dans ${used} concert${used > 1 ? 's' : ''} : changez ou supprimez ${used > 1 ? 'ces concerts' : 'ce concert'} d’abord.`);
     }
-    db.prepare('DELETE FROM cms_items WHERE id = ?').run(item.id);
+    db.transaction(() => {
+      // Un lien de menu emporte ses sous-liens
+      if (item.collection === LINKS) db.prepare(`DELETE FROM cms_items WHERE collection = '${LINKS}' AND json_extract(data, '$.parent') = ?`).run(item.key);
+      db.prepare('DELETE FROM cms_items WHERE id = ?').run(item.id);
+    })();
     audit(db, req, 'delete', 'item', item.id, { before: item });
     return { ok: true };
   });
@@ -187,6 +211,31 @@ export default function collectionRoutes(app, { db, defaultLang }) {
     db.prepare('UPDATE cms_items SET updated_at = ? WHERE id = ?').run(nowIso(), item.id);
     audit(db, req, 'update', 'item_i18n', item.id, { lang, before: before ? JSON.parse(before.data) : null, after: translated });
     return present(getItem(item.id));
+  });
+
+  /** Listes de liens déclarées dans les gabarits (menus, pied de page, cartes) : nom, page, sous-menus permis. */
+  app.get('/link-lists', { preHandler: guard() }, async (req) => {
+    assertInScope(req, () => false, 'les menus');
+    const pages = new Map(db.prepare('SELECT id, key FROM cms_pages').all().map((p) => [p.key, p.id]));
+    return scanLinkLists().map(({ key, label, page, nested }) => ({ key, label, page, page_id: page ? pages.get(page) ?? null : null, nested }));
+  });
+
+  /** Nouvel ordre d'une liste : identifiants des liens dans l'ordre voulu, sous-liens compris. */
+  app.put('/link-lists/:key/order', {
+    preHandler: guard('content'),
+    schema: { params: { type: 'object', properties: { key: { type: 'string', maxLength: 80 } } },
+      body: { type: 'array', maxItems: 500, items: { type: 'integer' } } },
+  }, async (req) => {
+    assertInScope(req, () => false, 'les menus');
+    const ids = db.prepare(`SELECT id FROM cms_items WHERE collection = '${LINKS}' AND json_extract(data, '$.list') = ?`).pluck().all(req.params.key);
+    if (!ids.length) throw notFound('Liste');
+    const known = new Set(ids);
+    if (req.body.length !== ids.length || req.body.some((id) => !known.has(id)) || new Set(req.body).size !== ids.length) throw badRequest('Ordre incomplet : envoyez tous les liens de la liste.');
+    const set = db.prepare('UPDATE cms_items SET position = ?, updated_at = ? WHERE id = ?');
+    const now = nowIso();
+    db.transaction(() => req.body.forEach((id, i) => set.run(i, now, id)))();
+    audit(db, req, 'update', 'link_list', req.params.key, { after: req.body });
+    return { ok: true };
   });
 
   app.put('/items/:id/media', {

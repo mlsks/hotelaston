@@ -8,6 +8,7 @@ import { injectTexts } from './annotations.js';
 import { injectMedia } from './media-render.js';
 import { renderZones, renderPopup } from './banners.js';
 import { renderGigList } from './gigs.js';
+import { renderLinkLists } from './link-lists.js';
 import { fillVars, sha } from '../lib/util.js';
 import { globalGraph, breadcrumbFromDom, faqFromDom, webPageNode, jsonForScript } from './jsonld.js';
 
@@ -74,6 +75,8 @@ export function renderPage(site, lang, target, head) {
   const mark = (el, isMissing) => {
     if (isMissing && site.mode === 'preview') el.attribs['data-preview-missing'] = '';
   };
+  // Menus et listes de liens repris dans la base : reconstruits avant l'injection des textes
+  for (const skipped of renderLinkLists($, { source, lang, now: site.now })) site.warn(`${lang.toUpperCase()} : lien ignoré, cible introuvable (${skipped})`);
   injectTexts($, (key) => text(key), mark);
   injectMedia($, source, lang, (key) => missing.add(key));
 

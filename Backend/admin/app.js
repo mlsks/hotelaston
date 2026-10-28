@@ -10,6 +10,7 @@ import { navigation, isActive, icon, startRouter, rerender } from './lib/router.
 import './views/home.js';
 import './views/pages.js';
 import './views/texts.js';
+import './views/links.js';
 import './views/collections.js';
 import './views/media.js';
 import './views/banners.js';

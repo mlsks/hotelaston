@@ -2,12 +2,12 @@
   <div class="flex flex-wrap items-end justify-between gap-4">
     <div>
       <h1 class="page-title">Médiathèque</h1>
-      <p class="mt-1 text-slate-600">Photos, vidéos et sons du site, optimisés à l’envoi (WebP, plusieurs tailles, recadrage portrait pour mobile).</p>
+      <p class="mt-1 text-slate-600">Photos, vidéos, sons et documents PDF du site. Les photos sont optimisées à l’envoi (WebP, plusieurs tailles, recadrage portrait pour mobile).</p>
     </div>
     <div class="flex flex-wrap items-center gap-2" x-show="canUpload">
       <input class="input w-40 font-mono text-xs" x-model="uploadFolder" :disabled="$store.session.isScoped" title="Dossier d’envoi" placeholder="/dossier">
       <label class="btn btn-primary cursor-pointer">Envoyer des fichiers
-        <input type="file" class="sr-only" multiple accept="image/*,video/*,audio/*" @change="send([...$event.target.files]); $event.target.value = ''">
+        <input type="file" class="sr-only" multiple accept="image/*,video/*,audio/*,application/pdf" @change="send([...$event.target.files]); $event.target.value = ''">
       </label>
     </div>
   </div>
@@ -38,7 +38,7 @@
       </div>
       <label class="block"><span class="label">Type</span>
         <select class="input" x-model="kind" @change="load()">
-          <option value="">Tous</option><option value="image">Images</option><option value="video">Vidéos</option><option value="audio">Sons</option><option value="embed">Liens externes</option>
+          <option value="">Tous</option><option value="image">Images</option><option value="video">Vidéos</option><option value="audio">Sons</option><option value="document">Documents PDF</option><option value="embed">Liens externes</option>
         </select></label>
       <label class="flex items-center gap-2 text-sm"><input type="checkbox" x-model="trash" @change="close(); load()"> Corbeille</label>
       <form x-show="canUpload" class="space-y-2 rounded-lg bg-white p-3 ring-1 ring-slate-200" @submit.prevent="addEmbed">
@@ -57,10 +57,10 @@
           <button class="overflow-hidden rounded-xl bg-white text-left shadow-sm ring-1 transition" :class="current === m.id ? 'ring-2 ring-azure-700' : 'ring-slate-200 hover:ring-azure-700'" @click="open(m)">
             <div class="relative aspect-[4/3] bg-slate-100">
               <img x-show="m.thumb" :src="m.thumb" alt="" class="size-full object-cover" loading="lazy">
-              <div x-show="!m.thumb" class="grid size-full place-items-center text-xs font-semibold text-slate-500 uppercase" x-text="m.kind === 'embed' ? m.embed_provider || 'lien' : m.kind"></div>
+              <div x-show="!m.thumb" class="grid size-full place-items-center text-xs font-semibold text-slate-500 uppercase" x-text="{ embed: m.embed_provider || 'lien', document: 'PDF' }[m.kind] || m.kind"></div>
               <span x-show="m.status !== 'ready'" class="badge absolute top-2 left-2" :class="m.status === 'error' ? 'bg-rose-50 text-rose-700 ring-rose-200' : 'bg-amber-50 text-amber-800 ring-amber-200'"
                 x-text="m.status === 'error' ? 'Erreur' : 'Traitement…'"></span>
-              <span x-show="m.kind !== 'embed' && m.i18n[$store.ui.lang]?.state !== 'ready'" class="badge absolute right-2 bottom-2 bg-white/90 text-rose-700 ring-rose-200" title="Texte alternatif manquant dans la langue de travail">alt</span>
+              <span x-show="!['embed', 'document'].includes(m.kind) && m.i18n[$store.ui.lang]?.state !== 'ready'" class="badge absolute right-2 bottom-2 bg-white/90 text-rose-700 ring-rose-200" title="Texte alternatif manquant dans la langue de travail">alt</span>
             </div>
             <p class="truncate px-2.5 py-2 text-xs text-slate-600" x-text="m.original_name || m.embed_url"></p>
           </button>
@@ -96,6 +96,10 @@
           </template>
           <template x-if="detail.kind === 'video'"><video controls preload="metadata" :src="original" :poster="poster" class="w-full rounded-lg bg-black"></video></template>
           <template x-if="detail.kind === 'audio'"><audio controls preload="metadata" :src="original" class="w-full"></audio></template>
+          <template x-if="detail.kind === 'document'">
+            <p class="text-sm"><a :href="original" target="_blank" rel="noopener" class="font-medium text-azure-700 underline">Ouvrir le document</a>
+              <span class="ml-1 text-slate-500">· pour l’utiliser dans un menu ou une liste de liens : <a href="#/menus" class="underline">Menus et liens</a></span></p>
+          </template>
           <template x-if="detail.kind === 'embed'">
             <p class="text-sm"><a :href="detail.embed_url" target="_blank" rel="noopener" class="break-all text-azure-700 underline" x-text="detail.embed_url"></a>
               <span class="ml-1 text-slate-500" x-text="detail.embed_provider ? '(' + detail.embed_provider + ')' : ''"></span></p>
@@ -114,16 +118,16 @@
 
           <form class="space-y-5" @submit.prevent="saveDetail">
             <div class="space-y-4">
-              <p class="section-title" x-text="detail.kind === 'embed' ? 'Titre' : 'Texte alternatif, titre et légende'"></p>
+              <p class="section-title" x-text="['embed', 'document'].includes(detail.kind) ? 'Titre' : 'Texte alternatif, titre et légende'"></p>
               <p x-show="detail.kind === 'image'" class="hint -mt-2">Le texte alternatif décrit l’image pour les personnes malvoyantes et pour Google.</p>
               <template x-for="l in $store.session.languages" :key="l.code">
                 <fieldset class="rounded-lg p-3 ring-1 ring-slate-200" :disabled="!$store.session.canTranslate(l.code)">
                   <legend class="flex items-center gap-2 px-1 text-sm font-medium"><span x-text="l.name"></span>
                     <span class="badge" :class="$fmt.stateClass(detail.i18n[l.code]?.state)" x-text="$fmt.stateLabel(detail.i18n[l.code]?.state)"></span></legend>
                   <div class="space-y-2">
-                    <input x-show="detail.kind !== 'embed'" class="input" x-model="i18n[l.code].alt" placeholder="Texte alternatif">
+                    <input x-show="!['embed', 'document'].includes(detail.kind)" class="input" x-model="i18n[l.code].alt" placeholder="Texte alternatif">
                     <input class="input" x-model="i18n[l.code].title" placeholder="Titre (facultatif)">
-                    <input x-show="detail.kind !== 'embed'" class="input" x-model="i18n[l.code].caption" placeholder="Légende (facultatif)">
+                    <input x-show="!['embed', 'document'].includes(detail.kind)" class="input" x-model="i18n[l.code].caption" placeholder="Légende (facultatif)">
                   </div>
                 </fieldset>
               </template>

@@ -23,5 +23,6 @@ export function sniff(head) {
   if (ascii(head, 0, 3) === 'ID3' || (head[0] === 0xff && (head[1] & 0xe0) === 0xe0)) return { kind: 'audio', mime: 'audio/mpeg', ext: 'mp3' };
   if (ascii(head, 0, 4) === 'OggS') return { kind: 'audio', mime: 'audio/ogg', ext: 'ogg' };
   if (ascii(head, 0, 4) === 'fLaC') return { kind: 'audio', mime: 'audio/flac', ext: 'flac' };
+  if (ascii(head, 0, 5) === '%PDF-') return { kind: 'document', mime: 'application/pdf', ext: 'pdf' };
   return null;
 }
