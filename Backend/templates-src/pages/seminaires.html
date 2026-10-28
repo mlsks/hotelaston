@@ -8,15 +8,15 @@
           <p><a class="btn btn--gold" href="#/devis" data-cms-key="seminaires.007-a">Demander un devis</a></p>
         </div>
       </header>
-      <div class="container">
-        <ul class="facts-row" data-stagger="">
-          <li data-anim="rise"><strong data-count-to="7">7</strong><span data-cms-key="seminaires.008-span">espaces modulables</span></li>
-          <li data-anim="rise"><strong data-count-to="200" data-count-suffix=" m²" data-cms-key="seminaires.009-strong">200 m²</strong><span data-cms-key="seminaires.010-span">salle panoramique Matisse</span></li>
-          <li data-anim="rise"><strong data-count-to="250">250</strong><span data-cms-key="seminaires.011-span">personnes en assemblée</span></li>
-          <li data-anim="rise"><strong data-cms-key="seminaires.012-strong">1er étage</strong><span data-cms-key="seminaires.013-span">salons à la lumière du jour</span></li>
+      <div class="container" data-cms-blocks="sections" data-cms-blocks-label="Sections de la page">
+        <ul class="facts-row" data-stagger="" data-cms-block="chiffres" data-cms-block-label="Chiffres clés" data-cms-blocks="chiffres-liste" data-cms-blocks-label="Chiffres">
+          <li data-anim="rise" data-cms-block="chiffre-1"><strong data-count-to="7" data-cms-key="seminaires.chiffre-1">7</strong><span data-cms-key="seminaires.008-span">espaces modulables</span></li>
+          <li data-anim="rise" data-cms-block="chiffre-2"><strong data-count-to="200" data-count-suffix=" m²" data-cms-key="seminaires.009-strong">200 m²</strong><span data-cms-key="seminaires.010-span">salle panoramique Matisse</span></li>
+          <li data-anim="rise" data-cms-block="chiffre-3"><strong data-count-to="250" data-cms-key="seminaires.chiffre-3">250</strong><span data-cms-key="seminaires.011-span">personnes en assemblée</span></li>
+          <li data-anim="rise" data-cms-block="chiffre-4"><strong data-cms-key="seminaires.012-strong">1er étage</strong><span data-cms-key="seminaires.013-span">salons à la lumière du jour</span></li>
         </ul>
 
-        <section class="capacity" aria-labelledby="capacity-title">
+        <section class="capacity" data-cms-block="salles" aria-labelledby="capacity-title">
           <header class="section-head">
             <p class="eyebrow" data-cms-key="seminaires.014-p">Capacités</p>
             <h2 id="capacity-title" data-cms-key="seminaires.015-h2">Nos salles et leurs configurations</h2>
@@ -62,19 +62,19 @@
           </div>
         </section>
 
-        <section class="section section--tight" aria-labelledby="pauses-title">
+        <section class="section section--tight" data-cms-block="pauses" aria-labelledby="pauses-title">
           <header class="section-head">
             <p class="eyebrow" data-cms-key="seminaires.109-p">Pauses &amp; déjeuners</p>
             <h2 id="pauses-title" data-cms-key="seminaires.110-h2">Des pauses qui relancent la journée</h2>
           </header>
-          <div class="mosaic">
-            <figure><img data-cms-media="seminaires.photo-9" data-cms-sizes="(min-width: 1100px) 50vw, 100vw" data-cms-portrait="off" alt="Buffet de pause : viennoiseries, fruits frais et boissons chaudes" loading="lazy" data-cms-attr="alt:seminaires.111-img@alt"><figcaption data-cms-key="seminaires.112-figcaption">Pause gourmande dans la Galerie</figcaption></figure>
-            <figure><img data-cms-media="seminaires.photo-10" data-cms-sizes="(min-width: 1100px) 50vw, 100vw" data-cms-portrait="off" alt="Déjeuner de séminaire, tables dressées" loading="lazy" data-cms-attr="alt:seminaires.113-img@alt"><figcaption data-cms-key="seminaires.114-figcaption">Déjeuner assis ou buffet</figcaption></figure>
-            <figure><img data-cms-media="seminaires.photo-11" data-cms-sizes="(min-width: 1100px) 50vw, 100vw" data-cms-portrait="off" alt="Dîner en terrasse sur le toit au coucher du soleil" loading="lazy" data-cms-attr="alt:seminaires.115-img@alt"><figcaption data-cms-key="seminaires.116-figcaption">Dîner sur le toit-terrasse</figcaption></figure>
+          <div class="mosaic" data-cms-blocks="pauses-liste" data-cms-blocks-label="Photos">
+            <figure data-cms-block="photo-1"><img data-cms-media="seminaires.photo-9" data-cms-sizes="(min-width: 1100px) 50vw, 100vw" data-cms-portrait="off" alt="Buffet de pause : viennoiseries, fruits frais et boissons chaudes" loading="lazy" data-cms-attr="alt:seminaires.111-img@alt"><figcaption data-cms-key="seminaires.112-figcaption">Pause gourmande dans la Galerie</figcaption></figure>
+            <figure data-cms-block="photo-2"><img data-cms-media="seminaires.photo-10" data-cms-sizes="(min-width: 1100px) 50vw, 100vw" data-cms-portrait="off" alt="Déjeuner de séminaire, tables dressées" loading="lazy" data-cms-attr="alt:seminaires.113-img@alt"><figcaption data-cms-key="seminaires.114-figcaption">Déjeuner assis ou buffet</figcaption></figure>
+            <figure data-cms-block="photo-3"><img data-cms-media="seminaires.photo-11" data-cms-sizes="(min-width: 1100px) 50vw, 100vw" data-cms-portrait="off" alt="Dîner en terrasse sur le toit au coucher du soleil" loading="lazy" data-cms-attr="alt:seminaires.115-img@alt"><figcaption data-cms-key="seminaires.116-figcaption">Dîner sur le toit-terrasse</figcaption></figure>
           </div>
         </section>
 
-        <div class="split">
+        <div class="split" data-cms-block="equipe" data-cms-block-label="Équipe, contacts et avis">
           <div class="split__body prose">
             <h2 data-cms-key="seminaires.117-h2">Une équipe dédiée</h2>
             <p data-cms-key="seminaires.118-p">Rosanna Rocchia, responsable séminaires et banquets, et Maeva Debion, coordinatrice des événements, préparent votre journée de la configuration de salle au menu du déjeuner.</p>

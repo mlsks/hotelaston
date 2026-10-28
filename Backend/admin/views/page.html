@@ -16,14 +16,49 @@
 
       <div class="flex gap-2 border-b border-slate-200">
         <button class="tab" :class="tab === 'texts' && 'tab-active'" @click="tab = 'texts'">Textes</button>
+        <button class="tab" x-show="blocks.length" :class="tab === 'blocks' && 'tab-active'" @click="tab = 'blocks'">Blocs</button>
         <button class="tab" :class="tab === 'seo' && 'tab-active'" @click="tab = 'seo'">Référencement (SEO)</button>
         <button class="tab" x-show="$store.session.canContent && !$store.session.isScoped" :class="tab === 'settings' && 'tab-active'" @click="tab = 'settings'">Réglages</button>
       </div>
 
       <!-- Textes -->
       <div x-show="tab === 'texts'">
-        <div x-data="entriesEditor({ page: page.id })">
-          <template data-include="entries"></template>
+        <template x-for="v in [textsVersion]" :key="v">
+          <div x-data="entriesEditor({ page: page.id }, { q: textsFilter })">
+            <template data-include="entries"></template>
+          </div>
+        </template>
+      </div>
+
+      <!-- Blocs : sections et lignes de la page -->
+      <div x-show="tab === 'blocks'" class="max-w-3xl space-y-4">
+        <p class="text-sm text-slate-600">Montez, descendez, masquez ou dupliquez une section ou une ligne. Une copie reprend les textes de l’original : modifiez-les ensuite dans l’onglet Textes (traductions comprises). Le site change à la prochaine publication.</p>
+        <p x-show="!$store.session.canContent" class="rounded-lg bg-amber-50 px-4 py-3 text-sm text-amber-900 ring-1 ring-amber-200">Lecture seule : votre rôle ne permet pas de modifier les blocs.</p>
+        <div class="card divide-y divide-slate-100">
+          <template x-for="r in blockRows" :key="r.id">
+            <div class="flex items-center gap-2 py-2.5 pr-4" :style="`padding-left: ${1.25 + r.depth * 1.5}rem`">
+              <template x-if="r.kind === 'zone'">
+                <p class="text-xs font-semibold tracking-wide text-slate-500 uppercase" x-text="r.label"></p>
+              </template>
+              <template x-if="r.kind === 'block'">
+                <div class="flex min-w-0 flex-1 items-center gap-2">
+                  <span class="min-w-0 flex-1 truncate text-sm" :class="r.hidden ? 'text-slate-400 line-through' : 'text-slate-800'" x-text="r.label"></span>
+                  <span x-show="r.copy" class="badge bg-azure-50 text-azure-700 ring-azure-200">copie</span>
+                  <span x-show="r.hidden" class="badge bg-slate-100 text-slate-600 ring-slate-200">masqué</span>
+                  <template x-if="$store.session.canContent">
+                    <div class="flex shrink-0 items-center gap-1">
+                      <button type="button" class="btn btn-ghost btn-sm" title="Monter" :disabled="busy || r.index === 0" @click="moveBlock(r, -1)">↑</button>
+                      <button type="button" class="btn btn-ghost btn-sm" title="Descendre" :disabled="busy || r.index === r.count - 1" @click="moveBlock(r, 1)">↓</button>
+                      <button type="button" class="btn btn-ghost btn-sm" :disabled="busy" @click="toggleBlock(r)" x-text="r.hidden ? 'Afficher' : 'Masquer'"></button>
+                      <button type="button" class="btn btn-ghost btn-sm" :disabled="busy" @click="copyBlock(r)">Dupliquer</button>
+                      <button type="button" class="btn btn-ghost btn-sm" x-show="r.copy" @click="editCopy(r)">Textes</button>
+                      <button type="button" class="btn btn-ghost btn-sm text-rose-700" x-show="r.copy" :disabled="busy" @click="deleteBlock(r)">Supprimer</button>
+                    </div>
+                  </template>
+                </div>
+              </template>
+            </div>
+          </template>
         </div>
       </div>
 

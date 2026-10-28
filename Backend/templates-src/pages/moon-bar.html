@@ -10,13 +10,13 @@
           <p class="gold-sub gold-sub--lg" data-cms-key="moon-bar.006-p">De mai à octobre, quand le temps le permet · bar 10h00 – 00h30 · restaurant 12h00 – 14h00 et 19h00 – 22h00</p>
         </div>
       </section>
-      <div class="container">
-        <div class="photo-strip" data-slider="">
-          <div class="slider__track" data-slider-track="" tabindex="0" role="region" aria-label="Photos du Moon Bar" data-cms-attr="aria-label:moon-bar.007-div@aria-label">
-            <figure><img data-cms-media="moon-bar.photo-1" data-cms-sizes="(min-width: 1100px) 50vw, 100vw" data-cms-portrait="off" alt="Piscine et transats du rooftop sous les palmiers" loading="lazy" data-cms-attr="alt:moon-bar.008-img@alt"></figure>
-            <figure><img data-cms-media="moon-bar.photo-2" data-cms-sizes="(min-width: 1100px) 50vw, 100vw" data-cms-portrait="off" alt="Vue du Moon Bar sur les clochers de la Vieille Ville et la mer" loading="lazy" data-cms-attr="alt:moon-bar.009-img@alt"></figure>
-            <figure><img data-cms-media="moon-bar.photo-3" data-cms-sizes="(min-width: 1100px) 50vw, 100vw" data-cms-portrait="off" alt="Cocktail servi en terrasse au coucher du soleil" loading="lazy" data-cms-attr="alt:moon-bar.010-img@alt"></figure>
-            <figure><img data-cms-media="moon-bar.photo-4" data-cms-sizes="(min-width: 1100px) 50vw, 100vw" data-cms-portrait="off" alt="Salon lounge du rooftop" loading="lazy" data-cms-attr="alt:moon-bar.011-img@alt"></figure>
+      <div class="container" data-cms-blocks="sections" data-cms-blocks-label="Sections de la page">
+        <div class="photo-strip" data-slider="" data-cms-block="photos" data-cms-block-label="Bandeau de photos">
+          <div class="slider__track" data-slider-track="" data-cms-blocks="photos-liste" data-cms-blocks-label="Photos du bandeau" tabindex="0" role="region" aria-label="Photos du Moon Bar" data-cms-attr="aria-label:moon-bar.007-div@aria-label">
+            <figure data-cms-block="photo-1"><img data-cms-media="moon-bar.photo-1" data-cms-sizes="(min-width: 1100px) 50vw, 100vw" data-cms-portrait="off" alt="Piscine et transats du rooftop sous les palmiers" loading="lazy" data-cms-attr="alt:moon-bar.008-img@alt"></figure>
+            <figure data-cms-block="photo-2"><img data-cms-media="moon-bar.photo-2" data-cms-sizes="(min-width: 1100px) 50vw, 100vw" data-cms-portrait="off" alt="Vue du Moon Bar sur les clochers de la Vieille Ville et la mer" loading="lazy" data-cms-attr="alt:moon-bar.009-img@alt"></figure>
+            <figure data-cms-block="photo-3"><img data-cms-media="moon-bar.photo-3" data-cms-sizes="(min-width: 1100px) 50vw, 100vw" data-cms-portrait="off" alt="Cocktail servi en terrasse au coucher du soleil" loading="lazy" data-cms-attr="alt:moon-bar.010-img@alt"></figure>
+            <figure data-cms-block="photo-4"><img data-cms-media="moon-bar.photo-4" data-cms-sizes="(min-width: 1100px) 50vw, 100vw" data-cms-portrait="off" alt="Salon lounge du rooftop" loading="lazy" data-cms-attr="alt:moon-bar.011-img@alt"></figure>
           </div>
           <div class="slider__controls">
             <button class="slider__arrow" type="button" data-slider-prev="" aria-label="Photo précédente" data-cms-attr="aria-label:moon-bar.012-button@aria-label"><svg class="icon" aria-hidden="true"><use href="#i-prev"></use></svg></button>
@@ -24,11 +24,11 @@
             <button class="slider__arrow" type="button" data-slider-next="" aria-label="Photo suivante" data-cms-attr="aria-label:moon-bar.013-button@aria-label"><svg class="icon" aria-hidden="true"><use href="#i-next"></use></svg></button>
           </div>
         </div>
-        <div class="venue-layout">
-          <div class="venue-layout__main prose">
-            <p class="lede" data-cms-key="moon-bar.014-p">Sur le toit-terrasse de l'hôtel, entre ciel et mer : soleil, cuisine légère et détente le jour, lounge panoramique le soir.</p>
-            <p data-cms-html="moon-bar.015-p">En journée, la terrasse ombragée de palmiers et ses jardinières d'aromatiques accueillent les déjeuners. La piscine et le solarium sont <strong>réservés aux clients de l'hôtel</strong>, pour préserver leur tranquillité.</p>
-            <p data-cms-key="moon-bar.016-p">À la nuit tombée, le Moon Bar devient lounge. Assiettes et tapas du Chef Stéphane Furlan accompagnent les cocktails, face aux lumières de la baie des Anges.</p>
+        <div class="venue-layout" data-cms-block="presentation" data-cms-block-label="Présentation et infos pratiques">
+          <div class="venue-layout__main prose" data-cms-blocks="texte" data-cms-blocks-label="Paragraphes">
+            <p data-cms-block="paragraphe-1" class="lede" data-cms-key="moon-bar.014-p">Sur le toit-terrasse de l'hôtel, entre ciel et mer : soleil, cuisine légère et détente le jour, lounge panoramique le soir.</p>
+            <p data-cms-block="paragraphe-2" data-cms-html="moon-bar.015-p">En journée, la terrasse ombragée de palmiers et ses jardinières d'aromatiques accueillent les déjeuners. La piscine et le solarium sont <strong>réservés aux clients de l'hôtel</strong>, pour préserver leur tranquillité.</p>
+            <p data-cms-block="paragraphe-3" data-cms-key="moon-bar.016-p">À la nuit tombée, le Moon Bar devient lounge. Assiettes et tapas du Chef Stéphane Furlan accompagnent les cocktails, face aux lumières de la baie des Anges.</p>
             <ul class="link-list" data-cms-links="cartes-moon-bar" data-cms-links-label="Les cartes du Moon Bar">
               <li><a href="#/carte-moon-bar" data-cms-key="moon-bar.017-a">Carte du Moon Bar</a></li>
               <li><a href="#/carte-tapas" data-cms-key="moon-bar.018-a">Carte des tapas</a></li>
@@ -37,13 +37,13 @@
           <aside class="venue-layout__aside" aria-label="Informations pratiques du Moon Bar" data-cms-attr="aria-label:moon-bar.019-aside@aria-label">
             <div class="info-card">
               <h2 class="info-card__title" data-cms-key="moon-bar.020-h2">Infos pratiques</h2>
-              <dl>
-                <div><dt data-cms-key="moon-bar.021-dt">Saison</dt><dd><span class="verify" title="Le site actuel indique « juin à septembre » pour la piscine et « mai à octobre » dans la FAQ : à confirmer avec la fiche Google" data-cms-attr="title:moon-bar.022-span@title" data-cms-key="moon-bar.023-span">De mai à octobre, selon la météo</span></dd></div>
-                <div><dt data-cms-key="moon-bar.024-dt">Par mauvais temps</dt><dd data-cms-html="moon-bar.025-dd"><a href="#/aston-club">L'Aston Club</a>, 7e étage, 17h00 – minuit</dd></div>
-                <div><dt data-cms-key="moon-bar.026-dt">Bar</dt><dd data-cms-key="moon-bar.027-dd">Tous les jours, 10h00 – 00h30</dd></div>
-                <div><dt data-cms-key="moon-bar.028-dt">Restaurant</dt><dd data-cms-key="moon-bar.029-dd">12h00 – 14h00 et 19h00 – 22h00</dd></div>
-                <div><dt data-cms-key="moon-bar.030-dt">Lounge &amp; tapas</dt><dd data-cms-key="moon-bar.031-dd">À partir de 18h00</dd></div>
-                <div><dt data-cms-key="moon-bar.032-dt">Piscine</dt><dd data-cms-key="moon-bar.033-dd">10h00 – 17h00, clients de l'hôtel</dd></div>
+              <dl data-cms-blocks="infos-liste" data-cms-blocks-label="Infos pratiques">
+                <div data-cms-block="info-1"><dt data-cms-key="moon-bar.021-dt">Saison</dt><dd><span class="verify" title="Le site actuel indique « juin à septembre » pour la piscine et « mai à octobre » dans la FAQ : à confirmer avec la fiche Google" data-cms-attr="title:moon-bar.022-span@title" data-cms-key="moon-bar.023-span">De mai à octobre, selon la météo</span></dd></div>
+                <div data-cms-block="info-2"><dt data-cms-key="moon-bar.024-dt">Par mauvais temps</dt><dd data-cms-html="moon-bar.025-dd"><a href="#/aston-club">L'Aston Club</a>, 7e étage, 17h00 – minuit</dd></div>
+                <div data-cms-block="info-3"><dt data-cms-key="moon-bar.026-dt">Bar</dt><dd data-cms-key="moon-bar.027-dd">Tous les jours, 10h00 – 00h30</dd></div>
+                <div data-cms-block="info-4"><dt data-cms-key="moon-bar.028-dt">Restaurant</dt><dd data-cms-key="moon-bar.029-dd">12h00 – 14h00 et 19h00 – 22h00</dd></div>
+                <div data-cms-block="info-5"><dt data-cms-key="moon-bar.030-dt">Lounge &amp; tapas</dt><dd data-cms-key="moon-bar.031-dd">À partir de 18h00</dd></div>
+                <div data-cms-block="info-6"><dt data-cms-key="moon-bar.032-dt">Piscine</dt><dd data-cms-key="moon-bar.033-dd">10h00 – 17h00, clients de l'hôtel</dd></div>
               </dl>
             </div>
             <div class="info-card info-card--book" id="reserver-moonbar" data-table-booking="">
@@ -52,11 +52,11 @@
             </div>
           </aside>
         </div>
-        <section class="faq" aria-labelledby="moonbar-faq-title">
+        <section class="faq" data-cms-block="faq" data-cms-blocks="faq-liste" data-cms-blocks-label="Questions" aria-labelledby="moonbar-faq-title">
           <h2 id="moonbar-faq-title" data-cms-key="moon-bar.036-h2">Questions fréquentes sur le Moon Bar</h2>
-          <details><summary data-cms-key="moon-bar.037-summary">Le Moon Bar est-il ouvert aux personnes qui ne logent pas à l'hôtel ?</summary><p data-cms-key="moon-bar.038-p">Oui, le bar et le restaurant sont ouverts à tous. Seuls la piscine et le solarium sont réservés aux clients de l'hôtel.</p></details>
-          <details><summary data-cms-key="moon-bar.039-summary">Faut-il réserver ?</summary><p data-cms-html="moon-bar.040-p">La réservation est conseillée, surtout en fin de journée : <a href="tel:+33489222006">04 89 22 20 06</a>.</p></details>
-          <details><summary data-cms-key="moon-bar.041-summary">Le Moon Bar est-il ouvert en hiver ou quand il pleut ?</summary><p data-cms-html="moon-bar.042-p">Le rooftop ouvre de mai à octobre, quand le temps le permet. Par mauvais temps et le reste de l'année, c'est <a href="#/aston-club">L'Aston Club</a>, au 7e étage, qui prend le relais, de 17h00 à minuit.</p></details>
+          <details data-cms-block="question-1"><summary data-cms-key="moon-bar.037-summary">Le Moon Bar est-il ouvert aux personnes qui ne logent pas à l'hôtel ?</summary><p data-cms-key="moon-bar.038-p">Oui, le bar et le restaurant sont ouverts à tous. Seuls la piscine et le solarium sont réservés aux clients de l'hôtel.</p></details>
+          <details data-cms-block="question-2"><summary data-cms-key="moon-bar.039-summary">Faut-il réserver ?</summary><p data-cms-html="moon-bar.040-p">La réservation est conseillée, surtout en fin de journée : <a href="tel:+33489222006">04 89 22 20 06</a>.</p></details>
+          <details data-cms-block="question-3"><summary data-cms-key="moon-bar.041-summary">Le Moon Bar est-il ouvert en hiver ou quand il pleut ?</summary><p data-cms-html="moon-bar.042-p">Le rooftop ouvre de mai à octobre, quand le temps le permet. Par mauvais temps et le reste de l'année, c'est <a href="#/aston-club">L'Aston Club</a>, au 7e étage, qui prend le relais, de 17h00 à minuit.</p></details>
         </section>
       </div>
     </section>

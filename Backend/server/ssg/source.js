@@ -36,7 +36,7 @@ export class Source {
     this.pagesByKey = new Map(this.pages.map((p) => [p.key, p]));
     this.pagesById = new Map(this.pages.map((p) => [p.id, p]));
     this.pageI18n = groupBy2(all('SELECT * FROM cms_page_i18n'), 'page_id', 'lang');
-    this.entries = new Map(all('SELECT id, key, type, required FROM cms_entries').map((e) => [e.key, e]));
+    this.entries = new Map(all('SELECT id, key, type, required, translatable FROM cms_entries').map((e) => [e.key, e]));
     this.values = groupBy2(all('SELECT entry_id, lang, value, media_id, status FROM cms_entry_values'), 'entry_id', 'lang');
     this.collections = new Map(all('SELECT * FROM cms_collections').map((c) => [c.key, { ...c, schema: JSON.parse(c.schema) }]));
     this.items = all('SELECT * FROM cms_items WHERE is_active = 1 ORDER BY collection, position, id');
@@ -58,6 +58,14 @@ export class Source {
     this.popupI18n = groupBy2(all('SELECT * FROM cms_popup_i18n'), 'popup_id', 'lang');
     this.popupPages = all('SELECT * FROM cms_popup_pages');
     this.redirects = all('SELECT * FROM cms_redirects ORDER BY from_path');
+    // Blocs des pages (table absente d'un snapshot antérieur à la migration 010)
+    const hasBlocks = db.prepare("SELECT 1 FROM sqlite_master WHERE type = 'table' AND name = 'cms_page_blocks'").get();
+    this.blocks = hasBlocks ? all('SELECT * FROM cms_page_blocks') : [];
+  }
+
+  /** Ordre, visibilité et copies des blocs d'une page. */
+  blocksFor(pageId) {
+    return this.blocks.filter((b) => b.page_id === pageId);
   }
 
   /** Textes d'interface du JavaScript (ui.*) dans une langue, repli sur la langue par défaut. */
@@ -142,7 +150,8 @@ export class Source {
     const row = rows[lang];
     if (this.usable(row, lang) && row.value !== null && row.value !== '') return { value: row.value, missing: false };
     const fallback = rows[this.defaultLang];
-    return { value: fallback?.value ?? '', missing: true };
+    // Texte non traduisible (lien, chiffre) : la valeur de la langue par défaut vaut pour toutes
+    return { value: fallback?.value ?? '', missing: entry.translatable !== 0 };
   }
 
   /** Données SEO d'une page dans une langue (repli sur la langue par défaut en prévisualisation). */

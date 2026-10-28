@@ -3,7 +3,7 @@
  * ses réglages SEO par langue (aperçu Google et contrôles sur le rendu réel) et sa place dans le site.
  */
 import Alpine from '/admin/vendor/alpine.js';
-import { get, put, patch } from '../lib/api.js';
+import { get, put, post, patch } from '../lib/api.js';
 import { setTitle } from '../lib/router.js';
 
 /** Nom court d'une page dans une langue. */
@@ -62,12 +62,17 @@ Alpine.data('pageView', () => ({
   checking: false,
   saving: false,
   settings: null,
+  blocks: [],
+  busy: false,
+  textsVersion: 0,
+  textsFilter: '',
   async init() {
     const q = this.$store.route.query;
     if (q.lang && this.$store.session.languages.some((l) => l.code === q.lang)) this.$store.ui.setLang(q.lang);
-    this.tab = ['texts', 'seo', 'settings'].includes(q.tab) ? q.tab : 'texts';
+    this.tab = ['texts', 'blocks', 'seo', 'settings'].includes(q.tab) ? q.tab : 'texts';
     try {
       await this.load();
+      this.blocks = await get(`/pages/${this.page.id}/blocks`);
       if (!this.$store.session.isScoped) this.pages = await get('/pages');
     } catch (err) {
       this.$store.toast.error(err);
@@ -168,6 +173,79 @@ Alpine.data('pageView', () => ({
     } finally {
       this.checking = false;
     }
+  },
+  /** Zones et blocs à plat, dans l'ordre de la page, avec leur profondeur. */
+  get blockRows() {
+    const out = [];
+    const walk = (zones, depth) => {
+      for (const z of zones) {
+        out.push({ id: `z:${z.zone}`, kind: 'zone', depth, label: z.label });
+        z.blocks.forEach((b, index) => {
+          out.push({ ...b, id: `b:${z.zone}:${b.block}`, kind: 'block', depth, zone: z.zone, index, count: z.blocks.length });
+          walk(b.zones, depth + 1);
+        });
+      }
+    };
+    walk(this.blocks, 0);
+    return out;
+  },
+  zoneBlocks(name) {
+    const find = (zones) => {
+      for (const z of zones) {
+        if (z.zone === name) return z.blocks;
+        for (const b of z.blocks) {
+          const found = find(b.zones);
+          if (found) return found;
+        }
+      }
+      return null;
+    };
+    return find(this.blocks) || [];
+  },
+  async blockCall(fn, done) {
+    this.busy = true;
+    try {
+      await fn();
+      if (done) this.$store.toast.push(done);
+    } catch (err) {
+      this.$store.toast.error(err);
+    } finally {
+      this.busy = false;
+    }
+  },
+  saveZone(zone, list) {
+    return this.blockCall(async () => {
+      this.blocks = await put(`/pages/${this.page.id}/blocks`, { zone, blocks: list.map((b) => ({ block: b.block, hidden: b.hidden })) });
+    });
+  },
+  moveBlock(r, dir) {
+    const list = this.zoneBlocks(r.zone).slice();
+    const [b] = list.splice(r.index, 1);
+    list.splice(r.index + dir, 0, b);
+    return this.saveZone(r.zone, list);
+  },
+  toggleBlock(r) {
+    return this.saveZone(r.zone, this.zoneBlocks(r.zone).map((b) => (b.block === r.block ? { ...b, hidden: !b.hidden } : b)));
+  },
+  copyBlock(r) {
+    return this.blockCall(async () => {
+      const res = await post(`/pages/${this.page.id}/blocks/copy`, { zone: r.zone, block: r.block });
+      this.blocks = res.tree;
+      this.textsVersion += 1;
+    }, 'Copie ajoutée après l’original. Ses textes sont dans l’onglet Textes (bouton « Textes » de la copie).');
+  },
+  editCopy(r) {
+    this.textsFilter = `~${r.block.split('~').pop()}`;
+    this.textsVersion += 1;
+    this.tab = 'texts';
+  },
+  async deleteBlock(r) {
+    const ok = await this.$store.dialog.confirm({ title: `Supprimer la copie « ${r.label} » ?`, body: 'Ses textes et leurs traductions sont supprimés avec elle.', confirmLabel: 'Supprimer', danger: true });
+    if (!ok) return;
+    await this.blockCall(async () => {
+      this.blocks = await post(`/pages/${this.page.id}/blocks/delete`, { zone: r.zone, block: r.block });
+      this.textsVersion += 1;
+    }, 'Copie supprimée.');
   },
   async saveSettings() {
     this.saving = true;
