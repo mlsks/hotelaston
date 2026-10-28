@@ -226,7 +226,198 @@
             }
           ]
         }
-      ]
+      ],
+      "translations": {
+        "en": {
+          "page": {
+            "title": "L'Horloge restaurant menu in Nice | Hôtel Aston La Scala",
+            "description": "The menu of L'Horloge, the brasserie of Hôtel Aston La Scala in Nice, by Chef Stéphane Furlan: starters, salads, pasta, fish, meat, desserts and set menus."
+          },
+          "title": "L'Horloge menu",
+          "subtitle": "Chef Stéphane Furlan suggests",
+          "backLabel": "Back to L'Horloge restaurant",
+          "note": "All our meat is from France. Prices include VAT and service. Cheques are not accepted.",
+          "sections": [
+            {
+              "title": "Starters",
+              "dishes": [
+                {
+                  "name": "Aubergine",
+                  "desc": "Aubergine blinis with thyme and pink garlic, ricotta quenelle with olive oil, fresh vegetables (cauliflower, pink radish, peas, green beans and cherry tomatoes)"
+                },
+                {
+                  "name": "Red mullet",
+                  "desc": "Red mullet fillets with olive tapenade, avocado fan and flying fish roe"
+                },
+                {
+                  "name": "Asparagus",
+                  "desc": "Asparagus vichyssoise with green anise, fried quail egg and sesame seeds"
+                },
+                {
+                  "name": "Swordfish",
+                  "desc": "Swordfish tataki with coriander marinade, little gem lettuce with ginger dressing"
+                },
+                {
+                  "name": "Foie gras",
+                  "desc": "Slice of duck foie gras with acacia honey and balsamic vinegar, lightly toasted bread"
+                }
+              ]
+            },
+            {
+              "title": "Salads",
+              "dishes": [
+                {
+                  "name": "Italian",
+                  "desc": "Apulian salad (heirloom tomato, burrata and pesto)"
+                },
+                {
+                  "name": "Niçoise",
+                  "desc": "The authentic niçoise (seared rare tuna, anchovies, lettuce heart, tomato, cucumber, hard-boiled egg, radish, celery, bell pepper, olives, spring onions)"
+                },
+                {
+                  "name": "Caesar",
+                  "desc": "The classic Caesar (romaine lettuce, chicken strips, cereal croutons, parmesan shavings)"
+                },
+                {
+                  "name": "Grapefruit",
+                  "desc": "Fresh cocktail (pink grapefruit, avocado, prawns and fresh mushrooms)"
+                }
+              ]
+            },
+            {
+              "title": "Pasta & mains",
+              "dishes": [
+                {
+                  "name": "Seafood",
+                  "desc": "Seafood linguine (mussels, squid, prawns)"
+                },
+                {
+                  "name": "Langoustine",
+                  "desc": "Royan ravioli, langoustine sauce"
+                },
+                {
+                  "name": "Puttanesca",
+                  "desc": "Spaghetti with tomato, capers, anchovies and olives"
+                },
+                {
+                  "name": "Vegetarian dish",
+                  "desc": "Vegetarian burger, feta patty, tomato, cucumber and cocktail sauce"
+                },
+                {
+                  "name": "Vegan dish",
+                  "desc": "Vegetable tagliatelle, soy sauce, miso, coriander and cherry tomatoes"
+                }
+              ]
+            },
+            {
+              "title": "Fish",
+              "dishes": [
+                {
+                  "name": "Octopus",
+                  "desc": "Tender sliced octopus, chickpeas two ways with chorizo and fresh shiso"
+                },
+                {
+                  "name": "King prawns",
+                  "desc": "King prawns marinated in coconut milk, Thai rice scented with coriander"
+                },
+                {
+                  "name": "John Dory",
+                  "desc": "Roasted John Dory fillet, Maltese sauce, broccoli purée"
+                },
+                {
+                  "name": "Sea bream",
+                  "desc": "Pan-fried sea bream fillet with lemongrass sauce, quinoa with preserved lemon"
+                }
+              ]
+            },
+            {
+              "title": "Meat",
+              "dishes": [
+                {
+                  "name": "Beef",
+                  "desc": "Pan-fried Simmental beef fillet, chive sauce, potato croquettes"
+                },
+                {
+                  "name": "Lamb",
+                  "desc": "Parmentier of Charlotte potato and confit Sisteron lamb, green salad"
+                },
+                {
+                  "name": "Poultry",
+                  "desc": "Chicken supreme with fresh herbs, red pepper coulis, courgette flan"
+                },
+                {
+                  "name": "Veal",
+                  "desc": "Veal medallion smoked with rosemary and its jus, on a bed of mangetout"
+                }
+              ]
+            },
+            {
+              "title": "Cheese",
+              "dishes": [
+                {
+                  "name": "Local matured cheeses",
+                  "desc": "Beaufort, ash-coated goat's cheese, Brie de Meaux, Roquefort"
+                }
+              ]
+            },
+            {
+              "title": "Desserts",
+              "dishes": [
+                {
+                  "name": "Strawberry"
+                },
+                {
+                  "name": "Traditional Melba"
+                },
+                {
+                  "name": "Rhubarb tart",
+                  "desc": "Old-fashioned rhubarb tart"
+                },
+                {
+                  "name": "Authentic tiramisu",
+                  "desc": "The authentic Treviso coffee tiramisu"
+                },
+                {
+                  "name": "Chocolate mousse",
+                  "desc": "Valrhona grand cru dark chocolate mousse"
+                },
+                {
+                  "name": "Young red berries",
+                  "desc": "Young red berries from the garden, served in a coupe"
+                },
+                {
+                  "name": "Café gourmand"
+                },
+                {
+                  "name": "Ice creams / sorbets",
+                  "desc": "1, 2 or 3 scoops"
+                }
+              ]
+            },
+            {
+              "title": "Set menus",
+              "dishes": [
+                {
+                  "name": "Children's menu (4-12 years)",
+                  "desc": "One dish of your choice (chicken tenders and fries, kid's croque and salad, or spaghetti bolognese) and a 2-scoop ice cream"
+                },
+                {
+                  "name": "Express formula",
+                  "desc": "Dish of the day and coffee. Lunchtime only, except weekends and public holidays"
+                },
+                {
+                  "name": "Business menu",
+                  "desc": "Starter and main course, or main course and dessert. Starter: Aubergine or Swordfish. Main course: Poultry or Sea bream. Dessert: Authentic tiramisu or pastry of the day. Lunchtime only, except weekends and public holidays"
+                },
+                {
+                  "name": "Horloge menu",
+                  "desc": "2 or 3 courses. Starters: Foie gras or Red mullet. Main courses: Lamb or John Dory. Desserts: Dark chocolate mousse or Rhubarb tart"
+                }
+              ]
+            }
+          ]
+        }
+      }
     },
     {
       "key": "carte-vin-restaurant-horloge",
@@ -538,7 +729,271 @@
             }
           ]
         }
-      ]
+      ],
+      "translations": {
+        "en": {
+          "page": {
+            "title": "L'Horloge restaurant wine list in Nice | Hôtel Aston La Scala",
+            "description": "The wines of L'Horloge, the restaurant of Hôtel Aston La Scala in Nice: Provence, Bordeaux, Rhône Valley, Burgundy, Loire, Alsace, champagnes and wines by the glass."
+          },
+          "title": "L'Horloge wine list",
+          "subtitle": "Prices including VAT, by bottle size",
+          "backLabel": "Back to L'Horloge restaurant",
+          "note": "Cheques are not accepted. Alcohol abuse is dangerous for your health, please drink responsibly.",
+          "sections": [
+            {
+              "title": "Provence · red (50 cl / 75 cl)",
+              "dishes": [
+                {
+                  "name": "Château Margillière",
+                  "desc": "AOC Coteaux Varois en Provence · Organic (AB)"
+                },
+                {
+                  "name": "Bandol « La Frégate »",
+                  "desc": "AOC Bandol"
+                },
+                {
+                  "name": "Minuty Prestige",
+                  "desc": "AOC Côtes de Provence"
+                },
+                {
+                  "name": "Château Rasque, Pièce Noble",
+                  "desc": "Côtes de Provence"
+                },
+                {
+                  "name": "Roubine « Cuvée R »",
+                  "desc": "AOC Côtes de Provence"
+                }
+              ]
+            },
+            {
+              "title": "Provence · rosé (50 cl / 75 cl)",
+              "dishes": [
+                {
+                  "name": "Château Margillière",
+                  "desc": "AOC Coteaux Varois en Provence · Agriculture biologique (AB)"
+                },
+                {
+                  "name": "Bandol « La Frégate »",
+                  "desc": "AOC Bandol"
+                },
+                {
+                  "name": "Minuty Prestige",
+                  "desc": "AOC Côtes de Provence"
+                },
+                {
+                  "name": "Château Rasque, Alexandra",
+                  "desc": "Côtes de Provence"
+                },
+                {
+                  "name": "Domaine Toasc",
+                  "desc": "AOP Bellet"
+                },
+                {
+                  "name": "Roubine « Cuvée R »",
+                  "desc": "AOC Côtes de Provence"
+                }
+              ]
+            },
+            {
+              "title": "Provence · white (50 cl / 75 cl)",
+              "dishes": [
+                {
+                  "name": "Château Margillière",
+                  "desc": "AOC Coteaux Varois en Provence · Agriculture biologique (AB)"
+                },
+                {
+                  "name": "Bandol « La Frégate »",
+                  "desc": "AOC Bandol"
+                },
+                {
+                  "name": "Minuty Prestige",
+                  "desc": "AOC Côtes de Provence"
+                },
+                {
+                  "name": "Château Rasque, Alexandra",
+                  "desc": "Côtes de Provence"
+                },
+                {
+                  "name": "Roubine « Cuvée R »",
+                  "desc": "AOC Côtes de Provence"
+                }
+              ]
+            },
+            {
+              "title": "Bordeaux · red (37.5 cl / 75 cl)",
+              "dishes": [
+                {
+                  "name": "Château Plégat La Gravière",
+                  "desc": "Graves red"
+                },
+                {
+                  "name": "Château Prieuré de Blaignan",
+                  "desc": "Médoc"
+                },
+                {
+                  "name": "Château Tour Calon Montagne",
+                  "desc": "Saint-Émilion"
+                }
+              ]
+            },
+            {
+              "title": "Bordeaux · white (75 cl)",
+              "dishes": [
+                {
+                  "name": "La Clotte Glazalis",
+                  "desc": "Sauternes"
+                }
+              ]
+            },
+            {
+              "title": "Rhône Valley · red (75 cl)",
+              "dishes": [
+                {
+                  "name": "Domaine Mas des Flauzieres « Lauries »",
+                  "desc": "Côtes du Rhône Villages"
+                },
+                {
+                  "name": "Saint-Joseph « Guyot »",
+                  "desc": "AOC Saint-Joseph"
+                },
+                {
+                  "name": "Le Millepertuis « Guyot »",
+                  "desc": "Crozes-Hermitage"
+                },
+                {
+                  "name": "Domaine Bonserine",
+                  "desc": "Côte-Rôtie"
+                }
+              ]
+            },
+            {
+              "title": "Burgundy · red (75 cl)",
+              "dishes": [
+                {
+                  "name": "Pierreclos Bichot",
+                  "desc": "Mâcon"
+                },
+                {
+                  "name": "Passetoutgrain Domaine Albert Bichot",
+                  "desc": "Bourgogne"
+                },
+                {
+                  "name": "Louis Jadot",
+                  "desc": "Pommard"
+                }
+              ]
+            },
+            {
+              "title": "Burgundy · white (75 cl)",
+              "dishes": [
+                {
+                  "name": "La Sereine",
+                  "desc": "Chablis"
+                },
+                {
+                  "name": "Domaine Albert Bichot",
+                  "desc": "Pouilly-Fuissé"
+                },
+                {
+                  "name": "Domaine du Bouchet",
+                  "desc": "Mâcon-Lugny"
+                }
+              ]
+            },
+            {
+              "title": "Loire · red (75 cl)",
+              "dishes": [
+                {
+                  "name": "Les Valengenets",
+                  "desc": "Saumur-Champigny"
+                },
+                {
+                  "name": "Cuvée Élégance",
+                  "desc": "Sancerre"
+                }
+              ]
+            },
+            {
+              "title": "Loire · white (75 cl)",
+              "dishes": [
+                {
+                  "name": "Domaine Gaudron",
+                  "desc": "Vouvray"
+                },
+                {
+                  "name": "Cuvée Élégance",
+                  "desc": "Sancerre"
+                },
+                {
+                  "name": "Domaine Petit",
+                  "desc": "Pouilly-Fumé"
+                }
+              ]
+            },
+            {
+              "title": "Alsace (75 cl)",
+              "dishes": [
+                {
+                  "name": "Gewurztraminer, Lucien Albrecht",
+                  "desc": "White"
+                },
+                {
+                  "name": "Riesling, Lucien Albrecht",
+                  "desc": "White"
+                },
+                {
+                  "name": "Pinot Noir Réserve, Lucien Albrecht",
+                  "desc": "Red"
+                }
+              ]
+            },
+            {
+              "title": "Champagne (10 cl / 75 cl)",
+              "dishes": [
+                {
+                  "name": "Champagne 3A Hôtels"
+                },
+                {
+                  "name": "Taittinger Brut Cuvée Prestige"
+                },
+                {
+                  "name": "Taittinger Rosé Cuvée Prestige"
+                },
+                {
+                  "name": "Taittinger Comtes de Champagne",
+                  "desc": "Blanc de blancs"
+                }
+              ]
+            },
+            {
+              "title": "Wine by the glass (12 cl)",
+              "dishes": [
+                {
+                  "name": "Sommelier's selection",
+                  "desc": "White, rosé or red"
+                },
+                {
+                  "name": "Domaine Mas des Flauzieres « Lauries »",
+                  "desc": "Côtes du Rhône Villages"
+                },
+                {
+                  "name": "Pierreclos Bichot",
+                  "desc": "Mâcon"
+                },
+                {
+                  "name": "La Clotte Glazalis",
+                  "desc": "Sauternes"
+                },
+                {
+                  "name": "Domaine du Bouchet",
+                  "desc": "Mâcon-Lugny"
+                }
+              ]
+            }
+          ]
+        }
+      }
     },
     {
       "key": "carte-dessert",
@@ -598,7 +1053,58 @@
             }
           ]
         }
-      ]
+      ],
+      "translations": {
+        "en": {
+          "page": {
+            "title": "L'Horloge restaurant dessert menu in Nice | Hôtel Aston La Scala",
+            "description": "The desserts of L'Horloge, the restaurant of Hôtel Aston La Scala in Nice, by Pastry Chef Tom Vaulot: strawberry, peach Melba, rhubarb tart, tiramisu, Valrhona chocolate mousse, ice creams."
+          },
+          "title": "Our dessert menu",
+          "subtitle": "Pastry Chef Tom Vaulot suggests",
+          "backLabel": "Back to L'Horloge restaurant",
+          "note": "Prices include VAT. Cheques are not accepted.",
+          "sections": [
+            {
+              "title": "Desserts",
+              "dishes": [
+                {
+                  "name": "Strawberry",
+                  "desc": "Strawberry three ways: plain, iced, shortbread"
+                },
+                {
+                  "name": "Traditional all-peach Melba",
+                  "desc": "Whole peach, peach coulis, flaked almonds, vanilla ice cream"
+                },
+                {
+                  "name": "Old-fashioned rhubarb tart",
+                  "desc": "The rhubarb tart of our childhood"
+                },
+                {
+                  "name": "Authentic Treviso coffee tiramisu",
+                  "desc": "The authentic tiramisu recipe"
+                },
+                {
+                  "name": "Valrhona grand cru dark chocolate mousse",
+                  "desc": "Creamy Valrhona dark chocolate mousse"
+                },
+                {
+                  "name": "Young red berries from the garden, in a coupe",
+                  "desc": "Strawberries, raspberries, blackberries, blueberries, redcurrants"
+                },
+                {
+                  "name": "Café gourmand",
+                  "desc": "Half poached apricot, mini tiramisu, mini dark chocolate mousse, strawberry petit four, mini caramel crisp"
+                },
+                {
+                  "name": "Ice creams / sorbets",
+                  "desc": "1, 2 or 3 scoops"
+                }
+              ]
+            }
+          ]
+        }
+      }
     }
   ]
 }

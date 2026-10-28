@@ -118,6 +118,12 @@ test('cartes de L’Horloge : créées aux adresses de l’ancien site, liens «
   assert.ok($('.menu-section').length >= 5);
   assert.equal($('.back-link').text(), "Retour au restaurant L'Horloge");
   assert.equal($('.menu-page__cta .link-arrow').length, 2);
+  // Traduction anglaise jointe : en brouillon, visible en prévisualisation
+  assert.equal(db.prepare("SELECT ii.status FROM cms_item_i18n ii JOIN cms_items i ON i.id = ii.item_id WHERE i.collection = 'menus' AND i.key = 'carte-dessert' AND ii.lang = 'en'").pluck().get(), 'draft');
+  const en = page('en/menu-restaurant-horloge');
+  assert.equal(en('h1').text(), "L'Horloge menu");
+  assert.equal(en('.menu-section h2').first().text(), 'Starters');
+  assert.equal(en('.menu-list li').first().find('.menu-list__price').text(), $('.menu-list li').first().find('.menu-list__price').text());
   const horloge = page('fr/restaurant-horloge');
   const hrefs = horloge('.link-list a').map((i, a) => a.attribs.href).get();
   for (const key of keys) assert.ok(hrefs.includes(`/preview/fr/${key}/`), key);

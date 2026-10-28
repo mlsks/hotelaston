@@ -117,7 +117,7 @@ Pour un document à télécharger (plaquette, menu de groupe en PDF) : l'envoyer
 
 ### Cartes du restaurant
 
-**Cartes du restaurant** liste les cartes, rangées par lieu (L'Horloge, Moon Bar, L'Aston Club). Chaque carte est une page du site, avec ses rubriques et ses plats. Les trois cartes de L'Horloge (la carte, les vins, les desserts) ont été reprises de l'ancien site, aux mêmes adresses (`/fr/menu-restaurant-horloge/`, `/fr/carte-vin-restaurant-horloge/`, `/fr/carte-dessert/`) : Google et les liens existants y mènent toujours. Elles ne sont qu'en français pour l'instant.
+**Cartes du restaurant** liste les cartes, rangées par lieu (L'Horloge, Moon Bar, L'Aston Club). Chaque carte est une page du site, avec ses rubriques et ses plats. Les trois cartes de L'Horloge (la carte, les vins, les desserts) ont été reprises de l'ancien site, aux mêmes adresses (`/fr/menu-restaurant-horloge/`, `/fr/carte-vin-restaurant-horloge/`, `/fr/carte-dessert/`) : Google et les liens existants y mènent toujours. Leur traduction anglaise est préparée en **brouillon** : à relire dans chaque carte (onglet EN), puis à enregistrer sans cocher « brouillon » pour qu'elle soit publiée. Pensez aussi au title et à la description en anglais (lien **Référencement de la page**).
 
 - **Créer une carte** : en bas de l'écran, donner son nom, son lieu et l'adresse de sa page (proposée à partir du nom), puis **Créer la carte**. Elle est ajoutée aux liens « Les cartes » de la page du lieu (modifiables dans [Menus et liens](#menus-et-liens)).
 - **Modifier une carte** : cliquer dessus.
@@ -286,7 +286,7 @@ Même en ligne, une langue n'apparaît que sur les pages entièrement prêtes. L
 
 ### Le sélecteur de langue du site
 
-Le sélecteur de langue du site propose, pour chaque page, **les langues dans lesquelles cette page est publiée**, et mène à la page équivalente. S'il n'y a qu'une langue publiée pour la page, il est masqué.
+Le sélecteur de langue du site propose **les langues publiées sur le site**. Il mène à la même page dans l'autre langue ; si cette page n'y est pas encore traduite, il mène à la page parente la plus proche qui l'est (par exemple, depuis la carte des desserts, au restaurant L'Horloge en anglais), à défaut à l'accueil. Il n'est masqué que si le site n'est publié que dans une seule langue.
 
 ### Traduire hors de l'admin
 
