@@ -20,6 +20,8 @@ import { ensureUiStrings } from '../ssg/ui-strings.js';
 const LANG = 'fr';
 const CDN_BASE = 'https://d1i8cf9j7dueks.cloudfront.net/cache/img/';
 const BOOKING_PREFIX = 'https://www.secure-hotel-booking.com/smart/redirect/2ARI-19552/';
+// Lien profond D-Edge : la page des chambres s'ouvre sur les dates et le nombre d'adultes du visiteur
+const BOOKING_BASE = 'https://www.secure-hotel-booking.com/d-edge/redirect/2ARI/19552/{locale}/RoomSelection?currency=EUR';
 const CONTENT_TABLES = ['cms_entry_values', 'cms_entries', 'cms_page_i18n', 'cms_redirects', 'cms_pages',
   'cms_item_media', 'cms_item_i18n', 'cms_items', 'cms_collections', 'cms_settings',
   'cms_banner_placements', 'cms_banner_i18n', 'cms_banners', 'cms_popup_pages', 'cms_popup_i18n', 'cms_popups',
@@ -181,7 +183,7 @@ export function importLegacy(db, { force = false, forceAssets = false, writeTemp
   graph['@graph'] = graph['@graph'].filter((node) => node['@type'] !== 'FAQPage'); // FAQPage : générée par page depuis le contenu visible
   const settings = {
     cdn_base: CDN_BASE,
-    booking_engine: { base: `${BOOKING_PREFIX}{lang}/`, prefix: BOOKING_PREFIX },
+    booking_engine: { base: BOOKING_BASE, prefix: BOOKING_PREFIX },
     og_site_name: $('meta[property="og:site_name"]').attr('content'),
     og_image_default: $('meta[property="og:image"]').attr('content'),
     jsonld_graph: { [LANG]: graph },

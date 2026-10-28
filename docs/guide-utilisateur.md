@@ -320,7 +320,7 @@ Sur les ordinateurs de l'hôtel (réception, bureaux), cocher dans **Mon compte*
 Paramètres communs à tout le site, appliqués à la prochaine publication :
 
 - **Site** : nom du site, langue proposée aux visiteurs dont la langue n'est pas proposée (x-default), image de partage par défaut ;
-- **Moteur de réservation (D-Edge)** : adresse du moteur, noms des paramètres qui transmettent les dates, les voyageurs, la chambre et l'offre (laisser un nom vide pour ne pas envoyer l'information), codes chambre et codes tarif de D-Edge (une ligne par chambre ou offre : `privilege = code D-Edge`). Ces noms et codes sont fournis par D-Edge ; s'ils sont faux, le moteur s'ouvre sans les choix du visiteur ;
+- **Moteur de réservation (D-Edge)** : adresse du moteur (`{locale}` y devient `fr-FR`, `en-GB`…), noms des paramètres qui transmettent les dates, les voyageurs, la chambre et l'offre (laisser un nom vide pour ne pas envoyer l'information), codes chambre et codes tarif de D-Edge (une ligne par chambre ou offre : `privilege = code D-Edge`). Ces noms et codes sont fournis par D-Edge ; s'ils sont faux, le moteur s'ouvre sans les choix du visiteur ;
 - **Avis clients** : **Exemples** ou **Avis réels de clients**, note et lien Google, note minimale pour l'accueil ;
 - **Données structurées (JSON-LD)** : réservé aux personnes à l'aise avec le format ;
 - **Maintenance** : **Effacer la corbeille maintenant**.

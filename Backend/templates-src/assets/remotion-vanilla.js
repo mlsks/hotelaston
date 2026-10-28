@@ -429,26 +429,29 @@
   /*
    * Noms des paramètres envoyés au moteur : les clés sont celles du site, les
    * valeurs les noms attendus par D-Edge. Valeur null : paramètre non envoyé.
+   * Lien profond D-Edge relevé le 28/10/2026 : …/fr-FR/RoomSelection?arrivalDate=
+   * AAAA-MM-JJ&departureDate=AAAA-MM-JJ&selectedAdultCount=N ; le visiteur choisit
+   * ensuite sa chambre chez D-Edge.
    * Les Réglages du back-office (booking_engine.params, .rooms, .offers) priment
    * sur ces valeurs par défaut, sans toucher au code.
    */
   const BOOKING_DEFAULTS = {
     params: {
-      checkin: 'checkin',
-      checkout: 'checkout',
+      checkin: 'arrivalDate',
+      checkout: 'departureDate',
       nights: null,
-      guests: 'guests',
-      adults: 'adults',
-      children: 'children',
-      roomType: 'roomType',
-      offerId: 'offerId',
+      guests: null,
+      adults: 'selectedAdultCount',
+      children: null,
+      roomType: null,
+      offerId: null,
     },
     /* Codes chambre et tarif du moteur, par slug du site */
     rooms: { confort: 'confort', privilege: 'privilege', premium: 'premium', exclusive: 'exclusive', deluxe: 'deluxe', suites: 'suites' },
     offers: { 'escapade-gourmande': 'escapade-gourmande', 'nouvel-an': 'nouvel-an', carnaval: 'carnaval' },
   };
   const BOOKING_ENGINE = {
-    base: SITE_CONFIG?.bookingBase || 'https://www.secure-hotel-booking.com/smart/redirect/2ARI-19552/fr/',
+    base: SITE_CONFIG?.bookingBase || 'https://www.secure-hotel-booking.com/d-edge/redirect/2ARI/19552/fr-FR/RoomSelection?currency=EUR',
     params: { ...BOOKING_DEFAULTS.params, ...SITE_CONFIG?.booking?.params },
     rooms: { ...BOOKING_DEFAULTS.rooms, ...SITE_CONFIG?.booking?.rooms },
     offers: { ...BOOKING_DEFAULTS.offers, ...SITE_CONFIG?.booking?.offers },

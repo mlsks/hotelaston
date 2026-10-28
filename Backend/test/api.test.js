@@ -263,8 +263,12 @@ test('textes du JavaScript : passés au navigateur dans la langue de la page', a
   assert.equal(Object.keys(cfg('fr/index.html').i18n).length, Object.keys(UI_STRINGS).length);
 });
 
-test('moteur de réservation : noms de paramètres et codes des Réglages passés au navigateur', async () => {
+test('moteur de réservation : lien profond D-Edge par langue, réglages passés au navigateur', async () => {
   const before = (await call('admin', 'GET', '/api/settings')).json().booking_engine;
+  await call('editor', 'POST', '/api/builds/preview', {});
+  const base = (rel) => JSON.parse(cheerio.load(read(rel))('#site-config').text()).bookingBase;
+  assert.equal(base('fr/index.html'), 'https://www.secure-hotel-booking.com/d-edge/redirect/2ARI/19552/fr-FR/RoomSelection?currency=EUR');
+  assert.match(base('en/index.html'), /\/en-GB\/RoomSelection\?/);
   const booking = { params: { checkin: 'arrivalDate', checkout: 'departureDate', nights: null }, rooms: { privilege: 'PRV' }, offers: {} };
   await call('admin', 'PATCH', '/api/settings', { booking_engine: { ...before, ...booking } });
   await call('editor', 'POST', '/api/builds/preview', {});

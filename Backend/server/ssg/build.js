@@ -69,7 +69,9 @@ export function generateSite({ source, mode, now, previousState = new Map(), onl
   const assets = prepareAssets({ templatesDir: config.templatesDir, mediaDir: config.mediaDir, basePath });
   const { settings, defaultLang } = source;
   const langs = source.activeLangs.map((l) => l.code);
-  const bookingBase = (lang) => (settings.booking_engine?.base || '').replace('{lang}', source.lang(lang).booking_lang);
+  const bookingBase = (lang) => (settings.booking_engine?.base || '')
+    .replace('{lang}', source.lang(lang).booking_lang)
+    .replace('{locale}', source.lang(lang).locale);
 
   /* Cibles : pages + fiches des collections qui ont un gabarit */
   // Textes d'interface du JavaScript : requis sur toutes les pages, comme ceux du layout

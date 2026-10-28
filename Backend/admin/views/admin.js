@@ -78,7 +78,7 @@ Alpine.data('usersView', () => ({
 /* ---------- Réglages ---------- */
 /* Valeurs par défaut du site (templates-src/assets/remotion-vanilla.js, BOOKING_DEFAULTS) */
 const BOOKING_PARAMS = {
-  checkin: 'checkin', checkout: 'checkout', nights: '', adults: 'adults', children: 'children', guests: 'guests', roomType: 'roomType', offerId: 'offerId',
+  checkin: 'arrivalDate', checkout: 'departureDate', nights: '', adults: 'selectedAdultCount', children: '', guests: '', roomType: '', offerId: '',
 };
 const BOOKING_ROOMS = { confort: 'confort', privilege: 'privilege', premium: 'premium', exclusive: 'exclusive', deluxe: 'deluxe', suites: 'suites' };
 const BOOKING_OFFERS = { 'escapade-gourmande': 'escapade-gourmande', 'nouvel-an': 'nouvel-an', carnaval: 'carnaval' };
@@ -126,8 +126,8 @@ Alpine.data('settingsView', () => ({
       return;
     }
     const f = this.form;
-    if (!f.booking_base.includes('{lang}')) {
-      this.$store.toast.push('L’adresse du moteur doit contenir {lang} (remplacé par la langue de la page).', 'error');
+    if (!/\{(lang|locale)\}/.test(f.booking_base)) {
+      this.$store.toast.push('L’adresse du moteur doit contenir {locale} (fr-FR) ou {lang} (fr), remplacé par la langue de la page.', 'error');
       return;
     }
     this.saving = true;

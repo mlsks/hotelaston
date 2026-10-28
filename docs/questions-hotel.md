@@ -38,9 +38,10 @@ Les blocs A à D sont nécessaires pour la mise en ligne. Les blocs E à I peuve
 
 ## C. Moteur de réservation D-Edge
 
-14. Pouvez-vous nous mettre en relation avec votre contact D-Edge, ou lui transmettre ceci : quand un visiteur choisit ses dates, le nombre de personnes et une chambre sur le site, nous voulons ouvrir le moteur **directement sur ces choix** (« lien profond » ou « deep link »). Aujourd'hui, `https://www.secure-hotel-booking.com/d-edge/redirect/2ARI/19552/fr/RoomSelection` s'ouvre toujours sur les valeurs par défaut (aujourd'hui → demain, 2 personnes). Il nous faut :
-    - le format d'adresse et les noms exacts des paramètres : date d'arrivée, date de départ ou nombre de nuits (et format des dates), adultes, enfants (et âges ?), nombre de chambres, langue ;
-    - le paramètre pour présélectionner une **chambre** et un **tarif / une offre**, avec la liste des **codes chambre** (Confort, Privilège, Premium, Exclusive, Deluxe Terrasse, Suites familiales) et des **codes tarif** utilisés par l'hôtel.
+14. Le lien profond vers D-Edge est trouvé (28/10/2026) : `https://www.secure-hotel-booking.com/d-edge/redirect/2ARI/19552/fr-FR/RoomSelection?arrivalDate=AAAA-MM-JJ&departureDate=AAAA-MM-JJ&selectedAdultCount=N&currency=EUR` ouvre la liste des chambres sur les dates et le nombre d'adultes du visiteur, qui choisit ensuite sa chambre chez D-Edge. Pouvez-vous seulement demander à votre contact D-Edge :
+    - le paramètre pour transmettre les **enfants** (et leurs âges), aujourd'hui non transmis ;
+    - si les langues autres que le français s'écrivent bien `en-GB`, `it-IT`, `de-DE` dans l'adresse ;
+    - en option, s'il existe un paramètre pour présélectionner une **offre** (codes tarif).
 
 ## D. Avis clients
 
