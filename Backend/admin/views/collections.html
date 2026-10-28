@@ -1,7 +1,7 @@
 <div x-data="collectionsView" class="space-y-6">
   <div>
     <h1 class="page-title">Fiches et listes</h1>
-    <p class="mt-1 text-slate-600">Les contenus répétés du site : chaque chambre, chaque service, les offres, les salles de séminaire, les avis, les réponses du chat, le programme des concerts.</p>
+    <p class="mt-1 text-slate-600">Les contenus répétés du site : chaque chambre, chaque service, les offres, les salles de séminaire, les avis, les réponses du chat, le programme des concerts, et les bandeaux photo en haut des pages.</p>
   </div>
   <div class="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
     <template x-for="c in collections" :key="c.key">
@@ -12,5 +12,10 @@
         <p class="text-xs text-slate-500" x-show="!translatable(c)">Pas de traduction (langue d’origine)</p>
       </a>
     </template>
+    <a href="#/collections/bandeaux-photo" x-show="$store.session.canContent" class="card block p-5 transition hover:ring-azure-700">
+      <p class="section-title">Bandeaux photo (HERO)</p>
+      <p class="mt-1 text-sm text-slate-600">Accueil, Séminaires, Moon Bar…</p>
+      <p class="mt-3 text-xs text-slate-500">Dégradé derrière le texte du grand bandeau en haut des pages</p>
+    </a>
   </div>
 </div>

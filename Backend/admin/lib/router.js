@@ -19,6 +19,7 @@ const ROUTES = [
   { path: '/cartes', view: 'menus', title: 'Cartes', allow: unscoped },
   { path: '/cartes/:key', view: 'menu', title: 'Carte', allow: unscoped },
   { path: '/collections', view: 'collections', title: 'Fiches et listes', allow: unscoped },
+  { path: '/collections/bandeaux-photo', view: 'heroes', title: 'Bandeaux photo (HERO)', allow: content },
   { path: '/collections/:key', view: 'collection', title: 'Fiches' },
   { path: '/collections/:key/:id', view: 'item', title: 'Fiche' },
   { path: '/medias', view: 'media', title: 'Médiathèque' },

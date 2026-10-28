@@ -93,7 +93,7 @@ Dans un texte enrichi (pages, fiches, popup), un texte copié depuis Word ou un 
   - **Dans le plan du site (sitemap.xml)** ;
   - **Page parente** et **Ordre** (place dans le menu et le fil d'Ariane) ;
   - **Priorité dans le plan du site** (laisser « Automatique » en cas de doute) ;
-  - **Dégradé derrière le texte du bandeau photo** (Accueil, Séminaires et Moon Bar) : un voile léger part de la gauche (du bas sur mobile) et une ombre douce détache le texte blanc, sans assombrir le reste de la photo ou de la vidéo. **Opacité** (50 % au départ) et **Étendue vers la droite** (70 %) se règlent au curseur ; **Revenir au réglage d'origine** remet ceux du site. Décoché, le bandeau de l'accueil et la vidéo du Moon Bar gardent leur voile d'origine. Enregistrer, puis vérifier dans la prévisualisation.
+  - **Dégradé derrière le texte du bandeau photo** (Accueil, Séminaires et Moon Bar) : un voile léger part de la gauche (du bas sur mobile) et une ombre douce détache le texte blanc, sans assombrir le reste de la photo ou de la vidéo. **Opacité** (50 % au départ) et **Étendue vers la droite** (70 %) se règlent au curseur ; **Revenir au réglage d'origine** remet ceux du site. Décoché, le bandeau de l'accueil et la vidéo du Moon Bar gardent leur voile d'origine. Enregistrer, puis vérifier dans la prévisualisation. Tous les bandeaux se règlent aussi sur un seul écran : voir [Les bandeaux photo (HERO)](#les-bandeaux-photo-hero).
 
 ### Blocs d'une page
 
@@ -165,6 +165,7 @@ Les textes affichés par le JavaScript du site : module de réservation, avis, f
 | Avis | Auteur, mois du séjour, note, chambre, thèmes, texte et réponse de l'hôtel. |
 | Réponses du chat | Les mots déclencheurs (si la question du visiteur en contient un, le chat donne cette réponse) et la réponse. |
 | Programme Live Music, Artistes | Voir [Live Music](#5-live-music-concerts-et-artistes). |
+| Bandeaux photo (HERO) | Le dégradé derrière le texte du grand bandeau en haut de l'Accueil, des Séminaires et du Moon Bar. Voir [Les bandeaux photo (HERO)](#les-bandeaux-photo-hero). |
 
 Dans une fiche :
 
@@ -219,6 +220,17 @@ Le tableau « Nos salles et leurs configurations » de la page **Séminaires** e
 Le lien « Devis pour cette salle » ouvre le formulaire de devis avec la salle déjà choisie. **Ajouter**, **Masquer** ou **Supprimer** une salle met à jour le tableau et le formulaire à la prochaine publication. La liste « Les chiffres clés » de la page guide *Salle de séminaire à Nice* et les chiffres de la page Séminaires (« 7 espaces modulables ») ne changent pas seuls : les revoir dans **Pages**.
 
 Les avis livrés avec le site sont des exemples, marqués « Exemple » sur le site. Le passage aux avis réels se fait dans les [Réglages](#reglages).
+
+### Les bandeaux photo (HERO)
+
+**Fiches et listes** → **Bandeaux photo (HERO)** montre, sur un seul écran, chaque page qui a un grand bandeau réglable : Accueil, Séminaires et Moon Bar (vidéo). Pour chacune :
+
+- **Dégradé derrière le texte** : un voile léger part de la gauche (du bas sur mobile) et une ombre douce détache le texte blanc, sans assombrir le reste de la photo ou de la vidéo. Décoché, le bandeau garde son voile d'origine.
+- **Opacité** (50 % au départ) et **Étendue vers la droite** (70 %) se règlent au curseur.
+- **Revenir au réglage d'origine** remet ceux du site (activé sur Séminaires et Moon Bar, désactivé sur l'Accueil).
+- **Enregistrer**, puis **Prévisualiser** ouvre la page dans la prévisualisation.
+
+Le même réglage se trouve aussi dans l'onglet **Réglages** de la page.
 
 ## 5. Live Music : concerts et artistes
 

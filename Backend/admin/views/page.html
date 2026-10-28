@@ -185,7 +185,7 @@
               <label class="block"><span class="label flex justify-between">Étendue vers la droite <span class="font-normal text-slate-500" x-text="veil.width + ' %'"></span></span>
                 <input type="range" class="w-full" min="20" max="100" step="5" x-model.number="veil.width"></label>
             </div>
-            <p class="hint">Visible dans la prévisualisation après Enregistrer. <button type="button" class="font-medium text-azure-700 hover:underline" @click="resetVeil()">Revenir au réglage d’origine</button></p>
+            <p class="hint">Visible dans la prévisualisation après Enregistrer. Tous les bandeaux se règlent aussi dans <a href="#/collections/bandeaux-photo" class="font-medium text-azure-700 hover:underline">Fiches et listes → Bandeaux photo</a>. <button type="button" class="font-medium text-azure-700 hover:underline" @click="resetVeil()">Revenir au réglage d’origine</button></p>
           </fieldset>
         </template>
         <div class="border-t border-slate-100 pt-4"><button class="btn btn-primary" :disabled="saving">Enregistrer</button></div>
