@@ -84,8 +84,8 @@ export class Source {
   translated(map, id, lang) {
     const rows = map.get(id) || {};
     if (this.usable(rows[lang], lang)) return { ...rows[lang], missing: false };
-    const relay = rows[RELAY_LANG];
-    if (lang !== RELAY_LANG && relay?.status === 'ready' && this.lang(RELAY_LANG)) return { ...relay, missing: true };
+    const relay = this.relay(rows, lang);
+    if (relay) return { ...relay, missing: true };
     if (rows[this.defaultLang]) return { ...rows[this.defaultLang], missing: true };
     return null;
   }
@@ -121,6 +121,12 @@ export class Source {
     return this.languages.find((l) => l.code === code);
   }
 
+  /** Traduction de relais d'une langue sans la sienne : l'anglais, s'il est prêt (sinon la langue par défaut). */
+  relay(rows, lang) {
+    const row = rows[RELAY_LANG];
+    return lang !== RELAY_LANG && lang !== this.defaultLang && row?.status === 'ready' && this.lang(RELAY_LANG) ? row : null;
+  }
+
   /** Une valeur traduite compte-t-elle pour cette langue ? */
   usable(row, lang) {
     if (!row) return false;
@@ -149,7 +155,10 @@ export class Source {
     return { ...def, lang, path: def.slug ? `/${lang}/${def.slug}/` : `/${lang}/`, missing: true };
   }
 
-  /** Éléments actifs d'une collection, fusionnés dans la langue (dates de début / fin respectées). */
+  /**
+   * Éléments actifs d'une collection, fusionnés dans la langue (dates de début / fin respectées).
+   * Sans traduction utilisable, l'élément s'affiche en anglais s'il y est prêt, sinon dans la langue par défaut.
+   */
   collectionItems(collection, lang, now = new Date()) {
     const iso = now.toISOString();
     return this.items
@@ -158,14 +167,12 @@ export class Source {
       .map((it) => {
         const rows = this.itemI18n.get(it.id) || {};
         const own = this.usable(rows[lang], lang) ? rows[lang] : null;
-        const tr = own || rows[this.defaultLang];
-        return {
-          id: it.id,
-          key: it.key,
-          slug: tr?.slug || it.key,
-          missing: !own,
-          data: mergeTranslation(JSON.parse(it.data), tr ? JSON.parse(tr.data) : undefined),
-        };
+        const def = rows[this.defaultLang];
+        const relay = own ? null : this.relay(rows, lang);
+        const tr = own || def;
+        let data = mergeTranslation(JSON.parse(it.data), tr ? JSON.parse(tr.data) : undefined);
+        if (relay) data = mergeTranslation(data, JSON.parse(relay.data));
+        return { id: it.id, key: it.key, slug: tr?.slug || it.key, missing: !own, data };
       });
   }
 }

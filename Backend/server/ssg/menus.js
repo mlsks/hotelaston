@@ -4,7 +4,8 @@
  *
  * Élément : data = { page, venue, sections: [{ dishes: [{ price }] }] } ;
  * traduits : title, subtitle, backLabel, note, sections[].title, sections[].dishes[].name / .desc.
- * Un plat ou une rubrique pas encore traduits s'affichent dans la langue par défaut.
+ * Un plat ou une rubrique pas encore traduits s'affichent dans la langue par défaut ; une carte sans
+ * traduction dans une langue s'affiche en anglais s'il est prêt.
  */
 import fs from 'node:fs';
 import path from 'node:path';
@@ -212,7 +213,8 @@ export function menuFor(source, key, lang) {
   const parse = (row) => (row ? JSON.parse(row.data) : undefined);
   let data = mergeTranslation(JSON.parse(item.data), parse(rows[source.defaultLang]));
   const own = lang !== source.defaultLang && source.usable(rows[lang], lang) ? rows[lang] : null;
-  if (own) data = mergeTranslation(data, dropEmpty(parse(own)));
+  const relay = own ? null : source.relay(rows, lang); // anglais prêt, à défaut de la langue
+  if (own || relay) data = mergeTranslation(data, dropEmpty(parse(own || relay)));
   return { key, data, missing: lang !== source.defaultLang && !own };
 }
 

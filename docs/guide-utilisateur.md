@@ -233,9 +233,9 @@ Une fenêtre au plus par page (la plus prioritaire). Sur mobile, elle ne s'ouvre
 - **Pages** : toutes, seulement sur…, ou partout sauf… ;
 - **Enregistrer**, puis publier.
 
-### Bandeaux et popup dans les autres langues
+### Bandeaux, popup, liens et cartes dans les autres langues
 
-Un bandeau ou un popup **n'est jamais masqué** faute de traduction. Dans une langue où son texte n'est pas prêt, il s'affiche :
+Un bandeau, un popup, un lien des menus, une carte du restaurant ou une fiche **n'est jamais masqué** faute de traduction. Dans une langue où son texte n'est pas prêt, il s'affiche :
 
 1. en **anglais**, si sa version anglaise est prête ;
 2. sinon en **français**.
