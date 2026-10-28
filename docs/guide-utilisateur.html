@@ -200,7 +200,7 @@ npm start</code></pre></li>
 <p><strong>+ Ajouter un lien</strong> ajoute un lien en fin de liste, vers l'accueil : changer son libellé et sa cible. Dans une autre langue que le français, seuls les libellés se traduisent ; l'ordre et les cibles valent pour toutes les langues. Un libellé pas encore traduit s'affiche en français.</p>
 <p>Pour un document à télécharger (plaquette, menu de groupe en PDF) : l'envoyer dans la <strong>Médiathèque</strong> (ou directement depuis <strong>Choisir…</strong>), puis choisir <strong>Un document (PDF)</strong> sur le lien. Les cartes du restaurant et des bars, elles, sont des pages du site : voir <a href="#cartes-du-restaurant">Cartes du restaurant</a>.</p>
 <h3 id="cartes-du-restaurant">Cartes du restaurant</h3>
-<p><strong>Cartes du restaurant</strong> liste les cartes, rangées par lieu (L'Horloge, Moon Bar, L'Aston Club). Chaque carte est une page du site, avec ses rubriques et ses plats. Les trois cartes de L'Horloge (la carte, les vins, les desserts) ont été reprises de l'ancien site, aux mêmes adresses (<code>/fr/menu-restaurant-horloge/</code>, <code>/fr/carte-vin-restaurant-horloge/</code>, <code>/fr/carte-dessert/</code>) : Google et les liens existants y mènent toujours. Leur traduction anglaise est préparée en <strong>brouillon</strong> : à relire dans chaque carte (onglet EN), puis à enregistrer sans cocher « brouillon » pour qu'elle soit publiée. Pensez aussi au title et à la description en anglais (lien <strong>Référencement de la page</strong>).</p>
+<p><strong>Cartes du restaurant</strong> liste les cartes, rangées par lieu (L'Horloge, Moon Bar, L'Aston Club). Chaque carte est une page du site, avec ses rubriques et ses plats. Les trois cartes de L'Horloge (la carte, les vins, les desserts) ont été reprises de l'ancien site, aux mêmes adresses (<code>/fr/menu-restaurant-horloge/</code>, <code>/fr/carte-vin-restaurant-horloge/</code>, <code>/fr/carte-dessert/</code>) : Google et les liens existants y mènent toujours. Leur traduction anglaise est préparée en <strong>brouillon</strong> : à relire dans chaque carte (onglet EN), puis à enregistrer sans cocher « brouillon » pour qu'elle soit publiée. Les libellés anglais des liens « Les cartes » sont aussi en brouillon, dans <a href="#menus-et-liens">Menus et liens</a> (liste « Les cartes de L'Horloge », onglet EN).</p>
 <ul>
 <li><strong>Créer une carte</strong> : en bas de l'écran, donner son nom, son lieu et l'adresse de sa page (proposée à partir du nom), puis <strong>Créer la carte</strong>. Elle est ajoutée aux liens « Les cartes » de la page du lieu (modifiables dans <a href="#menus-et-liens">Menus et liens</a>).</li>
 <li><strong>Modifier une carte</strong> : cliquer dessus.
@@ -211,9 +211,9 @@ npm start</code></pre></li>
 <li><strong>Enregistrer</strong> : rien n'est enregistré avant ce bouton ; l'admin prévient si on quitte l'écran avec des modifications en cours.</li>
 </ul></li>
 <li><strong>Masquer la carte</strong> : sa page et les liens qui y mènent disparaissent du site à la prochaine publication ; <strong>Réafficher la carte</strong> les remet. Une carte ne se supprime pas.</li>
-<li><strong>Title et description pour Google</strong> : lien <strong>Référencement de la page</strong> en haut de la carte.</li>
+<li><strong>Référencement (Google)</strong> : title et description de la page, dans la carte elle-même, enregistrés avec elle. Les autres réglages (adresse, partage sur les réseaux) restent sous le lien <strong>Référencement de la page</strong>.</li>
 </ul>
-<p>Dans une autre langue, la carte se traduit au même endroit : le français est en regard, seuls les libellés se traduisent (les prix et l'ordre valent pour toutes les langues). Un plat pas encore traduit s'affiche en français. Supprimer ou déplacer un plat en français fait repasser la traduction « à revoir ».</p>
+<p>Dans une autre langue, la carte se traduit au même endroit : le français est en regard, seuls les libellés se traduisent (les prix et l'ordre valent pour toutes les langues). Le title et la description se traduisent dans la même page : <strong>une carte n'est publiée dans une langue que si sa carte et son référencement sont « prêts »</strong>, d'où les deux pastilles en haut. <strong>Enregistrer</strong> passe les deux au même état. Un plat pas encore traduit s'affiche en français. Supprimer ou déplacer un plat en français fait repasser la traduction « à revoir ».</p>
 <h3 id="textes-de-l-interface">Textes de l'interface</h3>
 <p>Les textes affichés par le JavaScript du site : module de réservation, avis, formulaires, chat, bandeaux, popup. Les éléments entre accolades, comme <code>{count}</code>, sont remplacés par une valeur au moment de l'affichage : <strong>il faut les garder tels quels</strong>, y compris dans les traductions.</p>
 <h2 id="4-fiches-et-listes">4. Fiches et listes</h2>
@@ -301,8 +301,8 @@ npm start</code></pre></li>
 <li><strong>Pages</strong> : toutes, seulement sur…, ou partout sauf… ;</li>
 <li><strong>Enregistrer</strong>, puis publier.</li>
 </ul>
-<h3 id="bandeaux-et-popup-dans-les-autres-langues">Bandeaux et popup dans les autres langues</h3>
-<p>Un bandeau ou un popup <strong>n'est jamais masqué</strong> faute de traduction. Dans une langue où son texte n'est pas prêt, il s'affiche :</p>
+<h3 id="bandeaux-popup-liens-et-cartes-dans-les-autres-langues">Bandeaux, popup, liens et cartes dans les autres langues</h3>
+<p>Un bandeau, un popup, un lien des menus, une carte du restaurant ou une fiche <strong>n'est jamais masqué</strong> faute de traduction. Dans une langue où son texte n'est pas prêt, il s'affiche :</p>
 <ol>
 <li>en <strong>anglais</strong>, si sa version anglaise est prête ;</li>
 <li>sinon en <strong>français</strong>.</li>

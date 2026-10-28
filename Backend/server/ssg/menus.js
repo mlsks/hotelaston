@@ -4,7 +4,8 @@
  *
  * Élément : data = { page, venue, sections: [{ dishes: [{ price }] }] } ;
  * traduits : title, subtitle, backLabel, note, sections[].title, sections[].dishes[].name / .desc.
- * Un plat ou une rubrique pas encore traduits s'affichent dans la langue par défaut.
+ * Un plat ou une rubrique pas encore traduits s'affichent dans la langue par défaut ; une carte sans
+ * traduction dans une langue s'affiche en anglais s'il est prêt.
  */
 import fs from 'node:fs';
 import path from 'node:path';
@@ -168,6 +169,21 @@ function createSeedMenus(db, def) {
           VALUES (?, ?, ?, ?, ?, ?, 'draft', ?, ?)`).run(page.id, lang, m.key, `/${lang}/${m.key}/`, t.page.title, t.page.description, sha(`${m.page.title}\n${m.page.description}`), now);
       }
     }
+    // Libellé traduit des liens « Les cartes » qui mènent à la carte, en brouillon lui aussi
+    for (const m of menus) {
+      for (const [lang, t] of Object.entries(m.translations || {})) {
+        const mark = `${m.key}@${lang}:lien`;
+        if (done.has(mark) || !langs.has(lang) || !t.link) continue;
+        const links = db.prepare(`SELECT i.id, fr.data FROM cms_items i JOIN cms_item_i18n fr ON fr.item_id = i.id AND fr.lang = ?
+          WHERE i.collection = ? AND json_extract(i.data, '$.kind') = 'page' AND json_extract(i.data, '$.page') = ?`).all(def, LINKS, m.key);
+        if (!links.length) continue;
+        done.add(mark);
+        for (const link of links) {
+          db.prepare(`INSERT OR IGNORE INTO cms_item_i18n (item_id, lang, slug, data, status, source_hash, updated_at) VALUES (?, ?, NULL, ?, 'draft', ?, ?)`)
+            .run(link.id, lang, JSON.stringify({ label: t.link }), sha(link.data), now);
+        }
+      }
+    }
     db.prepare(`INSERT INTO cms_settings (key, value, updated_at) VALUES (?, ?, ?)
       ON CONFLICT (key) DO UPDATE SET value = excluded.value, updated_at = excluded.updated_at`).run(CREATED, JSON.stringify([...done].sort()), now);
   })();
@@ -197,7 +213,8 @@ export function menuFor(source, key, lang) {
   const parse = (row) => (row ? JSON.parse(row.data) : undefined);
   let data = mergeTranslation(JSON.parse(item.data), parse(rows[source.defaultLang]));
   const own = lang !== source.defaultLang && source.usable(rows[lang], lang) ? rows[lang] : null;
-  if (own) data = mergeTranslation(data, dropEmpty(parse(own)));
+  const relay = own ? null : source.relay(rows, lang); // anglais prêt, à défaut de la langue
+  if (own || relay) data = mergeTranslation(data, dropEmpty(parse(own || relay)));
   return { key, data, missing: lang !== source.defaultLang && !own };
 }
 

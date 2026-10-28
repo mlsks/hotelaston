@@ -117,7 +117,7 @@ Pour un document à télécharger (plaquette, menu de groupe en PDF) : l'envoyer
 
 ### Cartes du restaurant
 
-**Cartes du restaurant** liste les cartes, rangées par lieu (L'Horloge, Moon Bar, L'Aston Club). Chaque carte est une page du site, avec ses rubriques et ses plats. Les trois cartes de L'Horloge (la carte, les vins, les desserts) ont été reprises de l'ancien site, aux mêmes adresses (`/fr/menu-restaurant-horloge/`, `/fr/carte-vin-restaurant-horloge/`, `/fr/carte-dessert/`) : Google et les liens existants y mènent toujours. Leur traduction anglaise est préparée en **brouillon** : à relire dans chaque carte (onglet EN), puis à enregistrer sans cocher « brouillon » pour qu'elle soit publiée. Pensez aussi au title et à la description en anglais (lien **Référencement de la page**).
+**Cartes du restaurant** liste les cartes, rangées par lieu (L'Horloge, Moon Bar, L'Aston Club). Chaque carte est une page du site, avec ses rubriques et ses plats. Les trois cartes de L'Horloge (la carte, les vins, les desserts) ont été reprises de l'ancien site, aux mêmes adresses (`/fr/menu-restaurant-horloge/`, `/fr/carte-vin-restaurant-horloge/`, `/fr/carte-dessert/`) : Google et les liens existants y mènent toujours. Leur traduction anglaise est préparée en **brouillon** : à relire dans chaque carte (onglet EN), puis à enregistrer sans cocher « brouillon » pour qu'elle soit publiée. Les libellés anglais des liens « Les cartes » sont aussi en brouillon, dans [Menus et liens](#menus-et-liens) (liste « Les cartes de L'Horloge », onglet EN).
 
 - **Créer une carte** : en bas de l'écran, donner son nom, son lieu et l'adresse de sa page (proposée à partir du nom), puis **Créer la carte**. Elle est ajoutée aux liens « Les cartes » de la page du lieu (modifiables dans [Menus et liens](#menus-et-liens)).
 - **Modifier une carte** : cliquer dessus.
@@ -126,9 +126,9 @@ Pour un document à télécharger (plaquette, menu de groupe en PDF) : l'envoyer
   - **Plats** : nom, prix (texte libre : « 12 € », « 6 € / 32 € »), description facultative ; ↑ ↓ pour l'ordre, ✕ pour retirer, **+ Ajouter un plat**. Un plat sans nom n'est pas enregistré.
   - **Enregistrer** : rien n'est enregistré avant ce bouton ; l'admin prévient si on quitte l'écran avec des modifications en cours.
 - **Masquer la carte** : sa page et les liens qui y mènent disparaissent du site à la prochaine publication ; **Réafficher la carte** les remet. Une carte ne se supprime pas.
-- **Title et description pour Google** : lien **Référencement de la page** en haut de la carte.
+- **Référencement (Google)** : title et description de la page, dans la carte elle-même, enregistrés avec elle. Les autres réglages (adresse, partage sur les réseaux) restent sous le lien **Référencement de la page**.
 
-Dans une autre langue, la carte se traduit au même endroit : le français est en regard, seuls les libellés se traduisent (les prix et l'ordre valent pour toutes les langues). Un plat pas encore traduit s'affiche en français. Supprimer ou déplacer un plat en français fait repasser la traduction « à revoir ».
+Dans une autre langue, la carte se traduit au même endroit : le français est en regard, seuls les libellés se traduisent (les prix et l'ordre valent pour toutes les langues). Le title et la description se traduisent dans la même page : **une carte n'est publiée dans une langue que si sa carte et son référencement sont « prêts »**, d'où les deux pastilles en haut. **Enregistrer** passe les deux au même état. Un plat pas encore traduit s'affiche en français. Supprimer ou déplacer un plat en français fait repasser la traduction « à revoir ».
 
 ### Textes de l'interface
 
@@ -233,9 +233,9 @@ Une fenêtre au plus par page (la plus prioritaire). Sur mobile, elle ne s'ouvre
 - **Pages** : toutes, seulement sur…, ou partout sauf… ;
 - **Enregistrer**, puis publier.
 
-### Bandeaux et popup dans les autres langues
+### Bandeaux, popup, liens et cartes dans les autres langues
 
-Un bandeau ou un popup **n'est jamais masqué** faute de traduction. Dans une langue où son texte n'est pas prêt, il s'affiche :
+Un bandeau, un popup, un lien des menus, une carte du restaurant ou une fiche **n'est jamais masqué** faute de traduction. Dans une langue où son texte n'est pas prêt, il s'affiche :
 
 1. en **anglais**, si sa version anglaise est prête ;
 2. sinon en **français**.

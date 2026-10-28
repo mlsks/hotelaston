@@ -53,6 +53,8 @@ Alpine.data('menuView', () => ({
   venues: [],
   form: null, // langue par défaut : structure complète
   tr: null, // autre langue : libellés seulement, alignés sur la structure
+  page: null, // page de la carte : title et description pour Google, par langue
+  seo: { title: '', meta_description: '' },
   asDraft: false,
   saving: false,
   async init() {
@@ -63,7 +65,7 @@ Alpine.data('menuView', () => ({
       this.venues = venues;
       this.info = menus.find((m) => m.key === key);
       if (!this.info) throw new Error('Carte introuvable.');
-      this.item = await get(`/items/${this.info.id}`);
+      [this.item, this.page] = await Promise.all([get(`/items/${this.info.id}`), this.info.page_id ? get(`/pages/${this.info.page_id}`) : null]);
     } catch (err) {
       this.$store.toast.error(err);
       return;
@@ -77,6 +79,9 @@ Alpine.data('menuView', () => ({
   get canEdit() { return this.$store.session.canContent; },
   get canText() { return this.$store.session.canTranslate(this.lang); },
   get state() { return this.item?.i18n[this.lang]?.state || 'missing'; },
+  /** État de la traduction : la carte n'est publiée dans la langue que si son contenu et son référencement sont prêts. */
+  get pageState() { return this.page?.i18n[this.lang]?.state || 'missing'; },
+  get seoSource() { return this.page?.i18n[this.def] || {}; },
   /** Contenu dans la langue par défaut (structure + textes). */
   get source() { return this.item.merged; },
   prepare() {
@@ -93,6 +98,8 @@ Alpine.data('menuView', () => ({
         dishes: s.dishes.map((d, j) => ({ name: own.sections?.[i]?.dishes?.[j]?.name || '', desc: own.sections?.[i]?.dishes?.[j]?.desc || '' })),
       })),
     };
+    const p = this.page?.i18n[this.lang] || {};
+    this.seo = { title: p.title || '', meta_description: p.meta_description || '' };
     setTitle(`Carte · ${m.title || this.info.key}`);
     this.$store.route.previewPath = this.info.path ? this.info.path.replace(/^\/[a-z]{2}\//, `/${this.lang}/`) : null;
     this.$store.ui.dirty = false;
@@ -138,6 +145,10 @@ Alpine.data('menuView', () => ({
     return out;
   },
   async save() {
+    if (this.page && !String(this.seo.title || '').trim() && (!this.translating || !this.asDraft)) {
+      this.$store.toast.push('Renseignez aussi le title de la page (Référencement) : sans lui, la carte n’est pas publiée dans cette langue.', 'error');
+      return;
+    }
     this.saving = true;
     try {
       if (this.translating) {
@@ -147,9 +158,11 @@ Alpine.data('menuView', () => ({
           sections: this.tr.sections.map((s) => ({ title: t(s.title), dishes: s.dishes.map((d) => ({ name: t(d.name), desc: t(d.desc) })) })),
         };
         this.item = await put(`/items/${this.item.id}/i18n/${this.lang}`, { data, status: this.asDraft ? 'draft' : 'ready' });
+        await this.saveSeo(this.asDraft ? 'draft' : 'ready');
       } else {
         // Les plats retirés ou déplacés décalent les traductions : elles passent « à revoir »
         this.item = await patch(`/items/${this.item.id}`, { data: this.clean(this.form) });
+        await this.saveSeo();
       }
       this.prepare();
       this.$store.toast.push('Carte enregistrée.');
@@ -158,6 +171,17 @@ Alpine.data('menuView', () => ({
     } finally {
       this.saving = false;
     }
+  },
+  /** Title et description de la page dans la langue de travail, enregistrés avec la carte (même statut). */
+  async saveSeo(status) {
+    if (!this.page) return;
+    const title = String(this.seo.title || '').trim();
+    const description = String(this.seo.meta_description || '').trim();
+    const row = this.page.i18n[this.lang] || {};
+    if (!title) return; // brouillon sans référencement
+    if (title === row.title && description === (row.meta_description || '') && (!status || row.status === status)) return;
+    await put(`/pages/${this.page.id}/i18n/${this.lang}`, { title, meta_description: description, ...(status ? { status } : {}) });
+    this.page = await get(`/pages/${this.page.id}`);
   },
   async toggle() {
     const active = !this.info.is_active;
@@ -171,6 +195,7 @@ Alpine.data('menuView', () => ({
     }
   },
   copyFrench() {
+    if (!this.seo.title) this.seo = { title: this.seoSource.title || '', meta_description: this.seoSource.meta_description || '' };
     this.tr = clone({
       title: this.source.title || '', subtitle: this.source.subtitle || '', backLabel: this.source.backLabel || '', note: this.source.note || '',
       sections: this.form.sections.map((s) => ({ title: s.title, dishes: s.dishes.map((d) => ({ name: d.name, desc: d.desc })) })),

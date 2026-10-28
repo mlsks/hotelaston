@@ -230,8 +230,8 @@
       "translations": {
         "en": {
           "page": {
-            "title": "L'Horloge restaurant menu in Nice | Hôtel Aston La Scala",
-            "description": "The menu of L'Horloge, the brasserie of Hôtel Aston La Scala in Nice, by Chef Stéphane Furlan: starters, salads, pasta, fish, meat, desserts and set menus."
+            "title": "L'Horloge restaurant menu, Nice | Hôtel Aston La Scala",
+            "description": "The menu of L'Horloge, Hôtel Aston La Scala's brasserie in Nice, by Chef Stéphane Furlan: starters, salads, pasta, fish, meat, desserts and set menus."
           },
           "title": "L'Horloge menu",
           "subtitle": "Chef Stéphane Furlan suggests",
@@ -415,7 +415,8 @@
                 }
               ]
             }
-          ]
+          ],
+          "link": "Discover the menu"
         }
       }
     },
@@ -733,8 +734,8 @@
       "translations": {
         "en": {
           "page": {
-            "title": "L'Horloge restaurant wine list in Nice | Hôtel Aston La Scala",
-            "description": "The wines of L'Horloge, the restaurant of Hôtel Aston La Scala in Nice: Provence, Bordeaux, Rhône Valley, Burgundy, Loire, Alsace, champagnes and wines by the glass."
+            "title": "L'Horloge wine list, Nice | Hôtel Aston La Scala",
+            "description": "L'Horloge wine list at Hôtel Aston La Scala, Nice: Provence, Bordeaux, Rhône, Burgundy, Loire, Alsace, champagne and wines by the glass."
           },
           "title": "L'Horloge wine list",
           "subtitle": "Prices including VAT, by bottle size",
@@ -991,7 +992,8 @@
                 }
               ]
             }
-          ]
+          ],
+          "link": "Wine list"
         }
       }
     },
@@ -1057,8 +1059,8 @@
       "translations": {
         "en": {
           "page": {
-            "title": "L'Horloge restaurant dessert menu in Nice | Hôtel Aston La Scala",
-            "description": "The desserts of L'Horloge, the restaurant of Hôtel Aston La Scala in Nice, by Pastry Chef Tom Vaulot: strawberry, peach Melba, rhubarb tart, tiramisu, Valrhona chocolate mousse, ice creams."
+            "title": "L'Horloge dessert menu, Nice | Hôtel Aston La Scala",
+            "description": "L'Horloge desserts at Hôtel Aston La Scala, Nice, by Pastry Chef Tom Vaulot: strawberry, peach Melba, rhubarb tart, tiramisu, Valrhona chocolate mousse."
           },
           "title": "Our dessert menu",
           "subtitle": "Pastry Chef Tom Vaulot suggests",
@@ -1102,7 +1104,8 @@
                 }
               ]
             }
-          ]
+          ],
+          "link": "Dessert menu"
         }
       }
     }

@@ -120,6 +120,9 @@ test('cartes de L’Horloge : créées aux adresses de l’ancien site, liens «
   assert.equal($('.menu-page__cta .link-arrow').length, 2);
   // Traduction anglaise jointe : en brouillon, visible en prévisualisation
   assert.equal(db.prepare("SELECT ii.status FROM cms_item_i18n ii JOIN cms_items i ON i.id = ii.item_id WHERE i.collection = 'menus' AND i.key = 'carte-dessert' AND ii.lang = 'en'").pluck().get(), 'draft');
+  assert.deepEqual(db.prepare(`SELECT json_extract(ii.data, '$.label') AS label, ii.status FROM cms_item_i18n ii JOIN cms_items i ON i.id = ii.item_id
+    WHERE i.collection = 'links' AND json_extract(i.data, '$.page') = 'carte-vin-restaurant-horloge' AND ii.lang = 'en'`).get(), { label: 'Wine list', status: 'draft' });
+  assert.equal(db.prepare(`SELECT pi.status FROM cms_page_i18n pi JOIN cms_pages p ON p.id = pi.page_id WHERE p.key = 'carte-dessert' AND pi.lang = 'en'`).pluck().get(), 'draft');
   const en = page('en/menu-restaurant-horloge');
   assert.equal(en('h1').text(), "L'Horloge menu");
   assert.equal(en('.menu-section h2').first().text(), 'Starters');
@@ -153,4 +156,21 @@ test('anglais prêt : publié malgré les listes de liens ; sélecteur vers la p
   assert.deepEqual(links('fr/carte-dessert'), [['fr', '/fr/carte-dessert/'], ['en', '/en/restaurant-horloge/']]);
   assert.deepEqual(links('fr/carte-vin-restaurant-horloge'), [['fr', '/fr/carte-vin-restaurant-horloge/'], ['en', '/en/carte-vin-restaurant-horloge/']]);
   assert.equal(fs.existsSync(path.join(config.publicDist, 'en/carte-dessert/index.html')), false);
+});
+
+test('langue sans traduction : liens et cartes en anglais s’il est prêt, sinon en français', async () => {
+  db.prepare("UPDATE cms_languages SET is_active = 1 WHERE code = 'de'").run();
+  const link = db.prepare(`SELECT id FROM cms_items WHERE collection = 'links' AND json_extract(data, '$.page') = 'carte-vin-restaurant-horloge'`).pluck().get();
+  const menu = db.prepare(`SELECT id FROM cms_items WHERE collection = 'menus' AND key = 'carte-dessert'`).pluck().get();
+  await preview();
+  const label = () => page('de/restaurant-horloge')('.link-list a').filter((i, a) => a.attribs.href.endsWith('/carte-vin-restaurant-horloge/')).text();
+  assert.equal(label(), 'Carte des vins'); // anglais en brouillon : français
+  assert.equal((await call('PUT', `/api/items/${link}/i18n/en`, { data: { label: 'Wine list' }, status: 'ready' })).statusCode, 200);
+  const en = (await call('GET', `/api/items/${menu}`)).json().i18n.en.data;
+  assert.equal((await call('PUT', `/api/items/${menu}/i18n/en`, { data: en, status: 'ready' })).statusCode, 200);
+  await preview();
+  assert.equal(label(), 'Wine list');
+  assert.equal(page('de/carte-dessert')('h1').text(), 'Our dessert menu');
+  assert.equal(page('fr/carte-dessert')('h1').text(), 'Notre carte des desserts');
+  db.prepare("UPDATE cms_languages SET is_active = 0 WHERE code = 'de'").run();
 });
