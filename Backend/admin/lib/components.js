@@ -5,7 +5,8 @@ import Alpine from '/admin/vendor/alpine.js';
 
 /**
  * Texte riche : gras, italique, liens, listes. Le serveur nettoie le HTML (liste blanche) ;
- * le collage arrive en texte brut pour ne pas importer la mise en forme de Word.
+ * le collage arrive en texte brut pour ne pas importer la mise en forme de Word, sauf du code HTML,
+ * inséré comme mise en forme après nettoyage.
  * Usage : <div x-data="richtext" x-modelable="html" x-model="champ" @rich-change="enregistrer()"></div>
  */
 Alpine.data('richtext', (opts = {}) => ({
@@ -55,7 +56,10 @@ Alpine.data('richtext', (opts = {}) => ({
     editor.addEventListener('input', () => this.sync());
     editor.addEventListener('paste', (e) => {
       e.preventDefault();
-      document.execCommand('insertText', false, e.clipboardData.getData('text/plain'));
+      const text = e.clipboardData.getData('text/plain');
+      // Code HTML collé (copié d'un éditeur de code, d'un outil d'IA…) : inséré comme mise en forme, pas comme texte
+      if (looksLikeHtml(text)) document.execCommand('insertHTML', false, cleanHtml(text));
+      else document.execCommand('insertText', false, text);
     });
     editor.addEventListener('blur', () => {
       if (atFocus !== null && atFocus !== this.html) root.dispatchEvent(new CustomEvent('rich-change', { bubbles: true }));
@@ -113,6 +117,43 @@ Alpine.data('richtext', (opts = {}) => ({
     else this.editorEl.innerHTML = this.html || '';
   },
 }));
+
+/** Texte collé qui est du code HTML : commence par une balise et en ferme au moins une. */
+const looksLikeHtml = (text) => /^\s*<[a-z!]/i.test(text) && /<\/[a-z][a-z0-9]*\s*>/i.test(text);
+
+/**
+ * Nettoie du code HTML collé, sans l'exécuter (DOMParser) : mêmes balises que le serveur, attributs
+ * retirés sauf l'adresse des liens ; les autres balises (div, h1…) laissent place à leur contenu.
+ */
+const KEEP = new Set(['A', 'STRONG', 'EM', 'B', 'I', 'BR', 'SPAN', 'SMALL', 'ABBR', 'SUP', 'SUB', 'TIME', 'P', 'UL', 'OL', 'LI', 'H2', 'H3', 'H4', 'BLOCKQUOTE']);
+const DROP = new Set(['SCRIPT', 'STYLE', 'TEMPLATE', 'IFRAME', 'OBJECT', 'EMBED', 'SVG', 'MATH', 'HEAD', 'TITLE', 'META', 'LINK']);
+function cleanHtml(html) {
+  const doc = new DOMParser().parseFromString(html, 'text/html');
+  const walk = (node) => {
+    for (const child of [...node.childNodes]) {
+      if (child.nodeType === Node.COMMENT_NODE) child.remove();
+      if (child.nodeType !== Node.ELEMENT_NODE) continue;
+      if (DROP.has(child.tagName)) { child.remove(); continue; }
+      walk(child);
+      if (!KEEP.has(child.tagName)) { child.replaceWith(...child.childNodes); continue; }
+      for (const attr of [...child.attributes]) {
+        if (!(child.tagName === 'A' && attr.name === 'href' && /^(https?:|#\/|\/|mailto:|tel:)/i.test(attr.value))) child.removeAttribute(attr.name);
+      }
+    }
+  };
+  walk(doc.body);
+  // Indentation du code autour des paragraphes, titres et listes : inutile une fois mis en forme
+  const BLOCK = new Set(['P', 'UL', 'OL', 'LI', 'H2', 'H3', 'H4', 'BLOCKQUOTE']);
+  const isBlock = (n) => n?.nodeType === Node.ELEMENT_NODE && BLOCK.has(n.tagName);
+  const tidy = (node) => {
+    for (const child of [...node.childNodes]) {
+      if (child.nodeType === Node.TEXT_NODE && !child.data.trim() && (['UL', 'OL'].includes(node.tagName) || isBlock(child.previousSibling) || isBlock(child.nextSibling))) child.remove();
+      else if (child.nodeType === Node.ELEMENT_NODE) tidy(child);
+    }
+  };
+  tidy(doc.body);
+  return doc.body.innerHTML.trim();
+}
 
 /** Couleur d'un compteur de caractères (title, description). */
 export function counterClass(length, [min, max]) {
