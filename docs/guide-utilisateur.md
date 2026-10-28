@@ -81,12 +81,12 @@ Les écrans qui contiennent du texte (pages, textes, fiches, bandeaux, popup) on
 
 ### Pages
 
-**Pages** liste toutes les pages du site avec leur adresse et l'état de chaque langue. Une recherche permet de filtrer. Chaque page a trois onglets, et quatre pour les pages qui ont des [blocs](#blocs-dune-page) :
+**Pages** liste toutes les pages du site avec leur adresse et l'état de chaque langue. Une recherche permet de filtrer. Chaque page a trois onglets, et quatre pour les pages qui ont des [blocs](#blocs-d-une-page) :
 
 - **Textes** : tous les textes de la page, rangés par section, et ses photos (bouton **Changer l'image**). Les textes enrichis (gras, liens) ont une petite barre d'outils. Le champ de recherche en haut retrouve un texte précis.
 
 Dans un texte enrichi (pages, fiches, popup), un texte copié depuis Word ou un e-mail est collé sans sa mise en forme, à refaire avec la barre d'outils. Du **code HTML** collé (qui commence par une balise, comme `<p>` ou `<div>`) est au contraire appliqué : titres `h2` à `h4`, paragraphes, listes, gras, italique et liens sont gardés, le reste (blocs `div`, classes, styles, images) est retiré. Le bouton **HTML** de la barre montre et modifie directement le code.
-- **Blocs** (Restaurant & bar, L'Horloge, Moon Bar, Aston Club, Séminaires et ses trois pages guides) : voir [Blocs d'une page](#blocs-dune-page).
+- **Blocs** (Restaurant & bar, L'Horloge, Moon Bar, Aston Club, Séminaires et ses trois pages guides) : voir [Blocs d'une page](#blocs-d-une-page).
 - **Référencement (SEO)** : voir [Référencement](#9-referencement-seo).
 - **Réglages** :
   - **Page active** : une page désactivée n'est plus générée ni publiée ;
