@@ -1,0 +1,407 @@
+<!doctype html>
+<!-- Généré par tools/md-to-html.mjs depuis guide-utilisateur.md : modifier le Markdown, puis relancer la commande. -->
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Guide utilisateur du back-office · Aston La Scala</title>
+<style>
+  :root {
+    color-scheme: light;
+    --bg: #fbf8f2; --paper: #ffffff; --ink: #1b2330; --ink-2: #47515f; --ink-3: #6b7482;
+    --line: rgba(20, 56, 92, 0.14); --navy: #14385c; --navy-deep: #0b1f34; --brass: #a8834b; --gold: #c9a45e; --soft: #efe8db;
+    --serif: "Cormorant Garamond", "Cormorant", Georgia, "Times New Roman", serif;
+    --sans: "Jost", "Avenir Next", "Segoe UI", system-ui, -apple-system, sans-serif;
+    --mono: ui-monospace, "Cascadia Mono", Consolas, monospace;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      color-scheme: dark;
+      --bg: #0d1724; --paper: #142233; --ink: #e9edf2; --ink-2: #b9c3cf; --ink-3: #8d99a8;
+      --line: rgba(201, 164, 94, 0.18); --navy: #8fb4d9; --navy-deep: #e9edf2; --soft: #1c2c40;
+    }
+  }
+  :root[data-theme="dark"] {
+    color-scheme: dark;
+    --bg: #0d1724; --paper: #142233; --ink: #e9edf2; --ink-2: #b9c3cf; --ink-3: #8d99a8;
+    --line: rgba(201, 164, 94, 0.18); --navy: #8fb4d9; --navy-deep: #e9edf2; --soft: #1c2c40;
+  }
+
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { margin: 0; background: var(--bg); color: var(--ink); font: 16px/1.6 var(--sans); -webkit-font-smoothing: antialiased; }
+  .wrap { width: min(900px, 100%); margin: 0 auto; padding: 0 16px; }
+  a { color: var(--navy); }
+  code { font: 0.86em var(--mono); background: var(--soft); padding: 0.1em 0.35em; border-radius: 4px; overflow-wrap: anywhere; }
+  h1, h2, h3, h4 { font-family: var(--serif); color: var(--navy-deep); line-height: 1.15; }
+  h2 { font-size: clamp(1.7rem, 1.4rem + 1.2vw, 2.2rem); margin: 2.6rem 0 0.8rem; padding-top: 1.4rem; border-top: 1px solid var(--line); scroll-margin-top: 12px; }
+  h3 { font-size: 1.4rem; margin: 1.8rem 0 0.5rem; scroll-margin-top: 12px; }
+  h4 { font-size: 1.15rem; margin: 1.4rem 0 0.4rem; }
+  p { margin: 0 0 0.8rem; }
+  ul, ol { margin: 0 0 1rem; padding-left: 1.4em; }
+  li { margin: 0.3rem 0; }
+  li::marker { color: var(--brass); }
+  li > ul, li > ol, li > pre { margin-top: 0.4rem; }
+  strong { color: var(--navy-deep); }
+
+  .hero { background: #0b1f34; color: #e9edf2; padding: 44px 0 36px; border-bottom: 3px solid var(--gold); }
+  .eyebrow { margin: 0 0 6px; font-size: 0.72rem; font-weight: 600; letter-spacing: 0.24em; text-transform: uppercase; color: var(--gold); }
+  .hero h1 { margin: 0; color: #fff; font-size: clamp(2.2rem, 1.7rem + 2.4vw, 3.4rem); }
+  .hero .date { margin: 6px 0 0; color: #b9c3cf; }
+  .toc { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 22px; }
+  .toc a { color: #e9edf2; text-decoration: none; font-size: 0.85rem; padding: 5px 11px; border: 1px solid rgba(255, 255, 255, 0.2); border-radius: 999px; }
+  .toc a:hover { border-color: var(--gold); color: var(--gold); }
+  .theme { float: right; background: none; border: 1px solid rgba(255, 255, 255, 0.25); color: #e9edf2; border-radius: 999px; padding: 5px 12px; font: inherit; font-size: 0.85rem; cursor: pointer; }
+
+  main.wrap { padding-top: 28px; }
+  .table { overflow-x: auto; margin: 0.4rem 0 1.2rem; border: 1px solid var(--line); border-radius: 10px; background: var(--paper); }
+  table { border-collapse: collapse; width: 100%; font-size: 0.94rem; }
+  th, td { text-align: left; vertical-align: top; padding: 9px 12px; border-top: 1px solid var(--line); }
+  thead th { border-top: 0; background: var(--soft); font-weight: 600; }
+  pre { margin: 0.4rem 0 1rem; padding: 12px 14px; background: #0b1f34; color: #e9edf2; border-radius: 10px; overflow-x: auto; font: 0.88rem/1.5 var(--mono); }
+  pre code { background: none; padding: 0; font-size: inherit; color: inherit; }
+  footer { margin-top: 40px; padding: 22px 0 40px; border-top: 1px solid var(--line); color: var(--ink-3); font-size: 0.9rem; }
+
+  @media (max-width: 560px) {
+    .hero { padding: 30px 0 26px; }
+    .theme { float: none; margin-bottom: 14px; }
+  }
+  @media print {
+    body { background: #fff; color: #000; }
+    .hero { background: #fff; color: #000; border-bottom: 2px solid #000; padding: 0 0 16px; }
+    .hero h1 { color: #000; }
+    .toc, .theme { display: none; }
+    pre { background: #f3f3f3; color: #000; }
+    h2, h3 { break-after: avoid; }
+    .table, pre { break-inside: avoid; }
+  }
+</style>
+</head>
+<body>
+<header class="hero">
+  <div class="wrap">
+    <button class="theme" type="button" id="theme" aria-label="Changer de thème">Thème</button>
+    <p class="eyebrow">Hôtel Aston La Scala</p>
+    <h1>Guide utilisateur du back-office</h1>
+    <p class="date">Mis à jour le 28 octobre 2026</p>
+    <nav class="toc" aria-label="Sommaire">
+      <a href="#l-essentiel-en-une-minute">L'essentiel en une minute</a>
+      <a href="#1-demarrer-le-back-office">1. Démarrer le back-office</a>
+      <a href="#2-se-reperer-dans-l-admin">2. Se repérer dans l'admin</a>
+      <a href="#3-modifier-les-textes">3. Modifier les textes</a>
+      <a href="#4-fiches-et-listes">4. Fiches et listes</a>
+      <a href="#5-live-music-concerts-et-artistes">5. Live Music : concerts et artistes</a>
+      <a href="#6-mediatheque-bandeaux-et-popup">6. Médiathèque, bandeaux et popup</a>
+      <a href="#7-traduire-le-site">7. Traduire le site</a>
+      <a href="#8-publier-et-revenir-en-arriere">8. Publier et revenir en arrière</a>
+      <a href="#9-referencement-seo">9. Référencement (SEO)</a>
+      <a href="#10-statistiques">10. Statistiques</a>
+      <a href="#11-administration">11. Administration</a>
+      <a href="#12-sauvegarder">12. Sauvegarder</a>
+      <a href="#13-en-cas-de-probleme">13. En cas de problème</a>
+      <a href="#tenir-ce-guide-a-jour">Tenir ce guide à jour</a>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+<p>Ce guide explique comment faire vivre le site de l'hôtel depuis le back-office : modifier un texte, changer une photo, annoncer un concert, traduire, publier, revenir en arrière. Il s'adresse aux personnes qui utilisent l'admin au quotidien, sans connaissance technique.</p>
+<p>Le guide existe en deux versions qui disent la même chose : <a href="guide-utilisateur.md">guide-utilisateur.md</a> (à modifier) et <a href="guide-utilisateur.html">guide-utilisateur.html</a> (à lire ou imprimer). Pour les mettre à jour, voir <a href="#tenir-ce-guide-a-jour">Tenir ce guide à jour</a>.</p>
+<h2 id="l-essentiel-en-une-minute">L'essentiel en une minute</h2>
+<ul>
+<li><strong>Le site public est fait de pages fixes</strong>, générées par le back-office. Une modification enregistrée n'est donc <strong>pas visible tout de suite</strong> sur le site : elle l'est dans la <strong>prévisualisation</strong>, puis sur le site après <strong>Publier</strong>.</li>
+<li><strong>Prévisualiser</strong> et <strong>Publier</strong> sont en haut de chaque écran.</li>
+<li>Les textes s'enregistrent <strong>dès qu'on quitte le champ</strong> (la mention « Enregistré ✓ » apparaît). Les formulaires plus longs (fiches, bandeaux, popup, réglages) ont un bouton <strong>Enregistrer</strong>, et l'admin prévient avant de quitter un écran non enregistré.</li>
+<li><strong>Une page n'est publiée dans une langue que si tous ses textes y sont prêts.</strong> Sinon, seule la version française de cette page est en ligne : jamais de page à moitié traduite.</li>
+<li><strong>On peut toujours revenir en arrière</strong> : les trois dernières versions publiées sont conservées et se restaurent en un clic.</li>
+</ul>
+<h2 id="1-demarrer-le-back-office">1. Démarrer le back-office</h2>
+<h3 id="sur-le-pc-de-developpement">Sur le PC de développement</h3>
+<p>L'installation complète (Node.js, premier lancement, problèmes courants) est décrite dans <a href="INSTALLATION-LOCALE.md">INSTALLATION-LOCALE.md</a>. Une fois installé :</p>
+<ol>
+<li><p>Ouvrir un terminal dans le dossier du projet, puis :</p>
+<pre><code>cd Backend
+npm start</code></pre></li>
+<li>Laisser ce terminal ouvert : fermer la fenêtre arrête le serveur.</li>
+<li>Ouvrir <a href="http://127.0.0.1:3020/admin/">http://127.0.0.1:3020/admin/</a> dans le navigateur.</li>
+</ol>
+<div class="table"><table>
+<thead><tr><th>Adresse</th><th>Ce qu'on y trouve</th></tr></thead>
+<tbody>
+<tr><td><a href="http://127.0.0.1:3020/admin/">http://127.0.0.1:3020/admin/</a></td><td>Le back-office</td></tr>
+<tr><td><a href="http://127.0.0.1:3020/fr/">http://127.0.0.1:3020/fr/</a></td><td>Le site publié</td></tr>
+<tr><td><a href="http://127.0.0.1:3020/preview/fr/">http://127.0.0.1:3020/preview/fr/</a></td><td>La prévisualisation (personnes connectées seulement)</td></tr>
+</tbody></table></div>
+<p>Sur le PC de développement, consulter <code>/fr/</code> ajoute des visites aux statistiques : ce n'est pas grave, mais ces chiffres ne veulent rien dire tant que le site n'est pas en ligne.</p>
+<h3 id="se-connecter">Se connecter</h3>
+<p>Saisir son e-mail et son mot de passe. Les comptes sont créés par un administrateur (voir <a href="#utilisateurs">Utilisateurs</a>) ; les identifiants de développement sont dans le fichier <code>Backend/.dev-credentials</code>, qui n'est pas versionné. Après 10 tentatives manquées, la connexion est bloquée un quart d'heure. La session dure 12 heures.</p>
+<p>Le menu du compte (rond avec l'initiale, en haut à droite) donne accès à <strong>Mon compte</strong> et à <strong>Se déconnecter</strong>.</p>
+<h3 id="ce-que-chacun-peut-faire">Ce que chacun peut faire</h3>
+<div class="table"><table>
+<thead><tr><th>Rôle</th><th>Peut</th></tr></thead>
+<tbody>
+<tr><td>Administrateur</td><td>Tout, y compris les utilisateurs, les langues, les réglages et le journal.</td></tr>
+<tr><td>Éditeur</td><td>Les contenus en français, les fiches, la médiathèque, les bandeaux, le popup, les redirections ; prévisualiser, publier, restaurer.</td></tr>
+<tr><td>Traducteur</td><td>Traduire dans ses langues (les autres restent en lecture seule) et prévisualiser. Il ne publie pas.</td></tr>
+<tr><td>Éditeur Live Music</td><td>La page Live Music, le programme des concerts, les fiches artistes, ses bandeaux et les médias du dossier <code>/live-music</code>. Il publie seulement sa partie (voir <a href="#5-live-music-concerts-et-artistes">Live Music</a>).</td></tr>
+</tbody></table></div>
+<p>Le menu de gauche ne montre que les écrans autorisés pour le compte connecté.</p>
+<h2 id="2-se-reperer-dans-l-admin">2. Se repérer dans l'admin</h2>
+<p>Le menu de gauche est rangé en cinq groupes :</p>
+<div class="table"><table>
+<thead><tr><th>Groupe</th><th>Écrans</th></tr></thead>
+<tbody>
+<tr><td>(en haut)</td><td><strong>Accueil</strong> : version en ligne, prévisualisation, statistiques de la semaine, avancement des traductions, rapport SEO.</td></tr>
+<tr><td>Contenu</td><td><strong>Pages</strong>, <strong>Textes communs</strong>, <strong>Textes de l'interface</strong>, <strong>Fiches et listes</strong>, <strong>Médiathèque</strong>, <strong>Bandeaux</strong>, <strong>Popup</strong>.</td></tr>
+<tr><td>Langues</td><td><strong>Traductions</strong>, <strong>Langues du site</strong>.</td></tr>
+<tr><td>Site</td><td><strong>Publication et versions</strong>, <strong>Rapport SEO</strong>, <strong>Statistiques</strong>, <strong>Redirections</strong>.</td></tr>
+<tr><td>Administration</td><td><strong>Utilisateurs</strong>, <strong>Réglages</strong>, <strong>Journal des modifications</strong>.</td></tr>
+</tbody></table></div>
+<h3 id="la-langue-de-travail">La langue de travail</h3>
+<p>Les écrans qui contiennent du texte (pages, textes, fiches, bandeaux, popup) ont une rangée d'<strong>onglets de langue</strong> en haut. Le français est la langue d'origine. Dans une autre langue, le texte français est affiché en regard, pour traduire (voir <a href="#7-traduire-le-site">Traduire le site</a>).</p>
+<h3 id="le-cycle-d-une-modification">Le cycle d'une modification</h3>
+<ol>
+<li><strong>Modifier</strong> dans l'écran voulu ; c'est enregistré dans la base de travail.</li>
+<li><strong>Prévisualiser</strong> (bouton en haut) : le site est généré tel qu'il sera publié, brouillons et langues incomplètes compris. Un bandeau « Prévisualisation » est affiché en bas à gauche, et les textes non traduits sont entourés en orange.</li>
+<li><strong>Publier</strong> : le site est figé et mis en ligne.</li>
+</ol>
+<h2 id="3-modifier-les-textes">3. Modifier les textes</h2>
+<h3 id="pages">Pages</h3>
+<p><strong>Pages</strong> liste toutes les pages du site avec leur adresse et l'état de chaque langue. Une recherche permet de filtrer. Chaque page a trois onglets :</p>
+<ul>
+<li><strong>Textes</strong> : tous les textes de la page, rangés par section, et ses photos (bouton <strong>Changer l'image</strong>). Les textes enrichis (gras, liens) ont une petite barre d'outils. Le champ de recherche en haut retrouve un texte précis.</li>
+<li><strong>Référencement (SEO)</strong> : voir <a href="#9-referencement-seo">Référencement</a>.</li>
+<li><strong>Réglages</strong> :
+<ul>
+<li><strong>Page active</strong> : une page désactivée n'est plus générée ni publiée ;</li>
+<li><strong>Dans le plan du site (sitemap.xml)</strong> ;</li>
+<li><strong>Page parente</strong> et <strong>Ordre</strong> (place dans le menu et le fil d'Ariane) ;</li>
+<li><strong>Priorité dans le plan du site</strong> (laisser « Automatique » en cas de doute).</li>
+</ul></li>
+</ul>
+<h3 id="textes-communs">Textes communs</h3>
+<p>L'en-tête, les menus, le pied de page, le fil d'Ariane des fiches, le bouton du bas sur mobile, le chat : les textes présents sur toutes les pages. Une modification ici change toutes les pages à la prochaine publication.</p>
+<h3 id="textes-de-l-interface">Textes de l'interface</h3>
+<p>Les textes affichés par le JavaScript du site : module de réservation, avis, formulaires, chat, bandeaux, popup. Les éléments entre accolades, comme <code>{count}</code>, sont remplacés par une valeur au moment de l'affichage : <strong>il faut les garder tels quels</strong>, y compris dans les traductions.</p>
+<h2 id="4-fiches-et-listes">4. Fiches et listes</h2>
+<p><strong>Fiches et listes</strong> regroupe les contenus répétés du site, chacun avec un formulaire adapté :</p>
+<div class="table"><table>
+<thead><tr><th>Liste</th><th>Contenu</th></tr></thead>
+<tbody>
+<tr><td>Chambres</td><td>Une fiche par catégorie : nom, titre, description, points clés, équipements, variantes, photos, thème des avis affichés. Chaque fiche a sa propre page.</td></tr>
+<tr><td>Services</td><td>Une fiche par service : chapeau, texte, informations pratiques, questions fréquentes, photos. Chaque fiche a sa propre page.</td></tr>
+<tr><td>Équipements</td><td>Les pictogrammes et libellés utilisés par les fiches chambre.</td></tr>
+<tr><td>Avis</td><td>Auteur, mois du séjour, note, chambre, thèmes, texte et réponse de l'hôtel.</td></tr>
+<tr><td>Réponses du chat</td><td>Les mots déclencheurs (si la question du visiteur en contient un, le chat donne cette réponse) et la réponse.</td></tr>
+<tr><td>Programme Live Music, Artistes</td><td>Voir <a href="#5-live-music-concerts-et-artistes">Live Music</a>.</td></tr>
+</tbody></table></div>
+<p>Dans une fiche :</p>
+<ul>
+<li><strong>Visible sur le site</strong> : décocher pour masquer la fiche sans la supprimer.</li>
+<li><strong>Afficher seulement entre deux dates</strong> : pour une offre ou un contenu temporaire (heure de Paris).</li>
+<li><strong>Enregistrer</strong> ; les modifications sont visibles dans la prévisualisation, puis sur le site après publication.</li>
+<li><strong>Supprimer</strong> : définitif pour la fiche (mais une version publiée plus ancienne peut encore être restaurée).</li>
+</ul>
+<p>Les avis livrés avec le site sont des exemples, marqués « Exemple » sur le site. Le passage aux avis réels se fait dans les <a href="#reglages">Réglages</a>.</p>
+<h2 id="5-live-music-concerts-et-artistes">5. Live Music : concerts et artistes</h2>
+<p>Un seul bar est ouvert à la fois : le Moon Bar sur le toit quand le temps le permet, sinon L'Aston Club au 7e étage.</p>
+<h3 id="ajouter-un-concert">Ajouter un concert</h3>
+<p><strong>Fiches et listes</strong> → <strong>Programme Live Music</strong> (ou <strong>Programme des concerts</strong> pour l'éditeur Live Music), puis le bouton d'ajout. On peut aussi passer par <strong>Ajouter un concert</strong> sur l'accueil.</p>
+<div class="table"><table>
+<thead><tr><th>Champ</th><th>À savoir</th></tr></thead>
+<tbody>
+<tr><td>Date, Heure</td><td>Obligatoire pour la date ; 21:00 proposé par défaut.</td></tr>
+<tr><td>Lieu</td><td><strong>Selon la météo</strong> (Moon Bar sur le toit si le temps le permet, sinon L'Aston Club), <strong>Moon Bar (rooftop)</strong> ou <strong>L'Aston Club (7e étage)</strong>.</td></tr>
+<tr><td>Artiste ou groupe</td><td>Obligatoire. Se choisit dans la liste, ou se crée sur place avec <strong>+ Nouvel artiste</strong>. Le style, la présentation, la photo et le site viennent de la fiche artiste.</td></tr>
+<tr><td>Précisions sur la soirée</td><td>Facultatif. Vide : la présentation de l'artiste est affichée.</td></tr>
+</tbody></table></div>
+<p>Les concerts à venir apparaissent sur la page Live Music avec la photo et le lien de l'artiste, et sont signalés à Google comme événements. Les concerts passés disparaissent seuls : le site est régénéré chaque nuit.</p>
+<h3 id="fiches-artistes">Fiches artistes</h3>
+<p><strong>Fiches et listes</strong> → <strong>Artistes</strong> (ou le lien <strong>Gérer les fiches artistes →</strong> depuis le programme) :</p>
+<ul>
+<li><strong>Nom de l'artiste ou du groupe</strong> (obligatoire) ;</li>
+<li><strong>Style</strong> et <strong>Présentation</strong> (traduits) ;</li>
+<li><strong>Site internet</strong> (facultatif, commence par <code>https://</code>) ;</li>
+<li><strong>Photo</strong>, choisie dans la médiathèque, affichée en vignette ronde.</li>
+</ul>
+<p>Un artiste programmé ne peut pas être supprimé. Masquer un artiste retire ses concerts du site.</p>
+<h3 id="le-compte-live-music">Le compte Live Music</h3>
+<p>L'éditeur Live Music voit un menu réduit : sa page, le programme, les artistes, la médiathèque (dossier <code>/live-music</code>) et les bandeaux de sa page. Quand il publie, <strong>seule la partie Live Music part en ligne</strong> : les brouillons des autres écrans restent en attente. Il ne peut pas restaurer une version.</p>
+<h2 id="6-mediatheque-bandeaux-et-popup">6. Médiathèque, bandeaux et popup</h2>
+<h3 id="mediatheque">Médiathèque</h3>
+<ul>
+<li><strong>Envoyer</strong> : glisser-déposer des fichiers sur l'écran (ou <strong>Envoyer des fichiers</strong>), en choisissant le dossier d'envoi. Les photos sont optimisées automatiquement : WebP en plusieurs tailles, recadrage portrait pour mobile, miniature. Un doublon est signalé.</li>
+<li><strong>Liens externes</strong> : coller une adresse YouTube, Vimeo, Spotify… puis <strong>Ajouter</strong>.</li>
+<li><strong>Retrouver</strong> : dossiers, filtre par type (images, vidéos, sons, liens externes), recherche par nom ou texte alternatif.</li>
+<li><strong>Dans la fiche d'un média</strong> :
+<ul>
+<li>cliquer sur le <strong>sujet principal</strong> de la photo : le recadrage portrait utilisé sur mobile se centre sur ce point ;</li>
+<li><strong>Texte alternatif</strong> dans chaque langue : il décrit l'image pour les personnes malvoyantes et pour Google (une pastille signale ceux qui manquent) ;</li>
+<li>titre, légende, dossier, <strong>Crédit photo</strong> ;</li>
+<li><strong>Utilisé par</strong> : les pages et fiches qui s'en servent.</li>
+</ul></li>
+<li><strong>Mettre à la corbeille</strong> : le média est effacé définitivement la nuit suivante, sauf si une version conservée du site l'utilise encore. La case <strong>Corbeille</strong> affiche les médias en attente d'effacement ; l'admin ne propose pas de les récupérer.</li>
+</ul>
+<p>Pour changer la photo d'une page : onglet <strong>Textes</strong> de la page, <strong>Changer l'image</strong>. Pour une fiche : champ <strong>Photo</strong> de la fiche.</p>
+<h3 id="bandeaux">Bandeaux</h3>
+<p>Des messages placés en haut des pages, sous le module de réservation, entre deux sections ou avant le pied de page. Ils s'affichent et disparaissent seuls aux dates choisies.</p>
+<p><strong>Bandeaux</strong> → <strong>Nouveau bandeau</strong>, puis :</p>
+<ul>
+<li><strong>Texte du bandeau</strong> par langue : message, texte du bouton, et si besoin une adresse propre à la langue ;</li>
+<li><strong>Réglages</strong> : nom interne (pour s'y retrouver), style, pictogramme, couleurs ;</li>
+<li><strong>Bouton vers</strong> : une page, une fiche, le moteur de réservation ou une adresse ;</li>
+<li><strong>Afficher à partir du / Jusqu'au</strong> (heure de Paris ; sans date, le bandeau reste affiché tant qu'il est actif) ;</li>
+<li><strong>Actif</strong>, <strong>Le visiteur peut le fermer</strong>, <strong>Priorité</strong> (une zone n'affiche qu'un nombre limité de bandeaux à la fois : le plus prioritaire passe devant) ;</li>
+<li><strong>Emplacements</strong> : la zone, puis <strong>Nulle part</strong>, <strong>Toutes les pages</strong> ou <strong>Pages choisies</strong> ;</li>
+<li><strong>Enregistrer</strong>, puis publier.</li>
+</ul>
+<h3 id="popup">Popup</h3>
+<p>Une fenêtre au plus par page (la plus prioritaire). Sur mobile, elle ne s'ouvre jamais avant un geste du visiteur et s'affiche en panneau bas.</p>
+<p><strong>Popup</strong> → <strong>Nouveau popup</strong>, puis :</p>
+<ul>
+<li><strong>Contenu</strong> par langue : titre, texte, bouton ; une image, une vidéo ou un son ;</li>
+<li><strong>S'ouvre sur ordinateur</strong> : après un délai, après un défilement, ou quand le visiteur s'apprête à partir ;</li>
+<li><strong>Sur mobile</strong> : après un défilement, après un délai, ou jamais ;</li>
+<li><strong>Fréquence</strong> : une seule fois par visiteur, une fois par visite, ou au plus tous les N jours ;</li>
+<li><strong>Actif</strong>, <strong>Priorité</strong>, <strong>Le montrer à nouveau aux visiteurs qui l'avaient déjà fermé</strong> ;</li>
+<li><strong>Pages</strong> : toutes, seulement sur…, ou partout sauf… ;</li>
+<li><strong>Enregistrer</strong>, puis publier.</li>
+</ul>
+<h3 id="bandeaux-et-popup-dans-les-autres-langues">Bandeaux et popup dans les autres langues</h3>
+<p>Un bandeau ou un popup <strong>n'est jamais masqué</strong> faute de traduction. Dans une langue où son texte n'est pas prêt, il s'affiche :</p>
+<ol>
+<li>en <strong>anglais</strong>, si sa version anglaise est prête ;</li>
+<li>sinon en <strong>français</strong>.</li>
+</ol>
+<p>Il vaut quand même mieux les traduire : c'est plus agréable pour le visiteur.</p>
+<h2 id="7-traduire-le-site">7. Traduire le site</h2>
+<h3 id="etats-d-une-traduction">États d'une traduction</h3>
+<div class="table"><table>
+<thead><tr><th>État</th><th>Signification</th><th>Publié ?</th></tr></thead>
+<tbody>
+<tr><td>À traduire</td><td>Rien n'est saisi dans cette langue.</td><td>Non</td></tr>
+<tr><td>Brouillon</td><td>Saisi, mais à relire.</td><td>Non</td></tr>
+<tr><td>Prêt</td><td>Validé.</td><td>Oui</td></tr>
+<tr><td>À revoir</td><td>Le texte français a changé depuis la traduction.</td><td>La traduction précédente reste en ligne ; la mettre à jour puis la marquer prête.</td></tr>
+</tbody></table></div>
+<h3 id="traduire-dans-l-admin">Traduire dans l'admin</h3>
+<ol>
+<li>Ouvrir l'écran (page, textes communs, fiche…) et choisir la langue dans les <strong>onglets de langue</strong>.</li>
+<li>Le texte français est affiché à gauche. Cocher <strong>Seulement les textes à traduire ou à revoir</strong> pour ne voir que le travail restant.</li>
+<li>Saisir la traduction. <strong>Reprendre le texte français</strong> copie l'original (utile pour un nom propre ou une adresse).</li>
+<li>Si la case <strong>Enregistrer en brouillon (à relire)</strong> est cochée, le texte part en brouillon. Une fois relu, cliquer sur <strong>Marquer comme prêt</strong> sous le texte.</li>
+</ol>
+<p>Le titre, la description et l'adresse de la page dans cette langue se traduisent dans l'onglet <strong>Référencement (SEO)</strong>. Une case y indique si la traduction est encore un brouillon.</p>
+<p>L'écran <strong>Traductions</strong> montre l'avancement de chaque langue (prêts, brouillons, à revoir, à traduire), puis, par module (textes, pages, fiches, médias, bandeaux, popup), la liste de ce qui reste, chaque ligne menant au bon écran.</p>
+<h3 id="passer-toute-une-langue-en-pret">Passer toute une langue en « prêt »</h3>
+<p>Après une traduction importée et relue, on peut passer d'un coup tous les brouillons d'une langue en « prêt ». Serveur lancé, dans un second terminal :</p>
+<pre><code>cd Backend
+node scripts/i18n-ready.mjs it --dry   # montre ce qui changerait, sans rien modifier
+node scripts/i18n-ready.mjs it         # passe les brouillons de l'italien en « prêt »</code></pre>
+<p>Seul le statut change, le texte reste le même, et chaque modification figure au <strong>Journal</strong>. Rien n'est publié : il reste à activer la langue et à publier.</p>
+<h3 id="mettre-une-langue-en-ligne">Mettre une langue en ligne</h3>
+<ol>
+<li><strong>Langues du site</strong> (administrateur) : la langue doit figurer dans la liste. <strong>Ajouter une langue</strong> demande son code (<code>es</code>), son nom, son nom dans la langue, sa locale (<code>es-ES</code>) et la langue du moteur de réservation.</li>
+<li>Une langue <strong>Inactive</strong> se prépare (ses textes se traduisent et se prévisualisent) sans apparaître sur le site. Cliquer sur l'état pour la passer <strong>En ligne</strong>. Les flèches règlent l'ordre des langues.</li>
+<li><strong>Publier.</strong></li>
+</ol>
+<p>Même en ligne, une langue n'apparaît que sur les pages entièrement prêtes. Les autres pages restent en français seulement.</p>
+<h3 id="le-selecteur-de-langue-du-site">Le sélecteur de langue du site</h3>
+<p>Le sélecteur de langue du site propose, pour chaque page, <strong>les langues dans lesquelles cette page est publiée</strong>, et mène à la page équivalente. S'il n'y a qu'une langue publiée pour la page, il est masqué.</p>
+<h3 id="traduire-hors-de-l-admin">Traduire hors de l'admin</h3>
+<p>Pour confier une traduction à un prestataire, <code>node scripts/i18n-export.mjs</code> exporte tous les textes français dans un fichier JSON, et <code>node scripts/i18n-import.mjs &lt;fichier.json&gt;</code> le réimporte : tout arrive en brouillon. Les détails sont dans <a href="../Backend/README.md">Backend/README.md</a>.</p>
+<h2 id="8-publier-et-revenir-en-arriere">8. Publier et revenir en arrière</h2>
+<h3 id="previsualiser">Prévisualiser</h3>
+<p>Le bouton <strong>Prévisualiser</strong> génère le site dans toutes les langues actives, brouillons compris, et l'ouvre. L'accueil propose aussi <strong>Générer et ouvrir</strong> et <strong>Ouvrir la dernière</strong>. La prévisualisation est réservée aux personnes connectées et n'est jamais indexée par Google ni comptée dans les statistiques.</p>
+<h3 id="publier">Publier</h3>
+<p>Le bouton <strong>Publier</strong> fige le contenu enregistré, génère le site et le met en ligne. Si rien n'a changé depuis la dernière publication, aucune version n'est créée. Le site est aussi régénéré chaque nuit à minuit, pour les bandeaux, popups et fiches programmés et les concerts passés.</p>
+<h3 id="publication-et-versions">Publication et versions</h3>
+<p>L'écran montre la version en ligne (numéro, date, nombre de pages, langues) et l'historique des générations (<strong>Afficher les prévisualisations</strong> pour les voir aussi). Les trois dernières versions publiées sont conservées.</p>
+<p><strong>Restaurer</strong> une version remet en ligne le site tel qu'il était. On choisit :</p>
+<ul>
+<li><strong>sans le contenu</strong> : seul le site en ligne change ; les modifications en cours dans l'admin sont gardées et repartiront à la prochaine publication ;</li>
+<li><strong>avec le contenu</strong> : le contenu de l'admin revient lui aussi à cette version (une sauvegarde est faite automatiquement avant).</li>
+</ul>
+<h2 id="9-referencement-seo">9. Référencement (SEO)</h2>
+<h3 id="onglet-referencement-d-une-page">Onglet Référencement d'une page</h3>
+<p>Pour chaque page et chaque langue :</p>
+<ul>
+<li><strong>Adresse de la page</strong> : minuscules, chiffres et tirets. Changer l'adresse d'une page déjà publiée crée automatiquement une redirection 301 depuis l'ancienne ;</li>
+<li><strong>Libellé dans le menu et le fil d'Ariane</strong> ;</li>
+<li><strong>Title</strong> et <strong>Description</strong> avec compteurs de longueur ;</li>
+<li><strong>Mot-clé principal</strong> : l'expression que la page doit porter dans Google. Les contrôles vérifient sa présence dans le title, le titre principal, la description, l'adresse et le premier paragraphe ;</li>
+<li><strong>Partage sur les réseaux sociaux</strong> (facultatif) : titre, description, image (1200 × 630 px conseillés ; sinon l'image par défaut du site) ;</li>
+<li><strong>Ne pas faire apparaître cette page dans Google</strong> (<code>noindex</code>).</li>
+</ul>
+<p>À droite : l'<strong>aperçu dans Google</strong> et les <strong>contrôles sur la page générée</strong> (bouton <strong>Relancer</strong>). Les contrôles portent sur le contenu enregistré, brouillons compris.</p>
+<h3 id="rapport-seo">Rapport SEO</h3>
+<p>Les points relevés à chaque génération : longueur des titles et descriptions, doublons, liens cassés, textes non traduits… regroupés par page, pour le site en ligne ou la prévisualisation. <strong>Corriger</strong> mène au bon écran. Le rapport est vide tant qu'aucune prévisualisation ni publication n'a été faite.</p>
+<h3 id="redirections">Redirections</h3>
+<p>Une ancienne adresse renvoie vers une page du site ou une adresse externe, pour que les favoris, les liens et Google suivent. Saisir l'ancienne adresse (par exemple <code>/fr/ancienne-page.html</code>), choisir la page ou l'adresse de destination, le type (<strong>Définitive (301)</strong> en général), puis <strong>Ajouter</strong>.</p>
+<h2 id="10-statistiques">10. Statistiques</h2>
+<p>Les statistiques mesurent les visites du site publié, sans cookie ni bandeau de consentement : ni adresse IP ni identifiant ne sont conservés.</p>
+<ul>
+<li><strong>Période</strong> : semaine, mois ou année, comparée à la période précédente.</li>
+<li><strong>Filtres</strong> : canal, appareil, langue, pays.</li>
+<li><strong>Rapports</strong> : canaux d'arrivée (dont les assistants IA et les comparateurs), entonnoir jusqu'au moteur de réservation, calendrier des dates recherchées, efficacité des bandeaux et du popup, pages, contacts, chat, pages introuvables (404), vitesse ressentie (Core Web Vitals). Chaque rapport s'exporte en CSV.</li>
+<li>Le pays et la région ne s'affichent qu'une fois la base de géolocalisation installée (pas encore fait).</li>
+</ul>
+<p>Sur les ordinateurs de l'hôtel (réception, bureaux), cocher dans <strong>Mon compte</strong> : <strong>Ne pas compter mes visites sur le site depuis ce navigateur</strong>, pour ne mesurer que les vrais visiteurs.</p>
+<h2 id="11-administration">11. Administration</h2>
+<h3 id="utilisateurs">Utilisateurs</h3>
+<p><strong>Nouveau compte</strong> : e-mail, rôle, langues traduites (traducteur), et si besoin <strong>Limiter à une partie du site</strong> (par exemple Live Music). Un mot de passe est généré et <strong>affiché une seule fois</strong> : le transmettre à la personne, qui pourra le changer dans <strong>Mon compte</strong> (12 caractères au moins). <strong>Modifier</strong> permet de changer le rôle, les langues ou de désactiver le compte ; <strong>Mot de passe</strong> en génère un nouveau.</p>
+<h3 id="reglages">Réglages</h3>
+<p>Paramètres communs à tout le site, appliqués à la prochaine publication :</p>
+<ul>
+<li><strong>Site</strong> : nom du site, langue proposée aux visiteurs dont la langue n'est pas proposée (x-default), image de partage par défaut ;</li>
+<li><strong>Moteur de réservation (D-Edge)</strong> : adresse du moteur ;</li>
+<li><strong>Avis clients</strong> : <strong>Exemples</strong> ou <strong>Avis réels de clients</strong>, note et lien Google, note minimale pour l'accueil ;</li>
+<li><strong>Données structurées (JSON-LD)</strong> : réservé aux personnes à l'aise avec le format ;</li>
+<li><strong>Maintenance</strong> : <strong>Effacer la corbeille maintenant</strong>.</li>
+</ul>
+<h3 id="journal-des-modifications">Journal des modifications</h3>
+<p>Qui a modifié quoi, et quand : les 500 dernières actions, filtrables par personne ou action.</p>
+<h2 id="12-sauvegarder">12. Sauvegarder</h2>
+<p>Le contenu du site (textes, traductions, fiches, réglages, comptes, versions) <strong>n'est pas dans GitHub</strong> : il est dans la base locale. Les photos non plus. Deux dossiers sont à sauvegarder régulièrement, serveur arrêté de préférence :</p>
+<div class="table"><table>
+<thead><tr><th>Dossier</th><th>Contenu</th></tr></thead>
+<tbody>
+<tr><td><code>Backend/storage/</code></td><td>La base de données (<code>db/aston.sqlite</code>), les contenus figés de chaque version publiée, les sauvegardes faites avant une restauration.</td></tr>
+<tr><td><code>Backend/media/</code></td><td>Les photos, vidéos et sons de la médiathèque, avec leurs tailles optimisées.</td></tr>
+</tbody></table></div>
+<p>Le dossier <code>Backend/releases/</code> (sites générés) peut être copié aussi, mais il se reconstruit à partir de <code>storage/</code>.</p>
+<p>Sur le futur serveur, des scripts de sauvegarde automatique sont prêts dans <a href="../deploy/README.md">deploy/</a> (<code>backup-db.sh</code> pour la base, <code>sync-media.sh</code> pour les médias).</p>
+<h2 id="13-en-cas-de-probleme">13. En cas de problème</h2>
+<div class="table"><table>
+<thead><tr><th>Problème</th><th>Que faire</th></tr></thead>
+<tbody>
+<tr><td>Ma modification n'apparaît pas sur le site.</td><td>Elle est enregistrée mais pas publiée : <strong>Publier</strong>. Si c'est une traduction, vérifier qu'elle est <strong>prête</strong> et que toute la page l'est (écran <strong>Traductions</strong>).</td></tr>
+<tr><td>Une langue n'apparaît pas sur une page.</td><td>La page a encore des textes non prêts dans cette langue, ou la langue est <strong>Inactive</strong> dans <strong>Langues du site</strong>.</td></tr>
+<tr><td>Une publication a cassé quelque chose.</td><td><strong>Publication et versions</strong> → <strong>Restaurer</strong> la version précédente.</td></tr>
+<tr><td>La photo est mal cadrée sur mobile.</td><td>Médiathèque → ouvrir la photo → cliquer sur le sujet principal → publier.</td></tr>
+<tr><td>« Non enregistré » s'affiche à côté d'un texte.</td><td>Le serveur n'a pas répondu ou la session a expiré : recharger la page, se reconnecter, ressaisir.</td></tr>
+<tr><td>L'admin ne s'ouvre pas.</td><td>Vérifier que le terminal <code>npm start</code> est toujours ouvert et sans erreur ; voir <a href="INSTALLATION-LOCALE.md">INSTALLATION-LOCALE.md</a>.</td></tr>
+</tbody></table></div>
+<h2 id="tenir-ce-guide-a-jour">Tenir ce guide à jour</h2>
+<p>Le fichier de référence est <strong><code>docs/guide-utilisateur.md</code></strong>. On ne modifie que lui, puis on régénère la version HTML :</p>
+<pre><code>node tools/md-to-html.mjs docs/guide-utilisateur.md</code></pre>
+<p>La commande écrit <code>docs/guide-utilisateur.html</code> à côté. <code>--check</code> vérifie seulement que la version HTML est à jour (elle échoue sinon). Penser à changer la date en haut du guide, puis à commiter les deux fichiers ensemble.</p>
+</main>
+
+<footer class="wrap">Version HTML générée depuis <a href="guide-utilisateur.md">guide-utilisateur.md</a>.</footer>
+
+<script>
+  (() => {
+    const root = document.documentElement;
+    const key = 'aston.guide.theme';
+    try { const t = localStorage.getItem(key); if (t) root.dataset.theme = t; } catch {}
+    document.getElementById('theme').addEventListener('click', () => {
+      const dark = root.dataset.theme ? root.dataset.theme === 'dark' : matchMedia('(prefers-color-scheme: dark)').matches;
+      root.dataset.theme = dark ? 'light' : 'dark';
+      try { localStorage.setItem(key, root.dataset.theme); } catch {}
+    });
+  })();
+</script>
+</body>
+</html>

@@ -6,6 +6,7 @@ Ce dossier vient du PC de développement (`C:\dev\Claude\Remotion\hotelaston`), 
 1. `.claude/memory/MEMORY.md`, puis les trois notes qu'il référence : profil de l'utilisateur, notes du projet, historique des demandes et décisions.
 2. `BILAN.md` : ce qui est fait, ce qui reste à faire, ordre conseillé pour la mise en ligne.
 3. `README.md` (maquette), `Backend/README.md` (commandes, rôles, écrans, API), `Backend/ARCHITECTURE.md` (architecture et modèle de données).
+4. `docs/guide-utilisateur.md` : guide de l'admin pour l'utilisateur et l'hôtel. À tenir à jour quand un écran ou un usage change ; ne modifier que le Markdown, puis `node tools/md-to-html.mjs docs/guide-utilisateur.md` régénère la version HTML (un test vérifie qu'elle est à jour).
 
 Tenir les notes de `.claude/memory/` à jour quand une décision importante est prise : elles servent de mémoire d'une session à l'autre.
 
@@ -22,7 +23,7 @@ Tenir les notes de `.claude/memory/` à jour quand une décision importante est 
 
 ## Lancer et vérifier
 - Back-office : `npm --prefix Backend start`, puis http://localhost:3020/admin/ (site publié sur `/fr/`, prévisualisation sur `/preview/fr/`, maquette d'origine sur `/legacy/` quand `SERVE_LEGACY=1` dans `Backend/.env`).
-- Tests : `npm --prefix Backend test` (48 tests, tous verts au 28/10/2026, dont 1 sauté sans ffmpeg).
+- Tests : `npm --prefix Backend test` (49 tests, tous verts au 28/10/2026, dont 1 sauté sans ffmpeg).
 - Maquette seule : `python tools/serve.py --port 8765`.
 - Configurations de lancement du navigateur intégré : `.claude/launch.json` (dossier `hotelaston` ouvert comme projet).
 - Ouvrir `/fr/` en local ajoute des visites aux statistiques de développement : les effacer après les tests (tables `an_events`, `an_visits`, `an_salts`, `an_daily`).

@@ -75,6 +75,8 @@ En local, `SERVE_LEGACY=1` sert aussi le site actuel sous `/legacy/`, pour compa
 
 ## Interface d'administration
 
+Mode d'emploi pour les utilisateurs : [docs/guide-utilisateur.md](../docs/guide-utilisateur.md) (version HTML : [guide-utilisateur.html](../docs/guide-utilisateur.html)).
+
 Sur `/admin/`, sans étape de build : Alpine.js 3.17.4, Tailwind CSS 4.3.3 (version navigateur) et Chart.js 4.5.1, servis par le serveur depuis `node_modules` (versions figées dans `package.json`, aucun CDN tiers). Politique de sécurité (CSP) stricte sur `/admin`.
 
 | Écran | Ce qu'on y fait |
