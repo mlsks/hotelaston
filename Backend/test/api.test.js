@@ -289,3 +289,18 @@ test('utilisateurs : mot de passe généré, dernier administrateur protégé', 
   assert.equal((await call('admin', 'PATCH', `/api/users/${adminId}`, { role: 'editor' })).statusCode, 400);
   assert.equal((await call('admin', 'DELETE', `/api/users/${adminId}`)).statusCode, 400);
 });
+
+test('bandeaux et popup : repli sur l’anglais prêt, sinon sur le français', () => {
+  const source = Object.assign(Object.create(Source.prototype), {
+    mode: 'production', defaultLang: 'fr', languages: ['fr', 'en', 'de', 'es'].map((code) => ({ code })),
+  });
+  const row = (lang, status = 'ready') => ({ lang, text: `texte ${lang}`, status });
+  const pick = (rows, lang) => source.translated(new Map([[1, rows]]), 1, lang);
+  const frOnly = { fr: row('fr'), en: row('en', 'draft') };
+  assert.deepEqual([pick(frOnly, 'de').lang, pick(frOnly, 'en').lang], ['fr', 'fr'], 'anglais en brouillon : français partout');
+  const withEn = { fr: row('fr'), en: row('en'), es: row('es') };
+  assert.deepEqual(['fr', 'en', 'de', 'es'].map((l) => pick(withEn, l).lang), ['fr', 'en', 'en', 'es']);
+  assert.equal(pick(withEn, 'de').missing, true);
+  assert.equal(pick(withEn, 'es').missing, false);
+  assert.equal(pick({}, 'de'), null);
+});

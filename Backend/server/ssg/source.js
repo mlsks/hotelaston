@@ -6,9 +6,14 @@
  *  - langue par défaut : toute valeur enregistrée compte ;
  *  - autres langues : seules les valeurs au statut « ready » comptent en production ;
  *    en prévisualisation, les brouillons s'affichent aussi et les manques
- *    retombent sur la langue par défaut (repérés à l'écran).
+ *    retombent sur la langue par défaut (repérés à l'écran) ;
+ *  - bandeaux et popups : jamais masqués faute de traduction, repli sur l'anglais
+ *    s'il est prêt, sinon sur la langue par défaut (voir translated).
  */
 import { mergeTranslation } from './collections.js';
+
+/** Langue de repli des bandeaux et popups non traduits, avant la langue par défaut. */
+const RELAY_LANG = 'en';
 
 const groupBy2 = (rows, k1, k2) => {
   const map = new Map();
@@ -71,11 +76,17 @@ export class Source {
     return { media, variants: this.variants.get(id) || [], alt: row?.alt || '', title: row?.title || '' };
   }
 
-  /** Ligne traduite d'un bandeau / popup (repli seulement en prévisualisation). */
+  /**
+   * Ligne traduite d'un bandeau / popup. Sans traduction prête dans la langue, le bandeau ou
+   * le popup s'affiche quand même : en anglais si l'anglais est prêt, sinon dans la langue par
+   * défaut (même règle en production et en prévisualisation, où le repli est signalé).
+   */
   translated(map, id, lang) {
     const rows = map.get(id) || {};
     if (this.usable(rows[lang], lang)) return { ...rows[lang], missing: false };
-    if (this.mode === 'preview' && rows[this.defaultLang]) return { ...rows[this.defaultLang], missing: true };
+    const relay = rows[RELAY_LANG];
+    if (lang !== RELAY_LANG && relay?.status === 'ready' && this.lang(RELAY_LANG)) return { ...relay, missing: true };
+    if (rows[this.defaultLang]) return { ...rows[this.defaultLang], missing: true };
     return null;
   }
 

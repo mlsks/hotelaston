@@ -6,6 +6,8 @@
  * (dans le <head> du layout) les masque dès qu'ils expirent entre deux builds, et applique la
  * fermeture choisie par le visiteur, avant l'affichage.
  * Popup : un seul par page (le plus prioritaire), configuration en JSON, piloté par popup.js.
+ * Sans traduction prête, bandeaux et popup s'affichent en anglais, sinon dans la langue par défaut
+ * (Source.translated), avec l'attribut lang de la langue réellement affichée.
  */
 import { sha } from '../lib/util.js';
 import { esc, mediaHtml } from './media-render.js';
@@ -14,6 +16,8 @@ import { jsonForScript } from './jsonld.js';
 const HORIZON_MS = 25 * 3600 * 1000; // jusqu'au prochain build planifié, avec une marge
 const stripTags = (html) => String(html).replace(/<[^>]+>/g, '').replace(/\s+/g, ' ').trim();
 const icon = (id) => `<svg class="icon" aria-hidden="true"><use href="#${esc(id)}"></use></svg>`;
+/** Texte affiché dans une langue de repli : le signaler aux lecteurs d'écran. */
+const langAttr = (t, lang) => (t.lang && t.lang !== lang ? ` lang="${esc(t.lang)}"` : '');
 const isActive = (item, now) => (!item.start_at || item.start_at <= now.toISOString()) && (!item.end_at || item.end_at > now.toISOString());
 
 /**
@@ -41,7 +45,7 @@ export function ctaLink(source, kind, target) {
   return null;
 }
 
-function bannerHtml(b, zone, { source, now, uiText, preview }) {
+function bannerHtml(b, zone, { source, lang, now, uiText, preview }) {
   const t = b.i18n;
   const strip = zone === 'top-bar';
   const version = sha(String(b.updated_at), 8);
@@ -60,7 +64,7 @@ function bannerHtml(b, zone, { source, now, uiText, preview }) {
     : '';
   const classes = ['cms-banner', `cms-banner--${b.variant}`, strip ? 'live-strip cms-banner--strip' : `cms-banner--block cms-banner--${zone}`, colors ? 'has-colors' : ''].filter(Boolean).join(' ');
   const flag = t.missing && preview ? ' data-preview-missing' : '';
-  const attrs = `class="${classes}" data-banner="${b.id}" data-banner-version="${version}"${dates} aria-label="${esc(stripTags(t.text).slice(0, 120))}" data-track-view="banner:${b.id}"${colors}${hidden}${flag}`;
+  const attrs = `class="${classes}" data-banner="${b.id}" data-banner-version="${version}"${dates} aria-label="${esc(stripTags(t.text).slice(0, 120))}" data-track-view="banner:${b.id}"${colors}${hidden}${flag}${langAttr(t, lang)}`;
   const inner = `${b.icon ? icon(b.icon) : ''}${strip ? `<p>${t.text}</p>` : `<div class="cms-banner__text">${t.text}</div>`}${ctaHtml}${close}`;
   if (strip) return `<aside ${attrs}><div class="container live-strip__inner">${inner}</div></aside>`;
   const wrapped = zone === 'hero-sub' ? `<div class="cms-banner__inner">${inner}</div>` : `<div class="container"><div class="cms-banner__inner">${inner}</div></div>`;
@@ -103,7 +107,7 @@ export function renderPopup($, ctx) {
     : '';
   const version = `${p.version}-${sha(String(p.updated_at), 6)}`;
   $('body').append(`
-  <dialog class="cms-popup" data-popup="${p.id}" aria-labelledby="cms-popup-title" data-track-view="popup:${p.id}"${t.missing && preview ? ' data-preview-missing' : ''}>
+  <dialog class="cms-popup" data-popup="${p.id}" aria-labelledby="cms-popup-title" data-track-view="popup:${p.id}"${t.missing && preview ? ' data-preview-missing' : ''}${langAttr(t, lang)}>
     <form method="dialog" class="cms-popup__close-form"><button class="cms-popup__close" value="close" aria-label="${esc(uiText('ui.popup.close'))}">${icon('i-close')}</button></form>
     ${media}
     <div class="cms-popup__body">
