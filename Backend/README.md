@@ -64,6 +64,8 @@ La commande `user:add` affiche le mot de passe une seule fois. Se connecter ensu
 | `node server/cli.js media:import-site` | Range les photos du site actuel (encore sur son CDN) dans la médiathèque et relie les gabarits, les fiches chambre et service, l'image de partage et le JSON-LD. Relançable : ne télécharge que ce qui manque. Les emplacements sont listés dans `templates-src/photos.json`. |
 | `node server/cli.js media:gc` | Efface les médias supprimés que plus aucune version conservée n'utilise (fait aussi chaque nuit). |
 | `node server/cli.js stats:aggregate` | Agrégats quotidiens des statistiques et purge des données anciennes (fait aussi chaque nuit). |
+| `node scripts/i18n-export.mjs` | Exporte tous les textes traduisibles du français (textes, pages et référencement, fiches, textes alternatifs, bandeaux, popups) dans `storage/translations/source.fr.json`, pour une traduction hors ligne. |
+| `node scripts/i18n-import.mjs <fichier.json> [--dry]` | Réimporte une traduction de même forme (champ `lang`) par l'API, serveur lancé : tout arrive en **brouillon** et figure au Journal. Signale d'abord les balises, liens, variables `{…}` ou nombres qui diffèrent du français ; `--dry` s'arrête là. |
 | `node server/cli.js geoip:update [--city]` | Télécharge la base de géolocalisation DB-IP Lite du mois dans `storage/geoip/` (pays ; pays et région avec `--city`, environ 130 Mo). À relancer chaque mois. |
 | `npm start` | Serveur : API, prévisualisation protégée, site, réception des statistiques, cron de minuit (régénération, nettoyage des médias, agrégats des statistiques). |
 | `npm test` | Tests automatiques. |
