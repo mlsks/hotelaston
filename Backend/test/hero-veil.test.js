@@ -1,6 +1,6 @@
 /**
  * Dégradé des bandeaux photo (module hero-veil) : réglage du gabarit par défaut, réglage de la page
- * dans l'onglet Réglages (oui / non, opacité, étendue), pages sans bandeau réglable.
+ * dans l'onglet Réglages ou dans Fiches et listes (oui / non, opacité, étendue), pages sans bandeau réglable.
  */
 import { test, before, after } from 'node:test';
 import assert from 'node:assert/strict';
@@ -78,6 +78,10 @@ test('réglage par défaut du gabarit, puis réglage de la page', async () => {
   assert.deepEqual((await call('GET', `/api/pages/${pageRow('accueil').id}`)).json().hero, { default: { on: false, opacity: 0.5, width: 70 } });
   assert.deepEqual((await call('GET', `/api/pages/${pageRow('moon-bar').id}`)).json().hero, { default: { on: true, opacity: 0.5, width: 70 } });
   assert.equal((await call('GET', `/api/pages/${pageRow('aston-club').id}`)).json().hero, null);
+  // Fiches et listes → Bandeaux photo : les seules pages réglables, avec leur adresse
+  const heroes = (await call('GET', '/api/pages/heroes')).json();
+  assert.deepEqual(heroes.map((p) => p.key).sort(), ['accueil', 'moon-bar', 'seminaires']);
+  assert.equal(heroes.find((p) => p.key === 'moon-bar').i18n.fr.path, '/fr/moon-bar/');
 
   await preview();
   let head = page('fr/seminaires')('header.page-head--image');

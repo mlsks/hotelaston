@@ -1,11 +1,13 @@
 /**
- * Fiches et listes : chambres, services, équipements, avis, réponses du chat, programme Live Music, artistes.
+ * Fiches et listes : chambres, services, équipements, avis, réponses du chat, programme Live Music, artistes,
+ * et les bandeaux photo (HERO) des pages.
  * Formulaire décrit par lib/collections.js ; en traduction, seuls les champs traduisibles sont modifiables.
  */
 import Alpine from '/admin/vendor/alpine.js';
 import { get, post, patch, put, del } from '../lib/api.js';
 import { setTitle, go } from '../lib/router.js';
 import * as fmt from '../lib/format.js';
+import { pageLabel } from './pages.js';
 import { SPECS, fieldsFor, fieldTranslatable, splitTranslatable, translationForm, missingTranslations } from '../lib/collections.js';
 
 const spec = (key) => SPECS[key] || { noun: 'élément', title: (d) => d.name || d.label || d.title || '', subtitle: () => '' };
@@ -16,6 +18,48 @@ Alpine.data('collectionsView', () => ({
     try { this.collections = await get('/collections'); } catch (err) { this.$store.toast.error(err); }
   },
   translatable(c) { return c.schema.translatable?.length > 0; },
+}));
+
+/** Bandeaux photo (HERO) : dégradé derrière le texte, page par page (même réglage que l'onglet Réglages de la page). */
+Alpine.data('heroesView', () => ({
+  heroes: [],
+  loading: true,
+  async init() {
+    try { await this.load(); } catch (err) { this.$store.toast.error(err); }
+    this.loading = false;
+  },
+  async load() {
+    const def = this.$store.session.defaultLang;
+    this.heroes = (await get('/pages/heroes')).map((p) => {
+      let saved = null;
+      try { saved = p.hero_veil ? JSON.parse(p.hero_veil) : null; } catch { /* illisible : gabarit */ }
+      const row = p.i18n?.[def] || {};
+      return {
+        id: p.id, label: p.key === 'accueil' ? 'Accueil' : pageLabel(p, def), default: p.hero.default, veil: { ...p.hero.default, ...saved },
+        path: row.path || (p.key === 'accueil' ? `/${def}/` : `/${def}/${row.slug || p.key}/`),
+        dirty: false, saving: false, get isDefault() { return ['on', 'opacity', 'width'].every((k) => this.veil[k] === this.default[k]); },
+      };
+    });
+    this.$store.ui.dirty = false;
+  },
+  reset(h) {
+    h.veil = { ...h.default };
+    h.dirty = true;
+    this.$store.ui.dirty = true;
+  },
+  async save(h) {
+    h.saving = true;
+    try {
+      await patch(`/pages/${h.id}`, { hero_veil: { on: Boolean(h.veil.on), opacity: Number(h.veil.opacity), width: Number(h.veil.width) } });
+      h.dirty = false;
+      this.$store.ui.dirty = this.heroes.some((x) => x.dirty);
+      this.$store.toast.push(`Bandeau « ${h.label} » enregistré.`);
+    } catch (err) {
+      this.$store.toast.error(err);
+    } finally {
+      h.saving = false;
+    }
+  },
 }));
 
 /** Fiches désignées par un champ « ref » (artistes d'un concert) : clé → fiche fusionnée, avec son id. */

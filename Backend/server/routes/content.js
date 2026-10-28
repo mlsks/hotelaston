@@ -72,6 +72,15 @@ export default function contentRoutes(app, { db, defaultLang }) {
     .filter((p) => !isScoped(req.user) || rulesOf(req.user).pages.has(p.key))
     .map((p) => ({ ...p, i18n: withStates(p.id) })));
 
+  /** Pages dont le bandeau photo a un dégradé réglable (Fiches et listes → Bandeaux photo). */
+  app.get('/pages/heroes', { preHandler: guard('content') }, async (req) => {
+    assertUnscoped(req);
+    return db.prepare('SELECT * FROM cms_pages ORDER BY position, id').all()
+      .map((p) => ({ ...p, hero: pageHero(p) }))
+      .filter((p) => p.hero)
+      .map((p) => ({ ...p, i18n: withStates(p.id) }));
+  });
+
   app.get('/pages/:id', { preHandler: guard(), schema: { params: ID } }, async (req) => {
     const page = db.prepare('SELECT * FROM cms_pages WHERE id = ?').get(req.params.id);
     if (!page) throw notFound('Page');
