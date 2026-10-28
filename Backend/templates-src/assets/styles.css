@@ -601,7 +601,6 @@ picture { display: contents; }
   padding-right: 32px;
 }
 .booking__field input:focus, .booking__field select:focus { border-color: var(--azure-700); outline: 2px solid rgba(25, 68, 105, 0.15); }
-.booking__field--room { display: none; }
 .booking__submit { grid-column: 1 / -1; min-height: 52px; }
 .booking__error { grid-column: 1 / -1; margin: 0; color: var(--danger); font-size: var(--fs-sm); }
 .booking__promise {
@@ -617,12 +616,9 @@ picture { display: contents; }
 .booking__promise .icon { color: var(--ok); }
 @media (min-width: 600px) {
   .booking--hero, .booking--dialog { grid-template-columns: repeat(4, 1fr); }
-  .booking__field--room { display: grid; grid-column: span 2; }
-  .booking--hero .booking__submit, .booking--dialog .booking__submit { grid-column: span 2; }
 }
 @media (min-width: 1024px) {
-  .booking--hero { grid-template-columns: 1.15fr 1.15fr 0.62fr 0.62fr 1.5fr 1.35fr; padding: 16px 18px; }
-  .booking--hero .booking__field--room { grid-column: auto; }
+  .booking--hero { grid-template-columns: 1.15fr 1.15fr 0.62fr 0.62fr 1.35fr; padding: 16px 18px; }
   .booking--hero .booking__submit { grid-column: auto; }
 }
 .booking--aside { grid-template-columns: 1fr 1fr; }
