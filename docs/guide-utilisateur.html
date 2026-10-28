@@ -153,7 +153,7 @@ npm start</code></pre></li>
 <thead><tr><th>Groupe</th><th>Écrans</th></tr></thead>
 <tbody>
 <tr><td>(en haut)</td><td><strong>Accueil</strong> : version en ligne, prévisualisation, statistiques de la semaine, avancement des traductions, rapport SEO.</td></tr>
-<tr><td>Contenu</td><td><strong>Pages</strong>, <strong>Textes communs</strong>, <strong>Menus et liens</strong>, <strong>Textes de l'interface</strong>, <strong>Fiches et listes</strong>, <strong>Médiathèque</strong>, <strong>Bandeaux</strong>, <strong>Popup</strong>.</td></tr>
+<tr><td>Contenu</td><td><strong>Pages</strong>, <strong>Textes communs</strong>, <strong>Menus et liens</strong>, <strong>Cartes du restaurant</strong>, <strong>Textes de l'interface</strong>, <strong>Fiches et listes</strong>, <strong>Médiathèque</strong>, <strong>Bandeaux</strong>, <strong>Popup</strong>.</td></tr>
 <tr><td>Langues</td><td><strong>Traductions</strong>, <strong>Langues du site</strong>.</td></tr>
 <tr><td>Site</td><td><strong>Publication et versions</strong>, <strong>Rapport SEO</strong>, <strong>Statistiques</strong>, <strong>Redirections</strong>.</td></tr>
 <tr><td>Administration</td><td><strong>Utilisateurs</strong>, <strong>Réglages</strong>, <strong>Journal des modifications</strong>.</td></tr>
@@ -198,7 +198,22 @@ npm start</code></pre></li>
 <li><strong>Supprimer</strong> : définitif ; un lien principal emporte ses sous-liens.</li>
 </ul>
 <p><strong>+ Ajouter un lien</strong> ajoute un lien en fin de liste, vers l'accueil : changer son libellé et sa cible. Dans une autre langue que le français, seuls les libellés se traduisent ; l'ordre et les cibles valent pour toutes les langues. Un libellé pas encore traduit s'affiche en français.</p>
-<p>Pour mettre une carte en PDF : l'envoyer dans la <strong>Médiathèque</strong> (ou directement depuis <strong>Choisir…</strong>), puis choisir <strong>Un document (PDF)</strong> sur le lien.</p>
+<p>Pour un document à télécharger (plaquette, menu de groupe en PDF) : l'envoyer dans la <strong>Médiathèque</strong> (ou directement depuis <strong>Choisir…</strong>), puis choisir <strong>Un document (PDF)</strong> sur le lien. Les cartes du restaurant et des bars, elles, sont des pages du site : voir <a href="#cartes-du-restaurant">Cartes du restaurant</a>.</p>
+<h3 id="cartes-du-restaurant">Cartes du restaurant</h3>
+<p><strong>Cartes du restaurant</strong> liste les cartes, rangées par lieu (L'Horloge, Moon Bar, L'Aston Club). Chaque carte est une page du site, avec ses rubriques et ses plats.</p>
+<ul>
+<li><strong>Créer une carte</strong> : en bas de l'écran, donner son nom, son lieu et l'adresse de sa page (proposée à partir du nom), puis <strong>Créer la carte</strong>. Elle est ajoutée aux liens « Les cartes » de la page du lieu (modifiables dans <a href="#menus-et-liens">Menus et liens</a>).</li>
+<li><strong>Modifier une carte</strong> : cliquer dessus.
+<ul>
+<li><strong>En-tête</strong> : nom (titre de la page), sous-titre, lieu, texte du lien de retour vers le lieu, note en bas de carte (allergènes, prix nets…). Les champs facultatifs vides n'apparaissent pas.</li>
+<li><strong>Rubriques</strong> (Entrées, Vins rouges…) : renommer, monter ou descendre avec ↑ ↓, <strong>Supprimer la rubrique</strong>, <strong>+ Ajouter une rubrique</strong>.</li>
+<li><strong>Plats</strong> : nom, prix (texte libre : « 12 € », « 6 € / 32 € »), description facultative ; ↑ ↓ pour l'ordre, ✕ pour retirer, <strong>+ Ajouter un plat</strong>. Un plat sans nom n'est pas enregistré.</li>
+<li><strong>Enregistrer</strong> : rien n'est enregistré avant ce bouton ; l'admin prévient si on quitte l'écran avec des modifications en cours.</li>
+</ul></li>
+<li><strong>Masquer la carte</strong> : sa page et les liens qui y mènent disparaissent du site à la prochaine publication ; <strong>Réafficher la carte</strong> les remet. Une carte ne se supprime pas.</li>
+<li><strong>Title et description pour Google</strong> : lien <strong>Référencement de la page</strong> en haut de la carte.</li>
+</ul>
+<p>Dans une autre langue, la carte se traduit au même endroit : le français est en regard, seuls les libellés se traduisent (les prix et l'ordre valent pour toutes les langues). Un plat pas encore traduit s'affiche en français. Supprimer ou déplacer un plat en français fait repasser la traduction « à revoir ».</p>
 <h3 id="textes-de-l-interface">Textes de l'interface</h3>
 <p>Les textes affichés par le JavaScript du site : module de réservation, avis, formulaires, chat, bandeaux, popup. Les éléments entre accolades, comme <code>{count}</code>, sont remplacés par une valeur au moment de l'affichage : <strong>il faut les garder tels quels</strong>, y compris dans les traductions.</p>
 <h2 id="4-fiches-et-listes">4. Fiches et listes</h2>

@@ -1,0 +1,41 @@
+<div x-data="menusView" class="space-y-6">
+  <div class="max-w-3xl">
+    <h1 class="page-title">Cartes</h1>
+    <p class="mt-1 text-slate-600">Les cartes du restaurant et des bars, chacune sur sa page du site : rubriques, plats, descriptions et prix, traduits dans les langues du site. Les liens « Les cartes » des pages L’Horloge et Moon Bar se règlent dans <a href="#/menus" class="text-azure-700 underline">Menus et liens</a>.</p>
+  </div>
+
+  <p x-show="loading" class="py-10 text-center text-slate-500">Chargement des cartes…</p>
+
+  <template x-for="g in groups" :key="g.key">
+    <section class="space-y-3">
+      <h2 class="section-title" x-text="g.label"></h2>
+      <div class="grid gap-3 md:grid-cols-2 xl:grid-cols-3">
+        <template x-for="m in g.menus" :key="m.id">
+          <a :href="'#/cartes/' + m.key" class="card block p-5 transition hover:ring-2 hover:ring-azure-700" :class="!m.is_active && 'opacity-60'">
+            <p class="font-medium text-slate-900" x-text="title(m)"></p>
+            <p class="mt-1 font-mono text-xs text-slate-500" x-text="m.path || ''"></p>
+            <p class="mt-3 flex flex-wrap items-center gap-2 text-sm text-slate-600">
+              <span x-text="(m.data.sections || []).length + ' rubrique(s) · ' + dishes(m) + ' plat(s)'"></span>
+              <span x-show="!m.is_active" class="badge bg-slate-100 text-slate-600 ring-slate-200">Masquée</span>
+            </p>
+          </a>
+        </template>
+      </div>
+    </section>
+  </template>
+
+  <form x-show="$store.session.canContent" class="card grid gap-4 p-5 md:grid-cols-[minmax(0,1.4fr)_minmax(0,1fr)_minmax(0,1.2fr)_auto]" @submit.prevent="create">
+    <p class="section-title md:col-span-4">Nouvelle carte</p>
+    <label class="block"><span class="label">Nom de la carte</span>
+      <input class="input" x-model="draft.title" @input="autoSlug()" required maxlength="120" placeholder="Carte des vins"></label>
+    <label class="block"><span class="label">Lieu</span>
+      <select class="input" x-model="draft.venue">
+        <template x-for="v in venues" :key="v.key"><option :value="v.key" x-text="v.label" :selected="v.key === draft.venue"></option></template>
+      </select></label>
+    <label class="block"><span class="label">Adresse de la page</span>
+      <input class="input font-mono text-xs" x-model="draft.slug" @input="draft.slugTouched = true" required pattern="[a-z0-9]+(-[a-z0-9]+)*" placeholder="carte-des-vins-horloge">
+      <span class="hint">/fr/<span x-text="draft.slug || '…'"></span>/</span></label>
+    <div class="self-end"><button class="btn btn-primary" :disabled="creating">Créer la carte</button></div>
+    <p class="hint md:col-span-4">La carte est ajoutée aux liens « Les cartes » de son lieu. Son title et sa description pour Google se règlent ensuite dans Pages, onglet Référencement.</p>
+  </form>
+</div>

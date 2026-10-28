@@ -19,6 +19,7 @@ Alpine.data('linksView', () => ({
   kinds: KINDS,
   async init() {
     setTitle('Menus et liens');
+    if (this.$store.route.query.lang) this.$store.ui.setLang(this.$store.route.query.lang);
     try {
       [this.lists, this.items, this.pages] = await Promise.all([get('/link-lists'), get('/collections/links/items'), get('/pages')]);
       await this.loadMedia();

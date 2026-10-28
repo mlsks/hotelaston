@@ -8,6 +8,7 @@ import { nowIso, sha, isPlainObject } from '../lib/util.js';
 import { audit } from '../lib/audit.js';
 import { splitTranslatable, mergeTranslation } from '../ssg/collections.js';
 import { scanLinkLists, LINKS } from '../ssg/link-lists.js';
+import { VENUES } from '../ssg/menus.js';
 import { ID, ID_LANG, STATUS, DATE, assertLang, translationState, pick, updateRow, bool } from './helpers.js';
 
 /** Champs en texte riche, nettoyés à l'enregistrement. */
@@ -32,6 +33,18 @@ const VALIDATE = {
     if (!String(item.name ?? '').trim()) throw badRequest('Artiste : nom obligatoire.');
     if (item.website && !/^https?:\/\/[^\s/]+\.[^\s]+$/i.test(String(item.website).trim())) throw badRequest('Artiste : site internet au format https://…');
     if (item.media != null && !db.prepare("SELECT 1 FROM cms_media WHERE id = ? AND kind = 'image' AND deleted_at IS NULL").get(item.media)) throw badRequest('Artiste : photo introuvable dans la médiathèque.');
+  },
+  menus(item) {
+    if (!String(item.title ?? '').trim()) throw badRequest('Carte : nom obligatoire.');
+    if (!VENUES[item.venue]) throw badRequest('Carte : lieu inconnu.');
+    if (!Array.isArray(item.sections) || item.sections.length > 40) throw badRequest('Carte : rubriques manquantes (40 au plus).');
+    for (const s of item.sections) {
+      if (!isPlainObject(s) || !Array.isArray(s.dishes) || s.dishes.length > 150) throw badRequest('Carte : chaque rubrique a une liste de plats (150 au plus).');
+      for (const d of s.dishes) {
+        if (!isPlainObject(d)) throw badRequest('Carte : plat invalide.');
+        for (const f of ['name', 'desc', 'price']) if (d[f] != null && (typeof d[f] !== 'string' || d[f].length > (f === 'desc' ? 600 : 160))) throw badRequest(`Carte : champ « ${f} » trop long.`);
+      }
+    }
   },
   links(item, db) {
     const list = scanLinkLists().find((l) => l.key === item.list);
@@ -169,6 +182,7 @@ export default function collectionRoutes(app, { db, defaultLang }) {
   app.delete('/items/:id', { preHandler: guard('content'), schema: { params: ID } }, async (req) => {
     const item = getItem(req.params.id);
     collectionInScope(req, item.collection);
+    if (item.collection === 'menus') throw badRequest('Une carte ne se supprime pas : masquez-la (sa page et ses liens disparaissent du site).');
     if (item.collection === 'artists') {
       const used = db.prepare("SELECT COUNT(*) FROM cms_items WHERE collection = 'gigs' AND json_extract(data, '$.artist') = ?").pluck().get(item.key);
       if (used) throw badRequest(`Cet artiste est programmé dans ${used} concert${used > 1 ? 's' : ''} : changez ou supprimez ${used > 1 ? 'ces concerts' : 'ce concert'} d’abord.`);

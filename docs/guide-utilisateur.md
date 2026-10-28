@@ -62,7 +62,7 @@ Le menu de gauche est rangé en cinq groupes :
 | Groupe | Écrans |
 |---|---|
 | (en haut) | **Accueil** : version en ligne, prévisualisation, statistiques de la semaine, avancement des traductions, rapport SEO. |
-| Contenu | **Pages**, **Textes communs**, **Menus et liens**, **Textes de l'interface**, **Fiches et listes**, **Médiathèque**, **Bandeaux**, **Popup**. |
+| Contenu | **Pages**, **Textes communs**, **Menus et liens**, **Cartes du restaurant**, **Textes de l'interface**, **Fiches et listes**, **Médiathèque**, **Bandeaux**, **Popup**. |
 | Langues | **Traductions**, **Langues du site**. |
 | Site | **Publication et versions**, **Rapport SEO**, **Statistiques**, **Redirections**. |
 | Administration | **Utilisateurs**, **Réglages**, **Journal des modifications**. |
@@ -113,7 +113,22 @@ Pour chaque lien :
 
 **+ Ajouter un lien** ajoute un lien en fin de liste, vers l'accueil : changer son libellé et sa cible. Dans une autre langue que le français, seuls les libellés se traduisent ; l'ordre et les cibles valent pour toutes les langues. Un libellé pas encore traduit s'affiche en français.
 
-Pour mettre une carte en PDF : l'envoyer dans la **Médiathèque** (ou directement depuis **Choisir…**), puis choisir **Un document (PDF)** sur le lien.
+Pour un document à télécharger (plaquette, menu de groupe en PDF) : l'envoyer dans la **Médiathèque** (ou directement depuis **Choisir…**), puis choisir **Un document (PDF)** sur le lien. Les cartes du restaurant et des bars, elles, sont des pages du site : voir [Cartes du restaurant](#cartes-du-restaurant).
+
+### Cartes du restaurant
+
+**Cartes du restaurant** liste les cartes, rangées par lieu (L'Horloge, Moon Bar, L'Aston Club). Chaque carte est une page du site, avec ses rubriques et ses plats.
+
+- **Créer une carte** : en bas de l'écran, donner son nom, son lieu et l'adresse de sa page (proposée à partir du nom), puis **Créer la carte**. Elle est ajoutée aux liens « Les cartes » de la page du lieu (modifiables dans [Menus et liens](#menus-et-liens)).
+- **Modifier une carte** : cliquer dessus.
+  - **En-tête** : nom (titre de la page), sous-titre, lieu, texte du lien de retour vers le lieu, note en bas de carte (allergènes, prix nets…). Les champs facultatifs vides n'apparaissent pas.
+  - **Rubriques** (Entrées, Vins rouges…) : renommer, monter ou descendre avec ↑ ↓, **Supprimer la rubrique**, **+ Ajouter une rubrique**.
+  - **Plats** : nom, prix (texte libre : « 12 € », « 6 € / 32 € »), description facultative ; ↑ ↓ pour l'ordre, ✕ pour retirer, **+ Ajouter un plat**. Un plat sans nom n'est pas enregistré.
+  - **Enregistrer** : rien n'est enregistré avant ce bouton ; l'admin prévient si on quitte l'écran avec des modifications en cours.
+- **Masquer la carte** : sa page et les liens qui y mènent disparaissent du site à la prochaine publication ; **Réafficher la carte** les remet. Une carte ne se supprime pas.
+- **Title et description pour Google** : lien **Référencement de la page** en haut de la carte.
+
+Dans une autre langue, la carte se traduit au même endroit : le français est en regard, seuls les libellés se traduisent (les prix et l'ordre valent pour toutes les langues). Un plat pas encore traduit s'affiche en français. Supprimer ou déplacer un plat en français fait repasser la traduction « à revoir ».
 
 ### Textes de l'interface
 

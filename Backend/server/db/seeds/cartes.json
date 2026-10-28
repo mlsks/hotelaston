@@ -1,0 +1,536 @@
+{
+  "carte-moon-bar": {
+    "venue": "moon-bar",
+    "backLabel": {
+      "key": "carte-moon-bar.001-a",
+      "text": "Retour au Moon Bar"
+    },
+    "title": {
+      "key": "carte-moon-bar.002-h1",
+      "text": "Carte du Moon Bar"
+    },
+    "subtitle": {
+      "key": "carte-moon-bar.003-p",
+      "text": "Rooftop de l'hôtel Aston La Scala · prix nets en euros"
+    },
+    "sections": [
+      {
+        "title": {
+          "key": "carte-moon-bar.004-h2",
+          "text": "Entrées"
+        },
+        "dishes": [
+          {
+            "name": {
+              "key": "carte-moon-bar.005-span",
+              "text": "L'Aubergine"
+            },
+            "price": "13 €",
+            "desc": {
+              "key": "carte-moon-bar.006-span",
+              "text": "Blinis d'aubergine au thym et ail rose, quenelle de ricotta, légumes frais"
+            }
+          },
+          {
+            "name": {
+              "key": "carte-moon-bar.007-span",
+              "text": "Le Rouget"
+            },
+            "price": "17 €",
+            "desc": {
+              "key": "carte-moon-bar.008-span",
+              "text": "Filets de rouget, tapenade d'olive, éventail d'avocat, œufs de poisson volant"
+            }
+          },
+          {
+            "name": {
+              "key": "carte-moon-bar.009-span",
+              "text": "L'Espadon"
+            },
+            "price": "17 €",
+            "desc": {
+              "key": "carte-moon-bar.010-span",
+              "text": "Tataki d'espadon mariné à la coriandre, sucrine vinaigrette gingembre"
+            }
+          },
+          {
+            "name": {
+              "key": "carte-moon-bar.011-span",
+              "text": "Le Foie Gras"
+            },
+            "price": "21 €",
+            "desc": {
+              "key": "carte-moon-bar.012-span",
+              "text": "Foie gras de canard au miel d'acacia et vinaigre balsamique, toasts"
+            }
+          }
+        ]
+      },
+      {
+        "title": {
+          "key": "carte-moon-bar.013-h2",
+          "text": "Salades"
+        },
+        "dishes": [
+          {
+            "name": {
+              "key": "carte-moon-bar.014-span",
+              "text": "L'Italienne"
+            },
+            "price": "15 €",
+            "desc": {
+              "key": "carte-moon-bar.015-span",
+              "text": "Salade des Pouilles : tomate ancienne, burrata, pesto"
+            }
+          },
+          {
+            "name": {
+              "key": "carte-moon-bar.016-span",
+              "text": "La Niçoise"
+            },
+            "price": "18 €",
+            "desc": {
+              "key": "carte-moon-bar.017-span",
+              "text": "L'authentique, au thon snacké mi-cuit et anchois"
+            }
+          },
+          {
+            "name": {
+              "key": "carte-moon-bar.018-span",
+              "text": "La Caesar"
+            },
+            "price": "17 €",
+            "desc": {
+              "key": "carte-moon-bar.019-span",
+              "text": "Romaine, aiguillettes de poulet, croûtons aux céréales, parmesan"
+            }
+          },
+          {
+            "name": {
+              "key": "carte-moon-bar.020-span",
+              "text": "Le Pamplemousse"
+            },
+            "price": "16 €",
+            "desc": {
+              "key": "carte-moon-bar.021-span",
+              "text": "Pamplemousse rose, avocat, crevettes, champignons frais"
+            }
+          }
+        ]
+      },
+      {
+        "title": {
+          "key": "carte-moon-bar.022-h2",
+          "text": "Pâtes & plats"
+        },
+        "dishes": [
+          {
+            "name": {
+              "key": "carte-moon-bar.023-span",
+              "text": "Fruits de mer"
+            },
+            "price": "17 €",
+            "desc": {
+              "key": "carte-moon-bar.024-span",
+              "text": "Linguines aux moules, encornets et crevettes"
+            }
+          },
+          {
+            "name": {
+              "key": "carte-moon-bar.025-span",
+              "text": "Puttanesca"
+            },
+            "price": "18 €",
+            "desc": {
+              "key": "carte-moon-bar.026-span",
+              "text": "Spaghettis à la tomate, câpres, anchois et olives"
+            }
+          },
+          {
+            "name": {
+              "key": "carte-moon-bar.027-span",
+              "text": "Burger végétarien"
+            },
+            "price": "21 €",
+            "desc": {
+              "key": "carte-moon-bar.028-span",
+              "text": "Galette de feta, tomate, concombre, sauce cocktail"
+            }
+          },
+          {
+            "name": {
+              "key": "carte-moon-bar.029-span",
+              "text": "Tagliatelles vegan"
+            },
+            "price": "16 €",
+            "desc": {
+              "key": "carte-moon-bar.030-span",
+              "text": "Tagliatelles de légumes, soja, miso, coriandre"
+            }
+          }
+        ]
+      },
+      {
+        "title": {
+          "key": "carte-moon-bar.031-h2",
+          "text": "Poissons"
+        },
+        "dishes": [
+          {
+            "name": {
+              "key": "carte-moon-bar.032-span",
+              "text": "Le Poulpe"
+            },
+            "price": "28 €",
+            "desc": {
+              "key": "carte-moon-bar.033-span",
+              "text": "Émincé de poulpe fondant, pois chiches au chorizo, shiso"
+            }
+          },
+          {
+            "name": {
+              "key": "carte-moon-bar.034-span",
+              "text": "Gambas"
+            },
+            "price": "29 €",
+            "desc": {
+              "key": "carte-moon-bar.035-span",
+              "text": "Marinées au lait de coco, riz thaï à la coriandre"
+            }
+          },
+          {
+            "name": {
+              "key": "carte-moon-bar.036-span",
+              "text": "Le Loup"
+            },
+            "price": "25 €",
+            "desc": {
+              "key": "carte-moon-bar.037-span",
+              "text": "Filet à la plancha, sauce maltaise, purée de brocolis"
+            }
+          },
+          {
+            "name": {
+              "key": "carte-moon-bar.038-span",
+              "text": "La Daurade"
+            },
+            "price": "24 €",
+            "desc": {
+              "key": "carte-moon-bar.039-span",
+              "text": "Filet snacké, sauce citronnelle, quinoa aux citrons confits"
+            }
+          }
+        ]
+      },
+      {
+        "title": {
+          "key": "carte-moon-bar.040-h2",
+          "text": "Viandes"
+        },
+        "dishes": [
+          {
+            "name": {
+              "key": "carte-moon-bar.041-span",
+              "text": "Le Bœuf"
+            },
+            "price": "29 €",
+            "desc": {
+              "key": "carte-moon-bar.042-span",
+              "text": "Filet de bœuf Simmental à la plancha, sauce ciboulette, croquettes"
+            }
+          },
+          {
+            "name": {
+              "key": "carte-moon-bar.043-span",
+              "text": "L'Agneau"
+            },
+            "price": "25 €",
+            "desc": {
+              "key": "carte-moon-bar.044-span",
+              "text": "Brochette au pesto, semoule aux légumes"
+            }
+          },
+          {
+            "name": {
+              "key": "carte-moon-bar.045-span",
+              "text": "La Volaille"
+            },
+            "price": "21 €",
+            "desc": {
+              "key": "carte-moon-bar.046-span",
+              "text": "Suprême aux fines herbes, coulis de poivron, flan de courgette"
+            }
+          },
+          {
+            "name": {
+              "key": "carte-moon-bar.047-span",
+              "text": "Le Veau"
+            },
+            "price": "28 €",
+            "desc": {
+              "key": "carte-moon-bar.048-span",
+              "text": "Médaillon de veau fumé au romarin, pois gourmands"
+            }
+          }
+        ]
+      },
+      {
+        "title": {
+          "key": "carte-moon-bar.049-h2",
+          "text": "Fromages & desserts"
+        },
+        "dishes": [
+          {
+            "name": {
+              "key": "carte-moon-bar.050-span",
+              "text": "Les Affinés du Terroir"
+            },
+            "price": "17 €",
+            "desc": {
+              "key": "carte-moon-bar.051-span",
+              "text": "Beaufort, chèvre cendré, brie de Meaux, roquefort"
+            }
+          },
+          {
+            "name": {
+              "key": "carte-moon-bar.052-span",
+              "text": "La Fraise"
+            },
+            "price": "11 €",
+            "desc": {
+              "key": "carte-moon-bar.053-span",
+              "text": "Nature, glacée et sablée"
+            }
+          },
+          {
+            "name": {
+              "key": "carte-moon-bar.054-span",
+              "text": "La Traditionnelle Melba"
+            },
+            "price": "11 €",
+            "desc": {
+              "key": "carte-moon-bar.055-span",
+              "text": "Pêche, coulis, amandes effilées, glace vanille"
+            }
+          },
+          {
+            "name": {
+              "key": "carte-moon-bar.056-span",
+              "text": "L'Authentique Tiramisu"
+            },
+            "price": "7 €",
+            "desc": {
+              "key": "carte-moon-bar.057-span",
+              "text": "Au café, recette de Trévise"
+            }
+          },
+          {
+            "name": {
+              "key": "carte-moon-bar.058-span",
+              "text": "Mousse au chocolat noir"
+            },
+            "price": "7 €",
+            "desc": {
+              "key": "carte-moon-bar.059-span",
+              "text": "Chocolat grand cru Valrhona"
+            }
+          },
+          {
+            "name": {
+              "key": "carte-moon-bar.060-span",
+              "text": "Café gourmand"
+            },
+            "price": "11 €",
+            "desc": {
+              "key": "carte-moon-bar.061-span",
+              "text": "Cinq mignardises de la maison"
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "carte-tapas": {
+    "venue": "moon-bar",
+    "backLabel": {
+      "key": "carte-tapas.001-a",
+      "text": "Retour au Moon Bar"
+    },
+    "title": {
+      "key": "carte-tapas.002-h1",
+      "text": "Carte des tapas"
+    },
+    "subtitle": {
+      "key": "carte-tapas.003-p",
+      "text": "Moon Bar & Aston Club · à partager"
+    },
+    "sections": [
+      {
+        "title": {
+          "key": "carte-tapas.004-h2",
+          "text": "Tapas chaudes"
+        },
+        "dishes": [
+          {
+            "name": {
+              "key": "carte-tapas.005-span",
+              "text": "Pommes grenailles"
+            },
+            "price": "9 €",
+            "desc": {
+              "key": "carte-tapas.006-span",
+              "text": "Sauce bravas"
+            }
+          },
+          {
+            "name": {
+              "key": "carte-tapas.007-span",
+              "text": "Croquetas de jambon"
+            },
+            "price": "9 €",
+            "desc": {
+              "key": "carte-tapas.008-span",
+              "text": "Jambon serrano, persil plat (8 pièces)"
+            }
+          },
+          {
+            "name": {
+              "key": "carte-tapas.009-span",
+              "text": "Fritto de calamars"
+            },
+            "price": "11 €",
+            "desc": {
+              "key": "carte-tapas.010-span",
+              "text": "Calamars de Patagonie, aïoli, citron vert"
+            }
+          },
+          {
+            "name": {
+              "key": "carte-tapas.011-span",
+              "text": "Beignets de fleurs"
+            },
+            "price": "18 €",
+            "desc": {
+              "key": "carte-tapas.012-span",
+              "text": "Fleurs de courgette, sauce ciboulette (8 pièces)"
+            }
+          },
+          {
+            "name": {
+              "key": "carte-tapas.013-span",
+              "text": "Gyozas légumes"
+            },
+            "price": "18 €",
+            "desc": {
+              "key": "carte-tapas.014-span",
+              "text": "Sauce aigre-douce (8 pièces)"
+            }
+          },
+          {
+            "name": {
+              "key": "carte-tapas.015-span",
+              "text": "Mini-burgers"
+            },
+            "price": "23 €",
+            "desc": {
+              "key": "carte-tapas.016-span",
+              "text": "Ardoise de 8 mini-burgers, sauce cocktail"
+            }
+          }
+        ]
+      },
+      {
+        "title": {
+          "key": "carte-tapas.017-h2",
+          "text": "Tapas froides"
+        },
+        "dishes": [
+          {
+            "name": {
+              "key": "carte-tapas.018-span",
+              "text": "Caviar d'aubergine"
+            },
+            "price": "9 €",
+            "desc": {
+              "key": "carte-tapas.019-span",
+              "text": "Croûtons de focaccia"
+            }
+          },
+          {
+            "name": {
+              "key": "carte-tapas.020-span",
+              "text": "Panier de crudités"
+            },
+            "price": "12 €",
+            "desc": {
+              "key": "carte-tapas.021-span",
+              "text": "Bagna cauda aux anchois, ail et huile d'olive"
+            }
+          },
+          {
+            "name": {
+              "key": "carte-tapas.022-span",
+              "text": "Guacamole & nachos"
+            },
+            "price": "12 €"
+          },
+          {
+            "name": {
+              "key": "carte-tapas.023-span",
+              "text": "Wraps de poulet"
+            },
+            "price": "13 €",
+            "desc": {
+              "key": "carte-tapas.024-span",
+              "text": "Poulet mariné, sauce ponzu, coriandre (6 pièces)"
+            }
+          },
+          {
+            "name": {
+              "key": "carte-tapas.025-span",
+              "text": "Crevettes marinées"
+            },
+            "price": "17 €",
+            "desc": {
+              "key": "carte-tapas.026-span",
+              "text": "Au lait de coco (8 pièces)"
+            }
+          },
+          {
+            "name": {
+              "key": "carte-tapas.027-span",
+              "text": "Planche de charcuterie"
+            },
+            "price": "19 €",
+            "desc": {
+              "key": "carte-tapas.028-span",
+              "text": "Serrano, rosette de Lyon, mortadelle, chorizo"
+            }
+          },
+          {
+            "name": {
+              "key": "carte-tapas.029-span",
+              "text": "Planche de fromages"
+            },
+            "price": "19 €",
+            "desc": {
+              "key": "carte-tapas.030-span",
+              "text": "Chèvre cendré, beaufort, brie, bleu d'Auvergne"
+            }
+          },
+          {
+            "name": {
+              "key": "carte-tapas.031-span",
+              "text": "Tataki de thon"
+            },
+            "price": "21 €",
+            "desc": {
+              "key": "carte-tapas.032-span",
+              "text": "Thon snacké"
+            }
+          }
+        ]
+      }
+    ]
+  }
+}
