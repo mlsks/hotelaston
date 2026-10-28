@@ -13,6 +13,7 @@ import { renderMenu } from './menus.js';
 import { renderRoomCards } from './room-cards.js';
 import { renderOfferCards } from './offer-cards.js';
 import { applyBlocks, syncCounters } from './page-blocks.js';
+import { applyHeroVeil } from './hero-veil.js';
 import { renderMeetingRooms } from './meeting-rooms.js';
 import { fillVars, sha } from '../lib/util.js';
 import { globalGraph, breadcrumbFromDom, faqFromDom, webPageNode, jsonForScript } from './jsonld.js';
@@ -69,6 +70,8 @@ export function renderPage(site, lang, target, head) {
   removeComments($);
   // Blocs masqués, réordonnés ou dupliqués dans l'admin (onglet Blocs de la page)
   if (target.type === 'page') applyBlocks($, view, source.blocksFor(target.page.id));
+  // Dégradé du bandeau photo, réglé dans l'onglet Réglages de la page
+  applyHeroVeil($, view, target.type === 'page' ? target.page : null);
   $('[data-house-rules]').each((i, el) => {
     if (!$(el).children().length) $(el).append(site.houseRulesHtml);
   });

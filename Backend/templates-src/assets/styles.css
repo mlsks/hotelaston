@@ -557,8 +557,9 @@ picture { display: contents; }
 /* Module « voile de bandeau » (hero-veil) : rend lisible un texte blanc posé sur une photo ou une vidéo
    sans assombrir l'image. Un dégradé léger part de la gauche, du côté du texte, et s'efface vers la droite
    (de bas en haut sur mobile, où le texte occupe toute la largeur), et une ombre douce détache les lettres.
-   Usage : ajouter la classe hero-veil au bandeau (élément positionné qui contient l'image et le texte) ;
-   la photo ou la vidéo du fond se place en z-index: -2, le voile est en -1.
+   Usage : data-cms-hero sur le bandeau dans le gabarit (="veil" : dégradé par défaut) ; le générateur pose la
+   classe hero-veil selon l'onglet Réglages de la page (server/ssg/hero-veil.js). La photo ou la vidéo du
+   fond se place en z-index: -2, le voile est en -1.
    Réglages par bandeau (attribut style ou règle CSS) : --veil-opacity (0.5 par défaut), --veil-width
    (étendue du dégradé, 70 %), --veil-rgb (couleur, bleu nuit de la charte), --veil-shadow (ombre du texte). */
 .hero-veil {
@@ -578,7 +579,11 @@ picture { display: contents; }
   background: linear-gradient(90deg, rgba(var(--veil-rgb), var(--veil-opacity)) 0%, rgba(var(--veil-rgb), calc(var(--veil-opacity) * 0.55)) calc(var(--veil-width) * 0.5), rgba(var(--veil-rgb), 0) var(--veil-width));
 }
 .hero-veil :is(h1, h2, p, .breadcrumb, .eyebrow, .lede, .gold-sub) { text-shadow: var(--veil-shadow); }
-.hero-veil .btn { text-shadow: none; }
+/* Boutons et module de réservation (fond clair) : sans ombre */
+.hero-veil :is(.btn, .booking, .booking *, form, form *) { text-shadow: none; }
+/* Bandeau de l'accueil : le dégradé remplace son voile propre */
+.hero.hero-veil .hero__media { z-index: -2; }
+.hero.hero-veil .hero__veil { display: none; }
 @media (max-width: 699.98px) {
   .hero-veil::before { background: linear-gradient(0deg, rgba(var(--veil-rgb), var(--veil-opacity)) 0%, rgba(var(--veil-rgb), calc(var(--veil-opacity) * 0.6)) 55%, rgba(var(--veil-rgb), calc(var(--veil-opacity) * 0.25)) 100%); }
 }
