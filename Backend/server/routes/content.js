@@ -12,6 +12,7 @@ import path from 'node:path';
 import * as cheerio from 'cheerio';
 import { config } from '../config.js';
 import { blockTree, saveZone, copyBlock, deleteBlock } from '../ssg/page-blocks.js';
+import { pageHero } from '../ssg/hero-veil.js';
 
 const SETTINGS_EDITABLE = ['booking_engine', 'og_site_name', 'og_image_default', 'x_default_lang', 'reviews_meta', 'cdn_base', 'jsonld_graph'];
 const SLUG = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
@@ -75,20 +76,27 @@ export default function contentRoutes(app, { db, defaultLang }) {
     const page = db.prepare('SELECT * FROM cms_pages WHERE id = ?').get(req.params.id);
     if (!page) throw notFound('Page');
     pageInScope(req, page);
-    return { ...page, i18n: withStates(page.id), entries: entriesFor({ page: page.id }) };
+    return { ...page, i18n: withStates(page.id), entries: entriesFor({ page: page.id }), hero: pageHero(page) };
   });
 
   app.patch('/pages/:id', {
     preHandler: guard('content'),
     schema: { params: ID, body: { type: 'object', additionalProperties: false, properties: {
       in_sitemap: { type: 'boolean' }, is_active: { type: 'boolean' }, position: { type: 'integer' }, parent_id: { type: ['integer', 'null'] }, priority: { type: ['number', 'null'], minimum: 0, maximum: 1 },
+      hero_veil: { type: ['object', 'null'], required: ['on', 'opacity', 'width'], additionalProperties: false, properties: {
+        on: { type: 'boolean' }, opacity: { type: 'number', minimum: 0.1, maximum: 0.9 }, width: { type: 'integer', minimum: 20, maximum: 100 },
+      } },
     } } },
   }, async (req) => {
     assertUnscoped(req);
     const page = db.prepare('SELECT * FROM cms_pages WHERE id = ?').get(req.params.id);
     if (!page) throw notFound('Page');
-    const fields = pick(req.body, ['in_sitemap', 'is_active', 'position', 'parent_id', 'priority']);
+    const fields = pick(req.body, ['in_sitemap', 'is_active', 'position', 'parent_id', 'priority', 'hero_veil']);
     for (const k of ['in_sitemap', 'is_active']) if (k in fields) fields[k] = bool(fields[k]);
+    if ('hero_veil' in fields) {
+      if (fields.hero_veil && !pageHero(page)) throw badRequest('Cette page n’a pas de bandeau photo réglable.');
+      fields.hero_veil = fields.hero_veil ? JSON.stringify(fields.hero_veil) : null;
+    }
     if (fields.parent_id === page.id) throw badRequest('Une page ne peut pas être sa propre parente.');
     updateRow(db, 'cms_pages', page.id, { ...fields, updated_at: nowIso() });
     audit(db, req, 'update', 'page', page.id, { before: page, after: fields });

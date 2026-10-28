@@ -92,7 +92,8 @@ Dans un texte enrichi (pages, fiches, popup), un texte copié depuis Word ou un 
   - **Page active** : une page désactivée n'est plus générée ni publiée ;
   - **Dans le plan du site (sitemap.xml)** ;
   - **Page parente** et **Ordre** (place dans le menu et le fil d'Ariane) ;
-  - **Priorité dans le plan du site** (laisser « Automatique » en cas de doute).
+  - **Priorité dans le plan du site** (laisser « Automatique » en cas de doute) ;
+  - **Dégradé derrière le texte du bandeau photo** (Accueil, Séminaires et Moon Bar) : un voile léger part de la gauche (du bas sur mobile) et une ombre douce détache le texte blanc, sans assombrir le reste de la photo ou de la vidéo. **Opacité** (50 % au départ) et **Étendue vers la droite** (70 %) se règlent au curseur ; **Revenir au réglage d'origine** remet ceux du site. Décoché, le bandeau de l'accueil et la vidéo du Moon Bar gardent leur voile d'origine. Enregistrer, puis vérifier dans la prévisualisation.
 
 ### Blocs d'une page
 

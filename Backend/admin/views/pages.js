@@ -62,6 +62,7 @@ Alpine.data('pageView', () => ({
   checking: false,
   saving: false,
   settings: null,
+  veil: null,
   blocks: [],
   busy: false,
   textsVersion: 0,
@@ -92,6 +93,10 @@ Alpine.data('pageView', () => ({
     this.page = page;
     setTitle(`Page · ${pageLabel(page, this.def)}`);
     this.settings = { is_active: Boolean(page.is_active), in_sitemap: Boolean(page.in_sitemap), priority: page.priority, parent_id: page.parent_id, position: page.position };
+    // Dégradé du bandeau photo : réglage de la page, sinon celui du gabarit
+    let veil = null;
+    try { veil = page.hero_veil ? JSON.parse(page.hero_veil) : null; } catch { /* illisible : gabarit */ }
+    this.veil = page.hero ? { ...page.hero.default, ...veil } : null;
     this.resetSeo();
   },
   get lang() { return this.$store.ui.lang; },
@@ -247,11 +252,16 @@ Alpine.data('pageView', () => ({
       this.textsVersion += 1;
     }, 'Copie supprimée.');
   },
+  resetVeil() {
+    this.veil = { ...this.page.hero.default };
+    this.$store.ui.dirty = true;
+  },
   async saveSettings() {
     this.saving = true;
     try {
       const s = this.settings;
-      await patch(`/pages/${this.page.id}`, { ...s, priority: s.priority === '' || s.priority === null ? null : Number(s.priority), parent_id: s.parent_id ? Number(s.parent_id) : null, position: Number(s.position) || 0 });
+      const hero = this.veil ? { hero_veil: { on: Boolean(this.veil.on), opacity: Number(this.veil.opacity), width: Number(this.veil.width) } } : {};
+      await patch(`/pages/${this.page.id}`, { ...s, ...hero, priority: s.priority === '' || s.priority === null ? null : Number(s.priority), parent_id: s.parent_id ? Number(s.parent_id) : null, position: Number(s.position) || 0 });
       this.$store.ui.dirty = false;
       this.$store.toast.push('Réglages de la page enregistrés.');
       await this.load();

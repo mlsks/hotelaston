@@ -557,8 +557,9 @@ picture { display: contents; }
 /* Module « voile de bandeau » (hero-veil) : rend lisible un texte blanc posé sur une photo ou une vidéo
    sans assombrir l'image. Un dégradé léger part de la gauche, du côté du texte, et s'efface vers la droite
    (de bas en haut sur mobile, où le texte occupe toute la largeur), et une ombre douce détache les lettres.
-   Usage : ajouter la classe hero-veil au bandeau (élément positionné qui contient l'image et le texte) ;
-   la photo ou la vidéo du fond se place en z-index: -2, le voile est en -1.
+   Usage : data-cms-hero sur le bandeau dans le gabarit (="veil" : dégradé par défaut) ; le générateur pose la
+   classe hero-veil selon l'onglet Réglages de la page (server/ssg/hero-veil.js). La photo ou la vidéo du
+   fond se place en z-index: -2, le voile est en -1.
    Réglages par bandeau (attribut style ou règle CSS) : --veil-opacity (0.5 par défaut), --veil-width
    (étendue du dégradé, 70 %), --veil-rgb (couleur, bleu nuit de la charte), --veil-shadow (ombre du texte). */
 .hero-veil {
@@ -578,7 +579,12 @@ picture { display: contents; }
   background: linear-gradient(90deg, rgba(var(--veil-rgb), var(--veil-opacity)) 0%, rgba(var(--veil-rgb), calc(var(--veil-opacity) * 0.55)) calc(var(--veil-width) * 0.5), rgba(var(--veil-rgb), 0) var(--veil-width));
 }
 .hero-veil :is(h1, h2, p, .breadcrumb, .eyebrow, .lede, .gold-sub) { text-shadow: var(--veil-shadow); }
-.hero-veil .btn { text-shadow: none; }
+/* Boutons et module de réservation (fond clair) : sans ombre */
+.hero-veil :is(.btn, .booking, .booking *, form, form *) { text-shadow: none; }
+/* Bandeau de l'accueil : le dégradé remplace son voile propre */
+.hero.hero-veil .hero__media { z-index: -2; }
+.hero.hero-veil .hero__veil { display: none; }
+/* Bandeau vidéo (Moon Bar) : idem, voir .venue-video */
 @media (max-width: 699.98px) {
   .hero-veil::before { background: linear-gradient(0deg, rgba(var(--veil-rgb), var(--veil-opacity)) 0%, rgba(var(--veil-rgb), calc(var(--veil-opacity) * 0.6)) 55%, rgba(var(--veil-rgb), calc(var(--veil-opacity) * 0.25)) 100%); }
 }
@@ -1211,7 +1217,8 @@ picture { display: contents; }
 /* Moon Bar : en-tête vidéo */
 .venue-video { position: relative; isolation: isolate; min-height: min(80svh, 720px); display: flex; align-items: flex-end; color: #fff; margin-bottom: clamp(24px, 4vw, 48px); background: var(--azure-950); }
 .venue-video video { position: absolute; inset: 0; z-index: -2; width: 100%; height: 100%; object-fit: cover; }
-.venue-video::before { content: ""; position: absolute; inset: 0; z-index: -1; background: linear-gradient(0deg, rgba(5, 13, 29, 0.85), rgba(5, 13, 29, 0) 60%), linear-gradient(180deg, rgba(5, 13, 29, 0.5), rgba(5, 13, 29, 0) 25%); }
+/* Voile propre de la vidéo, remplacé par le module hero-veil (section 6) quand il est activé */
+.venue-video:not(.hero-veil)::before { content: ""; position: absolute; inset: 0; z-index: -1; background: linear-gradient(0deg, rgba(5, 13, 29, 0.85), rgba(5, 13, 29, 0) 60%), linear-gradient(180deg, rgba(5, 13, 29, 0.5), rgba(5, 13, 29, 0) 25%); }
 .venue-video__content { padding-top: calc(var(--header-h) + var(--strip-h) + 40px); padding-bottom: clamp(28px, 5vw, 56px); }
 .venue-video h1 { color: #fff; max-width: 18ch; }
 .venue-video .gold-sub { color: var(--gold); max-width: 60ch; }
