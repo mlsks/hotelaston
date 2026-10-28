@@ -36,6 +36,8 @@ export const COLLECTIONS = {
   // Cartes du restaurant et des bars (voir menus.js) : une page par carte, rubriques et plats
   // Offres de la page Offres et de l'accueil (voir offer-cards.js) : des cartes, sans page propre
   offers: { label: 'Offres', translatable: ['tag', 'title', 'alt', 'price', 'priceNote', 'includes[]', 'saving', 'conditions', 'button', 'teaserTitle', 'teaserText'] },
+  // Salles de séminaire (voir meeting-rooms.js) : tableau des capacités de la page Séminaires, formulaire de devis
+  meeting_rooms: { label: 'Salles de séminaire', translatable: ['name', 'detail'] },
   menus: { label: 'Cartes du restaurant et des bars', translatable: ['title', 'subtitle', 'backLabel', 'note', 'sections[].title', 'sections[].dishes[].name', 'sections[].dishes[].desc'] },
 };
 

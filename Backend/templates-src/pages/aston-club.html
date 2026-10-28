@@ -4,14 +4,14 @@
         <h1 data-cms-key="aston-club.005-h1">L'Aston Club, bar lounge avec vue sur la Vieille Ville de Nice</h1>
         <p class="gold-sub gold-sub--lg" data-cms-key="aston-club.006-p">Quand le Moon Bar est fermé · de 17h00 à minuit</p>
       </header>
-      <div class="container">
-        <div class="photo-strip photo-strip--lead" data-slider="">
-          <div class="slider__track" data-slider-track="" tabindex="0" role="region" aria-label="Photos de L'Aston Club" data-cms-attr="aria-label:aston-club.007-div@aria-label">
-            <figure><img data-cms-media="aston-club.photo-1" data-cms-sizes="(min-width: 1100px) 50vw, 100vw" data-cms-portrait="off" alt="Fauteuils de L'Aston Club face aux baies vitrées et aux toits de Nice" data-cms-attr="alt:aston-club.008-img@alt"></figure>
-            <figure><img data-cms-media="aston-club.photo-2" data-cms-sizes="(min-width: 1100px) 50vw, 100vw" data-cms-portrait="off" alt="L'Aston Club au coucher du soleil" loading="lazy" data-cms-attr="alt:aston-club.009-img@alt"></figure>
-            <figure><img data-cms-media="aston-club.photo-3" data-cms-sizes="(min-width: 1100px) 50vw, 100vw" data-cms-portrait="off" alt="Tables dressées pour le dîner à L'Aston Club" loading="lazy" data-cms-attr="alt:aston-club.010-img@alt"></figure>
-            <figure><img data-cms-media="aston-club.photo-4" data-cms-sizes="(min-width: 1100px) 50vw, 100vw" data-cms-portrait="off" alt="Vue depuis le 7e étage sur la Promenade du Paillon" loading="lazy" data-cms-attr="alt:aston-club.011-img@alt"></figure>
-            <figure><img data-cms-media="aston-club.photo-5" data-cms-sizes="(min-width: 1100px) 50vw, 100vw" data-cms-portrait="off" alt="Soirée Live Music, ambiance festive" loading="lazy" data-cms-attr="alt:aston-club.012-img@alt"></figure>
+      <div class="container" data-cms-blocks="sections" data-cms-blocks-label="Sections de la page">
+        <div class="photo-strip photo-strip--lead" data-slider="" data-cms-block="photos" data-cms-block-label="Bandeau de photos">
+          <div class="slider__track" data-slider-track="" data-cms-blocks="photos-liste" data-cms-blocks-label="Photos du bandeau" tabindex="0" role="region" aria-label="Photos de L'Aston Club" data-cms-attr="aria-label:aston-club.007-div@aria-label">
+            <figure data-cms-block="photo-1"><img data-cms-media="aston-club.photo-1" data-cms-sizes="(min-width: 1100px) 50vw, 100vw" data-cms-portrait="off" alt="Fauteuils de L'Aston Club face aux baies vitrées et aux toits de Nice" data-cms-attr="alt:aston-club.008-img@alt"></figure>
+            <figure data-cms-block="photo-2"><img data-cms-media="aston-club.photo-2" data-cms-sizes="(min-width: 1100px) 50vw, 100vw" data-cms-portrait="off" alt="L'Aston Club au coucher du soleil" loading="lazy" data-cms-attr="alt:aston-club.009-img@alt"></figure>
+            <figure data-cms-block="photo-3"><img data-cms-media="aston-club.photo-3" data-cms-sizes="(min-width: 1100px) 50vw, 100vw" data-cms-portrait="off" alt="Tables dressées pour le dîner à L'Aston Club" loading="lazy" data-cms-attr="alt:aston-club.010-img@alt"></figure>
+            <figure data-cms-block="photo-4"><img data-cms-media="aston-club.photo-4" data-cms-sizes="(min-width: 1100px) 50vw, 100vw" data-cms-portrait="off" alt="Vue depuis le 7e étage sur la Promenade du Paillon" loading="lazy" data-cms-attr="alt:aston-club.011-img@alt"></figure>
+            <figure data-cms-block="photo-5"><img data-cms-media="aston-club.photo-5" data-cms-sizes="(min-width: 1100px) 50vw, 100vw" data-cms-portrait="off" alt="Soirée Live Music, ambiance festive" loading="lazy" data-cms-attr="alt:aston-club.012-img@alt"></figure>
           </div>
           <div class="slider__controls">
             <button class="slider__arrow" type="button" data-slider-prev="" aria-label="Photo précédente" data-cms-attr="aria-label:aston-club.013-button@aria-label"><svg class="icon" aria-hidden="true"><use href="#i-prev"></use></svg></button>
@@ -19,23 +19,23 @@
             <button class="slider__arrow" type="button" data-slider-next="" aria-label="Photo suivante" data-cms-attr="aria-label:aston-club.014-button@aria-label"><svg class="icon" aria-hidden="true"><use href="#i-next"></use></svg></button>
           </div>
         </div>
-        <div class="venue-layout">
-          <div class="venue-layout__main prose">
-            <p class="lede" data-cms-key="aston-club.015-p">Au 7e étage, la ville se déplie : la place Masséna et ses sept statues, les toits et clochers de la Vieille Ville, le mont Boron, la Méditerranée et, au loin, les collines du Mercantour.</p>
-            <p data-cms-html="aston-club.016-p">Quand le temps ne permet pas d'ouvrir le <a href="#/moon-bar">Moon Bar</a>, sur le toit, c'est L'Aston Club qui vous accueille : par mauvais temps et hors saison.</p>
-            <p data-cms-key="aston-club.017-p">Ambiance blues et soul. Le barman compose ses créations à partir de vos goûts : guidez-le, il vous servira son cocktail signature. Assiettes à partager pour l'apéritif, ou dîner complet.</p>
-            <p data-cms-html="aston-club.018-p"><strong>Live Music</strong> chaque vendredi et samedi soir. <a href="#/live-music">Voir le programme des soirées</a>.</p>
+        <div class="venue-layout" data-cms-block="presentation" data-cms-block-label="Présentation et infos pratiques">
+          <div class="venue-layout__main prose" data-cms-blocks="texte" data-cms-blocks-label="Paragraphes">
+            <p data-cms-block="paragraphe-1" class="lede" data-cms-key="aston-club.015-p">Au 7e étage, la ville se déplie : la place Masséna et ses sept statues, les toits et clochers de la Vieille Ville, le mont Boron, la Méditerranée et, au loin, les collines du Mercantour.</p>
+            <p data-cms-block="paragraphe-2" data-cms-html="aston-club.016-p">Quand le temps ne permet pas d'ouvrir le <a href="#/moon-bar">Moon Bar</a>, sur le toit, c'est L'Aston Club qui vous accueille : par mauvais temps et hors saison.</p>
+            <p data-cms-block="paragraphe-3" data-cms-key="aston-club.017-p">Ambiance blues et soul. Le barman compose ses créations à partir de vos goûts : guidez-le, il vous servira son cocktail signature. Assiettes à partager pour l'apéritif, ou dîner complet.</p>
+            <p data-cms-block="paragraphe-4" data-cms-html="aston-club.018-p"><strong>Live Music</strong> chaque vendredi et samedi soir. <a href="#/live-music">Voir le programme des soirées</a>.</p>
           </div>
           <aside class="venue-layout__aside" aria-label="Informations pratiques L'Aston Club" data-cms-attr="aria-label:aston-club.019-aside@aria-label">
             <div class="info-card">
               <h2 class="info-card__title" data-cms-key="aston-club.020-h2">Infos pratiques</h2>
-              <dl>
-                <div><dt data-cms-key="aston-club.021-dt">Ouverture</dt><dd data-cms-key="aston-club.022-dd">Quand le Moon Bar est fermé (mauvais temps, hors saison)</dd></div>
-                <div><dt data-cms-key="aston-club.023-dt">Horaires</dt><dd data-cms-key="aston-club.024-dd">17h00 – minuit</dd></div>
-                <div><dt data-cms-key="aston-club.025-dt">Live Music</dt><dd data-cms-key="aston-club.026-dd">Vendredi et samedi soir</dd></div>
-                <div><dt data-cms-key="aston-club.027-dt">À la carte</dt><dd data-cms-key="aston-club.028-dd">Cocktails signature, assiettes à partager, dîner</dd></div>
-                <div><dt data-cms-key="aston-club.029-dt">Situation</dt><dd data-cms-key="aston-club.030-dd">7e étage, vue sur la Vieille Ville</dd></div>
-                <div><dt data-cms-key="aston-club.031-dt">Événements privés</dt><dd><a href="#/devis?offre=aston-club" data-cms-key="aston-club.032-a">Privatiser L'Aston Club</a></dd></div>
+              <dl data-cms-blocks="infos-liste" data-cms-blocks-label="Infos pratiques">
+                <div data-cms-block="info-1"><dt data-cms-key="aston-club.021-dt">Ouverture</dt><dd data-cms-key="aston-club.022-dd">Quand le Moon Bar est fermé (mauvais temps, hors saison)</dd></div>
+                <div data-cms-block="info-2"><dt data-cms-key="aston-club.023-dt">Horaires</dt><dd data-cms-key="aston-club.024-dd">17h00 – minuit</dd></div>
+                <div data-cms-block="info-3"><dt data-cms-key="aston-club.025-dt">Live Music</dt><dd data-cms-key="aston-club.026-dd">Vendredi et samedi soir</dd></div>
+                <div data-cms-block="info-4"><dt data-cms-key="aston-club.027-dt">À la carte</dt><dd data-cms-key="aston-club.028-dd">Cocktails signature, assiettes à partager, dîner</dd></div>
+                <div data-cms-block="info-5"><dt data-cms-key="aston-club.029-dt">Situation</dt><dd data-cms-key="aston-club.030-dd">7e étage, vue sur la Vieille Ville</dd></div>
+                <div data-cms-block="info-6"><dt data-cms-key="aston-club.031-dt">Événements privés</dt><dd><a href="#/devis?offre=aston-club" data-cms-key="aston-club.032-a">Privatiser L'Aston Club</a></dd></div>
               </dl>
             </div>
             <div class="info-card info-card--book" id="reserver-astonclub" data-table-booking="">

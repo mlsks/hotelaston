@@ -68,6 +68,7 @@ export function createScopedSnapshot(db, buildId, scopes, baseSnapshot) {
     ['cms_entries', (s) => `page_id IN (SELECT id FROM ${s}.cms_pages WHERE key IN (${list(pages)}))`],
     ['cms_entry_values', (s) => `entry_id IN (SELECT e.id FROM ${s}.cms_entries e JOIN ${s}.cms_pages p ON p.id = e.page_id WHERE p.key IN (${list(pages)}))`],
     ['cms_page_i18n', (s) => `page_id IN (SELECT id FROM ${s}.cms_pages WHERE key IN (${list(pages)}))`],
+    ['cms_page_blocks', (s) => `page_id IN (SELECT id FROM ${s}.cms_pages WHERE key IN (${list(pages)}))`],
     ['cms_media', (s) => inFolders(s).replaceAll(`${s}.cms_media.`, '')],
     ['cms_media_variants', (s) => `media_id IN (SELECT id FROM ${s}.cms_media WHERE ${inFolders(s)})`],
     ['cms_media_i18n', (s) => `media_id IN (SELECT id FROM ${s}.cms_media WHERE ${inFolders(s)})`],
@@ -117,6 +118,9 @@ export async function restoreContent(db, snapshotFile) {
         db.exec(`DELETE FROM main.${t.name}`);
         db.exec(`INSERT INTO main.${t.name} (${keep}) SELECT ${keep} FROM snap.${t.name}`);
       }
+      // Snapshot antérieur aux blocs des pages : aucun bloc déplacé, masqué ou copié à l'époque
+      const inSnap = new Set(cmsTables(db, 'snap').map((t) => t.name));
+      if (!inSnap.has('cms_page_blocks')) db.exec('DELETE FROM main.cms_page_blocks');
     })();
   } finally {
     db.prepare('DETACH DATABASE snap').run();

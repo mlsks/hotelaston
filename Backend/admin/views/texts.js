@@ -9,10 +9,10 @@ import { setTitle } from '../lib/router.js';
 /** Textes communs : d'où ils viennent (layout ou gabarit de fiche). */
 const PREFIX = { global: 'Toutes les pages', 'item-chambre': 'Fiches chambre', 'item-service': 'Fiches service' };
 
-Alpine.data('entriesEditor', (source) => ({
+Alpine.data('entriesEditor', (source, opts = {}) => ({
   entries: [],
   loading: true,
-  q: '',
+  q: opts.q || '',
   onlyTodo: false,
   asDraft: false,
   openCount: 3,
@@ -49,7 +49,7 @@ Alpine.data('entriesEditor', (source) => ({
   source(e) { return e.values[this.def]?.value ?? ''; },
   state(e) { return e.values[this.lang]?.state || 'missing'; },
   matches(e) {
-    if (this.translating && e.type === 'media') return false; // une photo vaut pour toutes les langues
+    if (this.translating && (e.type === 'media' || !e.translatable)) return false; // une photo, un lien ou un chiffre vaut pour toutes les langues
     if (this.onlyTodo && this.state(e) === 'ready') return false;
     if (!this.q) return true;
     const q = this.q.toLowerCase();
@@ -71,7 +71,7 @@ Alpine.data('entriesEditor', (source) => ({
   get summary() {
     if (this.loading) return '';
     if (!this.translating) return `${this.entries.length} textes`;
-    const texts = this.entries.filter((e) => e.type !== 'media');
+    const texts = this.entries.filter((e) => e.type !== 'media' && e.translatable);
     const todo = texts.filter((e) => this.state(e) !== 'ready').length;
     return todo ? `${todo} texte(s) à traduire ou à revoir sur ${texts.length}` : 'Tout est traduit';
   },

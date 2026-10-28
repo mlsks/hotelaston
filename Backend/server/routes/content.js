@@ -11,6 +11,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import * as cheerio from 'cheerio';
 import { config } from '../config.js';
+import { blockTree, saveZone, copyBlock, deleteBlock } from '../ssg/page-blocks.js';
 
 const SETTINGS_EDITABLE = ['booking_engine', 'og_site_name', 'og_image_default', 'x_default_lang', 'reviews_meta', 'cdn_base', 'jsonld_graph'];
 const SLUG = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
@@ -144,6 +145,54 @@ export default function contentRoutes(app, { db, defaultLang }) {
     })();
     audit(db, req, 'update', 'page_i18n', page.id, { lang, before, after: row });
     return withStates(page.id)[lang];
+  });
+
+  /* ---------- Blocs des pages (sections et lignes : ordre, masquage, copies) ---------- */
+  const blockPage = (req) => {
+    const page = db.prepare('SELECT * FROM cms_pages WHERE id = ?').get(req.params.id);
+    if (!page) throw notFound('Page');
+    pageInScope(req, page);
+    return page;
+  };
+  const BLOCK_REF = { type: 'object', required: ['zone', 'block'], additionalProperties: false, properties: {
+    zone: { type: 'string', minLength: 1, maxLength: 200 }, block: { type: 'string', minLength: 1, maxLength: 200 },
+  } };
+  const blocksResult = (page, r) => {
+    if (r.error) throw badRequest(r.error);
+    db.prepare('UPDATE cms_pages SET updated_at = ? WHERE id = ?').run(nowIso(), page.id);
+    return blockTree(db, page);
+  };
+
+  app.get('/pages/:id/blocks', { preHandler: guard(), schema: { params: ID } }, async (req) => blockTree(db, blockPage(req)));
+
+  app.put('/pages/:id/blocks', {
+    preHandler: guard('content'),
+    schema: { params: ID, body: { type: 'object', required: ['zone', 'blocks'], additionalProperties: false, properties: {
+      zone: { type: 'string', minLength: 1, maxLength: 200 },
+      blocks: { type: 'array', maxItems: 200, items: { type: 'object', required: ['block'], additionalProperties: false, properties: {
+        block: { type: 'string', minLength: 1, maxLength: 200 }, hidden: { type: 'boolean' },
+      } } },
+    } } },
+  }, async (req) => {
+    const page = blockPage(req);
+    const out = blocksResult(page, saveZone(db, page, req.body.zone, req.body.blocks));
+    audit(db, req, 'update', 'page_blocks', page.id, { after: req.body });
+    return out;
+  });
+
+  app.post('/pages/:id/blocks/copy', { preHandler: guard('content'), schema: { params: ID, body: BLOCK_REF } }, async (req) => {
+    const page = blockPage(req);
+    const r = copyBlock(db, page, req.body.zone, req.body.block);
+    const out = blocksResult(page, r);
+    audit(db, req, 'create', 'page_block', page.id, { after: { ...req.body, copy: r.block } });
+    return { copy: r.block, tree: out };
+  });
+
+  app.post('/pages/:id/blocks/delete', { preHandler: guard('content'), schema: { params: ID, body: BLOCK_REF } }, async (req) => {
+    const page = blockPage(req);
+    const out = blocksResult(page, deleteBlock(db, page, req.body.zone, req.body.block));
+    audit(db, req, 'delete', 'page_block', page.id, { before: req.body });
+    return out;
   });
 
   /* ---------- Textes ---------- */
