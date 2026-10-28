@@ -88,7 +88,7 @@ Documentation : [Backend/README.md](Backend/README.md) (commandes, rôles, écra
 | 8 | Politique de confidentialité | Faire valider et ajouter le paragraphe sur la mesure d'audience, prêt dans [docs/confidentialite-mesure-audience.md](docs/confidentialite-mesure-audience.md). |
 | 9 | Traductions | L'anglais est activé mais aucune page n'est encore entièrement traduite : seul le français sera publié tant que ce n'est pas fait. Désigner les traducteurs (comptes à créer), puis l'italien et l'allemand. |
 | 10 | Anciennes adresses | Relever les adresses actuelles de hotel-aston.com pour créer les redirections 301 et ne pas perdre le référencement. |
-| 11 | Cartes de L'Horloge | Reprises le 28/10/2026 de l'ancien site (carte, vins, desserts) dans l'écran **Cartes du restaurant**, aux mêmes adresses. À relire par l'hôtel (prix, millésimes, plats du moment), puis à traduire : l'ancien site avait des descriptions en anglais et en italien, non reprises. Vérifier aussi les cartes du Moon Bar. |
+| 11 | Cartes de L'Horloge | Reprises le 28/10/2026 de l'ancien site (carte, vins, desserts) dans l'écran **Cartes du restaurant**, aux mêmes adresses. À relire par l'hôtel (prix, millésimes, plats du moment), puis relire la traduction anglaise, préparée en brouillon le 28/10/2026 (l'ancien site avait aussi des descriptions en italien, non reprises). Vérifier aussi les cartes du Moon Bar. |
 
 ### 2.2 Développement restant
 

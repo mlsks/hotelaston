@@ -107,7 +107,7 @@ export function ensureMenus(db) {
 
 /**
  * Cartes relevées sur l'ancien site (cartes de L'Horloge) : page à la même adresse, contenu en
- * langue par défaut, et le lien « Les cartes » qui menait à l'ancienne page mène désormais à la nouvelle.
+ * langue par défaut (traductions jointes en brouillon), et le lien « Les cartes » qui menait à l'ancienne page mène désormais à la nouvelle.
  * Chaque carte n'est créée qu'une fois : masquée ou modifiée ensuite, elle n'est pas recréée.
  */
 function createSeedMenus(db, def) {
@@ -133,10 +133,7 @@ function createSeedMenus(db, def) {
       const base = { page: m.key, venue: m.venue, sections: m.sections.map((s) => ({ dishes: s.dishes.map((d) => ({ price: d.price || '' })) })) };
       const itemId = db.prepare(`INSERT INTO cms_items (collection, key, data, is_active, position, created_at, updated_at)
         VALUES (?, ?, ?, 1, (SELECT COALESCE(MAX(position), -1) + 1 FROM cms_items WHERE collection = ?), ?, ?)`).run(MENUS, m.key, JSON.stringify(base), MENUS, now, now).lastInsertRowid;
-      const tr = JSON.stringify({
-        title: m.title, subtitle: m.subtitle || '', backLabel: m.backLabel || '', note: m.note || '',
-        sections: m.sections.map((s) => ({ title: s.title, dishes: s.dishes.map((d) => ({ name: d.name, ...(d.desc ? { desc: d.desc } : {}) })) })),
-      });
+      const tr = textsOf(m);
       db.prepare(`INSERT INTO cms_item_i18n (item_id, lang, slug, data, status, source_hash, updated_at) VALUES (?, ?, NULL, ?, 'ready', ?, ?)`)
         .run(itemId, def, tr, sha(tr), now);
       // Liens vers l'ancienne page → la nouvelle ; sinon, lien ajouté à « Les cartes » du lieu
@@ -155,10 +152,34 @@ function createSeedMenus(db, def) {
       }
       created += 1;
     }
+    // Traductions jointes à une carte : ajoutées une fois, en brouillon (à relire), si la carte n'en a pas déjà une
+    const langs = new Set(db.prepare('SELECT code FROM cms_languages').pluck().all());
+    for (const m of menus) {
+      for (const [lang, t] of Object.entries(m.translations || {})) {
+        const mark = `${m.key}@${lang}`;
+        const item = db.prepare('SELECT id FROM cms_items WHERE collection = ? AND key = ?').get(MENUS, m.key);
+        const page = pageOf.get(m.key);
+        if (done.has(mark) || !langs.has(lang) || !item || !page) continue;
+        done.add(mark);
+        // Empreinte du texte français relevé : si la carte a changé depuis, la traduction est « à revoir »
+        db.prepare(`INSERT OR IGNORE INTO cms_item_i18n (item_id, lang, slug, data, status, source_hash, updated_at) VALUES (?, ?, NULL, ?, 'draft', ?, ?)`)
+          .run(item.id, lang, textsOf(t), sha(textsOf(m)), now);
+        db.prepare(`INSERT OR IGNORE INTO cms_page_i18n (page_id, lang, slug, path, title, meta_description, status, source_hash, updated_at)
+          VALUES (?, ?, ?, ?, ?, ?, 'draft', ?, ?)`).run(page.id, lang, m.key, `/${lang}/${m.key}/`, t.page.title, t.page.description, sha(`${m.page.title}\n${m.page.description}`), now);
+      }
+    }
     db.prepare(`INSERT INTO cms_settings (key, value, updated_at) VALUES (?, ?, ?)
       ON CONFLICT (key) DO UPDATE SET value = excluded.value, updated_at = excluded.updated_at`).run(CREATED, JSON.stringify([...done].sort()), now);
   })();
   return created;
+}
+
+/** Textes traduisibles d'une carte relevée (langue par défaut ou traduction jointe), au format enregistré. */
+function textsOf(m) {
+  return JSON.stringify({
+    title: m.title, subtitle: m.subtitle || '', backLabel: m.backLabel || '', note: m.note || '',
+    sections: m.sections.map((s) => ({ title: s.title, dishes: s.dishes.map((d) => ({ name: d.name, ...(d.desc ? { desc: d.desc } : {}) })) })),
+  });
 }
 
 /** Retire les textes vides d'une traduction : le texte de la langue par défaut reste affiché. */
