@@ -17,7 +17,7 @@ import { sitemapXml, robotsTxt, redirectsCaddy } from './sitemap.js';
 import { llmsTxt } from './llms.js';
 import { globalGraph } from './jsonld.js';
 import { createSnapshot, createScopedSnapshot } from './snapshot.js';
-import { activateRelease, pruneReleases, writeTree, currentBuild } from './release.js';
+import { activateRelease, pruneReleases, writeTree, currentBuild, moveDir } from './release.js';
 import { withBuildLock } from './lock.js';
 import { notifyIndexNow } from './indexnow.js';
 
@@ -378,13 +378,12 @@ export function runBuild({ kind = 'preview', trigger = 'manual', now = new Date(
         fs.rmSync(tmpDir, { recursive: true, force: true });
         writeTree(tmpDir, result.files);
         if (kind === 'preview') {
-          fs.rmSync(config.previewDir, { recursive: true, force: true });
-          fs.renameSync(tmpDir, config.previewDir);
+          moveDir(tmpDir, config.previewDir);
           finish({ ...summary, status: 'success' });
         } else {
           fs.mkdirSync(config.releasesDir, { recursive: true });
           const releasePath = path.join(config.releasesDir, String(id));
-          fs.renameSync(tmpDir, releasePath);
+          moveDir(tmpDir, releasePath); // un ancien dossier du même numéro (base recréée) est remplacé
           finish({ ...summary, status: 'success', snapshot_path: toVarPath(snapshotPath), release_path: toVarPath(releasePath) });
           activateRelease(db, id, releasePath);
           savePageState(db, result.pages);

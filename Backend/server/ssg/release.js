@@ -21,6 +21,33 @@ export function writeTree(dir, files) {
   }
 }
 
+const sleep = (ms) => Atomics.wait(new Int32Array(new SharedArrayBuffer(4)), 0, 0, ms);
+const BUSY = new Set(['EPERM', 'EACCES', 'EBUSY', 'ENOTEMPTY', 'EEXIST']);
+
+/**
+ * Déplace un dossier généré vers sa place (prévisualisation, version).
+ * Windows refuse un renommage tant qu'un fichier tout juste écrit est ouvert par l'antivirus,
+ * l'indexation ou l'Explorateur (EPERM, EBUSY), ou si la destination existe déjà : on retire
+ * la destination, on réessaie pendant quelques secondes, puis on copie en dernier recours.
+ */
+export function moveDir(src, dest, { attempts = 8, wait = 250 } = {}) {
+  for (let i = 0; ; i += 1) {
+    try {
+      if (fs.existsSync(dest)) fs.rmSync(dest, { recursive: true, force: true, maxRetries: 3 });
+      fs.renameSync(src, dest);
+      return;
+    } catch (err) {
+      if (!BUSY.has(err.code)) throw err;
+      if (i + 1 >= attempts) break;
+      sleep(wait * (i + 1));
+    }
+  }
+  fs.cpSync(src, dest, { recursive: true, force: true });
+  try {
+    fs.rmSync(src, { recursive: true, force: true, maxRetries: 5, retryDelay: 200 });
+  } catch { /* dossier temporaire retiré au prochain démarrage ou à la prochaine génération */ }
+}
+
 /**
  * Fait pointer public-dist vers une version.
  * Linux : renommage d'un lien temporaire par-dessus l'ancien, opération atomique.

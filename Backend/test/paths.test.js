@@ -17,7 +17,7 @@ const { getDb, closeDb, relativizeBuildPaths } = await import('../server/db/conn
 const { importLegacy } = await import('../server/db/import-legacy.js');
 const { seedSitePhotos } = await import('./helpers/site-photos.js');
 const { runBuild } = await import('../server/ssg/build.js');
-const { restoreRelease } = await import('../server/ssg/release.js');
+const { restoreRelease, moveDir } = await import('../server/ssg/release.js');
 
 after(() => {
   closeDb();
@@ -67,4 +67,42 @@ test('publication et restauration fonctionnent avec les chemins relatifs', async
   const target = await restoreRelease({ withContent: true });
   assert.equal(target.id, builds[0].id);
   assert.equal(fs.realpathSync(config.publicDist), fs.realpathSync(fromVarPath(builds[0].release_path)));
+});
+
+test('publication malgré un ancien dossier de version du même numéro (base recréée, copie Windows)', async () => {
+  const db = getDb();
+  const next = db.prepare("SELECT MAX(id) + 1 FROM sys_builds").pluck().get();
+  const stale = path.join(config.releasesDir, String(next));
+  fs.mkdirSync(path.join(stale, 'fr'), { recursive: true });
+  fs.writeFileSync(path.join(stale, 'fr', 'ancien.html'), 'ancien');
+  db.prepare(`UPDATE cms_page_i18n SET title = title || ' (3)' WHERE lang = 'fr' AND page_id = (SELECT MIN(page_id) FROM cms_page_i18n)`).run();
+  const res = await runBuild({ kind: 'production', log: () => {} });
+  assert.equal(res.status, 'success', res.error);
+  assert.equal(res.id, next);
+  assert.ok(!fs.existsSync(path.join(stale, 'fr', 'ancien.html')));
+  assert.ok(fs.existsSync(path.join(stale, 'fr', 'index.html')));
+  assert.deepEqual(fs.readdirSync(config.varDir).filter((n) => n.startsWith('.build-')), []);
+});
+
+test('déplacement d\'un dossier refusé un moment (Windows : antivirus, indexation) : nouvel essai, puis copie', () => {
+  const src = path.join(VAR, 'move-src');
+  const dest = path.join(VAR, 'move-dest');
+  fs.mkdirSync(src, { recursive: true });
+  fs.writeFileSync(path.join(src, 'a.txt'), 'a');
+  const rename = fs.renameSync;
+  let calls = 0;
+  const eperm = () => { calls += 1; throw Object.assign(new Error('EPERM: operation not permitted, rename'), { code: 'EPERM' }); };
+  try {
+    fs.renameSync = (...args) => (calls < 2 ? eperm() : rename(...args));
+    moveDir(src, dest, { wait: 1 });
+    assert.equal(fs.readFileSync(path.join(dest, 'a.txt'), 'utf8'), 'a');
+    assert.equal(calls, 2);
+    // Toujours refusé : copie
+    fs.renameSync = eperm;
+    moveDir(dest, src, { attempts: 3, wait: 1 });
+    assert.equal(fs.readFileSync(path.join(src, 'a.txt'), 'utf8'), 'a');
+    assert.ok(!fs.existsSync(dest));
+  } finally {
+    fs.renameSync = rename;
+  }
 });
