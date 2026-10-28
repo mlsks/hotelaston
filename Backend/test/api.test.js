@@ -272,6 +272,9 @@ test('sélecteur de langue : langues publiées de la page, lien vers la page éq
   ]);
   assert.deepEqual(links('en/aston-club/index.html', '.lang-switch--footer').map(([l, , c]) => [l, c]), [['fr', ''], ['en', 'true']]);
   assert.equal(cheerio.load(read('en/index.html'))('.mobile-menu .lang-switch a[lang="en"]').text(), 'English');
+  const header = cheerio.load(read('en/index.html'))('.site-header .lang-menu');
+  assert.equal(header.find('summary').text().trim(), 'EN');
+  assert.deepEqual(header.find('a[hreflang]').map((i, a) => a.attribs.href).get(), ['/preview/fr/', '/preview/en/']);
 });
 
 test('publication, restauration et contrôles SEO par l’API', async () => {
@@ -279,7 +282,7 @@ test('publication, restauration et contrôles SEO par l’API', async () => {
   assert.equal(first.status, 'success', first.error);
   // Anglais non traduit dans la base de test : une seule langue publiée, donc pas de sélecteur
   const home = cheerio.load(fs.readFileSync(path.join(config.publicDist, 'fr', 'index.html'), 'utf8'));
-  assert.equal(home('.lang-switch, [data-lang-switch]').length, 0);
+  assert.equal(home('.lang-switch, .lang-menu, [data-lang-switch]').length, 0);
   const id = entryId('aston-club.006-p');
   const original = db.prepare("SELECT value FROM cms_entry_values WHERE entry_id = ? AND lang = 'fr'").pluck().get(id);
   await call('editor', 'PUT', `/api/entries/${id}/fr`, { value: `${original} · nouvelle version` });

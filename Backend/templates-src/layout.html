@@ -150,6 +150,13 @@
       </nav>
 
       <div class="site-header__actions">
+        <!-- Sélecteur de langue (ordinateur) : liste écrite au build, retiré s'il n'y a qu'une langue -->
+        <details class="lang-menu" data-lang-switch="">
+          <summary class="lang-menu__toggle" aria-label="Langue" data-cms-attr="aria-label:global.031-div@aria-label">
+            <svg class="icon" aria-hidden="true"><use href="#i-globe"></use></svg><span data-lang-current="">FR</span>
+          </summary>
+          <div class="lang-menu__list" data-lang-list=""></div>
+        </details>
         <a class="header-phone" href="tel:+33497202524"><svg class="icon" aria-hidden="true"><use href="#i-phone"></use></svg><span>04 97 20 25 24</span></a>
         <a class="btn btn--gold btn--book" href="#/reserver" data-book="" data-cms-key="global.011-a">Réserver</a>
         <button class="burger" type="button" data-menu-open="" aria-expanded="false" aria-controls="mobile-menu">
