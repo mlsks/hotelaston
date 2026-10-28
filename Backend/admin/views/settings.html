@@ -23,9 +23,22 @@
       <section class="card grid gap-5 p-5 md:grid-cols-2">
         <h2 class="section-title md:col-span-2">Moteur de réservation (D-Edge)</h2>
         <label class="block md:col-span-2"><span class="label">Adresse du moteur</span><input class="input font-mono text-xs" x-model="form.booking_base" required>
-          <span class="hint block"><code>{lang}</code> est remplacé par la langue de la page. Les dates, voyageurs, chambre et offre sont ajoutés par le site.</span></label>
+          <span class="hint block"><code>{locale}</code> est remplacé par la langue de la page au format <code>fr-FR</code>, <code>{lang}</code> au format <code>fr</code>. Les dates, voyageurs, chambre et offre sont ajoutés par le site.</span></label>
         <label class="block md:col-span-2"><span class="label">Début commun des adresses du moteur</span><input class="input font-mono text-xs" x-model="form.booking_prefix">
           <span class="hint block">Sert à reconnaître, dans les textes, les liens qui mènent au moteur.</span></label>
+        <fieldset class="md:col-span-2">
+          <legend class="label">Noms des paramètres attendus par le moteur</legend>
+          <span class="hint block">Laisser vide pour ne pas envoyer l’information. Dates au format AAAA-MM-JJ.</span>
+          <div class="mt-2 grid gap-3 sm:grid-cols-2 md:grid-cols-4">
+            <template x-for="[key, label] in [['checkin', 'Arrivée'], ['checkout', 'Départ'], ['nights', 'Nombre de nuits'], ['adults', 'Adultes'], ['children', 'Enfants'], ['guests', 'Total des voyageurs'], ['roomType', 'Chambre'], ['offerId', 'Offre']]" :key="key">
+              <label class="block"><span class="hint block" x-text="label"></span><input class="input font-mono text-xs" x-model="form.booking_params[key]"></label>
+            </template>
+          </div>
+        </fieldset>
+        <label class="block"><span class="label">Codes chambre du moteur</span><textarea class="input font-mono text-xs" rows="6" x-model="form.booking_rooms"></textarea>
+          <span class="hint block">Une ligne par chambre : <code>adresse de la chambre sur le site = code D-Edge</code>.</span></label>
+        <label class="block"><span class="label">Codes tarif des offres</span><textarea class="input font-mono text-xs" rows="6" x-model="form.booking_offers"></textarea>
+          <span class="hint block">Une ligne par offre : <code>adresse de l’offre sur le site = code D-Edge</code>.</span></label>
       </section>
 
       <section class="card grid gap-5 p-5 md:grid-cols-2">

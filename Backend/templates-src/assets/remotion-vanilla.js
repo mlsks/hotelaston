@@ -426,27 +426,36 @@
      4. RÉSERVATION — dates, voyageurs, chambre consultée, offre → moteur
      ========================================================================= */
 
-  const BOOKING_ENGINE = {
-    base: SITE_CONFIG?.bookingBase || 'https://www.secure-hotel-booking.com/smart/redirect/2ARI-19552/fr/',
-    /*
-     * Noms des paramètres envoyés au moteur. Les clés sont celles du site ;
-     * les valeurs sont les noms attendus par le moteur de réservation
-     * (D-Edge, 3A Collection) : à faire valider par l'éditeur avant mise en ligne.
-     * Mettre une valeur à null pour ne pas envoyer le paramètre.
-     */
+  /*
+   * Noms des paramètres envoyés au moteur : les clés sont celles du site, les
+   * valeurs les noms attendus par D-Edge. Valeur null : paramètre non envoyé.
+   * Lien profond D-Edge relevé le 28/10/2026 : …/fr-FR/RoomSelection?arrivalDate=
+   * AAAA-MM-JJ&departureDate=AAAA-MM-JJ&selectedAdultCount=N&selectedChildCount=N
+   * (absent sans enfant) ; le visiteur choisit
+   * ensuite sa chambre chez D-Edge.
+   * Les Réglages du back-office (booking_engine.params, .rooms, .offers) priment
+   * sur ces valeurs par défaut, sans toucher au code.
+   */
+  const BOOKING_DEFAULTS = {
     params: {
-      checkin: 'checkin',
-      checkout: 'checkout',
+      checkin: 'arrivalDate',
+      checkout: 'departureDate',
       nights: null,
-      guests: 'guests',
-      adults: 'adults',
-      children: 'children',
-      roomType: 'roomType',
-      offerId: 'offerId',
+      guests: null,
+      adults: 'selectedAdultCount',
+      children: 'selectedChildCount',
+      roomType: null,
+      offerId: null,
     },
-    /* Codes chambre et tarif du moteur, par slug du site (à compléter avec les identifiants réels) */
+    /* Codes chambre et tarif du moteur, par slug du site */
     rooms: { confort: 'confort', privilege: 'privilege', premium: 'premium', exclusive: 'exclusive', deluxe: 'deluxe', suites: 'suites' },
     offers: { 'escapade-gourmande': 'escapade-gourmande', 'nouvel-an': 'nouvel-an', carnaval: 'carnaval' },
+  };
+  const BOOKING_ENGINE = {
+    base: SITE_CONFIG?.bookingBase || 'https://www.secure-hotel-booking.com/d-edge/redirect/2ARI/19552/fr-FR/RoomSelection?currency=EUR',
+    params: { ...BOOKING_DEFAULTS.params, ...SITE_CONFIG?.booking?.params },
+    rooms: { ...BOOKING_DEFAULTS.rooms, ...SITE_CONFIG?.booking?.rooms },
+    offers: { ...BOOKING_DEFAULTS.offers, ...SITE_CONFIG?.booking?.offers },
     target: '_blank',
   };
 
@@ -475,7 +484,7 @@
     set('checkout', checkout);
     if (a && b) set('nights', Math.round((b - a) / 86400000));
     set('adults', adults);
-    set('children', children);
+    set('children', Number(children) || ''); // comme D-Edge : rien sans enfant
     set('guests', Number(adults) + Number(children));
     set('roomType', BOOKING_ENGINE.rooms[roomType] || roomType);
     set('offerId', BOOKING_ENGINE.offers[offerId] || offerId);

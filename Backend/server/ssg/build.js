@@ -69,7 +69,9 @@ export function generateSite({ source, mode, now, previousState = new Map(), onl
   const assets = prepareAssets({ templatesDir: config.templatesDir, mediaDir: config.mediaDir, basePath });
   const { settings, defaultLang } = source;
   const langs = source.activeLangs.map((l) => l.code);
-  const bookingBase = (lang) => (settings.booking_engine?.base || '').replace('{lang}', source.lang(lang).booking_lang);
+  const bookingBase = (lang) => (settings.booking_engine?.base || '')
+    .replace('{lang}', source.lang(lang).booking_lang)
+    .replace('{locale}', source.lang(lang).locale);
 
   /* Cibles : pages + fiches des collections qui ont un gabarit */
   // Textes d'interface du JavaScript : requis sur toutes les pages, comme ceux du layout
@@ -138,6 +140,7 @@ export function generateSite({ source, mode, now, previousState = new Map(), onl
       site: config.siteUrl,
       base: basePath,
       bookingBase: bookingBase(lang),
+      booking: { params: settings.booking_engine?.params || null, rooms: settings.booking_engine?.rooms || null, offers: settings.booking_engine?.offers || null },
       paths: Object.fromEntries(routes.get(lang)),
       sw: mode === 'production' ? `${basePath}/sw.js` : null,
       track: mode === 'production' ? '/api/track' : null, // la prévisualisation n'est jamais comptée

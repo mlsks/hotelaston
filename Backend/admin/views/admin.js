@@ -76,6 +76,17 @@ Alpine.data('usersView', () => ({
 }));
 
 /* ---------- Réglages ---------- */
+/* Valeurs par défaut du site (templates-src/assets/remotion-vanilla.js, BOOKING_DEFAULTS) */
+const BOOKING_PARAMS = {
+  checkin: 'arrivalDate', checkout: 'departureDate', nights: '', adults: 'selectedAdultCount', children: 'selectedChildCount', guests: '', roomType: '', offerId: '',
+};
+const BOOKING_ROOMS = { confort: 'confort', privilege: 'privilege', premium: 'premium', exclusive: 'exclusive', deluxe: 'deluxe', suites: 'suites' };
+const BOOKING_OFFERS = { 'escapade-gourmande': 'escapade-gourmande', 'nouvel-an': 'nouvel-an', carnaval: 'carnaval' };
+const codesToText = (map) => Object.entries(map).map(([k, v]) => `${k} = ${v}`).join('\n');
+const textToCodes = (text) => Object.fromEntries(text.split('\n')
+  .map((line) => line.split('=').map((x) => x.trim()))
+  .filter(([k, v]) => k && v));
+
 Alpine.data('settingsView', () => ({
   settings: null,
   form: null,
@@ -93,6 +104,9 @@ Alpine.data('settingsView', () => ({
     this.form = {
       og_site_name: s.og_site_name || '', og_image_default: s.og_image_default || '', x_default_lang: s.x_default_lang || 'en', cdn_base: s.cdn_base || '',
       booking_base: s.booking_engine?.base || '', booking_prefix: s.booking_engine?.prefix || '',
+      booking_params: Object.fromEntries(Object.entries(BOOKING_PARAMS).map(([k, v]) => [k, s.booking_engine?.params ? s.booking_engine.params[k] || '' : v])),
+      booking_rooms: codesToText(s.booking_engine?.rooms || BOOKING_ROOMS),
+      booking_offers: codesToText(s.booking_engine?.offers || BOOKING_OFFERS),
       reviews_source: s.reviews_meta?.source || 'demo', google_rating: s.reviews_meta?.google?.rating ?? '', google_url: s.reviews_meta?.google?.url || '',
       home_threshold: s.reviews_meta?.homeRatingThreshold ?? 4,
     };
@@ -112,15 +126,21 @@ Alpine.data('settingsView', () => ({
       return;
     }
     const f = this.form;
-    if (!f.booking_base.includes('{lang}')) {
-      this.$store.toast.push('L’adresse du moteur doit contenir {lang} (remplacé par la langue de la page).', 'error');
+    if (!/\{(lang|locale)\}/.test(f.booking_base)) {
+      this.$store.toast.push('L’adresse du moteur doit contenir {locale} (fr-FR) ou {lang} (fr), remplacé par la langue de la page.', 'error');
       return;
     }
     this.saving = true;
     try {
       await patch('/settings', {
         og_site_name: f.og_site_name, og_image_default: f.og_image_default, x_default_lang: f.x_default_lang, cdn_base: f.cdn_base,
-        booking_engine: { ...this.settings.booking_engine, base: f.booking_base, prefix: f.booking_prefix },
+        booking_engine: {
+          ...this.settings.booking_engine, base: f.booking_base, prefix: f.booking_prefix,
+          // Nom vide : paramètre non envoyé au moteur
+          params: Object.fromEntries(Object.entries(f.booking_params).map(([k, v]) => [k, v.trim() || null])),
+          rooms: textToCodes(f.booking_rooms),
+          offers: textToCodes(f.booking_offers),
+        },
         reviews_meta: {
           ...this.settings.reviews_meta, source: f.reviews_source, homeRatingThreshold: Number(f.home_threshold),
           google: { ...this.settings.reviews_meta?.google, rating: f.google_rating === '' ? null : Number(f.google_rating), url: f.google_url },

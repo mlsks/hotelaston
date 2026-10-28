@@ -80,7 +80,7 @@ Documentation : [Backend/README.md](Backend/README.md) (commandes, rôles, écra
 |---|---|---|
 | 1 | Données « à confirmer » | Prix, économies et conditions des offres (séjour, séminaire) ; politique d'annulation et moyens de paiement ; capacités des salons (cabaret, banquet), de Matisse et de L'Aston Club ; itinéraire en tram depuis la gare ; programme Live Music. |
 | 2 | Incohérences du site actuel | Saison du Moon Bar (mai–octobre ou juin–septembre) ; heure de fermeture (00 h 30 ou minuit) ; étage (7e ou 8e) ; numéro de réservation du rooftop (04 92 17 53 09 ou 04 89 22 20 06). |
-| 3 | Moteur de réservation D-Edge | Valider les noms de paramètres et les codes chambre et tarif avec D-Edge. |
+| 3 | Moteur de réservation D-Edge | Lien profond trouvé le 28/10/2026 (dates, adultes et enfants transmis). Reste à confirmer avec D-Edge les langues autres que le français et, en option, un paramètre d'offre. |
 | 4 | Avis clients | Passer aux avis réels (fiche Google), puis basculer le réglage « Avis affichés » sur « Avis réels ». |
 | 5 | Vidéo du Hero | Fournir la prise de vue définitive : elle sera traitée en boucle et la vidéo réactivée. |
 | 6 | Résidence Aston La Scala | Ajouter sur residenceastonlascala.com le lien vers l'hôtel (extrait prêt en bas de `index.html`). 17 appartements annoncés, 16 détaillés. Les clients de la Résidence ont-ils accès à la piscine ? Valider son moteur de réservation (D-Edge `J1P3`, `hotelId=29961`). |
