@@ -38,7 +38,9 @@ Les blocs A à D sont nécessaires pour la mise en ligne. Les blocs E à I peuve
 
 ## C. Moteur de réservation D-Edge
 
-14. Pouvez-vous nous mettre en relation avec votre contact D-Edge, ou lui transmettre ceci : nous devons valider les noms des paramètres d'URL (dates, nombre de voyageurs, chambre, offre) et la liste des **codes chambre** et **codes tarif** utilisés par l'hôtel.
+14. Pouvez-vous nous mettre en relation avec votre contact D-Edge, ou lui transmettre ceci : quand un visiteur choisit ses dates, le nombre de personnes et une chambre sur le site, nous voulons ouvrir le moteur **directement sur ces choix** (« lien profond » ou « deep link »). Aujourd'hui, `https://www.secure-hotel-booking.com/d-edge/redirect/2ARI/19552/fr/RoomSelection` s'ouvre toujours sur les valeurs par défaut (aujourd'hui → demain, 2 personnes). Il nous faut :
+    - le format d'adresse et les noms exacts des paramètres : date d'arrivée, date de départ ou nombre de nuits (et format des dates), adultes, enfants (et âges ?), nombre de chambres, langue ;
+    - le paramètre pour présélectionner une **chambre** et un **tarif / une offre**, avec la liste des **codes chambre** (Confort, Privilège, Premium, Exclusive, Deluxe Terrasse, Suites familiales) et des **codes tarif** utilisés par l'hôtel.
 
 ## D. Avis clients
 
