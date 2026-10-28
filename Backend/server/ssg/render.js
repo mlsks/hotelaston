@@ -45,7 +45,7 @@ function insertAfter(anchor, nodes) {
  * @param site   contexte du build (voir build.js) : source, mode, basePath, gabarits, routes, fichiers…
  * @param lang   code de langue
  * @param target { type: 'page', page } ou { type: 'item', collection, item, route, view, template }
- * @param head   { title, description, canonical, alternates, xDefault, noindex } calculé par le build
+ * @param head   { title, description, canonical, alternates, xDefault, switcher, noindex } calculé par le build
  */
 export function renderPage(site, lang, target, head) {
   const { source } = site;
@@ -113,6 +113,23 @@ export function renderPage(site, lang, target, head) {
       if (el.attribs.action.startsWith(bookingPrefix)) el.attribs.action = site.bookingBase(lang);
     });
   }
+
+  /* Sélecteur de langue : une entrée par langue où la page est publiée, retiré s'il n'y en a qu'une.
+     Les liens vont dans [data-lang-list] s'il existe (menu déroulant de l'en-tête), sinon dans l'élément même. */
+  const switcher = head.switcher || [];
+  $('[data-lang-switch]').each((i, el) => {
+    if (!switcher.some((s) => s.lang !== lang)) return void $(el).remove();
+    const list = $(el).find('[data-lang-list]').first();
+    const box = list.length ? list.removeAttr('data-lang-list') : $(el);
+    box.children('a').remove();
+    for (const s of switcher) {
+      const a = $('<a>').attr({ href: s.href, hreflang: s.lang, lang: s.lang }).text(s.name);
+      if (s.lang === lang) a.attr('aria-current', 'true');
+      box.append('\n        ', a);
+    }
+    box.append('\n      ');
+    $(el).find('[data-lang-current]').removeAttr('data-lang-current').text(lang.toUpperCase());
+  });
 
   /* 5. Données lues par le script du site */
   $('script[data-cms-json]').each((i, el) => {

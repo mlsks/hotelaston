@@ -115,7 +115,7 @@
     if (href.startsWith('tel:')) send('phone_click', { s: sourceOf(el) });
     else if (href.startsWith('mailto:')) send('email_click', { s: sourceOf(el) });
     else if (el.matches('[data-map-load]')) send('map_open');
-    else if (el.closest('.lang-switch') && el.hasAttribute('hreflang')) send('lang_switch', { x: { to: el.getAttribute('hreflang') } });
+    else if (el.closest('.lang-switch, .lang-menu') && el.hasAttribute('hreflang')) send('lang_switch', { x: { to: el.getAttribute('hreflang') } });
     else if (/^https?:/.test(href) && !el.hasAttribute('data-book')) {
       const url = new URL(href, location.href);
       if (bookingOrigin && url.origin === bookingOrigin) send('booking_click', { s: sourceOf(el), via: via() }); // lien direct vers le moteur

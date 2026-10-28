@@ -796,6 +796,14 @@
       }
     });
     matchMedia('(min-width: 1024px)').addEventListener('change', (m) => { if (m.matches) closeMenu({ restoreFocus: false }); });
+    // Sélecteur de langue de l'en-tête : se referme au clic à côté et sur Échap
+    const langMenu = $('.lang-menu');
+    if (langMenu) {
+      document.addEventListener('click', (e) => { if (langMenu.open && !langMenu.contains(e.target)) langMenu.open = false; });
+      langMenu.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && langMenu.open) { langMenu.open = false; $('summary', langMenu).focus(); }
+      });
+    }
   }
 
   /* =========================================================================
