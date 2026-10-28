@@ -554,6 +554,35 @@ picture { display: contents; }
   .hero .eyebrow { margin-bottom: 8px; font-size: 0.7rem; }
 }
 
+/* Module « voile de bandeau » (hero-veil) : rend lisible un texte blanc posé sur une photo ou une vidéo
+   sans assombrir l'image. Un dégradé léger part de la gauche, du côté du texte, et s'efface vers la droite
+   (de bas en haut sur mobile, où le texte occupe toute la largeur), et une ombre douce détache les lettres.
+   Usage : ajouter la classe hero-veil au bandeau (élément positionné qui contient l'image et le texte) ;
+   la photo ou la vidéo du fond se place en z-index: -2, le voile est en -1.
+   Réglages par bandeau (attribut style ou règle CSS) : --veil-opacity (0.5 par défaut), --veil-width
+   (étendue du dégradé, 70 %), --veil-rgb (couleur, bleu nuit de la charte), --veil-shadow (ombre du texte). */
+.hero-veil {
+  --veil-opacity: 0.5;
+  --veil-width: 70%;
+  --veil-rgb: 11, 31, 52;
+  --veil-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+  position: relative;
+  isolation: isolate;
+}
+.hero-veil::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background: linear-gradient(90deg, rgba(var(--veil-rgb), var(--veil-opacity)) 0%, rgba(var(--veil-rgb), calc(var(--veil-opacity) * 0.55)) calc(var(--veil-width) * 0.5), rgba(var(--veil-rgb), 0) var(--veil-width));
+}
+.hero-veil :is(h1, h2, p, .breadcrumb, .eyebrow, .lede, .gold-sub) { text-shadow: var(--veil-shadow); }
+.hero-veil .btn { text-shadow: none; }
+@media (max-width: 699.98px) {
+  .hero-veil::before { background: linear-gradient(0deg, rgba(var(--veil-rgb), var(--veil-opacity)) 0%, rgba(var(--veil-rgb), calc(var(--veil-opacity) * 0.6)) 55%, rgba(var(--veil-rgb), calc(var(--veil-opacity) * 0.25)) 100%); }
+}
+
 .booking {
   display: grid;
   gap: 10px;
@@ -1080,8 +1109,8 @@ picture { display: contents; }
 .page-head { padding-top: calc(var(--header-h) + var(--strip-h) + clamp(28px, 5vw, 56px)); padding-bottom: clamp(20px, 3vw, 36px); }
 .page-head h1 { max-width: 22ch; }
 .page-head--image { position: relative; isolation: isolate; padding: 0; min-height: min(78svh, 680px); display: flex; align-items: flex-end; color: #fff; }
-.page-head--image > img, .page-head--image > picture > img { position: absolute; inset: 0; z-index: -1; width: 100%; height: 100%; object-fit: cover; }
-.page-head--image::before { content: ""; position: absolute; inset: 0; z-index: -1; background: linear-gradient(0deg, rgba(11, 31, 52, 0.82), rgba(11, 31, 52, 0.15) 60%, rgba(11, 31, 52, 0.45)); }
+.page-head--image > img, .page-head--image > picture > img { position: absolute; inset: 0; z-index: -2; width: 100%; height: 100%; object-fit: cover; }
+/* Voile : module hero-veil (section 6), posé sur le bandeau dans le gabarit */
 .page-head__overlay { padding-top: calc(var(--header-h) + var(--strip-h) + 40px); padding-bottom: clamp(28px, 5vw, 56px); }
 .page-head--image h1 { color: #fff; }
 .page-head--image .lede { color: #efe9dd; }
