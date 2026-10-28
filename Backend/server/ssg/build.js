@@ -138,6 +138,7 @@ export function generateSite({ source, mode, now, previousState = new Map(), onl
       site: config.siteUrl,
       base: basePath,
       bookingBase: bookingBase(lang),
+      booking: { params: settings.booking_engine?.params || null, rooms: settings.booking_engine?.rooms || null, offers: settings.booking_engine?.offers || null },
       paths: Object.fromEntries(routes.get(lang)),
       sw: mode === 'production' ? `${basePath}/sw.js` : null,
       track: mode === 'production' ? '/api/track' : null, // la prévisualisation n'est jamais comptée

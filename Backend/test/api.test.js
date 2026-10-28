@@ -263,6 +263,15 @@ test('textes du JavaScript : passés au navigateur dans la langue de la page', a
   assert.equal(Object.keys(cfg('fr/index.html').i18n).length, Object.keys(UI_STRINGS).length);
 });
 
+test('moteur de réservation : noms de paramètres et codes des Réglages passés au navigateur', async () => {
+  const before = (await call('admin', 'GET', '/api/settings')).json().booking_engine;
+  const booking = { params: { checkin: 'arrivalDate', checkout: 'departureDate', nights: null }, rooms: { privilege: 'PRV' }, offers: {} };
+  await call('admin', 'PATCH', '/api/settings', { booking_engine: { ...before, ...booking } });
+  await call('editor', 'POST', '/api/builds/preview', {});
+  assert.deepEqual(JSON.parse(cheerio.load(read('fr/index.html'))('#site-config').text()).booking, booking);
+  await call('admin', 'PATCH', '/api/settings', { booking_engine: before });
+});
+
 test('sélecteur de langue : langues publiées de la page, lien vers la page équivalente', async () => {
   await call('editor', 'POST', '/api/builds/preview', {});
   const links = (rel, sel) => cheerio.load(read(rel))(`${sel} a[hreflang]`).map((i, a) => [[a.attribs.hreflang, a.attribs.href, a.attribs['aria-current'] || '']]).get();

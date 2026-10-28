@@ -426,14 +426,13 @@
      4. RÉSERVATION — dates, voyageurs, chambre consultée, offre → moteur
      ========================================================================= */
 
-  const BOOKING_ENGINE = {
-    base: SITE_CONFIG?.bookingBase || 'https://www.secure-hotel-booking.com/smart/redirect/2ARI-19552/fr/',
-    /*
-     * Noms des paramètres envoyés au moteur. Les clés sont celles du site ;
-     * les valeurs sont les noms attendus par le moteur de réservation
-     * (D-Edge, 3A Collection) : à faire valider par l'éditeur avant mise en ligne.
-     * Mettre une valeur à null pour ne pas envoyer le paramètre.
-     */
+  /*
+   * Noms des paramètres envoyés au moteur : les clés sont celles du site, les
+   * valeurs les noms attendus par D-Edge. Valeur null : paramètre non envoyé.
+   * Les Réglages du back-office (booking_engine.params, .rooms, .offers) priment
+   * sur ces valeurs par défaut, sans toucher au code.
+   */
+  const BOOKING_DEFAULTS = {
     params: {
       checkin: 'checkin',
       checkout: 'checkout',
@@ -444,9 +443,15 @@
       roomType: 'roomType',
       offerId: 'offerId',
     },
-    /* Codes chambre et tarif du moteur, par slug du site (à compléter avec les identifiants réels) */
+    /* Codes chambre et tarif du moteur, par slug du site */
     rooms: { confort: 'confort', privilege: 'privilege', premium: 'premium', exclusive: 'exclusive', deluxe: 'deluxe', suites: 'suites' },
     offers: { 'escapade-gourmande': 'escapade-gourmande', 'nouvel-an': 'nouvel-an', carnaval: 'carnaval' },
+  };
+  const BOOKING_ENGINE = {
+    base: SITE_CONFIG?.bookingBase || 'https://www.secure-hotel-booking.com/smart/redirect/2ARI-19552/fr/',
+    params: { ...BOOKING_DEFAULTS.params, ...SITE_CONFIG?.booking?.params },
+    rooms: { ...BOOKING_DEFAULTS.rooms, ...SITE_CONFIG?.booking?.rooms },
+    offers: { ...BOOKING_DEFAULTS.offers, ...SITE_CONFIG?.booking?.offers },
     target: '_blank',
   };
 
