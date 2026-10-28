@@ -13,6 +13,7 @@ import { renderMenu } from './menus.js';
 import { renderRoomCards } from './room-cards.js';
 import { renderOfferCards } from './offer-cards.js';
 import { applyBlocks, syncCounters } from './page-blocks.js';
+import { renderMeetingRooms } from './meeting-rooms.js';
 import { fillVars, sha } from '../lib/util.js';
 import { globalGraph, breadcrumbFromDom, faqFromDom, webPageNode, jsonForScript } from './jsonld.js';
 
@@ -90,6 +91,8 @@ export function renderPage(site, lang, target, head) {
   renderRoomCards($, { source, lang, now: site.now });
   // Offres de la page Offres et de l'accueil : depuis les fiches « offers »
   renderOfferCards($, { source, lang, now: site.now, cdn: source.settings.cdn_base || '' });
+  // Salles de séminaire : tableau de la page Séminaires et liste du formulaire de devis
+  renderMeetingRooms($, { source, lang, now: site.now, cdn: source.settings.cdn_base || '' });
   injectTexts($, (key) => text(key), mark);
   syncCounters($);
   injectMedia($, source, lang, (key) => missing.add(key));

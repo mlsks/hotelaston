@@ -10,6 +10,7 @@ import { splitTranslatable, mergeTranslation } from '../ssg/collections.js';
 import { scanLinkLists, LINKS } from '../ssg/link-lists.js';
 import { VENUES } from '../ssg/menus.js';
 import { FAMILIES, ACTIONS } from '../ssg/offer-cards.js';
+import { CAPACITIES } from '../ssg/meeting-rooms.js';
 import { ID, ID_LANG, STATUS, DATE, assertLang, translationState, pick, updateRow, bool } from './helpers.js';
 
 /** Champs en texte riche, nettoyés à l'enregistrement. */
@@ -56,6 +57,14 @@ const VALIDATE = {
     if (item.checkin && item.checkout && item.checkout <= item.checkin) throw badRequest('Offre : le départ doit suivre l’arrivée.');
     if (item.media && !db.prepare("SELECT 1 FROM cms_media WHERE id = ? AND kind = 'image' AND deleted_at IS NULL").get(item.media)) throw badRequest('Offre : photo introuvable dans la médiathèque.');
     if (!Array.isArray(item.includes ?? []) || (item.includes ?? []).length > 20) throw badRequest('Offre : 20 lignes au plus dans « Ce qui est compris ».');
+  },
+  meeting_rooms(item, db) {
+    if (!String(item.name ?? '').trim()) throw badRequest('Salle : nom obligatoire.');
+    if (!/^(\d{1,5})?$/.test(String(item.surface ?? '').trim())) throw badRequest('Salle : surface en m², un nombre (vide : à préciser).');
+    for (const f of CAPACITIES) {
+      if (!/^(\d{1,5}|—|-)?$/.test(String(item[f] ?? '').trim())) throw badRequest('Salle : capacités en nombre de personnes, « — » si impossible, vide pour « Sur demande ».');
+    }
+    if (item.media && !db.prepare("SELECT 1 FROM cms_media WHERE id = ? AND kind = 'image' AND deleted_at IS NULL").get(item.media)) throw badRequest('Salle : photo introuvable dans la médiathèque.');
   },
   links(item, db) {
     const list = scanLinkLists().find((l) => l.key === item.list);

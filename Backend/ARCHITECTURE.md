@@ -252,6 +252,19 @@ CREATE TABLE cms_entry_values (
   updated_by  INTEGER,
   PRIMARY KEY (entry_id, lang)
 );
+
+CREATE TABLE cms_page_blocks (                   -- blocs des pages (migration 010, server/ssg/page-blocks.js)
+  id          INTEGER PRIMARY KEY,
+  page_id     INTEGER NOT NULL REFERENCES cms_pages(id) ON DELETE CASCADE,
+  zone        TEXT NOT NULL,                     -- data-cms-blocks du gabarit (suffixé « ~id » dans une copie)
+  block       TEXT NOT NULL,                     -- data-cms-block, ou « <original>~<id> » pour une copie
+  copy_of     TEXT,                              -- copie : bloc d'origine ; ses clés data-cms-* reçoivent le suffixe « ~id »
+  is_active   INTEGER NOT NULL DEFAULT 1,        -- 0 = masqué
+  position    INTEGER NOT NULL DEFAULT 0,
+  created_at  TEXT NOT NULL,
+  updated_at  TEXT NOT NULL,
+  UNIQUE (page_id, zone, block)
+);
 ```
 
 ### 3.4 Collections (chambres, offres, services, FAQ, avis, cartes, articles, appartements, interface…)

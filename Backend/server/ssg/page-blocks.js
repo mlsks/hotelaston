@@ -144,6 +144,7 @@ const excerpt = (s, n = 70) => {
 function blockLabel($, el) {
   const fixed = el.attr('data-cms-block-label');
   if (fixed) return fixed;
+  if (el.is('p')) return excerpt(el.text()) || 'Paragraphe';
   for (const sel of ['h2', 'h3', 'summary', 'dt', 'strong', 'figcaption']) {
     const t = el.find(sel).addBack(sel).first().text();
     if (t.trim()) return excerpt(t);
@@ -317,7 +318,7 @@ export function ensureBlockEntries(db) {
 /** Compteurs animés (data-count-to) dont le chiffre est un texte modifiable : suivent ce texte. */
 export function syncCounters($) {
   $('[data-count-to]').each((i, el) => {
-    const m = /^\s*(\d[\d\s  ]*)(.*)$/s.exec($(el).text());
+    const m = /^\s*(\d+(?:[\s\u202f\u00a0]\d{3})*)(.*)$/s.exec($(el).text());
     if (!m) {
       delete el.attribs['data-count-to'];
       delete el.attribs['data-count-suffix'];

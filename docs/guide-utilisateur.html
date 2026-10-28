@@ -168,12 +168,13 @@ npm start</code></pre></li>
 </ol>
 <h2 id="3-modifier-les-textes">3. Modifier les textes</h2>
 <h3 id="pages">Pages</h3>
-<p><strong>Pages</strong> liste toutes les pages du site avec leur adresse et l'état de chaque langue. Une recherche permet de filtrer. Chaque page a trois onglets :</p>
+<p><strong>Pages</strong> liste toutes les pages du site avec leur adresse et l'état de chaque langue. Une recherche permet de filtrer. Chaque page a trois onglets, et quatre pour les pages qui ont des <a href="#blocs-dune-page">blocs</a> :</p>
 <ul>
 <li><strong>Textes</strong> : tous les textes de la page, rangés par section, et ses photos (bouton <strong>Changer l'image</strong>). Les textes enrichis (gras, liens) ont une petite barre d'outils. Le champ de recherche en haut retrouve un texte précis.</li>
 </ul>
 <p>Dans un texte enrichi (pages, fiches, popup), un texte copié depuis Word ou un e-mail est collé sans sa mise en forme, à refaire avec la barre d'outils. Du <strong>code HTML</strong> collé (qui commence par une balise, comme <code>&lt;p&gt;</code> ou <code>&lt;div&gt;</code>) est au contraire appliqué : titres <code>h2</code> à <code>h4</code>, paragraphes, listes, gras, italique et liens sont gardés, le reste (blocs <code>div</code>, classes, styles, images) est retiré. Le bouton <strong>HTML</strong> de la barre montre et modifie directement le code.</p>
 <ul>
+<li><strong>Blocs</strong> (Restaurant &amp; bar, L'Horloge, Moon Bar, Aston Club, Séminaires et ses trois pages guides) : voir <a href="#blocs-dune-page">Blocs d'une page</a>.</li>
 <li><strong>Référencement (SEO)</strong> : voir <a href="#9-referencement-seo">Référencement</a>.</li>
 <li><strong>Réglages</strong> :
 <ul>
@@ -183,6 +184,16 @@ npm start</code></pre></li>
 <li><strong>Priorité dans le plan du site</strong> (laisser « Automatique » en cas de doute).</li>
 </ul></li>
 </ul>
+<h3 id="blocs-d-une-page">Blocs d'une page</h3>
+<p>L'onglet <strong>Blocs</strong> liste les sections de la page et, en retrait sous chacune, ses lignes : photos du bandeau, paragraphes, infos pratiques (horaires, capacité…), questions fréquentes, lieux de la page Restaurant &amp; bar, chiffres clés et photos des pauses de la page Séminaires, lignes des listes des pages guides. Pour chaque bloc :</p>
+<ul>
+<li><strong>↑ ↓</strong> : le monter ou le descendre (une ligne reste dans sa section) ;</li>
+<li><strong>Masquer</strong> / <strong>Afficher</strong> : un bloc masqué reste dans la liste, barré, et disparaît du site ;</li>
+<li><strong>Dupliquer</strong> : ajoute une copie juste après, marquée « copie », avec les mêmes textes, photos et traductions. Le bouton <strong>Textes</strong> de la copie ouvre l'onglet Textes sur ses seuls textes (leur clé finit par <code>~</code> suivi d'un numéro) : les modifier comme les autres. Dupliquer une section copie aussi ses lignes ;</li>
+<li><strong>Supprimer</strong> (copies seulement) : retire la copie et ses textes. Un bloc d'origine se masque.</li>
+</ul>
+<p>Une copie d'un lieu de la page Restaurant &amp; bar a son propre <strong>Lien</strong> dans l'onglet Textes (<code>#/</code> suivi du nom d'une page, par exemple <code>#/live-music</code>). Les chiffres clés de la page Séminaires se modifient aussi dans l'onglet Textes ; le compteur animé suit le nouveau chiffre. Liens et chiffres valent pour toutes les langues.</p>
+<p>Les changements de blocs apparaissent dans la prévisualisation, puis sur le site à la publication. Le tableau des salles de la page Séminaires ne se règle pas ici mais dans les fiches : voir <a href="#les-salles-de-seminaire">Les salles de séminaire</a>.</p>
 <h3 id="textes-communs">Textes communs</h3>
 <p>L'en-tête, le pied de page, le fil d'Ariane des fiches, le bouton du bas sur mobile, le chat : les textes présents sur toutes les pages. Une modification ici change toutes les pages à la prochaine publication. Les liens des menus et du pied de page ne sont plus ici : voir <a href="#menus-et-liens">Menus et liens</a>.</p>
 <h3 id="menus-et-liens">Menus et liens</h3>
@@ -227,6 +238,7 @@ npm start</code></pre></li>
 <tr><td>Chambres</td><td>Une fiche par catégorie : nom, titre, description, points clés, équipements, variantes, photos, thème des avis affichés, et ce qui s'affiche sur la page Chambres et dans le carrousel de l'accueil. Chaque fiche a sa propre page. Voir <a href="#les-chambres">Les chambres</a>.</td></tr>
 <tr><td>Services</td><td>Une fiche par service : chapeau, texte, informations pratiques, questions fréquentes, photos. Chaque fiche a sa propre page.</td></tr>
 <tr><td>Offres</td><td>Une fiche par offre : famille, photo, prix, ce qui est compris, économie, conditions, bouton, présence sur l'accueil. Voir <a href="#les-offres">Les offres</a>.</td></tr>
+<tr><td>Salles de séminaire</td><td>Une fiche par salle : nom, précisions, photo, surface et capacités. Voir <a href="#les-salles-de-seminaire">Les salles de séminaire</a>.</td></tr>
 <tr><td>Équipements</td><td>Les pictogrammes et libellés utilisés par les fiches chambre.</td></tr>
 <tr><td>Avis</td><td>Auteur, mois du séjour, note, chambre, thèmes, texte et réponse de l'hôtel.</td></tr>
 <tr><td>Réponses du chat</td><td>Les mots déclencheurs (si la question du visiteur en contient un, le chat donne cette réponse) et la réponse.</td></tr>
@@ -268,6 +280,15 @@ npm start</code></pre></li>
 </ul>
 <p>Pour une offre saisonnière, régler <strong>Afficher seulement entre deux dates</strong> (à droite) : elle apparaît et disparaît seule, à la régénération de chaque nuit. <strong>Masquer</strong> ou <strong>Supprimer</strong> la retire aussi de partout.</p>
 <p>Une offre réservable apparaît aussi dans le choix <strong>Le moteur de réservation</strong> des bandeaux et du popup. Son identifiant (sous la case <strong>Visible sur le site</strong>) est envoyé à D-Edge. Si D-Edge lui donne un autre code, l'ajouter dans les <a href="#reglages">Réglages</a> (codes tarif). Pour les trois offres d'origine, le nom affiché dans la fenêtre de réservation se règle dans <strong>Textes de l'interface</strong> (<code>ui.offer.…</code>) ; pour les autres, c'est le titre de la fiche.</p>
+<h3 id="les-salles-de-seminaire">Les salles de séminaire</h3>
+<p>Le tableau « Nos salles et leurs configurations » de la page <strong>Séminaires</strong> et la liste <strong>Offre ou salle</strong> du formulaire de devis sont construits à partir des fiches <strong>Salles de séminaire</strong>, dans l'ordre de la liste (flèches ↑ ↓). Dans une fiche :</p>
+<ul>
+<li><strong>Nom de la salle</strong> et <strong>Précisions</strong> (la ligne sous le nom, par exemple « 1er étage · lumière du jour · sonorisation ») ;</li>
+<li><strong>Photo</strong> (la vignette du tableau) ;</li>
+<li><strong>Surface</strong> en m² (un nombre ; vide : « À préciser ») ;</li>
+<li><strong>Théâtre</strong>, <strong>Classe</strong>, <strong>En U</strong>, <strong>Cabaret</strong>, <strong>Banquet</strong> : un nombre de personnes, <code>—</code> si la configuration n'existe pas dans cette salle, vide pour « Sur demande ». Une valeur vide est repérée « à confirmer » et n'est pas reprise dans les données lues par Google.</li>
+</ul>
+<p>Le lien « Devis pour cette salle » ouvre le formulaire de devis avec la salle déjà choisie. <strong>Ajouter</strong>, <strong>Masquer</strong> ou <strong>Supprimer</strong> une salle met à jour le tableau et le formulaire à la prochaine publication. La liste « Les chiffres clés » de la page guide <em>Salle de séminaire à Nice</em> et les chiffres de la page Séminaires (« 7 espaces modulables ») ne changent pas seuls : les revoir dans <strong>Pages</strong>.</p>
 <p>Les avis livrés avec le site sont des exemples, marqués « Exemple » sur le site. Le passage aux avis réels se fait dans les <a href="#reglages">Réglages</a>.</p>
 <h2 id="5-live-music-concerts-et-artistes">5. Live Music : concerts et artistes</h2>
 <p>Un seul bar est ouvert à la fois : le Moon Bar sur le toit quand le temps le permet, sinon L'Aston Club au 7e étage.</p>

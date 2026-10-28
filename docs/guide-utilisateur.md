@@ -81,17 +81,31 @@ Les écrans qui contiennent du texte (pages, textes, fiches, bandeaux, popup) on
 
 ### Pages
 
-**Pages** liste toutes les pages du site avec leur adresse et l'état de chaque langue. Une recherche permet de filtrer. Chaque page a trois onglets :
+**Pages** liste toutes les pages du site avec leur adresse et l'état de chaque langue. Une recherche permet de filtrer. Chaque page a trois onglets, et quatre pour les pages qui ont des [blocs](#blocs-dune-page) :
 
 - **Textes** : tous les textes de la page, rangés par section, et ses photos (bouton **Changer l'image**). Les textes enrichis (gras, liens) ont une petite barre d'outils. Le champ de recherche en haut retrouve un texte précis.
 
 Dans un texte enrichi (pages, fiches, popup), un texte copié depuis Word ou un e-mail est collé sans sa mise en forme, à refaire avec la barre d'outils. Du **code HTML** collé (qui commence par une balise, comme `<p>` ou `<div>`) est au contraire appliqué : titres `h2` à `h4`, paragraphes, listes, gras, italique et liens sont gardés, le reste (blocs `div`, classes, styles, images) est retiré. Le bouton **HTML** de la barre montre et modifie directement le code.
+- **Blocs** (Restaurant & bar, L'Horloge, Moon Bar, Aston Club, Séminaires et ses trois pages guides) : voir [Blocs d'une page](#blocs-dune-page).
 - **Référencement (SEO)** : voir [Référencement](#9-referencement-seo).
 - **Réglages** :
   - **Page active** : une page désactivée n'est plus générée ni publiée ;
   - **Dans le plan du site (sitemap.xml)** ;
   - **Page parente** et **Ordre** (place dans le menu et le fil d'Ariane) ;
   - **Priorité dans le plan du site** (laisser « Automatique » en cas de doute).
+
+### Blocs d'une page
+
+L'onglet **Blocs** liste les sections de la page et, en retrait sous chacune, ses lignes : photos du bandeau, paragraphes, infos pratiques (horaires, capacité…), questions fréquentes, lieux de la page Restaurant & bar, chiffres clés et photos des pauses de la page Séminaires, lignes des listes des pages guides. Pour chaque bloc :
+
+- **↑ ↓** : le monter ou le descendre (une ligne reste dans sa section) ;
+- **Masquer** / **Afficher** : un bloc masqué reste dans la liste, barré, et disparaît du site ;
+- **Dupliquer** : ajoute une copie juste après, marquée « copie », avec les mêmes textes, photos et traductions. Le bouton **Textes** de la copie ouvre l'onglet Textes sur ses seuls textes (leur clé finit par `~` suivi d'un numéro) : les modifier comme les autres. Dupliquer une section copie aussi ses lignes ;
+- **Supprimer** (copies seulement) : retire la copie et ses textes. Un bloc d'origine se masque.
+
+Une copie d'un lieu de la page Restaurant & bar a son propre **Lien** dans l'onglet Textes (`#/` suivi du nom d'une page, par exemple `#/live-music`). Les chiffres clés de la page Séminaires se modifient aussi dans l'onglet Textes ; le compteur animé suit le nouveau chiffre. Liens et chiffres valent pour toutes les langues.
+
+Les changements de blocs apparaissent dans la prévisualisation, puis sur le site à la publication. Le tableau des salles de la page Séminaires ne se règle pas ici mais dans les fiches : voir [Les salles de séminaire](#les-salles-de-seminaire).
 
 ### Textes communs
 
@@ -145,6 +159,7 @@ Les textes affichés par le JavaScript du site : module de réservation, avis, f
 | Chambres | Une fiche par catégorie : nom, titre, description, points clés, équipements, variantes, photos, thème des avis affichés, et ce qui s'affiche sur la page Chambres et dans le carrousel de l'accueil. Chaque fiche a sa propre page. Voir [Les chambres](#les-chambres). |
 | Services | Une fiche par service : chapeau, texte, informations pratiques, questions fréquentes, photos. Chaque fiche a sa propre page. |
 | Offres | Une fiche par offre : famille, photo, prix, ce qui est compris, économie, conditions, bouton, présence sur l'accueil. Voir [Les offres](#les-offres). |
+| Salles de séminaire | Une fiche par salle : nom, précisions, photo, surface et capacités. Voir [Les salles de séminaire](#les-salles-de-seminaire). |
 | Équipements | Les pictogrammes et libellés utilisés par les fiches chambre. |
 | Avis | Auteur, mois du séjour, note, chambre, thèmes, texte et réponse de l'hôtel. |
 | Réponses du chat | Les mots déclencheurs (si la question du visiteur en contient un, le chat donne cette réponse) et la réponse. |
@@ -190,6 +205,17 @@ La page **Offres** et les aperçus « Offres spéciales » de l'accueil sont con
 Pour une offre saisonnière, régler **Afficher seulement entre deux dates** (à droite) : elle apparaît et disparaît seule, à la régénération de chaque nuit. **Masquer** ou **Supprimer** la retire aussi de partout.
 
 Une offre réservable apparaît aussi dans le choix **Le moteur de réservation** des bandeaux et du popup. Son identifiant (sous la case **Visible sur le site**) est envoyé à D-Edge. Si D-Edge lui donne un autre code, l'ajouter dans les [Réglages](#reglages) (codes tarif). Pour les trois offres d'origine, le nom affiché dans la fenêtre de réservation se règle dans **Textes de l'interface** (`ui.offer.…`) ; pour les autres, c'est le titre de la fiche.
+
+### Les salles de séminaire
+
+Le tableau « Nos salles et leurs configurations » de la page **Séminaires** et la liste **Offre ou salle** du formulaire de devis sont construits à partir des fiches **Salles de séminaire**, dans l'ordre de la liste (flèches ↑ ↓). Dans une fiche :
+
+- **Nom de la salle** et **Précisions** (la ligne sous le nom, par exemple « 1er étage · lumière du jour · sonorisation ») ;
+- **Photo** (la vignette du tableau) ;
+- **Surface** en m² (un nombre ; vide : « À préciser ») ;
+- **Théâtre**, **Classe**, **En U**, **Cabaret**, **Banquet** : un nombre de personnes, `—` si la configuration n'existe pas dans cette salle, vide pour « Sur demande ». Une valeur vide est repérée « à confirmer » et n'est pas reprise dans les données lues par Google.
+
+Le lien « Devis pour cette salle » ouvre le formulaire de devis avec la salle déjà choisie. **Ajouter**, **Masquer** ou **Supprimer** une salle met à jour le tableau et le formulaire à la prochaine publication. La liste « Les chiffres clés » de la page guide *Salle de séminaire à Nice* et les chiffres de la page Séminaires (« 7 espaces modulables ») ne changent pas seuls : les revoir dans **Pages**.
 
 Les avis livrés avec le site sont des exemples, marqués « Exemple » sur le site. Le passage aux avis réels se fait dans les [Réglages](#reglages).
 

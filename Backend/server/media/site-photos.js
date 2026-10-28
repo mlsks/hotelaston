@@ -124,9 +124,9 @@ export async function importSitePhotos(db, { dir = config.templatesDir, convert 
       if (!row.media && row.src) wanted.push({ url: /^https?:/.test(row.src) ? row.src : cdn + row.src, alt: altOf(it, i), folder: `/site/${it.collection === 'rooms' ? 'chambres' : 'services'}` });
     });
   }
-  // Offres : une photo par fiche (media), encore à l'adresse du CDN (src) sur une base neuve
-  const offers = db.prepare("SELECT id, data FROM cms_items WHERE collection = 'offers'").all().map((it) => ({ ...it, data: JSON.parse(it.data) }));
-  for (const it of offers) if (!it.data.media && it.data.src) wanted.push({ url: /^https?:/.test(it.data.src) ? it.data.src : cdn + it.data.src, alt: '', folder: '/site/offres' });
+  // Offres et salles de séminaire : une photo par fiche (media), encore à l'adresse du CDN (src) sur une base neuve
+  const offers = db.prepare("SELECT id, collection, data FROM cms_items WHERE collection IN ('offers', 'meeting_rooms')").all().map((it) => ({ ...it, data: JSON.parse(it.data) }));
+  for (const it of offers) if (!it.data.media && it.data.src) wanted.push({ url: /^https?:/.test(it.data.src) ? it.data.src : cdn + it.data.src, alt: '', folder: it.collection === 'offers' ? '/site/offres' : '/site/seminaires' });
   const settingUrls = new Set();
   const collect = (v) => {
     if (typeof v === 'string' && CDN_RE.test(v)) settingUrls.add(v);

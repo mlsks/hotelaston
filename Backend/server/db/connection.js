@@ -13,6 +13,7 @@ import { ensureMenus } from '../ssg/menus.js';
 import { ensureRoomCards } from '../ssg/room-cards.js';
 import { ensureOffers } from '../ssg/offer-cards.js';
 import { ensureBlockEntries } from '../ssg/page-blocks.js';
+import { ensureMeetingRooms } from '../ssg/meeting-rooms.js';
 
 const MIGRATIONS_DIR = path.join(path.dirname(fileURLToPath(import.meta.url)), 'migrations');
 
@@ -44,6 +45,7 @@ export function getDb() {
     ensureMenus(shared);
     ensureRoomCards(shared);
     ensureOffers(shared);
+    ensureMeetingRooms(shared);
     ensureBlockEntries(shared);
   }
   return shared;

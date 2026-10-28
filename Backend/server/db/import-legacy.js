@@ -21,6 +21,7 @@ import { ensureMenus } from '../ssg/menus.js';
 import { ensureRoomCards } from '../ssg/room-cards.js';
 import { ensureOffers } from '../ssg/offer-cards.js';
 import { ensureBlockEntries } from '../ssg/page-blocks.js';
+import { ensureMeetingRooms } from '../ssg/meeting-rooms.js';
 
 const LANG = 'fr';
 const CDN_BASE = 'https://d1i8cf9j7dueks.cloudfront.net/cache/img/';
@@ -360,6 +361,7 @@ export function importLegacy(db, { force = false, forceAssets = false, writeTemp
       links: [], // repris des gabarits par ensureLinkLists
       menus: [], // repris par ensureMenus
       offers: [], // reprises par ensureOffers
+      meeting_rooms: [], // reprises par ensureMeetingRooms
     };
     for (const [key, def] of Object.entries(COLLECTIONS)) {
       insCollection.run(key, def.label, def.itemTemplate || null, def.parentPage ? pageIds.get(def.parentPage) : null, JSON.stringify({ translatable: def.translatable }));
@@ -377,6 +379,7 @@ export function importLegacy(db, { force = false, forceAssets = false, writeTemp
   ensureMenus(db); // cartes du restaurant et des bars
   ensureRoomCards(db); // chambres de la page Chambres et de l'accueil
   ensureOffers(db); // offres de la page Offres et de l'accueil
+  ensureMeetingRooms(db); // salles de séminaire (tableau des capacités, formulaire de devis)
   ensureBlockEntries(db); // textes ajoutés avec les blocs des pages (liens, chiffres)
   const counts = { pages: pages.length, entries: ex.entries.length, items: db.prepare('SELECT COUNT(*) FROM cms_items').pluck().get(), copied: copied.length };
   log(`Import : ${counts.pages} pages, ${counts.entries} textes, ${counts.items} éléments de collection, ${counts.copied} fichiers copiés.`);
