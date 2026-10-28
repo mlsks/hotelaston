@@ -120,6 +120,9 @@ test('cartes de L’Horloge : créées aux adresses de l’ancien site, liens «
   assert.equal($('.menu-page__cta .link-arrow').length, 2);
   // Traduction anglaise jointe : en brouillon, visible en prévisualisation
   assert.equal(db.prepare("SELECT ii.status FROM cms_item_i18n ii JOIN cms_items i ON i.id = ii.item_id WHERE i.collection = 'menus' AND i.key = 'carte-dessert' AND ii.lang = 'en'").pluck().get(), 'draft');
+  assert.deepEqual(db.prepare(`SELECT json_extract(ii.data, '$.label') AS label, ii.status FROM cms_item_i18n ii JOIN cms_items i ON i.id = ii.item_id
+    WHERE i.collection = 'links' AND json_extract(i.data, '$.page') = 'carte-vin-restaurant-horloge' AND ii.lang = 'en'`).get(), { label: 'Wine list', status: 'draft' });
+  assert.equal(db.prepare(`SELECT pi.status FROM cms_page_i18n pi JOIN cms_pages p ON p.id = pi.page_id WHERE p.key = 'carte-dessert' AND pi.lang = 'en'`).pluck().get(), 'draft');
   const en = page('en/menu-restaurant-horloge');
   assert.equal(en('h1').text(), "L'Horloge menu");
   assert.equal(en('.menu-section h2').first().text(), 'Starters');
