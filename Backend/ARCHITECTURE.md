@@ -720,7 +720,7 @@ Règle de publication par langue : une page n'est publiée dans une langue que s
 
 ### 6.1 Bandeaux
 - **Zones** : `top-bar` (remplace l'actuel bandeau Live Music), `hero-sub` (sous le module de réservation), `section-intercalaire` (entre deux sections, emplacements marqués dans les gabarits), `footer-cta` (avant le pied de page).
-- **Sélection au build** : bandeaux actifs, placés sur cette page (ou sur toutes), traduits dans la langue, et dont la période recoupe la fenêtre « maintenant → prochain cron + 1 h ». Tri par priorité, dans la limite de `max_banners` de la zone.
+- **Sélection au build** : bandeaux actifs, placés sur cette page (ou sur toutes), dans la langue (sinon en anglais s'il est prêt, sinon en français : un bandeau n'est jamais masqué faute de traduction), et dont la période recoupe la fenêtre « maintenant → prochain cron + 1 h ». Tri par priorité, dans la limite de `max_banners` de la zone.
 - **Double sécurité** : chaque bandeau porte `data-start` et `data-end` (ISO avec fuseau). Un petit script en ligne dans le `<head>`, exécuté avant l'affichage, masque un bandeau expiré ou pas encore commencé. Un bandeau qui démarre à 14 h apparaît donc à 14 h sans attendre le cron, et un bandeau expiré disparaît sans clignoter.
 - Un bandeau refermé reste fermé pour ce visiteur (`localStorage`, clé avec l'id et la version du bandeau).
 
