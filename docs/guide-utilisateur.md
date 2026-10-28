@@ -117,7 +117,7 @@ Pour un document à télécharger (plaquette, menu de groupe en PDF) : l'envoyer
 
 ### Cartes du restaurant
 
-**Cartes du restaurant** liste les cartes, rangées par lieu (L'Horloge, Moon Bar, L'Aston Club). Chaque carte est une page du site, avec ses rubriques et ses plats.
+**Cartes du restaurant** liste les cartes, rangées par lieu (L'Horloge, Moon Bar, L'Aston Club). Chaque carte est une page du site, avec ses rubriques et ses plats. Les trois cartes de L'Horloge (la carte, les vins, les desserts) ont été reprises de l'ancien site, aux mêmes adresses (`/fr/menu-restaurant-horloge/`, `/fr/carte-vin-restaurant-horloge/`, `/fr/carte-dessert/`) : Google et les liens existants y mènent toujours. Elles ne sont qu'en français pour l'instant.
 
 - **Créer une carte** : en bas de l'écran, donner son nom, son lieu et l'adresse de sa page (proposée à partir du nom), puis **Créer la carte**. Elle est ajoutée aux liens « Les cartes » de la page du lieu (modifiables dans [Menus et liens](#menus-et-liens)).
 - **Modifier une carte** : cliquer dessus.

@@ -1,0 +1,604 @@
+{
+  "_source": "Cartes de L'Horloge relevées le 28/10/2026 sur hotel-aston.com (pages /fr/menu-restaurant-horloge, /fr/carte-vin-restaurant-horloge, /fr/carte-dessert). Créées une seule fois au démarrage (server/ssg/menus.js, createSeedMenus), puis modifiables dans l'écran Cartes du restaurant.",
+  "menus": [
+    {
+      "key": "menu-restaurant-horloge",
+      "venue": "restaurant-horloge",
+      "from": "https://www.hotel-aston.com/fr/menu-restaurant-horloge",
+      "page": {
+        "title": "La carte du restaurant L'Horloge à Nice | Hôtel Aston La Scala",
+        "description": "La carte de L'Horloge, brasserie de l'hôtel Aston La Scala à Nice, par le Chef Stéphane Furlan : entrées, salades, pâtes, poissons, viandes, desserts et menus."
+      },
+      "title": "La carte de L'Horloge",
+      "subtitle": "Notre Chef Stéphane Furlan vous propose",
+      "backLabel": "Retour au restaurant L'Horloge",
+      "note": "Toutes nos viandes sont d'origine française. Prix TTC, service inclus. Les chèques ne sont pas acceptés.",
+      "sections": [
+        {
+          "title": "Nos entrées",
+          "dishes": [
+            {
+              "name": "L'Aubergine",
+              "price": "11 €",
+              "desc": "Blinis d'aubergine au thym et ail rose, quenelle de ricotta à l'huile d'olive, légumes frais (choux-fleurs, radis rose, petits pois, haricots verts et tomates cerises)"
+            },
+            {
+              "name": "Le Rouget",
+              "price": "17 €",
+              "desc": "Filets de rouget et tapenade d'olive, éventail d'avocat et œufs de poisson volant"
+            },
+            {
+              "name": "L'Asperge",
+              "price": "12 €",
+              "desc": "Vichyssoise d'asperge à l'anis vert, œuf de caille au plat et graines de sésame"
+            },
+            {
+              "name": "L'Espadon",
+              "price": "15 €",
+              "desc": "Tataki d'espadon et marinade coriandre, sucrine à la vinaigrette gingembre"
+            },
+            {
+              "name": "Le Foie Gras",
+              "price": "19 €",
+              "desc": "Tranche de foie gras de canard au miel d'acacia et vinaigre balsamique, toasts juste grillés"
+            }
+          ]
+        },
+        {
+          "title": "Nos salades",
+          "dishes": [
+            {
+              "name": "L'Italienne",
+              "price": "14 €",
+              "desc": "La salade des Pouilles (tomate ancienne, burrata et pesto)"
+            },
+            {
+              "name": "La Niçoise",
+              "price": "17 €",
+              "desc": "L'authentique niçoise (thon snacké mi-cuit, anchois, cœur de laitue, tomate, concombre, œuf dur, radis, céleri branche, poivron, olives, cébettes)"
+            },
+            {
+              "name": "La Caesar",
+              "price": "16 €",
+              "desc": "L'incontournable Caesar (salade romaine, aiguillettes de poulet, croûtons aux céréales, copeaux de parmesan)"
+            },
+            {
+              "name": "Le Pamplemousse",
+              "price": "15 €",
+              "desc": "Cocktail fraîcheur (pamplemousse rose, avocat, crevettes et champignons frais)"
+            }
+          ]
+        },
+        {
+          "title": "Nos pâtes & plats",
+          "dishes": [
+            {
+              "name": "Fruits de Mer",
+              "price": "15 €",
+              "desc": "Linguines aux fruits de mer (moules, encornets, crevettes)"
+            },
+            {
+              "name": "Langoustine",
+              "price": "17 €",
+              "desc": "Ravioles de Royan, sauce langoustine"
+            },
+            {
+              "name": "Puttanesca",
+              "price": "16 €",
+              "desc": "Spaghettis à la tomate, câpres, anchois et olives"
+            },
+            {
+              "name": "Plat végétarien",
+              "price": "21 €",
+              "desc": "Burger végétarien, galette de feta, tomate, concombre et sauce cocktail"
+            },
+            {
+              "name": "Plat vegan",
+              "price": "15 €",
+              "desc": "Tagliatelles de légumes, sauce soja, miso, coriandre et tomates cerises"
+            }
+          ]
+        },
+        {
+          "title": "Nos poissons",
+          "dishes": [
+            {
+              "name": "Le Poulpe",
+              "price": "28 €",
+              "desc": "Émincé de poulpe fondant, duo de pois chiche au chorizo et shiso frais"
+            },
+            {
+              "name": "La Gambas",
+              "price": "29 €",
+              "desc": "Gambas marinées au lait de coco, riz thaï parfumé à la coriandre"
+            },
+            {
+              "name": "Le Saint-Pierre",
+              "price": "23 €",
+              "desc": "Filet de saint-pierre rôti, sauce maltaise, purée de brocolis"
+            },
+            {
+              "name": "La Daurade",
+              "price": "24 €",
+              "desc": "Filet de daurade poêlé sauce citronnelle, quinoa au citron confit"
+            }
+          ]
+        },
+        {
+          "title": "Nos viandes",
+          "dishes": [
+            {
+              "name": "Le Bœuf",
+              "price": "29 €",
+              "desc": "Filet de bœuf Simmental poêlé, sauce ciboulette, pommes croquettes"
+            },
+            {
+              "name": "L'Agneau",
+              "price": "23 €",
+              "desc": "Parmentier de pomme Charlotte et agneau de Sisteron confit, salade verte"
+            },
+            {
+              "name": "La Volaille",
+              "price": "19 €",
+              "desc": "Suprême de volaille aux fines herbes, coulis de poivron rouge, flan de courgette"
+            },
+            {
+              "name": "Le Veau",
+              "price": "26 €",
+              "desc": "Médaillon de veau fumé au romarin et son jus, lit de pois gourmands"
+            }
+          ]
+        },
+        {
+          "title": "Fromage",
+          "dishes": [
+            {
+              "name": "Les affinés du terroir",
+              "price": "15 €",
+              "desc": "Beaufort, chèvre cendré, brie de Meaux, roquefort"
+            }
+          ]
+        },
+        {
+          "title": "Nos desserts",
+          "dishes": [
+            {
+              "name": "La Fraise",
+              "price": "11 €"
+            },
+            {
+              "name": "La Traditionnelle Melba",
+              "price": "11 €"
+            },
+            {
+              "name": "La Tarte à la Rhubarbe",
+              "price": "7 €",
+              "desc": "La tarte à la rhubarbe comme autrefois"
+            },
+            {
+              "name": "L'Authentique Tiramisu",
+              "price": "7 €",
+              "desc": "L'authentique tiramisu au café de Trévise"
+            },
+            {
+              "name": "Mousse au Chocolat",
+              "price": "7 €",
+              "desc": "Mousse au chocolat noir grand cru Valrhona"
+            },
+            {
+              "name": "Jeunes Fruits Rouges",
+              "price": "9 €",
+              "desc": "Jeunes fruits rouges du jardin en coupe"
+            },
+            {
+              "name": "Café Gourmand",
+              "price": "11 €"
+            },
+            {
+              "name": "Glaces / Sorbets",
+              "price": "3 € / 6 € / 9 €",
+              "desc": "1, 2 ou 3 boules"
+            }
+          ]
+        },
+        {
+          "title": "Nos menus",
+          "dishes": [
+            {
+              "name": "Menu enfant (4-12 ans)",
+              "price": "13 €",
+              "desc": "Un plat au choix (chicken tenders et frites, kid's croque et salade, ou spaghettis à la bolognaise) et une glace 2 boules"
+            },
+            {
+              "name": "Formule Express",
+              "price": "19 €",
+              "desc": "Plat du jour et café. Le midi uniquement, hors week-end et jours fériés"
+            },
+            {
+              "name": "Menu Affaire",
+              "price": "25 €",
+              "desc": "Entrée et plat, ou plat et dessert. Entrée : L'Aubergine ou L'Espadon. Plat : La Volaille ou La Daurade. Dessert : L'Authentique Tiramisu ou pâtisserie du jour. Le midi uniquement, hors week-end et jours fériés"
+            },
+            {
+              "name": "Menu Horloge",
+              "price": "27 € / 34 €",
+              "desc": "2 plats ou 3 plats. Entrées : Le Foie Gras ou Le Rouget. Plats : L'Agneau ou Le Saint-Pierre. Desserts : Mousse au chocolat noir ou La Tarte à la Rhubarbe"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "key": "carte-vin-restaurant-horloge",
+      "venue": "restaurant-horloge",
+      "from": "https://www.hotel-aston.com/fr/carte-vin-restaurant-horloge",
+      "page": {
+        "title": "La carte des vins du restaurant L'Horloge à Nice | Hôtel Aston La Scala",
+        "description": "Les vins de L'Horloge, restaurant de l'hôtel Aston La Scala à Nice : Provence, Bordelais, Vallée du Rhône, Bourgogne, Loire, Alsace, champagnes et vins au verre."
+      },
+      "title": "Les vins de L'Horloge",
+      "subtitle": "Prix TTC par contenance",
+      "backLabel": "Retour au restaurant L'Horloge",
+      "note": "Les chèques ne sont pas acceptés. L'abus d'alcool est dangereux pour la santé, à consommer avec modération.",
+      "sections": [
+        {
+          "title": "Provence · rouges (50 cl / 75 cl)",
+          "dishes": [
+            {
+              "name": "Château Margillière",
+              "price": "28 € / 35 €",
+              "desc": "AOC Coteaux Varois en Provence · Agriculture biologique (AB)"
+            },
+            {
+              "name": "Bandol « La Frégate »",
+              "price": "– / 41 €",
+              "desc": "AOC Bandol"
+            },
+            {
+              "name": "Minuty Prestige",
+              "price": "30 € / 46 €",
+              "desc": "AOC Côtes de Provence"
+            },
+            {
+              "name": "Château Rasque, Pièce Noble",
+              "price": "– / 55 €",
+              "desc": "Côtes de Provence"
+            },
+            {
+              "name": "Roubine « Cuvée R »",
+              "price": "– / 29 €",
+              "desc": "AOC Côtes de Provence"
+            }
+          ]
+        },
+        {
+          "title": "Provence · rosés (50 cl / 75 cl)",
+          "dishes": [
+            {
+              "name": "Château Margillière",
+              "price": "28 € / 35 €",
+              "desc": "AOC Coteaux Varois en Provence · Agriculture biologique (AB)"
+            },
+            {
+              "name": "Bandol « La Frégate »",
+              "price": "– / 41 €",
+              "desc": "AOC Bandol"
+            },
+            {
+              "name": "Minuty Prestige",
+              "price": "30 € / 46 €",
+              "desc": "AOC Côtes de Provence"
+            },
+            {
+              "name": "Château Rasque, Alexandra",
+              "price": "– / 55 €",
+              "desc": "Côtes de Provence"
+            },
+            {
+              "name": "Domaine Toasc",
+              "price": "– / 46 €",
+              "desc": "AOP Bellet"
+            },
+            {
+              "name": "Roubine « Cuvée R »",
+              "price": "– / 29 €",
+              "desc": "AOC Côtes de Provence"
+            }
+          ]
+        },
+        {
+          "title": "Provence · blancs (50 cl / 75 cl)",
+          "dishes": [
+            {
+              "name": "Château Margillière",
+              "price": "28 € / 35 €",
+              "desc": "AOC Coteaux Varois en Provence · Agriculture biologique (AB)"
+            },
+            {
+              "name": "Bandol « La Frégate »",
+              "price": "– / 41 €",
+              "desc": "AOC Bandol"
+            },
+            {
+              "name": "Minuty Prestige",
+              "price": "30 € / 46 €",
+              "desc": "AOC Côtes de Provence"
+            },
+            {
+              "name": "Château Rasque, Alexandra",
+              "price": "– / 58 €",
+              "desc": "Côtes de Provence"
+            },
+            {
+              "name": "Roubine « Cuvée R »",
+              "price": "– / 29 €",
+              "desc": "AOC Côtes de Provence"
+            }
+          ]
+        },
+        {
+          "title": "Bordelais · rouges (37,5 cl / 75 cl)",
+          "dishes": [
+            {
+              "name": "Château Plégat La Gravière",
+              "price": "21 € / 31 €",
+              "desc": "Graves rouge"
+            },
+            {
+              "name": "Château Prieuré de Blaignan",
+              "price": "– / 36 €",
+              "desc": "Médoc"
+            },
+            {
+              "name": "Château Tour Calon Montagne",
+              "price": "– / 55 €",
+              "desc": "Saint-Émilion"
+            }
+          ]
+        },
+        {
+          "title": "Bordelais · blancs (75 cl)",
+          "dishes": [
+            {
+              "name": "La Clotte Glazalis",
+              "price": "48 €",
+              "desc": "Sauternes"
+            }
+          ]
+        },
+        {
+          "title": "Vallée du Rhône · rouges (75 cl)",
+          "dishes": [
+            {
+              "name": "Domaine Mas des Flauzieres « Lauries »",
+              "price": "31 €",
+              "desc": "Côtes du Rhône Villages"
+            },
+            {
+              "name": "Saint-Joseph « Guyot »",
+              "price": "56 €",
+              "desc": "AOC Saint-Joseph"
+            },
+            {
+              "name": "Le Millepertuis « Guyot »",
+              "price": "49 €",
+              "desc": "Crozes-Hermitage"
+            },
+            {
+              "name": "Domaine Bonserine",
+              "price": "129 €",
+              "desc": "Côte-Rôtie"
+            }
+          ]
+        },
+        {
+          "title": "Bourgogne · rouges (75 cl)",
+          "dishes": [
+            {
+              "name": "Pierreclos Bichot",
+              "price": "39 €",
+              "desc": "Mâcon"
+            },
+            {
+              "name": "Passetoutgrain Domaine Albert Bichot",
+              "price": "55 €",
+              "desc": "Bourgogne"
+            },
+            {
+              "name": "Louis Jadot",
+              "price": "95 €",
+              "desc": "Pommard"
+            }
+          ]
+        },
+        {
+          "title": "Bourgogne · blancs (75 cl)",
+          "dishes": [
+            {
+              "name": "La Sereine",
+              "price": "56 €",
+              "desc": "Chablis"
+            },
+            {
+              "name": "Domaine Albert Bichot",
+              "price": "65 €",
+              "desc": "Pouilly-Fuissé"
+            },
+            {
+              "name": "Domaine du Bouchet",
+              "price": "35 €",
+              "desc": "Mâcon-Lugny"
+            }
+          ]
+        },
+        {
+          "title": "Loire · rouges (75 cl)",
+          "dishes": [
+            {
+              "name": "Les Valengenets",
+              "price": "35 €",
+              "desc": "Saumur-Champigny"
+            },
+            {
+              "name": "Cuvée Élégance",
+              "price": "45 €",
+              "desc": "Sancerre"
+            }
+          ]
+        },
+        {
+          "title": "Loire · blancs (75 cl)",
+          "dishes": [
+            {
+              "name": "Domaine Gaudron",
+              "price": "31 €",
+              "desc": "Vouvray"
+            },
+            {
+              "name": "Cuvée Élégance",
+              "price": "45 €",
+              "desc": "Sancerre"
+            },
+            {
+              "name": "Domaine Petit",
+              "price": "58 €",
+              "desc": "Pouilly-Fumé"
+            }
+          ]
+        },
+        {
+          "title": "Alsace (75 cl)",
+          "dishes": [
+            {
+              "name": "Gewurztraminer, Lucien Albrecht",
+              "price": "44 €",
+              "desc": "Blanc"
+            },
+            {
+              "name": "Riesling, Lucien Albrecht",
+              "price": "35 €",
+              "desc": "Blanc"
+            },
+            {
+              "name": "Pinot Noir Réserve, Lucien Albrecht",
+              "price": "36 €",
+              "desc": "Rouge"
+            }
+          ]
+        },
+        {
+          "title": "Champagne (10 cl / 75 cl)",
+          "dishes": [
+            {
+              "name": "Champagne 3A Hôtels",
+              "price": "12 € / 70 €"
+            },
+            {
+              "name": "Taittinger Brut Cuvée Prestige",
+              "price": "– / 98 €"
+            },
+            {
+              "name": "Taittinger Rosé Cuvée Prestige",
+              "price": "– / 125 €"
+            },
+            {
+              "name": "Taittinger Comtes de Champagne",
+              "price": "– / 225 €",
+              "desc": "Blanc de blancs"
+            }
+          ]
+        },
+        {
+          "title": "Vin au verre (12 cl)",
+          "dishes": [
+            {
+              "name": "Sélection du sommelier",
+              "price": "6 €",
+              "desc": "Blanc, rosé ou rouge"
+            },
+            {
+              "name": "Domaine Mas des Flauzieres « Lauries »",
+              "price": "6 €",
+              "desc": "Côtes du Rhône Villages"
+            },
+            {
+              "name": "Pierreclos Bichot",
+              "price": "8 €",
+              "desc": "Mâcon"
+            },
+            {
+              "name": "La Clotte Glazalis",
+              "price": "9 €",
+              "desc": "Sauternes"
+            },
+            {
+              "name": "Domaine du Bouchet",
+              "price": "7 €",
+              "desc": "Mâcon-Lugny"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "key": "carte-dessert",
+      "venue": "restaurant-horloge",
+      "from": "https://www.hotel-aston.com/fr/carte-dessert",
+      "page": {
+        "title": "La carte des desserts du restaurant L'Horloge à Nice | Hôtel Aston La Scala",
+        "description": "Les desserts de L'Horloge, restaurant de l'hôtel Aston La Scala à Nice, par le Pâtissier Tom Vaulot : fraise, pêche Melba, tarte à la rhubarbe, tiramisu, mousse au chocolat Valrhona, glaces."
+      },
+      "title": "Notre carte des desserts",
+      "subtitle": "Notre Pâtissier Tom Vaulot vous propose",
+      "backLabel": "Retour au restaurant L'Horloge",
+      "note": "Prix TTC. Les chèques ne sont pas acceptés.",
+      "sections": [
+        {
+          "title": "Desserts",
+          "dishes": [
+            {
+              "name": "La Fraise",
+              "price": "11 €",
+              "desc": "La fraise déclinée en trois façons : nature, glacée, sablée"
+            },
+            {
+              "name": "La Traditionnelle Melba entièrement pêche",
+              "price": "11 €",
+              "desc": "Pêche entière, coulis de pêche, amandes effilées, glace vanille"
+            },
+            {
+              "name": "La Tarte à la Rhubarbe comme autrefois",
+              "price": "7 €",
+              "desc": "Tarte à la rhubarbe de notre enfance"
+            },
+            {
+              "name": "L'Authentique Tiramisu au café de Trévise",
+              "price": "7 €",
+              "desc": "L'authentique recette du tiramisu"
+            },
+            {
+              "name": "Mousse au chocolat noir grand cru Valrhona",
+              "price": "7 €",
+              "desc": "Onctueuse mousse au chocolat noir Valrhona"
+            },
+            {
+              "name": "Jeunes fruits rouges du jardin en coupe",
+              "price": "9 €",
+              "desc": "Fraises, framboises, mûres, myrtilles, groseilles"
+            },
+            {
+              "name": "Café gourmand",
+              "price": "11 €",
+              "desc": "Demi abricot poché, mini tiramisu, mini mousse chocolat noir, mignardise fraise, mini croustillant caramel"
+            },
+            {
+              "name": "Glaces / Sorbets",
+              "price": "3 € / 6 € / 9 €",
+              "desc": "1, 2 ou 3 boules"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -106,3 +106,24 @@ test('nouvelle carte : page, lien dans « Les cartes », plats, traduction parti
   assert.equal(fs.existsSync(path.join(config.previewDir, 'fr/carte-des-vins-horloge/index.html')), false);
   assert.equal(page('fr/restaurant-horloge')('.link-list a[href$="carte-des-vins-horloge/"]').length, 0);
 });
+
+test('cartes de L’Horloge : créées aux adresses de l’ancien site, liens « Les cartes » redirigés', async () => {
+  const keys = ['menu-restaurant-horloge', 'carte-vin-restaurant-horloge', 'carte-dessert'];
+  for (const key of keys) assert.equal(db.prepare('SELECT template FROM cms_pages WHERE key = ?').pluck().get(key), 'pages/carte.html');
+  assert.equal(db.prepare("SELECT COUNT(*) FROM cms_items WHERE collection = 'links' AND json_extract(data, '$.url') LIKE '%hotel-aston.com%'").pluck().get(), 0);
+  assert.equal(ensureMenus(db), 0);
+  await preview();
+  const $ = page('fr/menu-restaurant-horloge');
+  assert.equal($('h1').text(), "La carte de L'Horloge");
+  assert.ok($('.menu-section').length >= 5);
+  assert.equal($('.back-link').text(), "Retour au restaurant L'Horloge");
+  assert.equal($('.menu-page__cta .link-arrow').length, 2);
+  const horloge = page('fr/restaurant-horloge');
+  const hrefs = horloge('.link-list a').map((i, a) => a.attribs.href).get();
+  for (const key of keys) assert.ok(hrefs.includes(`/preview/fr/${key}/`), key);
+  // Masquée, une carte n'est pas recréée au démarrage suivant
+  assert.equal((await call('PATCH', '/api/menus/carte-dessert', { is_active: false })).statusCode, 200);
+  assert.equal(ensureMenus(db), 0);
+  assert.equal(db.prepare("SELECT is_active FROM cms_pages WHERE key = 'carte-dessert'").pluck().get(), 0);
+  assert.equal((await call('PATCH', '/api/menus/carte-dessert', { is_active: true })).statusCode, 200);
+});

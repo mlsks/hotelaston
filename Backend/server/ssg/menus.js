@@ -10,6 +10,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { mergeTranslation } from './collections.js';
+import { LINKS } from './link-lists.js';
 import { nowIso, sha } from '../lib/util.js';
 
 export const MENUS = 'menus';
@@ -23,7 +24,11 @@ export const VENUES = {
   'aston-club': { label: "L'Aston Club", table: 'reserver-astonclub', links: null },
 };
 
-const SEED_FILE = path.join(path.dirname(fileURLToPath(import.meta.url)), '..', 'db', 'seeds', 'cartes.json');
+const SEEDS_DIR = path.join(path.dirname(fileURLToPath(import.meta.url)), '..', 'db', 'seeds');
+const SEED_FILE = path.join(SEEDS_DIR, 'cartes.json');
+/** Cartes à créer une fois (relevées sur l'ancien site), et réglage qui retient celles déjà créées. */
+const NEW_FILE = path.join(SEEDS_DIR, 'cartes-horloge.json');
+const CREATED = 'menus_seeded';
 
 /**
  * Cartes écrites en dur dans un gabarit (carte du Moon Bar, carte des tapas) : reprises dans la
@@ -97,7 +102,63 @@ export function ensureMenus(db) {
       converted += 1;
     }
   })();
-  return converted;
+  return converted + createSeedMenus(db, def);
+}
+
+/**
+ * Cartes relevées sur l'ancien site (cartes de L'Horloge) : page à la même adresse, contenu en
+ * langue par défaut, et le lien « Les cartes » qui menait à l'ancienne page mène désormais à la nouvelle.
+ * Chaque carte n'est créée qu'une fois : masquée ou modifiée ensuite, elle n'est pas recréée.
+ */
+function createSeedMenus(db, def) {
+  if (!fs.existsSync(NEW_FILE)) return 0;
+  const { menus } = JSON.parse(fs.readFileSync(NEW_FILE, 'utf8'));
+  const row = db.prepare('SELECT value FROM cms_settings WHERE key = ?').pluck().get(CREATED);
+  const done = new Set(row ? JSON.parse(row) : []);
+  const pageOf = db.prepare('SELECT * FROM cms_pages WHERE key = ?');
+  const now = nowIso();
+  let created = 0;
+
+  db.transaction(() => {
+    for (const m of menus) {
+      const venue = pageOf.get(m.venue);
+      if (done.has(m.key) || !venue) continue; // site pas encore importé : créée après l'import
+      done.add(m.key);
+      const addr = `/${def}/${m.key}/`;
+      if (pageOf.get(m.key) || db.prepare('SELECT 1 FROM cms_page_i18n WHERE lang = ? AND path = ?').get(def, addr)) continue;
+      const pageId = db.prepare(`INSERT INTO cms_pages (key, template, parent_id, in_sitemap, is_active, position, created_at, updated_at)
+        VALUES (?, ?, ?, 1, 1, (SELECT COALESCE(MAX(position), 0) + 1 FROM cms_pages), ?, ?)`).run(m.key, MENU_TEMPLATE, venue.id, now, now).lastInsertRowid;
+      db.prepare(`INSERT INTO cms_page_i18n (page_id, lang, slug, path, title, meta_description, status, source_hash, updated_at)
+        VALUES (?, ?, ?, ?, ?, ?, 'ready', ?, ?)`).run(pageId, def, m.key, addr, m.page.title, m.page.description, sha(`${m.page.title}\n${m.page.description}`), now);
+      const base = { page: m.key, venue: m.venue, sections: m.sections.map((s) => ({ dishes: s.dishes.map((d) => ({ price: d.price || '' })) })) };
+      const itemId = db.prepare(`INSERT INTO cms_items (collection, key, data, is_active, position, created_at, updated_at)
+        VALUES (?, ?, ?, 1, (SELECT COALESCE(MAX(position), -1) + 1 FROM cms_items WHERE collection = ?), ?, ?)`).run(MENUS, m.key, JSON.stringify(base), MENUS, now, now).lastInsertRowid;
+      const tr = JSON.stringify({
+        title: m.title, subtitle: m.subtitle || '', backLabel: m.backLabel || '', note: m.note || '',
+        sections: m.sections.map((s) => ({ title: s.title, dishes: s.dishes.map((d) => ({ name: d.name, ...(d.desc ? { desc: d.desc } : {}) })) })),
+      });
+      db.prepare(`INSERT INTO cms_item_i18n (item_id, lang, slug, data, status, source_hash, updated_at) VALUES (?, ?, NULL, ?, 'ready', ?, ?)`)
+        .run(itemId, def, tr, sha(tr), now);
+      // Liens vers l'ancienne page → la nouvelle ; sinon, lien ajouté à « Les cartes » du lieu
+      const old = db.prepare(`SELECT id, data FROM cms_items WHERE collection = ? AND json_extract(data, '$.kind') = 'url' AND json_extract(data, '$.url') = ?`).all(LINKS, m.from);
+      for (const link of old) {
+        const { url, ...data } = JSON.parse(link.data);
+        db.prepare('UPDATE cms_items SET data = ?, updated_at = ? WHERE id = ?').run(JSON.stringify({ ...data, kind: 'page', page: m.key }), now, link.id);
+      }
+      const list = VENUES[m.venue]?.links;
+      if (!old.length && list && db.prepare(`SELECT 1 FROM cms_items WHERE collection = ? AND json_extract(data, '$.list') = ?`).get(LINKS, list)) {
+        const linkId = db.prepare(`INSERT INTO cms_items (collection, key, data, is_active, position, created_at, updated_at)
+          VALUES (?, ?, ?, 1, (SELECT COALESCE(MAX(position), -1) + 1 FROM cms_items WHERE collection = ? AND json_extract(data, '$.list') = ?), ?, ?)`)
+          .run(LINKS, `${list}-${m.key}`, JSON.stringify({ list, parent: null, kind: 'page', page: m.key }), LINKS, list, now, now).lastInsertRowid;
+        const lt = JSON.stringify({ label: m.title });
+        db.prepare(`INSERT INTO cms_item_i18n (item_id, lang, slug, data, status, source_hash, updated_at) VALUES (?, ?, NULL, ?, 'ready', ?, ?)`).run(linkId, def, lt, sha(lt), now);
+      }
+      created += 1;
+    }
+    db.prepare(`INSERT INTO cms_settings (key, value, updated_at) VALUES (?, ?, ?)
+      ON CONFLICT (key) DO UPDATE SET value = excluded.value, updated_at = excluded.updated_at`).run(CREATED, JSON.stringify([...done].sort()), now);
+  })();
+  return created;
 }
 
 /** Retire les textes vides d'une traduction : le texte de la langue par défaut reste affiché. */

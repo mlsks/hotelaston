@@ -102,9 +102,9 @@ test('le site est construit depuis la base : menus, sous-menu, cartes de L’Hor
 
   const horloge = page('restaurant-horloge')('.link-list a').map((i, a) => [[cheerio.load(a).text(), a.attribs.href]]).get();
   assert.deepEqual(horloge, [
-    ['Découvrir le menu', 'https://www.hotel-aston.com/fr/menu-restaurant-horloge'],
-    ['Carte des vins', 'https://www.hotel-aston.com/fr/carte-vin-restaurant-horloge'],
-    ['Carte des desserts', 'https://www.hotel-aston.com/fr/carte-dessert'],
+    ['Découvrir le menu', '/preview/fr/menu-restaurant-horloge/'],
+    ['Carte des vins', '/preview/fr/carte-vin-restaurant-horloge/'],
+    ['Carte des desserts', '/preview/fr/carte-dessert/'],
   ]);
 });
 
