@@ -14,7 +14,8 @@ export const COLLECTIONS = {
     itemTemplate: 'items/chambre.html',
     parentPage: 'chambres',
     translatable: ['name', 'shortName', 'category', 'h1', 'title', 'metaDescription', 'facts[]', 'description',
-      'amenitiesFull[]', 'gallery[].kind', 'gallery[].alt', 'variants[].title', 'variants[].text'],
+      'amenitiesFull[]', 'gallery[].kind', 'gallery[].alt', 'variants[].title', 'variants[].text',
+      'indexName', 'summary', 'cardTitle', 'cardFacts[].text'], // + page Chambres et carte de l'accueil (room-cards.js)
   },
   services: {
     label: 'Services',
@@ -22,7 +23,7 @@ export const COLLECTIONS = {
     parentPage: 'services',
     translatable: ['name', 'h1', 'title', 'metaDescription', 'lede', 'photos[].alt', 'body', 'facts[]', 'faq[]'],
   },
-  amenities: { label: 'Équipements (pictogrammes)', translatable: ['label'] },
+  amenities: { label: 'Équipements (pictogrammes)', translatable: ['label', 'shortLabel'] }, // shortLabel : carte de l'accueil
   reviews: { label: 'Avis clients', translatable: [] }, // les avis restent dans leur langue d'origine
   chat: { label: 'Réponses du chat', translatable: ['keywords[]', 'answer'] },
   // Programme Live Music : date (AAAA-MM-JJ), heure (HH:MM), lieu (selon-meteo | moon-bar | aston-club),

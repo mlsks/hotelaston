@@ -267,7 +267,7 @@ Alpine.store('icons', {
       const sprite = document.createElementNS(ns, 'svg');
       sprite.setAttribute('aria-hidden', 'true');
       sprite.style.display = 'none';
-      sprite.innerHTML = this.list.map((i) => `<symbol id="${i.id}" viewBox="${i.viewBox}">${i.body}</symbol>`).join('');
+      sprite.innerHTML = this.list.map((i) => `<symbol id="${i.id}" viewBox="${i.viewBox}" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">${i.body}</symbol>`).join('');
       document.body.prepend(sprite);
     } catch {
       this.loaded = false;

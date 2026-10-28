@@ -187,7 +187,18 @@ export default function collectionRoutes(app, { db, defaultLang }) {
       const used = db.prepare("SELECT COUNT(*) FROM cms_items WHERE collection = 'gigs' AND json_extract(data, '$.artist') = ?").pluck().get(item.key);
       if (used) throw badRequest(`Cet artiste est programmé dans ${used} concert${used > 1 ? 's' : ''} : changez ou supprimez ${used > 1 ? 'ces concerts' : 'ce concert'} d’abord.`);
     }
+    const c = getCollection(item.collection);
     db.transaction(() => {
+      // Fiche avec sa page (chambre, service) : ses adresses redirigent vers la page parente, pour Google et les favoris
+      if (c.item_template && c.parent_page) {
+        const def = defaultLang();
+        const slugs = Object.fromEntries(db.prepare('SELECT lang, slug FROM cms_item_i18n WHERE item_id = ?').all(item.id).map((r) => [r.lang, r.slug]));
+        const redirect = db.prepare(`INSERT INTO cms_redirects (from_path, to_page, to_lang, to_url, code) VALUES (?, ?, ?, NULL, 301)
+          ON CONFLICT (from_path) DO UPDATE SET to_page = excluded.to_page, to_lang = excluded.to_lang, to_url = NULL, code = 301`);
+        for (const p of db.prepare('SELECT lang, path FROM cms_page_i18n WHERE page_id = ?').all(c.parent_page)) {
+          redirect.run(`${p.path}${slugs[p.lang] || slugs[def] || item.key}/`, c.parent_page, p.lang);
+        }
+      }
       // Un lien de menu emporte ses sous-liens
       if (item.collection === LINKS) db.prepare(`DELETE FROM cms_items WHERE collection = '${LINKS}' AND json_extract(data, '$.parent') = ?`).run(item.key);
       db.prepare('DELETE FROM cms_items WHERE id = ?').run(item.id);

@@ -100,7 +100,7 @@ Alpine.data('itemView', () => ({
   isNew: false,
   form: {},
   meta: { key: '', is_active: true, start_at: '', end_at: '', slug: '' },
-  options: { amenities: [] },
+  options: { amenities: [], rooms: [] },
   ctx: {},
   cdnBase: '',
   thumbs: {},
@@ -116,11 +116,12 @@ Alpine.data('itemView', () => ({
       this.collection = all.find((c) => c.key === key);
       if (!this.collection) throw new Error('Collection inconnue.');
       if (!this.isNew) this.item = await get(`/items/${id}`);
-      if (this.spec.fields?.some((f) => f.source === 'amenities')) {
-        const list = await get('/collections/amenities/items');
-        this.options.amenities = list.map((a) => [a.key, a.merged.label || a.key]);
+      // Choix tirés d'une autre collection : pictogrammes d'une chambre, chambre d'un avis
+      for (const source of new Set((this.spec.fields || []).filter((f) => ['tags', 'select'].includes(f.type) && f.source).map((f) => f.source))) {
+        const list = await get(`/collections/${source}/items`);
+        this.options[source] = list.map((a) => [a.key, a.merged.label || a.merged.name || a.key]);
       }
-      if (this.spec.fields?.some((f) => f.type === 'icon')) this.$store.icons.load();
+      if (this.spec.fields?.some((f) => f.type === 'icon' || f.fields?.some((s) => s.type === 'icon'))) this.$store.icons.load();
       await this.loadRefs();
       if (!this.$store.session.isScoped) {
         try { this.cdnBase = (await get('/settings')).cdn_base || ''; } catch { /* réglages non lisibles */ }
@@ -187,8 +188,16 @@ Alpine.data('itemView', () => ({
     return Array.isArray(v) ? v.join(' · ') : v ?? '';
   },
   selectValue(f) { return String(this.form[f.key] ?? ''); },
+  /** Choix d'une liste ; tirés d'une autre collection (source), la valeur enregistrée reste proposée si sa fiche a disparu. */
+  selectOptions(f) {
+    if (!f.source) return f.options;
+    const list = [...(f.options || []), ...(this.options[f.source] || [])];
+    const v = this.form[f.key];
+    if (v != null && v !== '' && !list.some((o) => String(o[0] ?? '') === String(v))) list.push([v, `${v} (fiche supprimée)`]);
+    return list;
+  },
   setSelect(f, value) {
-    const opt = f.options.find((o) => String(o[0] ?? '') === value);
+    const opt = this.selectOptions(f).find((o) => String(o[0] ?? '') === value);
     this.form[f.key] = opt ? opt[0] : value;
     this.$store.ui.dirty = true;
   },

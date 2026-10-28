@@ -47,7 +47,7 @@
               </template>
               <template x-if="f.type === 'select'">
                 <select class="input" :value="selectValue(f)" @change="setSelect(f, $event.target.value)" :disabled="readOnly(f)">
-                  <template x-for="o in f.options" :key="String(o[0])">
+                  <template x-for="o in selectOptions(f)" :key="String(o[0])">
                     <option :value="String(o[0] ?? '')" :selected="String(o[0] ?? '') === selectValue(f)" x-text="o[1]"></option>
                   </template>
                 </select>
@@ -157,6 +157,14 @@
                             </template>
                             <template x-if="s.type === 'text'">
                               <input class="input" x-model="row[s.key]" :disabled="readOnly(f, s)" :placeholder="sourceOf(f, i, s)">
+                            </template>
+                            <template x-if="s.type === 'icon'">
+                              <div class="flex items-center gap-2">
+                                <svg class="size-8 shrink-0 rounded-lg bg-white p-1.5 text-azure-800 ring-1 ring-slate-200"><use :href="'#' + row[s.key]"></use></svg>
+                                <select class="input" x-model="row[s.key]" :disabled="readOnly(f, s)">
+                                  <template x-for="ic in $store.icons.list" :key="ic.id"><option :value="ic.id" x-text="ic.id.replace(/^i-/, '')" :selected="ic.id === row[s.key]"></option></template>
+                                </select>
+                              </div>
                             </template>
                           </label>
                         </template>
