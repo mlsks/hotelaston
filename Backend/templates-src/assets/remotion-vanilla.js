@@ -461,7 +461,7 @@
 
   const ROOM_LABELS = { confort: 'Chambre Confort', privilege: 'Chambre Privilège', premium: 'Chambre Premium', exclusive: 'Chambre Exclusive', deluxe: 'Chambre Deluxe Terrasse', suites: 'Suite familiale' };
   const OFFER_LABELS = { 'escapade-gourmande': 'Escapade gourmande', 'nouvel-an': 'Nouvel An à Nice', carnaval: 'Magie du Carnaval' };
-  const roomLabel = (k) => ui(`ui.room.${k}`, ROOM_LABELS[k] || k);
+  const roomLabel = (k) => ui(`ui.room.${k}`, SITE_CONFIG?.roomNames?.[k] || ROOM_LABELS[k] || k);
   const offerLabel = (k) => ui(`ui.offer.${k}`, OFFER_LABELS[k] || k);
 
   const STAY_KEY = 'aston.stay';

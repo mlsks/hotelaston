@@ -221,7 +221,7 @@ npm start</code></pre></li>
 <div class="table"><table>
 <thead><tr><th>Liste</th><th>Contenu</th></tr></thead>
 <tbody>
-<tr><td>Chambres</td><td>Une fiche par catégorie : nom, titre, description, points clés, équipements, variantes, photos, thème des avis affichés. Chaque fiche a sa propre page.</td></tr>
+<tr><td>Chambres</td><td>Une fiche par catégorie : nom, titre, description, points clés, équipements, variantes, photos, thème des avis affichés, et ce qui s'affiche sur la page Chambres et dans le carrousel de l'accueil. Chaque fiche a sa propre page. Voir <a href="#les-chambres">Les chambres</a>.</td></tr>
 <tr><td>Services</td><td>Une fiche par service : chapeau, texte, informations pratiques, questions fréquentes, photos. Chaque fiche a sa propre page.</td></tr>
 <tr><td>Équipements</td><td>Les pictogrammes et libellés utilisés par les fiches chambre.</td></tr>
 <tr><td>Avis</td><td>Auteur, mois du séjour, note, chambre, thèmes, texte et réponse de l'hôtel.</td></tr>
@@ -235,6 +235,17 @@ npm start</code></pre></li>
 <li><strong>Enregistrer</strong> ; les modifications sont visibles dans la prévisualisation, puis sur le site après publication.</li>
 <li><strong>Supprimer</strong> : définitif pour la fiche (mais une version publiée plus ancienne peut encore être restaurée).</li>
 </ul>
+<h3 id="les-chambres">Les chambres</h3>
+<p>La page <strong>Chambres</strong> et le carrousel de l'accueil sont construits à partir des fiches <strong>Chambres</strong>, dans l'ordre de la liste (flèches ↑ ↓ pour le changer). En bas de chaque fiche :</p>
+<ul>
+<li><strong>Photo de couverture</strong> : la photo de la chambre sur la page Chambres et dans le carrousel. Vide : la première photo de la fiche ;</li>
+<li><strong>Nom sur la page Chambres</strong> (en gras) et <strong>Résumé sur la page Chambres</strong> (la suite de la ligne, par exemple « 23 m² + terrasse · 6e étage ») ;</li>
+<li><strong>Afficher dans le carrousel de l'accueil</strong> : décocher pour garder la chambre sur la page Chambres seulement ;</li>
+<li><strong>Titre sur l'accueil</strong> et <strong>Infos de la carte d'accueil</strong> : trois infos courtes avec leur pictogramme (surface, lits, vue). La carte montre aussi les six premiers <strong>Pictogrammes affichés</strong> de la fiche, avec leur <strong>libellé court</strong> (réglé dans la liste <strong>Équipements</strong>, par exemple « Clim »).</li>
+</ul>
+<p>Pour <strong>ajouter une chambre</strong>, cliquer sur <strong>Ajouter une chambre</strong> et remplir la fiche : elle apparaît sur la page Chambres, dans le carrousel, dans « Les autres chambres » des fiches, dans la liste <strong>Chambre concernée</strong> des avis et, sous son nom, dans la fenêtre de réservation. Si D-Edge lui donne un code, l'ajouter dans les <a href="#reglages">Réglages</a> (codes chambre).</p>
+<p><strong>Masquer</strong> une chambre (case <strong>Visible sur le site</strong>) la retire partout ; les liens qui la citent dans les textes mènent alors à la page Chambres. <strong>Supprimer</strong> une chambre fait de même et ajoute une redirection de son ancienne adresse vers la page Chambres, visible dans <a href="#redirections">Redirections</a> : les favoris et Google suivent. Si une chambre est recréée plus tard à la même adresse, la redirection cesse de s’appliquer.</p>
+<p>Les textes des pages qui comptent les chambres (« Six catégories, de 18 à 50 m² » sur la page Chambres, par exemple) ne changent pas seuls : les revoir dans <strong>Pages</strong> après un ajout ou une suppression.</p>
 <p>Les avis livrés avec le site sont des exemples, marqués « Exemple » sur le site. Le passage aux avis réels se fait dans les <a href="#reglages">Réglages</a>.</p>
 <h2 id="5-live-music-concerts-et-artistes">5. Live Music : concerts et artistes</h2>
 <p>Un seul bar est ouvert à la fois : le Moon Bar sur le toit quand le temps le permet, sinon L'Aston Club au 7e étage.</p>

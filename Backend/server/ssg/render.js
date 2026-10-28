@@ -10,6 +10,7 @@ import { renderZones, renderPopup } from './banners.js';
 import { renderGigList } from './gigs.js';
 import { renderLinkLists } from './link-lists.js';
 import { renderMenu } from './menus.js';
+import { renderRoomCards } from './room-cards.js';
 import { fillVars, sha } from '../lib/util.js';
 import { globalGraph, breadcrumbFromDom, faqFromDom, webPageNode, jsonForScript } from './jsonld.js';
 
@@ -54,6 +55,7 @@ export function renderPage(site, lang, target, head) {
   const missing = new Set();
   const unknown = new Set();
   const brokenLinks = new Set();
+  const parentLinks = new Set();
   const $ = cheerio.load(site.layoutHtml);
   const main = $('main[data-cms-page]').first().removeAttr('data-cms-page');
 
@@ -80,6 +82,8 @@ export function renderPage(site, lang, target, head) {
   if (target.type === 'page') renderMenu($, view, { source, lang, page: target.page, text: (key) => text(key).value, warn: site.warn });
   // Menus et listes de liens repris dans la base : reconstruits avant l'injection des textes
   for (const skipped of renderLinkLists($, { source, lang, now: site.now })) site.warn(`${lang.toUpperCase()} : lien ignoré, cible introuvable (${skipped})`);
+  // Chambres de la page Chambres et de l'accueil : depuis les fiches, avant les textes (boutons communs)
+  renderRoomCards($, { source, lang, now: site.now });
   injectTexts($, (key) => text(key), mark);
   injectMedia($, source, lang, (key) => missing.add(key));
 
@@ -98,7 +102,13 @@ export function renderPage(site, lang, target, head) {
     if (!m) return null;
     const key = m[1].replace(/\/+$/, '');
     if (key === 'reserver') return site.bookingBase(lang);
-    const path = routes.get(key);
+    let path = routes.get(key);
+    // Fiche masquée ou supprimée (chambre, service) : le lien mène à sa page parente
+    const parent = key.includes('/') ? routes.get(key.slice(0, key.lastIndexOf('/'))) : null;
+    if (!path && parent) {
+      parentLinks.add(href);
+      path = parent;
+    }
     if (!path) {
       brokenLinks.add(href);
       return null;
@@ -242,6 +252,7 @@ export function renderPage(site, lang, target, head) {
     missing,
     unknown,
     brokenLinks,
+    parentLinks,
     images,
     contentHash: sha(`${title}\n${description}\n${main.html()}`, 32),
   };

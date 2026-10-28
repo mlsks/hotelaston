@@ -251,6 +251,11 @@ test('popup : fenêtre, configuration et script sur les pages ciblées seulement
   assert.ok($('dialog.cms-popup img[srcset]').length, 'image de la médiathèque');
   assert.equal($('dialog.cms-popup a[data-book]').attr('data-offer-id'), 'escapade-gourmande');
   assert.equal(cheerio.load(read('fr/faq/index.html'))('dialog.cms-popup').length, 0);
+  // Sans bouton : l'admin envoie « none »
+  const none = await call('editor', 'PUT', `/api/popups/${p.id}/i18n/fr`, { title: 'L’été sur le toit', body: '<p>Piscine.</p>', cta_label: null, cta_kind: 'none', cta_target: null });
+  assert.equal(none.statusCode, 200, none.body);
+  await call('editor', 'POST', '/api/builds/preview', {});
+  assert.equal(cheerio.load(read('fr/index.html'))('dialog.cms-popup a').length, 0);
   await call('editor', 'DELETE', `/api/popups/${p.id}`);
 });
 

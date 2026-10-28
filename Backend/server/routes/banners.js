@@ -271,11 +271,12 @@ export default function bannerRoutes(app, { db, defaultLang }) {
     assertCan(req, 'translate', { lang, defaultLang: def });
     const p = getPopup(req.params.id);
     const body = req.body.body ? sanitizeRich(req.body.body) : null;
+    const ctaKind = req.body.cta_kind && req.body.cta_kind !== 'none' ? req.body.cta_kind : null; // sans bouton : NULL en base
     const defRow = lang === def ? { title: req.body.title, body, cta_label: req.body.cta_label } : db.prepare('SELECT * FROM cms_popup_i18n WHERE popup_id = ? AND lang = ?').get(p.id, def);
     db.prepare(`INSERT INTO cms_popup_i18n (popup_id, lang, title, body, cta_label, cta_kind, cta_target, status, source_hash) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
       ON CONFLICT (popup_id, lang) DO UPDATE SET title = excluded.title, body = excluded.body, cta_label = excluded.cta_label, cta_kind = excluded.cta_kind,
         cta_target = excluded.cta_target, status = excluded.status, source_hash = excluded.source_hash`)
-      .run(p.id, lang, req.body.title, body, req.body.cta_label ?? null, req.body.cta_kind ?? null, checkCta(db, req.body.cta_kind, req.body.cta_target),
+      .run(p.id, lang, req.body.title, body, req.body.cta_label ?? null, ctaKind, ctaKind ? checkCta(db, ctaKind, req.body.cta_target) : null,
         lang === def ? 'ready' : (req.body.status || 'ready'), defRow ? sha(`${defRow.title}\n${defRow.body ?? ''}\n${defRow.cta_label ?? ''}`) : null);
     db.prepare('UPDATE cms_popups SET updated_at = ? WHERE id = ?').run(nowIso(), p.id);
     audit(db, req, 'update', 'popup_i18n', p.id, { lang, after: req.body });

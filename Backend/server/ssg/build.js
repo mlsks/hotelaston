@@ -148,6 +148,7 @@ export function generateSite({ source, mode, now, previousState = new Map(), onl
       base: basePath,
       bookingBase: bookingBase(lang),
       booking: { params: settings.booking_engine?.params || null, rooms: settings.booking_engine?.rooms || null, offers: settings.booking_engine?.offers || null },
+      roomNames: Object.fromEntries(source.collectionItems('rooms', lang, now).map((r) => [r.key, r.data.name || r.key])), // fenêtre de réservation, chambres ajoutées
       paths: Object.fromEntries(routes.get(lang)),
       sw: mode === 'production' ? `${basePath}/sw.js` : null,
       track: mode === 'production' ? '/api/track' : null, // la prévisualisation n'est jamais comptée
@@ -217,6 +218,7 @@ export function generateSite({ source, mode, now, previousState = new Map(), onl
         if (mode === 'production') errors.push(msg);
         else warnings.add(msg);
       }
+      if (out.parentLinks.size) warnings.add(`${urlPath} : lien(s) vers une fiche masquée ou supprimée, menant à sa page parente : ${[...out.parentLinks].join(', ')}`);
       if (lang === defaultLang && out.missing.size) errors.push(`${urlPath} : ${out.missing.size} texte(s) vide(s) dans la langue par défaut`);
       if (!missing) {
         // Contrôles SEO sur les seules pages réellement rédigées dans cette langue
@@ -270,10 +272,12 @@ export function generateSite({ source, mode, now, previousState = new Map(), onl
     if (lang === defaultLang) files.set('llms.txt', txt);
   }
   files.set('site.webmanifest', webManifest({ templatesDir: config.templatesDir, assets, basePath, defaultLang }));
+  // Une adresse redevenue une page (fiche recréée sous le même nom) n'est plus redirigée
+  const live = new Set(pages.map((p) => p.path));
   const redirects = source.redirects.map((r) => {
     const page = r.to_page ? source.pagesById.get(r.to_page) : null;
     const to = page ? source.pageMeta(page, r.to_lang || defaultLang)?.path : r.to_url;
-    return to ? { from: r.from_path, to, code: r.code } : null;
+    return to && !live.has(r.from_path) ? { from: r.from_path, to, code: r.code } : null;
   }).filter(Boolean);
   files.set('_meta/redirects.caddy', redirectsCaddy({ redirects, defaultLang }));
   files.set('_meta/pages.json', JSON.stringify(pages.map(({ lang, path: p, contentHash, lastmod }) => ({ lang, path: p, contentHash, lastmod })), null, 2));

@@ -10,6 +10,7 @@ import { ensureUiStrings } from '../ssg/ui-strings.js';
 import { migrateGigArtists } from './gig-artists.js';
 import { ensureLinkLists } from '../ssg/link-lists.js';
 import { ensureMenus } from '../ssg/menus.js';
+import { ensureRoomCards } from '../ssg/room-cards.js';
 
 const MIGRATIONS_DIR = path.join(path.dirname(fileURLToPath(import.meta.url)), 'migrations');
 
@@ -39,6 +40,7 @@ export function getDb() {
     ensureUiStrings(shared);
     ensureLinkLists(shared);
     ensureMenus(shared);
+    ensureRoomCards(shared);
   }
   return shared;
 }

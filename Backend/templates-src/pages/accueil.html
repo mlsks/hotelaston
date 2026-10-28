@@ -107,7 +107,7 @@
       </section>
       <div data-cms-zone="section-intercalaire"></div>
 
-      <!-- Chambres & suites (avant l'histoire) -->
+      <!-- Chambres & suites (avant l'histoire) : une carte par fiche chambre, voir server/ssg/room-cards.js -->
       <section class="section" aria-labelledby="home-rooms-title">
         <div class="container">
           <header class="section-head">
@@ -117,144 +117,22 @@
           </header>
 
           <div class="slider" data-slider="">
-            <div class="slider__track" data-slider-track="" tabindex="0" role="region" aria-label="Chambres et suites, faites glisser pour en voir plus" data-cms-attr="aria-label:accueil.044-div@aria-label">
+            <div class="slider__track" data-slider-track="" tabindex="0" role="region" aria-label="Chambres et suites, faites glisser pour en voir plus" data-cms-attr="aria-label:accueil.044-div@aria-label" data-cms-rooms="home">
 
               <article class="room-card" data-anim="rise">
                 <header class="room-card__head">
-                  <h3 class="room-card__title"><a href="#/chambres/confort" data-cms-key="accueil.045-a">Chambre Confort</a></h3>
-                  <p class="room-card__facts"><span data-cms-text="accueil.046-span"><svg class="icon" aria-hidden="true"><use href="#i-area"></use></svg>19 m²</span><span data-cms-text="accueil.047-span"><svg class="icon" aria-hidden="true"><use href="#i-bed"></use></svg>1 grand lit ou 2 lits</span><span data-cms-text="accueil.048-span"><svg class="icon" aria-hidden="true"><use href="#i-window"></use></svg>Côté cour ou colline</span></p>
+                  <h3 class="room-card__title"><a href="#/chambres" data-f="title"></a></h3>
+                  <p class="room-card__facts" data-f="facts"></p>
                 </header>
-                <a class="room-card__media" href="#/chambres/confort" tabindex="-1" aria-hidden="true">
-                  <img data-cms-media="accueil.photo-1" data-cms-sizes="(min-width: 1100px) 50vw, 100vw" data-cms-decorative data-cms-portrait="off" alt="" loading="lazy">
+                <a class="room-card__media" href="#/chambres" tabindex="-1" aria-hidden="true" data-f="media">
+                  <img data-f="cover" data-cms-sizes="(min-width: 1100px) 50vw, 100vw" alt="" loading="lazy">
                 </a>
-                <ul class="amenities amenities--compact" aria-label="Équipements principaux" data-cms-attr="aria-label:accueil.049-ul@aria-label">
-                  <li data-cms-text="accueil.050-li"><svg class="icon" aria-hidden="true"><use href="#i-clim"></use></svg>Clim</li>
-                  <li data-cms-text="accueil.051-li"><svg class="icon" aria-hidden="true"><use href="#i-wifi"></use></svg>Wi-Fi</li>
-                  <li data-cms-text="accueil.052-li"><svg class="icon" aria-hidden="true"><use href="#i-minibar"></use></svg>Minibar</li>
-                  <li data-cms-text="accueil.053-li"><svg class="icon" aria-hidden="true"><use href="#i-safe"></use></svg>Coffre</li>
-                  <li data-cms-text="accueil.054-li"><svg class="icon" aria-hidden="true"><use href="#i-shower"></use></svg>Douche ou bain</li>
-                  <li data-cms-text="accueil.055-li"><svg class="icon" aria-hidden="true"><use href="#i-tv"></use></svg>TV</li>
-                </ul>
+                <ul class="amenities amenities--compact" aria-label="Équipements principaux" data-cms-attr="aria-label:accueil.049-ul@aria-label" data-f="amenities"></ul>
                 <div class="room-card__actions">
-                  <a class="btn btn--ghost" href="#/chambres/confort" data-cms-key="accueil.056-a">Découvrir</a>
-                  <a class="btn btn--primary" href="#/reserver" data-book="" data-room-type="confort" data-cms-key="accueil.057-a">Réserver</a>
+                  <a class="btn btn--ghost" href="#/chambres" data-f="discover" data-cms-key="accueil.056-a">Découvrir</a>
+                  <a class="btn btn--primary" href="#/reserver" data-book="" data-f="book" data-cms-key="accueil.057-a">Réserver</a>
                 </div>
                 <p class="best-rate" data-cms-text="accueil.058-p"><svg class="icon" aria-hidden="true"><use href="#i-check"></use></svg>Meilleur prix garanti en direct</p>
-              </article>
-
-              <article class="room-card" data-anim="rise">
-                <header class="room-card__head">
-                  <h3 class="room-card__title"><a href="#/chambres/privilege" data-cms-key="accueil.059-a">Chambre Privilège</a></h3>
-                  <p class="room-card__facts"><span data-cms-text="accueil.060-span"><svg class="icon" aria-hidden="true"><use href="#i-area"></use></svg>24 m²</span><span data-cms-text="accueil.061-span"><svg class="icon" aria-hidden="true"><use href="#i-bed"></use></svg>1 à 3 pers. (une pour 4)</span><span data-cms-text="accueil.062-span"><svg class="icon" aria-hidden="true"><use href="#i-access"></use></svg>Version PMR</span></p>
-                </header>
-                <a class="room-card__media" href="#/chambres/privilege" tabindex="-1" aria-hidden="true">
-                  <img data-cms-media="accueil.photo-2" data-cms-sizes="(min-width: 1100px) 50vw, 100vw" data-cms-decorative data-cms-portrait="off" alt="" loading="lazy">
-                </a>
-                <ul class="amenities amenities--compact" aria-label="Équipements principaux" data-cms-attr="aria-label:accueil.063-ul@aria-label">
-                  <li data-cms-text="accueil.064-li"><svg class="icon" aria-hidden="true"><use href="#i-clim"></use></svg>Clim</li>
-                  <li data-cms-text="accueil.065-li"><svg class="icon" aria-hidden="true"><use href="#i-wifi"></use></svg>Wi-Fi</li>
-                  <li data-cms-text="accueil.066-li"><svg class="icon" aria-hidden="true"><use href="#i-minibar"></use></svg>Minibar</li>
-                  <li data-cms-text="accueil.067-li"><svg class="icon" aria-hidden="true"><use href="#i-safe"></use></svg>Coffre</li>
-                  <li data-cms-text="accueil.068-li"><svg class="icon" aria-hidden="true"><use href="#i-shower"></use></svg>Douche ou bain</li>
-                  <li data-cms-text="accueil.069-li"><svg class="icon" aria-hidden="true"><use href="#i-tv"></use></svg>TV</li>
-                </ul>
-                <div class="room-card__actions">
-                  <a class="btn btn--ghost" href="#/chambres/privilege" data-cms-key="accueil.070-a">Découvrir</a>
-                  <a class="btn btn--primary" href="#/reserver" data-book="" data-room-type="privilege" data-cms-key="accueil.071-a">Réserver</a>
-                </div>
-                <p class="best-rate" data-cms-text="accueil.072-p"><svg class="icon" aria-hidden="true"><use href="#i-check"></use></svg>Meilleur prix garanti en direct</p>
-              </article>
-
-              <article class="room-card" data-anim="rise">
-                <header class="room-card__head">
-                  <h3 class="room-card__title"><a href="#/chambres/premium" data-cms-key="accueil.073-a">Chambre Premium</a></h3>
-                  <p class="room-card__facts"><span data-cms-text="accueil.074-span"><svg class="icon" aria-hidden="true"><use href="#i-area"></use></svg>18 m²</span><span data-cms-text="accueil.075-span"><svg class="icon" aria-hidden="true"><use href="#i-bed"></use></svg>1 grand lit ou 2 lits</span><span data-cms-text="accueil.076-span"><svg class="icon" aria-hidden="true"><use href="#i-window"></use></svg>Vue Vieux-Nice</span></p>
-                </header>
-                <a class="room-card__media" href="#/chambres/premium" tabindex="-1" aria-hidden="true">
-                  <img data-cms-media="accueil.photo-3" data-cms-sizes="(min-width: 1100px) 50vw, 100vw" data-cms-decorative data-cms-portrait="off" alt="" loading="lazy">
-                </a>
-                <ul class="amenities amenities--compact" aria-label="Équipements principaux" data-cms-attr="aria-label:accueil.077-ul@aria-label">
-                  <li data-cms-text="accueil.078-li"><svg class="icon" aria-hidden="true"><use href="#i-clim"></use></svg>Clim</li>
-                  <li data-cms-text="accueil.079-li"><svg class="icon" aria-hidden="true"><use href="#i-wifi"></use></svg>Wi-Fi</li>
-                  <li data-cms-text="accueil.080-li"><svg class="icon" aria-hidden="true"><use href="#i-minibar"></use></svg>Minibar</li>
-                  <li data-cms-text="accueil.081-li"><svg class="icon" aria-hidden="true"><use href="#i-safe"></use></svg>Coffre</li>
-                  <li data-cms-text="accueil.082-li"><svg class="icon" aria-hidden="true"><use href="#i-shower"></use></svg>Douche ou bain</li>
-                  <li data-cms-text="accueil.083-li"><svg class="icon" aria-hidden="true"><use href="#i-tv"></use></svg>TV</li>
-                </ul>
-                <div class="room-card__actions">
-                  <a class="btn btn--ghost" href="#/chambres/premium" data-cms-key="accueil.084-a">Découvrir</a>
-                  <a class="btn btn--primary" href="#/reserver" data-book="" data-room-type="premium" data-cms-key="accueil.085-a">Réserver</a>
-                </div>
-                <p class="best-rate" data-cms-text="accueil.086-p"><svg class="icon" aria-hidden="true"><use href="#i-check"></use></svg>Meilleur prix garanti en direct</p>
-              </article>
-
-              <article class="room-card" data-anim="rise">
-                <header class="room-card__head">
-                  <h3 class="room-card__title"><a href="#/chambres/exclusive" data-cms-key="accueil.087-a">Chambre Exclusive</a></h3>
-                  <p class="room-card__facts"><span data-cms-text="accueil.088-span"><svg class="icon" aria-hidden="true"><use href="#i-area"></use></svg>25 m²</span><span data-cms-text="accueil.089-span"><svg class="icon" aria-hidden="true"><use href="#i-bed"></use></svg>1 à 3 personnes</span><span data-cms-text="accueil.090-span"><svg class="icon" aria-hidden="true"><use href="#i-window"></use></svg>Vue Vieux-Nice</span></p>
-                </header>
-                <a class="room-card__media" href="#/chambres/exclusive" tabindex="-1" aria-hidden="true">
-                  <img data-cms-media="accueil.photo-4" data-cms-sizes="(min-width: 1100px) 50vw, 100vw" data-cms-decorative data-cms-portrait="off" alt="" loading="lazy">
-                </a>
-                <ul class="amenities amenities--compact" aria-label="Équipements principaux" data-cms-attr="aria-label:accueil.091-ul@aria-label">
-                  <li data-cms-text="accueil.092-li"><svg class="icon" aria-hidden="true"><use href="#i-clim"></use></svg>Clim</li>
-                  <li data-cms-text="accueil.093-li"><svg class="icon" aria-hidden="true"><use href="#i-wifi"></use></svg>Wi-Fi</li>
-                  <li data-cms-text="accueil.094-li"><svg class="icon" aria-hidden="true"><use href="#i-minibar"></use></svg>Minibar</li>
-                  <li data-cms-text="accueil.095-li"><svg class="icon" aria-hidden="true"><use href="#i-safe"></use></svg>Coffre</li>
-                  <li data-cms-text="accueil.096-li"><svg class="icon" aria-hidden="true"><use href="#i-bath"></use></svg>Baignoire</li>
-                  <li data-cms-text="accueil.097-li"><svg class="icon" aria-hidden="true"><use href="#i-tv"></use></svg>TV</li>
-                </ul>
-                <div class="room-card__actions">
-                  <a class="btn btn--ghost" href="#/chambres/exclusive" data-cms-key="accueil.098-a">Découvrir</a>
-                  <a class="btn btn--primary" href="#/reserver" data-book="" data-room-type="exclusive" data-cms-key="accueil.099-a">Réserver</a>
-                </div>
-                <p class="best-rate" data-cms-text="accueil.100-p"><svg class="icon" aria-hidden="true"><use href="#i-check"></use></svg>Meilleur prix garanti en direct</p>
-              </article>
-
-              <article class="room-card" data-anim="rise">
-                <header class="room-card__head">
-                  <h3 class="room-card__title"><a href="#/chambres/deluxe" data-cms-key="accueil.101-a">Deluxe Terrasse</a></h3>
-                  <p class="room-card__facts"><span data-cms-text="accueil.102-span"><svg class="icon" aria-hidden="true"><use href="#i-area"></use></svg>23 m² + terrasse</span><span data-cms-text="accueil.103-span"><svg class="icon" aria-hidden="true"><use href="#i-building"></use></svg>6e étage</span><span data-cms-text="accueil.104-span"><svg class="icon" aria-hidden="true"><use href="#i-window"></use></svg>Vue Vieux-Nice</span></p>
-                </header>
-                <a class="room-card__media" href="#/chambres/deluxe" tabindex="-1" aria-hidden="true">
-                  <img data-cms-media="accueil.photo-5" data-cms-sizes="(min-width: 1100px) 50vw, 100vw" data-cms-decorative data-cms-portrait="off" alt="" loading="lazy">
-                </a>
-                <ul class="amenities amenities--compact" aria-label="Équipements principaux" data-cms-attr="aria-label:accueil.105-ul@aria-label">
-                  <li data-cms-text="accueil.106-li"><svg class="icon" aria-hidden="true"><use href="#i-terrace"></use></svg>Terrasse</li>
-                  <li data-cms-text="accueil.107-li"><svg class="icon" aria-hidden="true"><use href="#i-clim"></use></svg>Clim</li>
-                  <li data-cms-text="accueil.108-li"><svg class="icon" aria-hidden="true"><use href="#i-wifi"></use></svg>Wi-Fi</li>
-                  <li data-cms-text="accueil.109-li"><svg class="icon" aria-hidden="true"><use href="#i-minibar"></use></svg>Minibar</li>
-                  <li data-cms-text="accueil.110-li"><svg class="icon" aria-hidden="true"><use href="#i-bath"></use></svg>Bain + douche</li>
-                  <li data-cms-text="accueil.111-li"><svg class="icon" aria-hidden="true"><use href="#i-robe"></use></svg>Peignoirs</li>
-                </ul>
-                <div class="room-card__actions">
-                  <a class="btn btn--ghost" href="#/chambres/deluxe" data-cms-key="accueil.112-a">Découvrir</a>
-                  <a class="btn btn--primary" href="#/reserver" data-book="" data-room-type="deluxe" data-cms-key="accueil.113-a">Réserver</a>
-                </div>
-                <p class="best-rate" data-cms-text="accueil.114-p"><svg class="icon" aria-hidden="true"><use href="#i-check"></use></svg>Meilleur prix garanti en direct</p>
-              </article>
-
-              <article class="room-card" data-anim="rise">
-                <header class="room-card__head">
-                  <h3 class="room-card__title"><a href="#/chambres/suites" data-cms-key="accueil.115-a">Suites familiales</a></h3>
-                  <p class="room-card__facts"><span data-cms-text="accueil.116-span"><svg class="icon" aria-hidden="true"><use href="#i-area"></use></svg>43 à 50 m² + terrasse</span><span data-cms-text="accueil.117-span"><svg class="icon" aria-hidden="true"><use href="#i-users"></use></svg>2 adultes + 2 enfants</span><span data-cms-text="accueil.118-span"><svg class="icon" aria-hidden="true"><use href="#i-sun"></use></svg>Plein sud</span></p>
-                </header>
-                <a class="room-card__media" href="#/chambres/suites" tabindex="-1" aria-hidden="true">
-                  <img data-cms-media="accueil.photo-6" data-cms-sizes="(min-width: 1100px) 50vw, 100vw" data-cms-decorative data-cms-portrait="off" alt="" loading="lazy">
-                </a>
-                <ul class="amenities amenities--compact" aria-label="Équipements principaux" data-cms-attr="aria-label:accueil.119-ul@aria-label">
-                  <li data-cms-text="accueil.120-li"><svg class="icon" aria-hidden="true"><use href="#i-users"></use></svg>Salon</li>
-                  <li data-cms-text="accueil.121-li"><svg class="icon" aria-hidden="true"><use href="#i-clim"></use></svg>Clim</li>
-                  <li data-cms-text="accueil.122-li"><svg class="icon" aria-hidden="true"><use href="#i-wifi"></use></svg>Wi-Fi</li>
-                  <li data-cms-text="accueil.123-li"><svg class="icon" aria-hidden="true"><use href="#i-coffee"></use></svg>Expresso</li>
-                  <li data-cms-text="accueil.124-li"><svg class="icon" aria-hidden="true"><use href="#i-bath"></use></svg>Bain + douche</li>
-                  <li data-cms-text="accueil.125-li"><svg class="icon" aria-hidden="true"><use href="#i-robe"></use></svg>Peignoirs</li>
-                </ul>
-                <div class="room-card__actions">
-                  <a class="btn btn--ghost" href="#/chambres/suites" data-cms-key="accueil.126-a">Découvrir</a>
-                  <a class="btn btn--primary" href="#/reserver" data-book="" data-room-type="suites" data-cms-key="accueil.127-a">Réserver</a>
-                </div>
-                <p class="best-rate" data-cms-text="accueil.128-p"><svg class="icon" aria-hidden="true"><use href="#i-check"></use></svg>Meilleur prix garanti en direct</p>
               </article>
 
             </div>

@@ -1,0 +1,323 @@
+{
+  "_source": "Cartes des chambres écrites dans pages/chambres.html et pages/accueil.html jusqu’au 28/10/2026 : reprises une fois dans les fiches (server/ssg/room-cards.js, ensureRoomCards).",
+  "rooms": [
+    {
+      "key": "confort",
+      "index": "chambres.006-span",
+      "photo": "chambres.photo-1",
+      "title": "accueil.045-a",
+      "facts": [
+        {
+          "key": "accueil.046-span",
+          "icon": "i-area"
+        },
+        {
+          "key": "accueil.047-span",
+          "icon": "i-bed"
+        },
+        {
+          "key": "accueil.048-span",
+          "icon": "i-window"
+        }
+      ],
+      "amenities": [
+        {
+          "key": "accueil.050-li",
+          "icon": "i-clim"
+        },
+        {
+          "key": "accueil.051-li",
+          "icon": "i-wifi"
+        },
+        {
+          "key": "accueil.052-li",
+          "icon": "i-minibar"
+        },
+        {
+          "key": "accueil.053-li",
+          "icon": "i-safe"
+        },
+        {
+          "key": "accueil.054-li",
+          "icon": "i-shower"
+        },
+        {
+          "key": "accueil.055-li",
+          "icon": "i-tv"
+        }
+      ],
+      "homePhoto": "accueil.photo-1",
+      "common": {
+        "list": "aria-label:accueil.049-ul@aria-label",
+        "discover": "accueil.056-a",
+        "book": "accueil.057-a",
+        "best": "accueil.058-p"
+      }
+    },
+    {
+      "key": "privilege",
+      "index": "chambres.007-span",
+      "photo": "chambres.photo-2",
+      "title": "accueil.059-a",
+      "facts": [
+        {
+          "key": "accueil.060-span",
+          "icon": "i-area"
+        },
+        {
+          "key": "accueil.061-span",
+          "icon": "i-bed"
+        },
+        {
+          "key": "accueil.062-span",
+          "icon": "i-access"
+        }
+      ],
+      "amenities": [
+        {
+          "key": "accueil.064-li",
+          "icon": "i-clim"
+        },
+        {
+          "key": "accueil.065-li",
+          "icon": "i-wifi"
+        },
+        {
+          "key": "accueil.066-li",
+          "icon": "i-minibar"
+        },
+        {
+          "key": "accueil.067-li",
+          "icon": "i-safe"
+        },
+        {
+          "key": "accueil.068-li",
+          "icon": "i-shower"
+        },
+        {
+          "key": "accueil.069-li",
+          "icon": "i-tv"
+        }
+      ],
+      "homePhoto": "accueil.photo-2",
+      "common": {
+        "list": "aria-label:accueil.063-ul@aria-label",
+        "discover": "accueil.070-a",
+        "book": "accueil.071-a",
+        "best": "accueil.072-p"
+      }
+    },
+    {
+      "key": "premium",
+      "index": "chambres.008-span",
+      "photo": "chambres.photo-3",
+      "title": "accueil.073-a",
+      "facts": [
+        {
+          "key": "accueil.074-span",
+          "icon": "i-area"
+        },
+        {
+          "key": "accueil.075-span",
+          "icon": "i-bed"
+        },
+        {
+          "key": "accueil.076-span",
+          "icon": "i-window"
+        }
+      ],
+      "amenities": [
+        {
+          "key": "accueil.078-li",
+          "icon": "i-clim"
+        },
+        {
+          "key": "accueil.079-li",
+          "icon": "i-wifi"
+        },
+        {
+          "key": "accueil.080-li",
+          "icon": "i-minibar"
+        },
+        {
+          "key": "accueil.081-li",
+          "icon": "i-safe"
+        },
+        {
+          "key": "accueil.082-li",
+          "icon": "i-shower"
+        },
+        {
+          "key": "accueil.083-li",
+          "icon": "i-tv"
+        }
+      ],
+      "homePhoto": "accueil.photo-3",
+      "common": {
+        "list": "aria-label:accueil.077-ul@aria-label",
+        "discover": "accueil.084-a",
+        "book": "accueil.085-a",
+        "best": "accueil.086-p"
+      }
+    },
+    {
+      "key": "exclusive",
+      "index": "chambres.009-span",
+      "photo": "chambres.photo-4",
+      "title": "accueil.087-a",
+      "facts": [
+        {
+          "key": "accueil.088-span",
+          "icon": "i-area"
+        },
+        {
+          "key": "accueil.089-span",
+          "icon": "i-bed"
+        },
+        {
+          "key": "accueil.090-span",
+          "icon": "i-window"
+        }
+      ],
+      "amenities": [
+        {
+          "key": "accueil.092-li",
+          "icon": "i-clim"
+        },
+        {
+          "key": "accueil.093-li",
+          "icon": "i-wifi"
+        },
+        {
+          "key": "accueil.094-li",
+          "icon": "i-minibar"
+        },
+        {
+          "key": "accueil.095-li",
+          "icon": "i-safe"
+        },
+        {
+          "key": "accueil.096-li",
+          "icon": "i-bath"
+        },
+        {
+          "key": "accueil.097-li",
+          "icon": "i-tv"
+        }
+      ],
+      "homePhoto": "accueil.photo-4",
+      "common": {
+        "list": "aria-label:accueil.091-ul@aria-label",
+        "discover": "accueil.098-a",
+        "book": "accueil.099-a",
+        "best": "accueil.100-p"
+      }
+    },
+    {
+      "key": "deluxe",
+      "index": "chambres.010-span",
+      "photo": "chambres.photo-5",
+      "title": "accueil.101-a",
+      "facts": [
+        {
+          "key": "accueil.102-span",
+          "icon": "i-area"
+        },
+        {
+          "key": "accueil.103-span",
+          "icon": "i-building"
+        },
+        {
+          "key": "accueil.104-span",
+          "icon": "i-window"
+        }
+      ],
+      "amenities": [
+        {
+          "key": "accueil.106-li",
+          "icon": "i-terrace"
+        },
+        {
+          "key": "accueil.107-li",
+          "icon": "i-clim"
+        },
+        {
+          "key": "accueil.108-li",
+          "icon": "i-wifi"
+        },
+        {
+          "key": "accueil.109-li",
+          "icon": "i-minibar"
+        },
+        {
+          "key": "accueil.110-li",
+          "icon": "i-bath"
+        },
+        {
+          "key": "accueil.111-li",
+          "icon": "i-robe"
+        }
+      ],
+      "homePhoto": "accueil.photo-5",
+      "common": {
+        "list": "aria-label:accueil.105-ul@aria-label",
+        "discover": "accueil.112-a",
+        "book": "accueil.113-a",
+        "best": "accueil.114-p"
+      }
+    },
+    {
+      "key": "suites",
+      "index": "chambres.011-span",
+      "photo": "chambres.photo-6",
+      "title": "accueil.115-a",
+      "facts": [
+        {
+          "key": "accueil.116-span",
+          "icon": "i-area"
+        },
+        {
+          "key": "accueil.117-span",
+          "icon": "i-users"
+        },
+        {
+          "key": "accueil.118-span",
+          "icon": "i-sun"
+        }
+      ],
+      "amenities": [
+        {
+          "key": "accueil.120-li",
+          "icon": "i-users"
+        },
+        {
+          "key": "accueil.121-li",
+          "icon": "i-clim"
+        },
+        {
+          "key": "accueil.122-li",
+          "icon": "i-wifi"
+        },
+        {
+          "key": "accueil.123-li",
+          "icon": "i-coffee"
+        },
+        {
+          "key": "accueil.124-li",
+          "icon": "i-bath"
+        },
+        {
+          "key": "accueil.125-li",
+          "icon": "i-robe"
+        }
+      ],
+      "homePhoto": "accueil.photo-6",
+      "common": {
+        "list": "aria-label:accueil.119-ul@aria-label",
+        "discover": "accueil.126-a",
+        "book": "accueil.127-a",
+        "best": "accueil.128-p"
+      }
+    }
+  ]
+}

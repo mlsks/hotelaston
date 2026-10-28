@@ -34,7 +34,8 @@ function photoUrl(row, { cdn, media, siteUrl }) {
 }
 
 export function fillRoom($, view, { room, rooms, amenities, cdn, media, siteUrl, t, routeKey }) {
-  const r = room.data;
+  // Fiche ajoutée dans le back-office : listes éventuellement absentes
+  const r = { facts: [], gallery: [], amenities: [], amenitiesFull: [], ...room.data };
   slot($, view, 'name').text(r.name);
   slot($, view, 'category').text(r.category);
   slot($, view, 'h1').text(r.h1);
@@ -52,10 +53,8 @@ export function fillRoom($, view, { room, rooms, amenities, cdn, media, siteUrl,
     variants.attr('class', 'variants');
     for (const v of r.variants) variants.append($('<div class="variant">').append($('<h3>').text(v.title), $('<p>').text(v.text)));
   }
-  slot($, view, 'amenities').empty().append(r.amenities.map((key) => {
-    const a = amenities.get(key);
-    return $('<li>').append(icon(a.icon)).append(escapeText(a.label));
-  }));
+  slot($, view, 'amenities').empty().append(r.amenities.map((key) => amenities.get(key)).filter(Boolean) // pictogramme supprimé : ignoré
+    .map((a) => $('<li>').append(icon(a.icon)).append(escapeText(a.label))));
   slot($, view, 'amenitiesFull').empty().append(r.amenitiesFull.map((f) => $('<li>').text(f)));
   const reviews = slot($, view, 'reviews');
   reviews.attr('data-topic', r.reviewTopic);
@@ -66,8 +65,8 @@ export function fillRoom($, view, { room, rooms, amenities, cdn, media, siteUrl,
   view.find('[data-room-select]').attr('value', room.key);
 
   return {
-    title: r.title,
-    description: r.metaDescription,
+    title: r.title || r.name || '',
+    description: r.metaDescription || r.description || '',
     ld: {
       '@type': 'HotelRoom',
       name: r.name,

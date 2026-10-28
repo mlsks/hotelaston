@@ -67,7 +67,16 @@ export const SPECS = {
       { key: 'gallery', label: 'Photos', type: 'objects', fields: [
         { key: 'media', label: 'Photo', type: 'image' }, { key: 'alt', label: 'Texte alternatif', type: 'text' }, { key: 'kind', label: 'Légende courte', type: 'text' }] },
       { key: 'reviewTopic', label: 'Thème des avis affichés sur la fiche', type: 'select', options: TOPICS },
+      { key: 'cover', label: 'Photo de couverture (page Chambres et accueil)', type: 'image', hint: 'Vide : la première photo de la fiche.' },
+      { key: 'indexName', label: 'Nom sur la page Chambres', type: 'text', half: true, placeholder: 'ex. Confort' },
+      { key: 'summary', label: 'Résumé sur la page Chambres', type: 'text', half: true, placeholder: 'ex. 17 à 23 m² · côté cour ou colline' },
+      { key: 'onHome', label: 'Afficher dans le carrousel de l’accueil', type: 'checkbox' },
+      { key: 'cardTitle', label: 'Titre sur l’accueil', type: 'text', placeholder: 'ex. Chambre Confort' },
+      { key: 'cardFacts', label: 'Infos de la carte d’accueil', type: 'objects', fields: [{ key: 'icon', label: 'Pictogramme', type: 'icon' }, { key: 'text', label: 'Texte', type: 'text' }],
+        hint: 'Trois infos courtes (surface, lits, vue). Sur la carte s’affichent aussi les 6 premiers pictogrammes ci-dessus, avec leur libellé court.' },
     ],
+    help: 'L’ordre des chambres ici est celui de la page Chambres et du carrousel de l’accueil. Masquer une chambre la retire partout ; la supprimer redirige son ancienne adresse vers la page Chambres.',
+    blank: () => ({ name: '', category: '', onHome: true, amenities: [], amenitiesFull: [], facts: [], gallery: [], cardFacts: [{ icon: 'i-area', text: '' }, { icon: 'i-bed', text: '' }, { icon: 'i-window', text: '' }] }),
   },
   services: {
     noun: 'service', addLabel: 'Ajouter un service',
@@ -92,6 +101,7 @@ export const SPECS = {
     subtitle: (d) => d.icon,
     fields: [
       { key: 'label', label: 'Libellé', type: 'text' },
+      { key: 'shortLabel', label: 'Libellé court (cartes de l’accueil)', type: 'text', placeholder: 'ex. Clim' },
       { key: 'icon', label: 'Pictogramme', type: 'icon' },
     ],
   },
@@ -106,7 +116,7 @@ export const SPECS = {
       { key: 'author', label: 'Auteur', type: 'text', half: true, placeholder: 'ex. Claire M.' },
       { key: 'date', label: 'Mois du séjour', type: 'month', half: true },
       { key: 'rating', label: 'Note', type: 'select', options: [[5, '5 / 5'], [4, '4 / 5'], [3, '3 / 5'], [2, '2 / 5'], [1, '1 / 5']], number: true, half: true },
-      { key: 'room', label: 'Chambre concernée', type: 'select', options: [[null, 'Aucune'], ['confort', 'Confort'], ['deluxe', 'Deluxe'], ['premium', 'Premium'], ['privilege', 'Privilège'], ['exclusive', 'Exclusive'], ['suites', 'Suites']], half: true },
+      { key: 'room', label: 'Chambre concernée', type: 'select', source: 'rooms', options: [[null, 'Aucune']], half: true },
       { key: 'topics', label: 'Thèmes', type: 'tags', options: TOPICS },
       { key: 'text', label: 'Avis', type: 'textarea' },
       { key: 'reply', label: 'Réponse de l’hôtel', type: 'textarea' },

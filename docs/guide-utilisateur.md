@@ -140,7 +140,7 @@ Les textes affichés par le JavaScript du site : module de réservation, avis, f
 
 | Liste | Contenu |
 |---|---|
-| Chambres | Une fiche par catégorie : nom, titre, description, points clés, équipements, variantes, photos, thème des avis affichés. Chaque fiche a sa propre page. |
+| Chambres | Une fiche par catégorie : nom, titre, description, points clés, équipements, variantes, photos, thème des avis affichés, et ce qui s'affiche sur la page Chambres et dans le carrousel de l'accueil. Chaque fiche a sa propre page. Voir [Les chambres](#les-chambres). |
 | Services | Une fiche par service : chapeau, texte, informations pratiques, questions fréquentes, photos. Chaque fiche a sa propre page. |
 | Équipements | Les pictogrammes et libellés utilisés par les fiches chambre. |
 | Avis | Auteur, mois du séjour, note, chambre, thèmes, texte et réponse de l'hôtel. |
@@ -153,6 +153,21 @@ Dans une fiche :
 - **Afficher seulement entre deux dates** : pour une offre ou un contenu temporaire (heure de Paris).
 - **Enregistrer** ; les modifications sont visibles dans la prévisualisation, puis sur le site après publication.
 - **Supprimer** : définitif pour la fiche (mais une version publiée plus ancienne peut encore être restaurée).
+
+### Les chambres
+
+La page **Chambres** et le carrousel de l'accueil sont construits à partir des fiches **Chambres**, dans l'ordre de la liste (flèches ↑ ↓ pour le changer). En bas de chaque fiche :
+
+- **Photo de couverture** : la photo de la chambre sur la page Chambres et dans le carrousel. Vide : la première photo de la fiche ;
+- **Nom sur la page Chambres** (en gras) et **Résumé sur la page Chambres** (la suite de la ligne, par exemple « 23 m² + terrasse · 6e étage ») ;
+- **Afficher dans le carrousel de l'accueil** : décocher pour garder la chambre sur la page Chambres seulement ;
+- **Titre sur l'accueil** et **Infos de la carte d'accueil** : trois infos courtes avec leur pictogramme (surface, lits, vue). La carte montre aussi les six premiers **Pictogrammes affichés** de la fiche, avec leur **libellé court** (réglé dans la liste **Équipements**, par exemple « Clim »).
+
+Pour **ajouter une chambre**, cliquer sur **Ajouter une chambre** et remplir la fiche : elle apparaît sur la page Chambres, dans le carrousel, dans « Les autres chambres » des fiches, dans la liste **Chambre concernée** des avis et, sous son nom, dans la fenêtre de réservation. Si D-Edge lui donne un code, l'ajouter dans les [Réglages](#reglages) (codes chambre).
+
+**Masquer** une chambre (case **Visible sur le site**) la retire partout ; les liens qui la citent dans les textes mènent alors à la page Chambres. **Supprimer** une chambre fait de même et ajoute une redirection de son ancienne adresse vers la page Chambres, visible dans [Redirections](#redirections) : les favoris et Google suivent. Si une chambre est recréée plus tard à la même adresse, la redirection cesse de s’appliquer.
+
+Les textes des pages qui comptent les chambres (« Six catégories, de 18 à 50 m² » sur la page Chambres, par exemple) ne changent pas seuls : les revoir dans **Pages** après un ajout ou une suppression.
 
 Les avis livrés avec le site sont des exemples, marqués « Exemple » sur le site. Le passage aux avis réels se fait dans les [Réglages](#reglages).
 
