@@ -127,3 +127,24 @@ test('cartes de L’Horloge : créées aux adresses de l’ancien site, liens «
   assert.equal(db.prepare("SELECT is_active FROM cms_pages WHERE key = 'carte-dessert'").pluck().get(), 0);
   assert.equal((await call('PATCH', '/api/menus/carte-dessert', { is_active: true })).statusCode, 200);
 });
+
+test('anglais prêt : publié malgré les listes de liens ; sélecteur vers la page parente si la page n’est pas traduite', async () => {
+  // Anglais « prêt » partout (copie du français), sauf la carte des desserts
+  const now = nowIso();
+  db.prepare(`INSERT INTO cms_entry_values (entry_id, lang, value, media_id, status, updated_at)
+    SELECT entry_id, 'en', value, media_id, 'ready', ? FROM cms_entry_values WHERE lang = 'fr'
+    ON CONFLICT (entry_id, lang) DO UPDATE SET value = excluded.value, media_id = excluded.media_id, status = 'ready'`).run(now);
+  db.prepare(`INSERT INTO cms_page_i18n (page_id, lang, slug, path, title, meta_description, status, updated_at)
+    SELECT page_id, 'en', slug, '/en' || substr(path, 4), title, meta_description, 'ready', ? FROM cms_page_i18n WHERE lang = 'fr'
+    ON CONFLICT (page_id, lang) DO UPDATE SET status = 'ready'`).run(now);
+  db.prepare(`DELETE FROM cms_page_i18n WHERE lang = 'en' AND page_id = (SELECT id FROM cms_pages WHERE key = 'carte-dessert')`).run();
+  const res = (await call('POST', '/api/builds/publish', {})).json();
+  assert.equal(res.status, 'success', res.error);
+  assert.deepEqual(res.langs, ['fr', 'en']);
+  const links = (rel) => cheerio.load(fs.readFileSync(path.join(config.publicDist, rel, 'index.html'), 'utf8'))('.site-header .lang-menu a[hreflang]')
+    .map((i, a) => [[a.attribs.hreflang, a.attribs.href]]).get();
+  assert.deepEqual(links('fr'), [['fr', '/fr/'], ['en', '/en/']]);
+  assert.deepEqual(links('fr/carte-dessert'), [['fr', '/fr/carte-dessert/'], ['en', '/en/restaurant-horloge/']]);
+  assert.deepEqual(links('fr/carte-vin-restaurant-horloge'), [['fr', '/fr/carte-vin-restaurant-horloge/'], ['en', '/en/carte-vin-restaurant-horloge/']]);
+  assert.equal(fs.existsSync(path.join(config.publicDist, 'en/carte-dessert/index.html')), false);
+});

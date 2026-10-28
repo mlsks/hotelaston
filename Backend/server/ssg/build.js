@@ -24,7 +24,13 @@ import { notifyIndexNow } from './indexnow.js';
 const ITEM_FILL = { rooms: { view: 'chambre', fill: fillRoom }, services: { view: 'service', fill: fillService } };
 
 /** Clés data-cms-* utilisées par un morceau de HTML. */
-function keysOf(html) {
+function keysOf(html, lists = new Set()) {
+  // Liens des listes reprises dans la collection « links » : leurs anciens textes n'existent plus
+  if (lists.size && html.includes('data-cms-links')) {
+    const $ = cheerio.load(html, null, false);
+    $('[data-cms-links]').each((i, el) => { if (lists.has(el.attribs['data-cms-links'])) $(el).children().remove(); });
+    html = $.html();
+  }
   const keys = new Set();
   for (const m of html.matchAll(/data-cms-(?:key|html)="([^"]+)"/g)) keys.add(m[1]);
   for (const m of html.matchAll(/data-cms-text="([^"]+)"/g)) m[1].split(',').forEach((k) => keys.add(k));
@@ -75,20 +81,21 @@ export function generateSite({ source, mode, now, previousState = new Map(), onl
 
   /* Cibles : pages + fiches des collections qui ont un gabarit */
   // Textes d'interface du JavaScript : requis sur toutes les pages, comme ceux du layout
-  const layoutKeys = new Set([...keysOf(layoutHtml), ...[...source.entries.keys()].filter((k) => k.startsWith('ui.'))]);
+  const linkLists = new Set(settings.link_lists || []);
+  const layoutKeys = new Set([...keysOf(layoutHtml, linkLists), ...[...source.entries.keys()].filter((k) => k.startsWith('ui.'))]);
   const houseKeys = keysOf(houseRulesHtml);
   const targets = [];
   for (const page of source.pages) {
     const html = templates.get(page.template);
     if (!html) { errors.push(`Gabarit manquant : ${page.template}`); continue; }
-    const keys = new Set([...layoutKeys, ...keysOf(html), ...(html.includes('data-house-rules') ? houseKeys : [])]);
+    const keys = new Set([...layoutKeys, ...keysOf(html, linkLists), ...(html.includes('data-house-rules') ? houseKeys : [])]);
     targets.push({ type: 'page', page, keys, route: page.key === 'accueil' ? '' : page.key });
   }
   for (const [collection, def] of source.collections) {
     if (!def.item_template || !ITEM_FILL[collection]) continue;
     const parent = source.pagesById.get(def.parent_page);
     const html = templates.get(def.item_template);
-    const keys = new Set([...layoutKeys, ...keysOf(html), ...(html.includes('data-house-rules') ? houseKeys : [])]);
+    const keys = new Set([...layoutKeys, ...keysOf(html, linkLists), ...(html.includes('data-house-rules') ? houseKeys : [])]);
     keys.add(collection === 'rooms' ? 'item-chambre.galerie' : 'item-service.faq-titre');
     for (const item of source.collectionItems(collection, defaultLang, now)) {
       targets.push({ type: 'item', collection, itemKey: item.key, parent, keys, route: `${parent.key}/${item.key}`, view: ITEM_FILL[collection].view, template: def.item_template });
@@ -162,9 +169,18 @@ export function generateSite({ source, mode, now, previousState = new Map(), onl
       .filter(translated)
       .map((l) => ({ lang: l, href: config.siteUrl + info.get(`${l}|${t.route}`).path }));
     const xDefault = (alternates.find((a) => a.lang === xDefaultLang) || alternates.find((a) => a.lang === defaultLang))?.href;
-    // Sélecteur de langue : langues où cette page est publiée, adresses du site servi (préfixe /preview compris)
-    const switcher = langsAll.filter(translated)
-      .map((l) => ({ lang: l, name: source.lang(l).native_name, href: basePath + info.get(`${l}|${t.route}`).path }));
+    // Sélecteur de langue, adresses du site servi (préfixe /preview compris) : la page dans chaque langue où elle est
+    // publiée ; ailleurs, la page parente la plus proche publiée dans cette langue (à défaut l'accueil)
+    const nearest = (l) => {
+      for (let p = t.type === 'page' ? source.pagesById.get(t.page.parent_id) : t.parent; p; p = source.pagesById.get(p.parent_id)) {
+        const href = published.get(l).get(p.key === 'accueil' ? '' : p.key);
+        if (href) return href;
+      }
+      return published.get(l).get('');
+    };
+    const switcher = langs
+      .map((l) => ({ lang: l, name: source.lang(l).native_name, href: langsAll.includes(l) && translated(l) ? basePath + info.get(`${l}|${t.route}`).path : nearest(l) }))
+      .filter((s) => s.href);
     for (const lang of langsOk) {
       const { path: urlPath, missing } = info.get(`${lang}|${t.route}`);
       if (mode === 'production' && missing && lang !== defaultLang) continue;
