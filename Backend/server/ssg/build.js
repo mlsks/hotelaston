@@ -152,12 +152,16 @@ export function generateSite({ source, mode, now, previousState = new Map(), onl
   const xDefaultLang = settings.x_default_lang;
   for (const t of targets) {
     if (only && only.route !== t.route) continue;
-    const langsOk = langs.filter((l) => published.get(l).has(t.route) && (mode === 'preview' || !info.get(`${l}|${t.route}`)?.missing || l === defaultLang))
-      .filter((l) => !only || only.lang === l);
+    const langsAll = langs.filter((l) => published.get(l).has(t.route) && (mode === 'preview' || !info.get(`${l}|${t.route}`)?.missing || l === defaultLang));
+    const langsOk = langsAll.filter((l) => !only || only.lang === l);
+    const translated = (l) => mode === 'preview' || !info.get(`${l}|${t.route}`).missing;
     const alternates = langsOk
-      .filter((l) => mode === 'preview' || !info.get(`${l}|${t.route}`).missing)
+      .filter(translated)
       .map((l) => ({ lang: l, href: config.siteUrl + info.get(`${l}|${t.route}`).path }));
     const xDefault = (alternates.find((a) => a.lang === xDefaultLang) || alternates.find((a) => a.lang === defaultLang))?.href;
+    // Sélecteur de langue : langues où cette page est publiée, adresses du site servi (préfixe /preview compris)
+    const switcher = langsAll.filter(translated)
+      .map((l) => ({ lang: l, name: source.lang(l).native_name, href: basePath + info.get(`${l}|${t.route}`).path }));
     for (const lang of langsOk) {
       const { path: urlPath, missing } = info.get(`${lang}|${t.route}`);
       if (mode === 'production' && missing && lang !== defaultLang) continue;
@@ -183,6 +187,7 @@ export function generateSite({ source, mode, now, previousState = new Map(), onl
         canonical: config.siteUrl + urlPath,
         alternates,
         xDefault,
+        switcher,
         noindex: Boolean(meta?.noindex),
         ogImage: settings.og_image_default,
       };

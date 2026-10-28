@@ -739,7 +739,7 @@ Règle de publication par langue : une page n'est publiée dans une langue que s
 ### 7.1 Langues
 
 - **Adresses** : `/fr/…`, `/en/…`, `/it/…`, `/de/…`, avec des noms de pages traduits (`/en/rooms/`, `/it/camere/`). `/` redirige vers la langue par défaut, jamais selon le pays ou le navigateur.
-- **Sélecteur de langue** : il mène à la même page dans l'autre langue ; une page absente dans une langue renvoie vers l'accueil de cette langue.
+- **Sélecteur de langue** : écrit au build dans chaque élément `data-lang-switch` du layout (menu mobile et pied de page). Il liste, dans l'ordre de « Langues », les langues actives où la page est publiée (dans la prévisualisation : toutes les langues actives), sous leur nom natif, et mène à la même page dans chaque langue. Une langue où la page n'est pas encore traduite n'y figure pas ; avec une seule langue, le sélecteur est retiré.
 - **hreflang** : sur chaque page, une balise par langue où elle est publiée, plus `x-default` (réglage `x_default_lang`).
 - **sitemap.xml** : une entrée par page et par langue, avec les alternatives `xhtml:link`. `robots.txt` indique son adresse.
 - **Moteur de réservation** : le segment de langue D-Edge vient de `cms_languages.booking_lang`.
