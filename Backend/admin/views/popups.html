@@ -16,6 +16,7 @@
           <p x-show="p.offer_key" class="text-xs text-azure-700" x-text="'Offre : ' + (p.offer?.title || p.offer_key)"></p>
         </div>
         <span x-show="unresolved(p)" class="badge shrink-0 bg-amber-50 text-amber-800 ring-amber-200" title="Chevauche un autre popup : ouvrir pour choisir lequel afficher">Conflit</span>
+        <span x-show="!unresolved(p) && hiddenBy(p)" class="badge shrink-0 bg-amber-50 text-amber-800 ring-amber-200" x-text="hiddenBy(p)" title="Ouvrir pour choisir lequel afficher"></span>
         <div class="flex shrink-0 gap-1.5" x-show="!p.offer_key || p.i18n[$store.session.defaultLang]?.state !== 'missing'" title="Popup d’une offre sans texte propre : traduit avec la fiche">
           <template x-for="l in $store.session.otherLangs" :key="l.code">
             <span class="badge" :class="$fmt.stateClass(p.i18n[l.code]?.state)" :title="l.name" x-text="l.code.toUpperCase()"></span>

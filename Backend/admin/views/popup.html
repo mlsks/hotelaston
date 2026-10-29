@@ -19,7 +19,7 @@
         <p x-show="!offer" class="font-medium text-rose-700">L’offre de ce popup n’existe plus : il ne s’affiche pas.</p>
       </div>
 
-      <section x-show="conflicts.length" class="card space-y-2 border-l-4 p-5" :class="conflicts.some((c) => !c.resolved) ? 'border-amber-500' : 'border-slate-300'">
+      <section x-show="conflicts.length" class="card space-y-2 border-l-4 p-5" :class="conflicts.some((c) => !c.resolved || c.winner !== popup.id) ? 'border-amber-500' : 'border-slate-300'">
         <h2 class="section-title">Chevauchements avec d’autres popups</h2>
         <p class="text-sm text-slate-600">Une seule fenêtre s’affiche par page : pendant la période commune, la plus prioritaire.</p>
         <ul class="space-y-1.5 text-sm">
@@ -32,7 +32,7 @@
             </li>
           </template>
         </ul>
-        <button type="button" x-show="canEdit && conflicts.some((c) => !c.resolved)" class="btn btn-secondary btn-sm" @click="decide()">Choisir lequel afficher</button>
+        <button type="button" x-show="canEdit" class="btn btn-secondary btn-sm" @click="decide()">Choisir lequel afficher</button>
       </section>
 
       <div class="grid gap-6 lg:grid-cols-[minmax(0,1fr)_22rem]">

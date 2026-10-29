@@ -28,18 +28,19 @@ export function conflictPages(c, pageName) {
 }
 
 /**
- * Demande, pour chaque conflit non tranché, lequel des deux popups afficher pendant la période
- * commune. Rend le popup à jour (ou celui reçu si rien n'a été choisi).
+ * Demande, pour chaque conflit (même déjà tranché par les priorités), lequel des deux popups
+ * afficher pendant la période commune. Rend le popup à jour (ou celui reçu si rien n'a changé).
  */
 export async function resolveConflicts(store, popup, pageName) {
   let current = popup;
-  for (const c of popup.conflicts.filter((x) => !x.resolved)) {
+  for (const c of popup.conflicts) {
     const pages = conflictPages(c, pageName);
+    const shown = c.winner === popup.id ? popup.name : c.name;
     const choice = await store.dialog.choose({
       title: `Conflit avec le popup « ${c.name} »`,
-      body: `Les deux s’ouvrent ${conflictPeriod(c)}, sur : ${pages}.\nUne seule fenêtre s’affiche par page. Laquelle afficher pendant cette période ? L’autre reprend ensuite.`,
+      body: `Les deux s’ouvrent ${conflictPeriod(c)}, sur : ${pages}.\nUne seule fenêtre s’affiche par page.${c.resolved ? ` Actuellement, c’est « ${shown} » qui s’affiche.` : ''} Laquelle afficher pendant cette période ? L’autre reprend ensuite.`,
       choices: [{ value: 'this', label: `Afficher « ${current.name} »` }, { value: 'other', label: `Afficher « ${c.name} »` }],
-      cancelLabel: 'Décider plus tard',
+      cancelLabel: c.resolved ? 'Garder ce réglage' : 'Décider plus tard',
     });
     if (!choice) continue;
     if (choice === 'this') current = await post(`/popups/${current.id}/prefer`, { over: c.id });
@@ -60,6 +61,11 @@ Alpine.data('popupsView', () => ({
   },
   schedule: scheduleState,
   unresolved(p) { return p.is_active ? p.conflicts.filter((c) => !c.resolved).length : 0; },
+  /** Popup masqué par un autre pendant une période commune (conflit tranché en sa défaveur). */
+  hiddenBy(p) {
+    const c = p.is_active && p.conflicts.find((x) => x.resolved && x.winner !== p.id);
+    return c ? `Masqué par « ${c.name} » ${conflictPeriod(c)}` : '';
+  },
   trigger(p) {
     const t = { delay: `après ${p.trigger_value ?? 8} s`, scroll: `à ${p.trigger_value ?? 50} % de la page`, exit_intent: 'quand le visiteur s’apprête à partir' }[p.trigger_type];
     const f = { once: 'une seule fois', session: 'une fois par visite', days: `au plus tous les ${p.frequency_days} jours` }[p.frequency];

@@ -324,8 +324,10 @@ Dans **Fiches et listes** → **Offres**, ouvrir l'offre, puis **Promouvoir en p
 Une seule fenêtre s'ouvre par page. Deux popups **actifs** qui se chevauchent (mêmes dates, au moins une page en commun) sont en **conflit**. À l'enregistrement, l'admin le signale : « Conflit avec le popup X, du … au …, sur … », et demande **lequel afficher** pendant la période commune.
 
 - Le popup choisi passe devant pendant le chevauchement ; l'autre reste actif et **reprend tout seul ensuite**. Exemple : une offre de Noël en décembre devant la Newsletter, qui revient en janvier.
-- **Décider plus tard** laisse le conflit ouvert : la liste des popups affiche alors un badge **Conflit**, et l'écran du popup un bouton **Choisir lequel afficher**.
-- L'écran d'un popup liste ses chevauchements et celui qui s'affiche. Le choix passe par la **Priorité** : changer la priorité à la main change aussi le gagnant.
+- La question revient à chaque enregistrement d'un popup actif en conflit, même déjà réglé : la fenêtre indique alors lequel s'affiche, et **Garder ce réglage** n'y change rien.
+- **Décider plus tard** laisse le conflit ouvert : la liste des popups affiche alors un badge **Conflit**.
+- Dans la liste, un popup qui cède la place porte le badge **Masqué par « X »**, avec la période.
+- L'écran d'un popup liste ses chevauchements et celui qui s'affiche ; le bouton **Choisir lequel afficher** permet de changer d'avis. Le choix passe par la **Priorité** : changer la priorité à la main change aussi le gagnant.
 
 ### Bandeaux, popup, liens et cartes dans les autres langues
 
