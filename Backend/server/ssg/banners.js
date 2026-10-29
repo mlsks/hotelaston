@@ -5,7 +5,8 @@
  * limite de la zone. Leurs dates sont aussi écrites en data-start / data-end : un petit script
  * (dans le <head> du layout) les masque dès qu'ils expirent entre deux builds, et applique la
  * fermeture choisie par le visiteur, avant l'affichage.
- * Popup : un seul par page (le plus prioritaire), configuration en JSON, piloté par popup.js.
+ * Popup : un seul par page (le plus prioritaire), configuration en JSON, piloté par popup.js ;
+ * celui d'une offre reprend le contenu de la fiche (popupTexts).
  * Sans traduction prête, bandeaux et popup s'affichent en anglais, sinon dans la langue par défaut
  * (Source.translated), avec l'attribut lang de la langue réellement affichée.
  */
@@ -93,15 +94,62 @@ export function renderZones($, ctx) {
   return missing;
 }
 
+/** Bouton d'une offre (mêmes cibles que sa carte) : moteur avec le code et les dates de l'offre, devis ou lien. */
+function offerCta(key, r) {
+  if (!r.button || r.action === 'none') return null;
+  if (r.action === 'quote') return { href: `#/devis?offre=${key}`, attrs: '' };
+  if (r.action === 'link') {
+    const href = String(r.link || '').trim();
+    return href ? { href, attrs: /^https?:/.test(href) ? ' target="_blank" rel="noopener"' : '' } : null;
+  }
+  const dates = `${r.checkin ? ` data-checkin="${esc(r.checkin)}"` : ''}${r.checkout ? ` data-checkout="${esc(r.checkout)}"` : ''}`;
+  return { href: '#/reserver', attrs: ` data-book data-offer-id="${esc(key)}"${dates}` };
+}
+
+/** Texte d'une offre dans le popup : prix, ce qui est compris, économie, conditions (à confirmer : .verify). */
+function offerBody(r) {
+  const mark = (text) => (r.toConfirm ? `<span class="verify">${esc(text)}</span>` : esc(text));
+  const price = [r.price ? `<strong>${mark(r.price)}</strong>` : '', r.priceNote ? `<small>${esc(r.priceNote)}</small>` : ''].filter(Boolean).join(' ');
+  const includes = (r.includes || []).filter(Boolean);
+  return [
+    price ? `<p>${price}</p>` : '',
+    includes.length ? `<ul>${includes.map((i) => `<li>${esc(i)}</li>`).join('')}</ul>` : '',
+    r.saving ? `<p>${mark(r.saving)}</p>` : '',
+    r.conditions ? `<p><small>${mark(r.conditions)}</small></p>` : '',
+  ].join('');
+}
+
+/**
+ * Textes d'un popup : les siens ; pour celui d'une offre, ce que le popup ne remplace pas vient
+ * de la fiche (titre, texte, bouton, photo).
+ */
+function popupTexts(p) {
+  const own = p.i18n || {};
+  if (!p.offer) return { ...own, cta: null, media_id: p.media_id };
+  const r = p.offer.data;
+  const ownCta = own.cta_kind && own.cta_label;
+  return {
+    title: own.title || r.title || '',
+    body: own.body || offerBody(r),
+    cta_label: ownCta ? own.cta_label : r.button,
+    cta_kind: ownCta ? own.cta_kind : null,
+    cta_target: ownCta ? own.cta_target : null,
+    cta: ownCta ? null : offerCta(p.offer.key, r),
+    media_id: p.media_id || r.media || null,
+    missing: own.title ? own.missing : p.offer.missing,
+    lang: own.title ? own.lang : p.offer.lang,
+  };
+}
+
 /** Ajoute le popup de la page (fenêtre, configuration, script). */
 export function renderPopup($, ctx) {
   const { source, lang, pageId, now, uiText, popupScript, preview } = ctx;
   const p = source.popupFor(pageId, lang, now, new Date(now.getTime() + HORIZON_MS));
   if (!p || !popupScript) return null;
-  const t = p.i18n;
-  const info = p.media_id ? source.mediaFor(p.media_id, lang) : null;
+  const t = popupTexts(p);
+  const info = t.media_id ? source.mediaFor(t.media_id, lang) : null;
   const media = info ? `<div class="cms-popup__media">${mediaHtml(info, { sizes: '(min-width: 600px) 560px, 100vw', loading: 'lazy', portrait: false })}</div>` : '';
-  const cta = ctaLink(source, t.cta_kind, t.cta_target);
+  const cta = t.cta || ctaLink(source, t.cta_kind, t.cta_target);
   const ctaHtml = cta && t.cta_label
     ? `<a class="btn btn--gold" href="${esc(cta.href)}"${cta.attrs} data-track="popup_click" data-track-source="popup:${p.id}">${esc(t.cta_label)}</a>`
     : '';

@@ -281,6 +281,7 @@ npm start</code></pre></li>
 <li><strong>Afficher sur l'accueil</strong>, avec un <strong>Titre</strong> et une <strong>Phrase</strong> propres à l'accueil. Sans aucune offre cochée, la rubrique disparaît de l'accueil.</li>
 </ul>
 <p>Pour une offre saisonnière, régler <strong>Afficher seulement entre deux dates</strong> (à droite) : elle apparaît et disparaît seule, à la régénération de chaque nuit. <strong>Masquer</strong> ou <strong>Supprimer</strong> la retire aussi de partout.</p>
+<p>Pour mettre une offre en avant, le bouton <strong>Promouvoir en popup</strong> (à droite, sous <strong>Enregistrer</strong>) crée un popup qui la reprend : voir <a href="#popup-d-une-offre">Popup d'une offre</a>. Une fois le popup créé, le bouton devient <strong>Voir son popup</strong>.</p>
 <p>Une offre réservable apparaît aussi dans le choix <strong>Le moteur de réservation</strong> des bandeaux et du popup. Son identifiant (sous la case <strong>Visible sur le site</strong>) est envoyé à D-Edge. Si D-Edge lui donne un autre code, l'ajouter dans les <a href="#reglages">Réglages</a> (codes tarif). Pour les trois offres d'origine, le nom affiché dans la fenêtre de réservation se règle dans <strong>Textes de l'interface</strong> (<code>ui.offer.…</code>) ; pour les autres, c'est le titre de la fiche.</p>
 <h3 id="les-salles-de-seminaire">Les salles de séminaire</h3>
 <p>Le tableau « Nos salles et leurs configurations » de la page <strong>Séminaires</strong> et la liste <strong>Offre ou salle</strong> du formulaire de devis sont construits à partir des fiches <strong>Salles de séminaire</strong>, dans l'ordre de la liste (flèches ↑ ↓). Dans une fiche :</p>
@@ -365,6 +366,22 @@ npm start</code></pre></li>
 <li><strong>Actif</strong>, <strong>Priorité</strong>, <strong>Le montrer à nouveau aux visiteurs qui l'avaient déjà fermé</strong> ;</li>
 <li><strong>Pages</strong> : toutes, seulement sur…, ou partout sauf… ;</li>
 <li><strong>Enregistrer</strong>, puis publier.</li>
+</ul>
+<h4 id="popup-d-une-offre">Popup d'une offre</h4>
+<p>Dans <strong>Fiches et listes</strong> → <strong>Offres</strong>, ouvrir l'offre, puis <strong>Promouvoir en popup</strong>. Le popup est créé <strong>inactif</strong> et s'ouvre dans l'écran Popup, avec tous les réglages ci-dessus (déclenchement, fréquence, dates, pages, priorité). Cocher <strong>Actif</strong>, <strong>Enregistrer</strong>, puis publier.</p>
+<ul>
+<li>Le <strong>titre</strong>, le <strong>texte</strong> (prix, ce qui est compris, économie, conditions), la <strong>photo</strong> et le <strong>bouton</strong> sont ceux de la fiche, dans toutes ses langues traduites. Modifier l'offre modifie le popup.</li>
+<li>Pour une accroche différente, remplir le <strong>Titre</strong>, le <strong>Texte</strong>, le <strong>Bouton vers</strong> ou l'<strong>image</strong> du popup : ce champ remplace celui de l'offre, le reste vient toujours de la fiche. Vider le champ revient à celui de l'offre.</li>
+<li>Le popup s'affiche seulement aux dates communes au popup et à l'offre. Une offre <strong>masquée</strong> ou hors de ses dates emporte son popup ; une offre <strong>supprimée</strong> le supprime.</li>
+</ul>
+<h4 id="conflits-entre-popups">Conflits entre popups</h4>
+<p>Une seule fenêtre s'ouvre par page. Deux popups <strong>actifs</strong> qui se chevauchent (mêmes dates, au moins une page en commun) sont en <strong>conflit</strong>. À l'enregistrement, l'admin le signale : « Conflit avec le popup X, du … au …, sur … », et demande <strong>lequel afficher</strong> pendant la période commune.</p>
+<ul>
+<li>Le popup choisi passe devant pendant le chevauchement ; l'autre reste actif et <strong>reprend tout seul ensuite</strong>. Exemple : une offre de Noël en décembre devant la Newsletter, qui revient en janvier.</li>
+<li>La question revient à chaque enregistrement d'un popup actif en conflit, même déjà réglé : la fenêtre indique alors lequel s'affiche, et <strong>Garder ce réglage</strong> n'y change rien.</li>
+<li><strong>Décider plus tard</strong> laisse le conflit ouvert : la liste des popups affiche alors un badge <strong>Conflit</strong>.</li>
+<li>Dans la liste, un popup qui cède la place porte le badge <strong>Masqué par « X »</strong>, avec la période.</li>
+<li>L'écran d'un popup liste ses chevauchements et celui qui s'affiche ; le bouton <strong>Choisir lequel afficher</strong> permet de changer d'avis. Le choix passe par la <strong>Priorité</strong> : changer la priorité à la main change aussi le gagnant.</li>
 </ul>
 <h3 id="bandeaux-popup-liens-et-cartes-dans-les-autres-langues">Bandeaux, popup, liens et cartes dans les autres langues</h3>
 <p>Un bandeau, un popup, un lien des menus, une carte du restaurant ou une fiche <strong>n'est jamais masqué</strong> faute de traduction. Dans une langue où son texte n'est pas prêt, il s'affiche :</p>

@@ -206,6 +206,8 @@ La page **Offres** et les aperçus « Offres spéciales » de l'accueil sont con
 
 Pour une offre saisonnière, régler **Afficher seulement entre deux dates** (à droite) : elle apparaît et disparaît seule, à la régénération de chaque nuit. **Masquer** ou **Supprimer** la retire aussi de partout.
 
+Pour mettre une offre en avant, le bouton **Promouvoir en popup** (à droite, sous **Enregistrer**) crée un popup qui la reprend : voir [Popup d'une offre](#popup-d-une-offre). Une fois le popup créé, le bouton devient **Voir son popup**.
+
 Une offre réservable apparaît aussi dans le choix **Le moteur de réservation** des bandeaux et du popup. Son identifiant (sous la case **Visible sur le site**) est envoyé à D-Edge. Si D-Edge lui donne un autre code, l'ajouter dans les [Réglages](#reglages) (codes tarif). Pour les trois offres d'origine, le nom affiché dans la fenêtre de réservation se règle dans **Textes de l'interface** (`ui.offer.…`) ; pour les autres, c'est le titre de la fiche.
 
 ### Les salles de séminaire
@@ -308,6 +310,24 @@ Une fenêtre au plus par page (la plus prioritaire). Sur mobile, elle ne s'ouvre
 - **Actif**, **Priorité**, **Le montrer à nouveau aux visiteurs qui l'avaient déjà fermé** ;
 - **Pages** : toutes, seulement sur…, ou partout sauf… ;
 - **Enregistrer**, puis publier.
+
+#### Popup d'une offre
+
+Dans **Fiches et listes** → **Offres**, ouvrir l'offre, puis **Promouvoir en popup**. Le popup est créé **inactif** et s'ouvre dans l'écran Popup, avec tous les réglages ci-dessus (déclenchement, fréquence, dates, pages, priorité). Cocher **Actif**, **Enregistrer**, puis publier.
+
+- Le **titre**, le **texte** (prix, ce qui est compris, économie, conditions), la **photo** et le **bouton** sont ceux de la fiche, dans toutes ses langues traduites. Modifier l'offre modifie le popup.
+- Pour une accroche différente, remplir le **Titre**, le **Texte**, le **Bouton vers** ou l'**image** du popup : ce champ remplace celui de l'offre, le reste vient toujours de la fiche. Vider le champ revient à celui de l'offre.
+- Le popup s'affiche seulement aux dates communes au popup et à l'offre. Une offre **masquée** ou hors de ses dates emporte son popup ; une offre **supprimée** le supprime.
+
+#### Conflits entre popups
+
+Une seule fenêtre s'ouvre par page. Deux popups **actifs** qui se chevauchent (mêmes dates, au moins une page en commun) sont en **conflit**. À l'enregistrement, l'admin le signale : « Conflit avec le popup X, du … au …, sur … », et demande **lequel afficher** pendant la période commune.
+
+- Le popup choisi passe devant pendant le chevauchement ; l'autre reste actif et **reprend tout seul ensuite**. Exemple : une offre de Noël en décembre devant la Newsletter, qui revient en janvier.
+- La question revient à chaque enregistrement d'un popup actif en conflit, même déjà réglé : la fenêtre indique alors lequel s'affiche, et **Garder ce réglage** n'y change rien.
+- **Décider plus tard** laisse le conflit ouvert : la liste des popups affiche alors un badge **Conflit**.
+- Dans la liste, un popup qui cède la place porte le badge **Masqué par « X »**, avec la période.
+- L'écran d'un popup liste ses chevauchements et celui qui s'affiche ; le bouton **Choisir lequel afficher** permet de changer d'avis. Le choix passe par la **Priorité** : changer la priorité à la main change aussi le gagnant.
 
 ### Bandeaux, popup, liens et cartes dans les autres langues
 

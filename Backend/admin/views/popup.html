@@ -10,6 +10,31 @@
         <template data-include="lang-tabs"></template>
       </div>
 
+      <div x-show="offer || popup?.offer_key" class="rounded-lg bg-azure-50 px-4 py-3 text-sm text-azure-900 ring-1 ring-azure-100">
+        <template x-if="offer">
+          <p>Ce popup promeut l’offre <a class="font-semibold underline" :href="'#/collections/offers/' + offer.id" x-text="'« ' + (offer.title || offer.key) + ' »'"></a> :
+            titre, texte, photo et bouton sont repris de la fiche, dans toutes ses langues. Remplissez un champ ci-dessous seulement pour le remplacer.
+            Il s’affiche aux dates communes au popup et à l’offre<span x-show="!offer.is_active">, <strong>mais l’offre est masquée : il ne s’affiche pas</strong></span>.</p>
+        </template>
+        <p x-show="!offer" class="font-medium text-rose-700">L’offre de ce popup n’existe plus : il ne s’affiche pas.</p>
+      </div>
+
+      <section x-show="conflicts.length" class="card space-y-2 border-l-4 p-5" :class="conflicts.some((c) => !c.resolved || c.winner !== popup.id) ? 'border-amber-500' : 'border-slate-300'">
+        <h2 class="section-title">Chevauchements avec d’autres popups</h2>
+        <p class="text-sm text-slate-600">Une seule fenêtre s’affiche par page : pendant la période commune, la plus prioritaire.</p>
+        <ul class="space-y-1.5 text-sm">
+          <template x-for="c in conflicts" :key="c.id">
+            <li class="flex flex-wrap items-center gap-2">
+              <a class="font-medium text-azure-800 hover:underline" :href="'#/popups/' + c.id" x-text="c.name"></a>
+              <span class="text-slate-600" x-text="conflictPeriod(c) + ' · ' + conflictPages(c)"></span>
+              <span x-show="c.resolved" class="badge bg-slate-50 text-slate-700 ring-slate-200" x-text="'s’affiche : ' + winnerName(c)"></span>
+              <span x-show="!c.resolved" class="badge bg-amber-50 text-amber-800 ring-amber-200">À choisir</span>
+            </li>
+          </template>
+        </ul>
+        <button type="button" x-show="canEdit" class="btn btn-secondary btn-sm" @click="decide()">Choisir lequel afficher</button>
+      </section>
+
       <div class="grid gap-6 lg:grid-cols-[minmax(0,1fr)_22rem]">
         <section class="card space-y-4 p-5">
           <div class="flex items-center gap-2">
@@ -17,15 +42,16 @@
             <span class="badge" :class="$fmt.stateClass(t.state)" x-text="$fmt.stateLabel(t.state)"></span>
           </div>
           <label class="block"><span class="label">Titre</span>
-            <input class="input" x-model="t.title" :disabled="!canText" :placeholder="lang !== def ? texts[def].title : ''"></label>
+            <input class="input" x-model="t.title" :disabled="!canText" :placeholder="lang !== def && texts[def].title ? texts[def].title : popup?.offer_key ? 'Vide : le titre de l’offre' : ''"></label>
           <div><span class="label">Texte</span>
+            <span x-show="popup?.offer_key" class="hint block">Vide : le prix, ce qui est compris, l’économie et les conditions de l’offre.</span>
             <div x-data="richtext({ disabled: !canText })" x-modelable="html" x-model="t.body" @rich-change="$store.ui.dirty = true"></div>
             <p x-show="lang !== def && texts[def].body" class="mt-1.5 rounded-md bg-slate-50 px-2.5 py-1.5 text-xs text-slate-600"><span class="font-semibold" x-text="$store.session.langName(def) + ' : '"></span><span x-text="$fmt.plain(texts[def].body)"></span></p>
           </div>
           <div class="grid gap-4 sm:grid-cols-2">
             <label class="block"><span class="label">Bouton vers</span>
               <select class="input" x-model="t.cta_kind" :disabled="!canText" @change="t.cta_target = ''">
-                <template x-for="k in CTA_KINDS" :key="k[0]"><option :value="k[0]" x-text="k[1]" :selected="k[0] === t.cta_kind"></option></template>
+                <template x-for="k in ctaKinds" :key="k[0]"><option :value="k[0]" x-text="k[1]" :selected="k[0] === t.cta_kind"></option></template>
               </select></label>
             <label class="block" x-show="t.cta_kind !== 'none'"><span class="label">Texte du bouton</span>
               <input class="input" x-model="t.cta_label" :disabled="!canText" :placeholder="lang !== def ? texts[def].cta_label : 'ex. Découvrir l’offre'"></label>
@@ -39,6 +65,7 @@
           </div>
           <div>
             <span class="label">Image, vidéo ou son</span>
+            <span x-show="popup?.offer_key" class="hint block">Vide : la photo de l’offre.</span>
             <div class="flex items-center gap-3">
               <img x-show="media?.thumb" :src="media?.thumb" alt="" class="size-16 rounded-lg object-cover ring-1 ring-slate-200">
               <span x-show="media && !media.thumb" class="text-sm text-slate-600" x-text="media?.original_name"></span>

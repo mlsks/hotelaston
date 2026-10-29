@@ -1,13 +1,56 @@
 /**
  * Popup : contenu par langue (titre, texte, bouton), média, déclenchement (délai, défilement,
  * intention de sortie ; sur mobile seulement après un geste), fréquence et pages concernées.
+ * Popup d'une offre : contenu repris de la fiche, ses propres textes le remplacent.
+ * Conflits : deux popups actifs aux mêmes dates sur une même page ; à l'enregistrement, l'admin
+ * demande lequel afficher pendant la période commune (l'autre reprend ensuite).
  */
 import Alpine from '/admin/vendor/alpine.js';
 import { get, post, patch, put, del } from '../lib/api.js';
 import { setTitle, go } from '../lib/router.js';
-import { toParisInput, scheduleState } from '../lib/format.js';
+import { toParisInput, scheduleState, fmtDateTime } from '../lib/format.js';
 import { pageLabel } from './pages.js';
 import { loadTargets, CTA_KINDS } from './banners.js';
+
+/** Période commune d'un conflit, en clair. */
+export function conflictPeriod(c) {
+  if (!c.start && !c.end) return 'sans limite de dates';
+  if (!c.start) return `jusqu’au ${fmtDateTime(c.end)}`;
+  if (!c.end) return `à partir du ${fmtDateTime(c.start)}`;
+  return `du ${fmtDateTime(c.start)} au ${fmtDateTime(c.end)}`;
+}
+
+/** Pages communes d'un conflit, en clair (les quatre premières). */
+export function conflictPages(c, pageName) {
+  if (c.allPages) return 'toutes les pages';
+  const names = c.pages.slice(0, 4).map(pageName);
+  return c.pages.length > 4 ? `${names.join(', ')} et ${c.pages.length - 4} autre${c.pages.length > 5 ? 's' : ''}` : names.join(', ');
+}
+
+/**
+ * Demande, pour chaque conflit (même déjà tranché par les priorités), lequel des deux popups
+ * afficher pendant la période commune. Rend le popup à jour (ou celui reçu si rien n'a changé).
+ */
+export async function resolveConflicts(store, popup, pageName) {
+  let current = popup;
+  for (const c of popup.conflicts) {
+    const pages = conflictPages(c, pageName);
+    const shown = c.winner === popup.id ? popup.name : c.name;
+    const choice = await store.dialog.choose({
+      title: `Conflit avec le popup « ${c.name} »`,
+      body: `Les deux s’ouvrent ${conflictPeriod(c)}, sur : ${pages}.\nUne seule fenêtre s’affiche par page.${c.resolved ? ` Actuellement, c’est « ${shown} » qui s’affiche.` : ''} Laquelle afficher pendant cette période ? L’autre reprend ensuite.`,
+      choices: [{ value: 'this', label: `Afficher « ${current.name} »` }, { value: 'other', label: `Afficher « ${c.name} »` }],
+      cancelLabel: c.resolved ? 'Garder ce réglage' : 'Décider plus tard',
+    });
+    if (!choice) continue;
+    if (choice === 'this') current = await post(`/popups/${current.id}/prefer`, { over: c.id });
+    else {
+      await post(`/popups/${c.id}/prefer`, { over: current.id });
+      current = await get(`/popups/${current.id}`);
+    }
+  }
+  return current;
+}
 
 Alpine.data('popupsView', () => ({
   popups: [],
@@ -17,6 +60,12 @@ Alpine.data('popupsView', () => ({
     this.loading = false;
   },
   schedule: scheduleState,
+  unresolved(p) { return p.is_active ? p.conflicts.filter((c) => !c.resolved).length : 0; },
+  /** Popup masqué par un autre pendant une période commune (conflit tranché en sa défaveur). */
+  hiddenBy(p) {
+    const c = p.is_active && p.conflicts.find((x) => x.resolved && x.winner !== p.id);
+    return c ? `Masqué par « ${c.name} » ${conflictPeriod(c)}` : '';
+  },
   trigger(p) {
     const t = { delay: `après ${p.trigger_value ?? 8} s`, scroll: `à ${p.trigger_value ?? 50} % de la page`, exit_intent: 'quand le visiteur s’apprête à partir' }[p.trigger_type];
     const f = { once: 'une seule fois', session: 'une fois par visite', days: `au plus tous les ${p.frequency_days} jours` }[p.frequency];
@@ -35,6 +84,8 @@ Alpine.data('popupView', () => ({
   scope: { mode: 'all', pages: [] },
   media: null,
   saving: false,
+  conflictPeriod,
+  conflictPages(c) { return conflictPages(c, (k) => this.pageKeyName(k)); },
   async init() {
     const id = this.$store.route.params.id;
     this.isNew = id === 'nouveau';
@@ -76,6 +127,22 @@ Alpine.data('popupView', () => ({
   get canEdit() { return this.$store.session.canContent; },
   get canText() { return this.$store.session.canTranslate(this.lang); },
   get t() { return this.texts[this.lang]; },
+  get offer() { return this.popup?.offer || null; },
+  get ctaKinds() { return this.popup?.offer_key ? [['none', 'Celui de l’offre'], ...CTA_KINDS.slice(1)] : CTA_KINDS; },
+  get conflicts() { return this.form?.is_active ? this.popup?.conflicts || [] : []; },
+  winnerName(c) { return c.winner === this.popup.id ? `« ${this.popup.name} »` : `« ${c.name} »`; },
+  pageKeyName(key) {
+    const p = this.pages.find((x) => x.key === key);
+    return p ? this.pageName(p) : key;
+  },
+  async decide() {
+    try {
+      this.popup = await resolveConflicts(this.$store, this.popup, (k) => this.pageKeyName(k));
+      await this.reset();
+    } catch (err) {
+      this.$store.toast.error(err);
+    }
+  },
   get state() { return scheduleState({ ...this.form, start_at: this.form.start_at ? new Date(this.form.start_at).toISOString() : null, end_at: this.form.end_at ? new Date(this.form.end_at).toISOString() : null }); },
   ctaChoices(kind) {
     if (kind === 'page') return this.targets.pages;
@@ -118,7 +185,9 @@ Alpine.data('popupView', () => ({
         this.popup = await put(`/popups/${id}/pages`, rows);
       }
       const t = this.t;
-      if (this.canText && t.title.trim()) {
+      const own = t.title.trim() || t.body || t.cta_kind !== 'none';
+      // Popup d'une offre : des textes vides le laissent reprendre ceux de l'offre
+      if (this.canText && (t.title.trim() || (this.popup.offer_key && (own || this.popup.i18n[this.lang]?.state !== 'missing')))) {
         this.popup = await put(`/popups/${id}/i18n/${this.lang}`, {
           title: t.title.trim(), body: t.body || null, cta_label: t.cta_label || null, cta_kind: t.cta_kind,
           cta_target: t.cta_kind === 'none' ? null : t.cta_target, ...(this.lang !== this.def ? { status: 'ready' } : {}),
@@ -126,6 +195,7 @@ Alpine.data('popupView', () => ({
       }
       this.$store.ui.dirty = false;
       this.$store.toast.push('Popup enregistré.');
+      if (this.canEdit && this.popup.is_active) this.popup = await resolveConflicts(this.$store, this.popup, (k) => this.pageKeyName(k));
       if (this.isNew) go(`#/popups/${id}`);
       else await this.reset();
     } catch (err) {

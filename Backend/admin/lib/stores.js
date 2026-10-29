@@ -122,7 +122,7 @@ Alpine.store('toast', {
 /* ---------- Fenêtres : confirmation, saisie, secret affiché une fois ---------- */
 Alpine.store('dialog', {
   open: false,
-  mode: 'confirm', // confirm | prompt | secret
+  mode: 'confirm', // confirm | prompt | secret | choice
   title: '',
   body: '',
   confirmLabel: 'Confirmer',
@@ -132,18 +132,27 @@ Alpine.store('dialog', {
   inputLabel: '',
   secret: '',
   copied: false,
+  choices: [],
+  cancelLabel: 'Annuler',
   resolve: null,
   show(opts) {
-    Object.assign(this, { mode: 'confirm', title: '', body: '', confirmLabel: 'Confirmer', danger: false, checkbox: null, input: '', inputLabel: '', secret: '', copied: false }, opts);
+    Object.assign(this, { mode: 'confirm', title: '', body: '', confirmLabel: 'Confirmer', danger: false, checkbox: null, input: '', inputLabel: '', secret: '', copied: false, choices: [], cancelLabel: 'Annuler' }, opts);
     this.open = true;
     return new Promise((resolve) => { this.resolve = resolve; });
   },
   confirm(opts) { return this.show({ ...opts, mode: 'confirm' }); },
   prompt(opts) { return this.show({ confirmLabel: 'Valider', ...opts, mode: 'prompt' }); },
   showSecret(opts) { return this.show({ confirmLabel: 'J’ai noté', ...opts, mode: 'secret' }); },
+  /** Choix entre plusieurs boutons ({ value, label }) : la valeur choisie, ou null si annulé. */
+  choose(opts) { return this.show({ ...opts, mode: 'choice' }); },
+  pick(value) {
+    this.open = false;
+    this.resolve?.(value);
+    this.resolve = null;
+  },
   finish(ok) {
     this.open = false;
-    const value = this.mode === 'prompt' ? (ok ? this.input : null) : this.checkbox ? { ok, checked: this.checkbox.checked } : ok;
+    const value = this.mode === 'prompt' || this.mode === 'choice' ? (ok && this.mode === 'prompt' ? this.input : null) : this.checkbox ? { ok, checked: this.checkbox.checked } : ok;
     this.resolve?.(value);
     this.resolve = null;
   },
