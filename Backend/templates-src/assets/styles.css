@@ -1216,6 +1216,12 @@ picture { display: contents; }
 .faq details p { margin: 0 0 18px; color: var(--ink-2); max-width: 70ch; }
 
 /* Pages de cartes / menus */
+/* Mentions légales */
+.legal { padding-bottom: var(--section-y); }
+.legal h2 { font-size: clamp(1.3rem, 1.15rem + 0.6vw, 1.6rem); }
+.legal ul { margin: 0 0 1em; padding-left: 1.2em; }
+.legal__facts > p { margin: 0; }
+div.legal__facts { margin-bottom: 1em; }
 .menu-page { padding-top: calc(var(--header-h) + var(--strip-h) + 32px); padding-bottom: var(--section-y); }
 .menu-section { margin-top: 36px; }
 .menu-section h2 { font-size: 1.9rem; border-bottom: 1px solid var(--gold); padding-bottom: 8px; }
