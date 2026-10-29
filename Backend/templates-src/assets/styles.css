@@ -379,8 +379,8 @@ p { margin: 0 0 1em; }
 }
 .burger .icon { width: 26px; height: 26px; }
 
-/* Sélecteur de langue de l'en-tête (ordinateur) : menu déroulant */
-.lang-menu { display: none; position: relative; }
+/* Sélecteur de langue de l'en-tête : menu déroulant, entre le nom et le bouton Réserver sur mobile */
+.lang-menu { position: relative; }
 .lang-menu__toggle {
   display: inline-flex;
   align-items: center;
@@ -414,7 +414,6 @@ p { margin: 0 0 1em; }
 
 @media (min-width: 1024px) {
   .main-nav { display: block; }
-  .lang-menu { display: block; }
   .header-phone { display: inline-flex; }
   .burger { display: none; }
   .site-header__actions { margin-left: 8px; }
@@ -422,6 +421,20 @@ p { margin: 0 0 1em; }
 @media (max-width: 1023.98px) {
   .brand__name { font-size: 1.3rem; }
   .btn--book { min-height: 40px; padding: 9px 14px; }
+  .site-header__actions { gap: 6px; }
+  .lang-menu__toggle { padding: 8px 2px; }
+}
+/* Téléphone : le globe seul, pour laisser la place au bouton Réserver et au menu */
+@media (max-width: 599.98px) {
+  .lang-menu__toggle { padding: 8px; }
+  .lang-menu__toggle span,
+  .lang-menu__toggle::after { display: none; }
+  .lang-menu__toggle .icon { width: 22px; height: 22px; }
+}
+@media (max-width: 389.98px) {
+  .site-header__actions { gap: 2px; }
+  .lang-menu__toggle { padding: 8px 6px; }
+  .btn--book { padding-inline: 11px; }
 }
 
 /* Menu mobile : panneau latéral au-dessus de TOUT le contenu */
