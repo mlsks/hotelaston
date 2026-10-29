@@ -221,6 +221,8 @@ export default function collectionRoutes(app, { db, defaultLang }) {
       }
       // Un lien de menu emporte ses sous-liens
       if (item.collection === LINKS) db.prepare(`DELETE FROM cms_items WHERE collection = '${LINKS}' AND json_extract(data, '$.parent') = ?`).run(item.key);
+      // Une offre emporte son popup
+      if (item.collection === 'offers') db.prepare('DELETE FROM cms_popups WHERE offer_key = ?').run(item.key);
       db.prepare('DELETE FROM cms_items WHERE id = ?').run(item.id);
     })();
     audit(db, req, 'delete', 'item', item.id, { before: item });

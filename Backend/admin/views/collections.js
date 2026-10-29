@@ -151,6 +151,7 @@ Alpine.data('itemView', () => ({
   saving: false,
   asDraft: false,
   jsonErrors: {},
+  promo: undefined, // popup d'une offre : null = pas encore promue ; undefined = sans objet
   async init() {
     const { key, id } = this.$store.route.params;
     this.isNew = id === 'nouveau';
@@ -167,6 +168,7 @@ Alpine.data('itemView', () => ({
       }
       if (this.spec.fields?.some((f) => f.type === 'icon' || f.fields?.some((s) => s.type === 'icon'))) this.$store.icons.load();
       await this.loadRefs();
+      if (this.canPromote) this.promo = (await get('/popups')).find((p) => p.offer_key === this.item.key) || null;
       if (!this.$store.session.isScoped) {
         try { this.cdnBase = (await get('/settings')).cdn_base || ''; } catch { /* réglages non lisibles */ }
       }
@@ -178,6 +180,19 @@ Alpine.data('itemView', () => ({
     this.$watch('$store.ui.lang', () => this.reset());
   },
   get spec() { return spec(this.collection?.key); },
+  /** Offre enregistrée : peut être mise en avant dans un popup (comptes sans périmètre). */
+  get canPromote() { return this.collection?.key === 'offers' && !this.isNew && this.$store.session.canContent && !this.$store.session.isScoped; },
+  async promote() {
+    if (this.promo) return go(`#/popups/${this.promo.id}`);
+    if (this.$store.ui.dirty) return this.$store.toast.push('Enregistrez d’abord l’offre.', 'error');
+    try {
+      const popup = await post('/popups', { name: `Offre · ${this.source.title || this.item.key}`.slice(0, 120), offer_key: this.item.key });
+      this.$store.toast.push('Popup créé, encore inactif : réglez-le, cochez « Actif », puis enregistrez.');
+      go(`#/popups/${popup.id}`);
+    } catch (err) {
+      this.$store.toast.error(err);
+    }
+  },
   get paths() { return this.collection?.schema.translatable || []; },
   get def() { return this.$store.session.defaultLang; },
   get lang() { return this.paths.length ? this.$store.ui.lang : this.def; },
@@ -416,7 +431,7 @@ Alpine.data('itemView', () => ({
   async remove() {
     const ok = await this.$store.dialog.confirm({
       title: `Supprimer « ${this.heading} » ?`,
-      body: 'L’élément disparaîtra du site à la prochaine publication. Cette suppression est définitive.',
+      body: `L’élément disparaîtra du site à la prochaine publication. Cette suppression est définitive.${this.promo ? ` Son popup « ${this.promo.name} » sera supprimé aussi.` : ''}`,
       confirmLabel: 'Supprimer',
       danger: true,
     });

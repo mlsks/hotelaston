@@ -11,6 +11,7 @@
  *    s'il est prêt, sinon sur la langue par défaut (voir translated).
  */
 import { mergeTranslation } from './collections.js';
+import { popupWindow } from '../lib/popup-conflicts.js';
 
 /** Langue de repli des bandeaux et popups non traduits, avant la langue par défaut. */
 const RELAY_LANG = 'en';
@@ -109,11 +110,21 @@ export class Source {
       .filter((b) => b.i18n?.text);
   }
 
-  /** Popup de la page (le plus prioritaire), actif pendant [now, horizon[. */
+  /**
+   * Popup de la page (le plus prioritaire), actif pendant [now, horizon[. Celui d'une offre prend
+   * les dates communes au popup et à l'offre, et disparaît avec elle (offer : la fiche traduite).
+   */
   popupFor(pageId, lang, now, horizon) {
     const from = now.toISOString();
     const to = horizon.toISOString();
     return this.popups
+      .map((p) => {
+        if (!p.offer_key) return p;
+        const it = this.items.find((i) => i.collection === 'offers' && i.key === p.offer_key);
+        const w = popupWindow(p, it);
+        return w && { ...p, start_at: w.start, end_at: w.end, offer: { key: it.key, ...this.itemData(it, lang) } };
+      })
+      .filter(Boolean)
       .filter((p) => (!p.end_at || p.end_at > from) && (!p.start_at || p.start_at < to))
       .filter((p) => {
         const rules = this.popupPages.filter((r) => r.popup_id === p.id);
@@ -122,7 +133,7 @@ export class Source {
         return !includes.length || includes.some((r) => r.page_id === null || r.page_id === pageId);
       })
       .map((p) => ({ ...p, i18n: this.translated(this.popupI18n, p.id, lang) }))
-      .find((p) => p.i18n?.title);
+      .find((p) => p.offer || p.i18n?.title);
   }
 
   lang(code) {
@@ -173,15 +184,18 @@ export class Source {
     return this.items
       .filter((it) => it.collection === collection)
       .filter((it) => (!it.start_at || it.start_at <= iso) && (!it.end_at || it.end_at > iso))
-      .map((it) => {
-        const rows = this.itemI18n.get(it.id) || {};
-        const own = this.usable(rows[lang], lang) ? rows[lang] : null;
-        const def = rows[this.defaultLang];
-        const relay = own ? null : this.relay(rows, lang);
-        const tr = own || def;
-        let data = mergeTranslation(JSON.parse(it.data), tr ? JSON.parse(tr.data) : undefined);
-        if (relay) data = mergeTranslation(data, JSON.parse(relay.data));
-        return { id: it.id, key: it.key, slug: tr?.slug || it.key, missing: !own, data };
-      });
+      .map((it) => ({ id: it.id, key: it.key, ...this.itemData(it, lang) }));
+  }
+
+  /** Données d'une fiche dans une langue (repli : anglais prêt, puis langue par défaut) ; lang : langue affichée. */
+  itemData(it, lang) {
+    const rows = this.itemI18n.get(it.id) || {};
+    const own = this.usable(rows[lang], lang) ? rows[lang] : null;
+    const def = rows[this.defaultLang];
+    const relay = own ? null : this.relay(rows, lang);
+    const tr = own || def;
+    let data = mergeTranslation(JSON.parse(it.data), tr ? JSON.parse(tr.data) : undefined);
+    if (relay) data = mergeTranslation(data, JSON.parse(relay.data));
+    return { slug: tr?.slug || it.key, missing: !own, lang: own ? lang : relay ? relay.lang : this.defaultLang, data };
   }
 }

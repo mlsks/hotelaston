@@ -11,10 +11,12 @@
       <a :href="'#/popups/' + p.id" class="flex flex-wrap items-center gap-3 px-4 py-3 hover:bg-slate-50 sm:flex-nowrap">
         <div class="min-w-0 flex-1">
           <p class="font-medium text-azure-800" x-text="p.name"></p>
-          <p class="truncate text-sm text-slate-500" x-text="p.i18n[$store.session.defaultLang]?.title || 'Pas encore de titre'"></p>
+          <p class="truncate text-sm text-slate-500" x-text="p.i18n[$store.session.defaultLang]?.title || p.offer?.title || 'Pas encore de titre'"></p>
           <p class="text-xs text-slate-500" x-text="trigger(p)"></p>
+          <p x-show="p.offer_key" class="text-xs text-azure-700" x-text="'Offre : ' + (p.offer?.title || p.offer_key)"></p>
         </div>
-        <div class="flex shrink-0 gap-1.5">
+        <span x-show="unresolved(p)" class="badge shrink-0 bg-amber-50 text-amber-800 ring-amber-200" title="Chevauche un autre popup : ouvrir pour choisir lequel afficher">Conflit</span>
+        <div class="flex shrink-0 gap-1.5" x-show="!p.offer_key || p.i18n[$store.session.defaultLang]?.state !== 'missing'" title="Popup d’une offre sans texte propre : traduit avec la fiche">
           <template x-for="l in $store.session.otherLangs" :key="l.code">
             <span class="badge" :class="$fmt.stateClass(p.i18n[l.code]?.state)" :title="l.name" x-text="l.code.toUpperCase()"></span>
           </template>

@@ -217,6 +217,11 @@
             <button class="btn btn-primary w-full" :disabled="saving || !canEdit" x-text="saving ? 'Enregistrement…' : isNew ? 'Créer' : 'Enregistrer'"></button>
             <p x-show="$store.ui.dirty" class="text-center text-xs text-amber-700">Modifications non enregistrées</p>
           </div>
+          <div x-show="canPromote && promo !== undefined && !translating" class="card space-y-2 p-4">
+            <button type="button" class="btn btn-secondary w-full" @click="promote()" x-text="promo ? 'Voir son popup' : 'Promouvoir en popup'"></button>
+            <p class="text-xs text-slate-500" x-show="!promo">Crée un popup qui reprend le titre, le texte, la photo et le bouton de l’offre, avec les réglages habituels du popup.</p>
+            <p class="text-xs text-slate-500" x-show="promo" x-text="promo ? (promo.is_active ? 'Popup actif' : 'Popup inactif') + (promo.is_active && promo.conflicts.some((c) => !c.resolved) ? ' · en conflit avec un autre popup' : '') : ''"></p>
+          </div>
           <button type="button" x-show="!isNew && !translating && $store.session.canContent" class="btn btn-danger w-full" @click="remove()">Supprimer</button>
           <p class="px-1 text-xs text-slate-500">Les modifications sont visibles dans la prévisualisation, puis sur le site après publication.</p>
         </aside>

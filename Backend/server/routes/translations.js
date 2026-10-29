@@ -68,8 +68,10 @@ function units(db, lang, def) {
   const popups = byLang('SELECT popup_id AS k, * FROM cms_popup_i18n');
   for (const p of db.prepare('SELECT * FROM cms_popups WHERE is_active = 1').all()) {
     const rows = popups.get(p.id) || {};
+    if (p.offer_key && !rows[def]) continue; // popup d'une offre sans texte propre : traduit avec la fiche
     out.push({ module: 'popups', id: p.id, label: p.name, ref: String(p.id),
-      state: translationState(rows[lang], rows[def] ? sha(`${rows[def].title}\n${rows[def].body ?? ''}\n${rows[def].cta_label ?? ''}`) : null, lang === def, (r) => Boolean(r?.title)) });
+      state: translationState(rows[lang], rows[def] ? sha(`${rows[def].title}\n${rows[def].body ?? ''}\n${rows[def].cta_label ?? ''}`) : null, lang === def,
+        (r) => Boolean(r?.title || (p.offer_key && r?.body))) });
   }
   return out;
 }

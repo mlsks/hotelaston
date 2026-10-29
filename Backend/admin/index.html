@@ -164,9 +164,14 @@
           <span x-text="$store.dialog.checkbox.label"></span>
         </label>
       </template>
+      <div x-show="$store.dialog.mode === 'choice'" class="mt-4 space-y-2">
+        <template x-for="c in $store.dialog.choices" :key="c.value">
+          <button type="button" class="btn btn-secondary w-full justify-start text-left" @click="$store.dialog.pick(c.value)" x-text="c.label"></button>
+        </template>
+      </div>
       <div class="mt-6 flex justify-end gap-2">
-        <button type="button" x-show="$store.dialog.mode !== 'secret'" class="btn btn-ghost" @click="$store.dialog.finish(false)">Annuler</button>
-        <button class="btn" :class="$store.dialog.danger ? 'bg-rose-700 text-white hover:bg-rose-800' : 'btn-primary'" x-text="$store.dialog.confirmLabel"></button>
+        <button type="button" x-show="$store.dialog.mode !== 'secret'" class="btn btn-ghost" @click="$store.dialog.finish(false)" x-text="$store.dialog.cancelLabel"></button>
+        <button x-show="$store.dialog.mode !== 'choice'" class="btn" :class="$store.dialog.danger ? 'bg-rose-700 text-white hover:bg-rose-800' : 'btn-primary'" x-text="$store.dialog.confirmLabel"></button>
       </div>
     </form>
   </div>
