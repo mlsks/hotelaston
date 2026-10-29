@@ -1475,6 +1475,9 @@ picture { display: contents; }
 .site-footer__bottom { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 14px 28px; margin-top: 48px; padding-block: 22px; border-top: 1px solid rgba(255, 255, 255, 0.12); font-size: var(--fs-xs); }
 .site-footer__labels, .site-footer__legal { display: flex; flex-wrap: wrap; gap: 8px 20px; margin: 0; align-items: center; }
 .site-footer__labels a { display: inline-flex; gap: 6px; align-items: center; }
+.site-footer__company { display: grid; gap: 14px; padding-block: 22px 28px; border-top: 1px solid rgba(255, 255, 255, 0.12); font-size: var(--fs-xs); line-height: 1.7; }
+.site-footer__company p { margin: 0; }
+.site-footer__company strong { color: #e6e1d6; font-weight: 600; }
 .lang-switch--footer { flex-basis: 100%; margin: 0; padding: 0; font-size: var(--fs-xs); }
 .site-footer .lang-switch a { color: #e6e1d6; }
 .site-footer .lang-switch a[aria-current="true"] { color: var(--gold-soft); }

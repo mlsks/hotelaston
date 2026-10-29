@@ -1,0 +1,47 @@
+{
+  "global.mentions-gds": {
+    "fr": "Codes GDS : Amadeus : IW NCE368 | Apollo : IW 52264 | Sabre : IW 11318 | Worldspan : IW NCEAL",
+    "en": "GDS codes: Amadeus: IW NCE368 | Apollo: IW 52264 | Sabre: IW 11318 | Worldspan: IW NCEAL",
+    "es": "Códigos GDS: Amadeus: IW NCE368 | Apollo: IW 52264 | Sabre: IW 11318 | Worldspan: IW NCEAL",
+    "it": "Codici GDS: Amadeus: IW NCE368 | Apollo: IW 52264 | Sabre: IW 11318 | Worldspan: IW NCEAL",
+    "de": "GDS-Codes: Amadeus: IW NCE368 | Apollo: IW 52264 | Sabre: IW 11318 | Worldspan: IW NCEAL",
+    "pt": "Códigos GDS: Amadeus: IW NCE368 | Apollo: IW 52264 | Sabre: IW 11318 | Worldspan: IW NCEAL",
+    "sv": "GDS-koder: Amadeus: IW NCE368 | Apollo: IW 52264 | Sabre: IW 11318 | Worldspan: IW NCEAL",
+    "no": "GDS-koder: Amadeus: IW NCE368 | Apollo: IW 52264 | Sabre: IW 11318 | Worldspan: IW NCEAL",
+    "el": "Κωδικοί GDS: Amadeus: IW NCE368 | Apollo: IW 52264 | Sabre: IW 11318 | Worldspan: IW NCEAL",
+    "ru": "Коды GDS: Amadeus: IW NCE368 | Apollo: IW 52264 | Sabre: IW 11318 | Worldspan: IW NCEAL",
+    "ja": "GDSコード：Amadeus：IW NCE368 | Apollo：IW 52264 | Sabre：IW 11318 | Worldspan：IW NCEAL",
+    "zh": "GDS 代码：Amadeus：IW NCE368 | Apollo：IW 52264 | Sabre：IW 11318 | Worldspan：IW NCEAL",
+    "ko": "GDS 코드: Amadeus: IW NCE368 | Apollo: IW 52264 | Sabre: IW 11318 | Worldspan: IW NCEAL"
+  },
+  "global.mentions-societe": {
+    "fr": "<strong>Nom :</strong> HOTEL ASTON LA SCALA<br><strong>SIRET :</strong> 798 563 003 00028 <strong>SIREN :</strong> 798 563 003<br><strong>RCS :</strong> NICE 798 563 003 - APE 5510Z <strong>TVA intra :</strong> FR93 798 563 003",
+    "en": "<strong>Name:</strong> HOTEL ASTON LA SCALA<br><strong>SIRET:</strong> 798 563 003 00028 <strong>SIREN:</strong> 798 563 003<br><strong>RCS:</strong> NICE 798 563 003 - APE 5510Z <strong>EU VAT no.:</strong> FR93 798 563 003",
+    "es": "<strong>Nombre:</strong> HOTEL ASTON LA SCALA<br><strong>SIRET:</strong> 798 563 003 00028 <strong>SIREN:</strong> 798 563 003<br><strong>RCS:</strong> NICE 798 563 003 - APE 5510Z <strong>IVA intracomunitario:</strong> FR93 798 563 003",
+    "it": "<strong>Nome:</strong> HOTEL ASTON LA SCALA<br><strong>SIRET:</strong> 798 563 003 00028 <strong>SIREN:</strong> 798 563 003<br><strong>RCS:</strong> NICE 798 563 003 - APE 5510Z <strong>Partita IVA intracomunitaria:</strong> FR93 798 563 003",
+    "de": "<strong>Name:</strong> HOTEL ASTON LA SCALA<br><strong>SIRET:</strong> 798 563 003 00028 <strong>SIREN:</strong> 798 563 003<br><strong>RCS:</strong> NICE 798 563 003 - APE 5510Z <strong>USt-IdNr.:</strong> FR93 798 563 003",
+    "pt": "<strong>Nome:</strong> HOTEL ASTON LA SCALA<br><strong>SIRET:</strong> 798 563 003 00028 <strong>SIREN:</strong> 798 563 003<br><strong>RCS:</strong> NICE 798 563 003 - APE 5510Z <strong>IVA intracomunitário:</strong> FR93 798 563 003",
+    "sv": "<strong>Namn:</strong> HOTEL ASTON LA SCALA<br><strong>SIRET:</strong> 798 563 003 00028 <strong>SIREN:</strong> 798 563 003<br><strong>RCS:</strong> NICE 798 563 003 - APE 5510Z <strong>Momsreg.nr (EU):</strong> FR93 798 563 003",
+    "no": "<strong>Navn:</strong> HOTEL ASTON LA SCALA<br><strong>SIRET:</strong> 798 563 003 00028 <strong>SIREN:</strong> 798 563 003<br><strong>RCS:</strong> NICE 798 563 003 - APE 5510Z <strong>MVA-nr. (EU):</strong> FR93 798 563 003",
+    "el": "<strong>Επωνυμία:</strong> HOTEL ASTON LA SCALA<br><strong>SIRET:</strong> 798 563 003 00028 <strong>SIREN:</strong> 798 563 003<br><strong>RCS:</strong> NICE 798 563 003 - APE 5510Z <strong>ΑΦΜ ΦΠΑ (ΕΕ):</strong> FR93 798 563 003",
+    "ru": "<strong>Название:</strong> HOTEL ASTON LA SCALA<br><strong>SIRET:</strong> 798 563 003 00028 <strong>SIREN:</strong> 798 563 003<br><strong>RCS:</strong> NICE 798 563 003 - APE 5510Z <strong>Номер НДС (ЕС):</strong> FR93 798 563 003",
+    "ja": "<strong>名称：</strong>HOTEL ASTON LA SCALA<br><strong>SIRET：</strong>798 563 003 00028 <strong>SIREN：</strong>798 563 003<br><strong>RCS：</strong>NICE 798 563 003 - APE 5510Z <strong>EU付加価値税番号：</strong>FR93 798 563 003",
+    "zh": "<strong>名称：</strong>HOTEL ASTON LA SCALA<br><strong>SIRET：</strong>798 563 003 00028 <strong>SIREN：</strong>798 563 003<br><strong>RCS：</strong>NICE 798 563 003 - APE 5510Z <strong>欧盟增值税号：</strong>FR93 798 563 003",
+    "ko": "<strong>명칭:</strong> HOTEL ASTON LA SCALA<br><strong>SIRET:</strong> 798 563 003 00028 <strong>SIREN:</strong> 798 563 003<br><strong>RCS:</strong> NICE 798 563 003 - APE 5510Z <strong>EU 부가가치세 번호:</strong> FR93 798 563 003"
+  },
+  "global.mentions-mediateur": {
+    "fr": "<strong>Nom :</strong> Médiateur de la consommation<br><strong>Adresse :</strong> Médiation Tourisme et Voyage<br>Service dépôt des saisines<br>CS 30958<br>75383 Paris Cedex 08<br><strong>Site internet :</strong> <a href=\"https://www.mtv.travel/\" rel=\"noopener\">www.mtv.travel</a>",
+    "en": "<strong>Name:</strong> Consumer mediator<br><strong>Address:</strong> Médiation Tourisme et Voyage<br>Service dépôt des saisines<br>CS 30958<br>75383 Paris Cedex 08<br><strong>Website:</strong> <a href=\"https://www.mtv.travel/\" rel=\"noopener\">www.mtv.travel</a>",
+    "es": "<strong>Nombre:</strong> Mediador de consumo<br><strong>Dirección:</strong> Médiation Tourisme et Voyage<br>Service dépôt des saisines<br>CS 30958<br>75383 Paris Cedex 08<br><strong>Sitio web:</strong> <a href=\"https://www.mtv.travel/\" rel=\"noopener\">www.mtv.travel</a>",
+    "it": "<strong>Nome:</strong> Mediatore dei consumatori<br><strong>Indirizzo:</strong> Médiation Tourisme et Voyage<br>Service dépôt des saisines<br>CS 30958<br>75383 Paris Cedex 08<br><strong>Sito web:</strong> <a href=\"https://www.mtv.travel/\" rel=\"noopener\">www.mtv.travel</a>",
+    "de": "<strong>Name:</strong> Verbraucherschlichtungsstelle<br><strong>Adresse:</strong> Médiation Tourisme et Voyage<br>Service dépôt des saisines<br>CS 30958<br>75383 Paris Cedex 08<br><strong>Website:</strong> <a href=\"https://www.mtv.travel/\" rel=\"noopener\">www.mtv.travel</a>",
+    "pt": "<strong>Nome:</strong> Mediador do consumidor<br><strong>Endereço:</strong> Médiation Tourisme et Voyage<br>Service dépôt des saisines<br>CS 30958<br>75383 Paris Cedex 08<br><strong>Site:</strong> <a href=\"https://www.mtv.travel/\" rel=\"noopener\">www.mtv.travel</a>",
+    "sv": "<strong>Namn:</strong> Konsumentmedlare<br><strong>Adress:</strong> Médiation Tourisme et Voyage<br>Service dépôt des saisines<br>CS 30958<br>75383 Paris Cedex 08<br><strong>Webbplats:</strong> <a href=\"https://www.mtv.travel/\" rel=\"noopener\">www.mtv.travel</a>",
+    "no": "<strong>Navn:</strong> Forbrukermegler<br><strong>Adresse:</strong> Médiation Tourisme et Voyage<br>Service dépôt des saisines<br>CS 30958<br>75383 Paris Cedex 08<br><strong>Nettsted:</strong> <a href=\"https://www.mtv.travel/\" rel=\"noopener\">www.mtv.travel</a>",
+    "el": "<strong>Επωνυμία:</strong> Διαμεσολαβητής καταναλωτών<br><strong>Διεύθυνση:</strong> Médiation Tourisme et Voyage<br>Service dépôt des saisines<br>CS 30958<br>75383 Paris Cedex 08<br><strong>Ιστότοπος:</strong> <a href=\"https://www.mtv.travel/\" rel=\"noopener\">www.mtv.travel</a>",
+    "ru": "<strong>Название:</strong> Медиатор по защите прав потребителей<br><strong>Адрес:</strong> Médiation Tourisme et Voyage<br>Service dépôt des saisines<br>CS 30958<br>75383 Paris Cedex 08<br><strong>Сайт:</strong> <a href=\"https://www.mtv.travel/\" rel=\"noopener\">www.mtv.travel</a>",
+    "ja": "<strong>名称：</strong>消費者調停機関<br><strong>住所：</strong>Médiation Tourisme et Voyage<br>Service dépôt des saisines<br>CS 30958<br>75383 Paris Cedex 08<br><strong>ウェブサイト：</strong><a href=\"https://www.mtv.travel/\" rel=\"noopener\">www.mtv.travel</a>",
+    "zh": "<strong>名称：</strong>消费者调解机构<br><strong>地址：</strong>Médiation Tourisme et Voyage<br>Service dépôt des saisines<br>CS 30958<br>75383 Paris Cedex 08<br><strong>网站：</strong><a href=\"https://www.mtv.travel/\" rel=\"noopener\">www.mtv.travel</a>",
+    "ko": "<strong>명칭:</strong> 소비자 조정 기관<br><strong>주소:</strong> Médiation Tourisme et Voyage<br>Service dépôt des saisines<br>CS 30958<br>75383 Paris Cedex 08<br><strong>웹사이트:</strong> <a href=\"https://www.mtv.travel/\" rel=\"noopener\">www.mtv.travel</a>"
+  }
+}
