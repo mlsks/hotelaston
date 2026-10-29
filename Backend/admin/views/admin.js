@@ -90,8 +90,8 @@ const textToCodes = (text) => Object.fromEntries(text.split('\n')
 Alpine.data('settingsView', () => ({
   settings: null,
   form: null,
-  jsonld: {},
-  jsonErrors: {},
+  jsonld: '',
+  jsonError: '',
   saving: false,
   async init() {
     try {
@@ -110,18 +110,18 @@ Alpine.data('settingsView', () => ({
       reviews_source: s.reviews_meta?.source || 'demo', google_rating: s.reviews_meta?.google?.rating ?? '', google_url: s.reviews_meta?.google?.url || '',
       home_threshold: s.reviews_meta?.homeRatingThreshold ?? 4,
     };
-    this.jsonld = Object.fromEntries(Object.entries(s.jsonld_graph || {}).map(([k, v]) => [k, JSON.stringify(v, null, 2)]));
+    this.jsonld = JSON.stringify(s.jsonld_graph || { '@context': 'https://schema.org', '@graph': [] }, null, 2);
   },
-  checkJson(lang) {
+  checkJson() {
     try {
-      JSON.parse(this.jsonld[lang]);
-      delete this.jsonErrors[lang];
+      const g = JSON.parse(this.jsonld);
+      this.jsonError = Array.isArray(g?.['@graph']) ? '' : 'Une liste « @graph » est attendue.';
     } catch (err) {
-      this.jsonErrors[lang] = `JSON invalide : ${err.message}`;
+      this.jsonError = `JSON invalide : ${err.message}`;
     }
   },
   async save() {
-    if (Object.keys(this.jsonErrors).length) {
+    if (this.jsonError) {
       this.$store.toast.push('Corrigez le JSON des données structurées avant d’enregistrer.', 'error');
       return;
     }
@@ -145,7 +145,7 @@ Alpine.data('settingsView', () => ({
           ...this.settings.reviews_meta, source: f.reviews_source, homeRatingThreshold: Number(f.home_threshold),
           google: { ...this.settings.reviews_meta?.google, rating: f.google_rating === '' ? null : Number(f.google_rating), url: f.google_url },
         },
-        jsonld_graph: Object.fromEntries(Object.entries(this.jsonld).map(([k, v]) => [k, JSON.parse(v)])),
+        jsonld_graph: JSON.parse(this.jsonld),
       });
       this.$store.ui.dirty = false;
       this.$store.toast.push('Réglages enregistrés : ils s’appliquent à la prochaine publication.');

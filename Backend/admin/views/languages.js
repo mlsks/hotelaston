@@ -49,6 +49,7 @@ Alpine.data('translationsView', () => ({
     if (u.module === 'pages') return `#/pages/${u.id}?lang=${lang}&tab=seo`;
     if (u.module === 'entries') {
       if (u.ref.startsWith('ui.')) return `#/textes/ui?lang=${lang}&entry=${u.id}`;
+      if (u.ref.startsWith('jsonld.')) return `#/textes/jsonld?lang=${lang}&entry=${u.id}`;
       const page = this.pages.find((p) => p.key === u.ref.split('.')[0]);
       return page ? `#/pages/${page.id}?lang=${lang}&entry=${u.id}` : `#/textes/global?lang=${lang}&entry=${u.id}`;
     }

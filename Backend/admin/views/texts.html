@@ -4,10 +4,11 @@
       <h1 class="page-title" x-text="title"></h1>
       <p class="mt-1 text-slate-600" x-show="scope === 'global'">En-tête, pied de page, bouton du bas, chat : les textes présents sur toutes les pages. Les liens des menus et du pied de page se modifient dans <a href="#/menus" class="text-azure-700 underline">Menus et liens</a>.</p>
       <p class="mt-1 text-slate-600" x-show="scope === 'ui'">Les textes affichés par le JavaScript du site : module de réservation, avis, formulaires, chat, bandeaux, popup. Les éléments entre accolades, comme <code class="rounded bg-slate-100 px-1">{n}</code>, sont remplacés par une valeur : gardez-les tels quels.</p>
+      <p class="mt-1 text-slate-600" x-show="scope === 'jsonld'">Les textes des données structurées lues par Google et les assistants IA : description de l’hôtel, équipements, restaurant et bars. Ils ne s’affichent pas sur les pages. Sans traduction prête, c’est l’anglais qui est repris, sinon le français. La structure se règle dans <a href="#/reglages" class="text-azure-700 underline">Réglages</a>.</p>
     </div>
     <template data-include="lang-tabs"></template>
   </div>
-  <template x-if="['global', 'ui'].includes(scope)">
+  <template x-if="['global', 'ui', 'jsonld'].includes(scope)">
     <div x-data="entriesEditor({ scope: scope })">
       <template data-include="entries"></template>
     </div>

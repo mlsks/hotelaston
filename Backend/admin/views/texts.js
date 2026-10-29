@@ -120,7 +120,7 @@ Alpine.data('entriesEditor', (source, opts = {}) => ({
 
 Alpine.data('textsView', () => ({
   get scope() { return this.$store.route.params.scope; },
-  get title() { return this.scope === 'ui' ? 'Textes de l’interface' : 'Textes communs'; },
+  get title() { return { ui: 'Textes de l’interface', jsonld: 'Données structurées (JSON-LD)' }[this.scope] || 'Textes communs'; },
   init() {
     setTitle(this.title);
   },

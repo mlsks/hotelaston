@@ -268,7 +268,12 @@ export function generateSite({ source, mode, now, previousState = new Map(), onl
   const homes = pages.filter((p) => p.kind === 'page' && p.path === `/${p.lang}/`)
     .map((p) => ({ lang: p.lang, name: source.lang(p.lang).native_name || p.lang, url: config.siteUrl + p.path }));
   for (const lang of new Set(pages.map((p) => p.lang))) {
-    const txt = llmsTxt({ siteUrl: config.siteUrl, lang, graph: globalGraph(source, lang), pages, homes });
+    const url = (key) => {
+      const href = routes.get(lang).get(key === 'accueil' ? '' : key);
+      return href ? config.siteUrl + href.slice(basePath.length) : null;
+    };
+    const graph = globalGraph(source, lang, { text: (key) => source.relayText(key, lang), url, locale: source.lang(lang).locale });
+    const txt = llmsTxt({ siteUrl: config.siteUrl, lang, graph, pages, homes });
     files.set(`${lang}/llms.txt`, txt);
     if (lang === defaultLang) files.set('llms.txt', txt);
   }
