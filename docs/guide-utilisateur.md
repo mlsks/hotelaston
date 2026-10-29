@@ -114,6 +114,15 @@ L'en-tête, le pied de page, le fil d'Ariane des fiches, le bouton du bas sur mo
 
 Les **mentions légales** du bas du pied de page (codes GDS, nom de la société, SIRET, SIREN, RCS, APE, TVA intracommunautaire, médiateur de la consommation) sont ici aussi, dans le groupe **Pied de page · Mentions légales** : trois textes, un par paragraphe. Elles sont livrées traduites dans toutes les langues : seuls les libellés (« Nom », « Adresse », « Site internet », « Médiateur de la consommation »…) changent d'une langue à l'autre ; les numéros, les noms propres et l'adresse restent identiques. Si un numéro change, le corriger en français puis dans chaque langue (onglets de langue), sinon les autres langues gardent l'ancien.
 
+### Page Mentions légales
+
+La page **Mentions légales** (lien en bas du pied de page, dans toutes les langues) reprend celle de l'ancien site : éditeur, hébergeur, propriété intellectuelle, disponibilité du site, médiateur de la consommation, Bloctel, litiges, droit de rétractation. Elle se modifie comme les autres dans **Pages → Mentions légales → Textes**, une section par rubrique. Ses textes sont livrés traduits dans les 13 langues.
+
+- **Hébergeur** : quatre champs à remplir une fois l'hébergeur choisi : **raison sociale**, **adresse postale**, **téléphone** et **site internet** (adresse complète, `https://…`). Ils valent pour toutes les langues : les saisir en français suffit. Tant qu'ils sont vides, la rubrique Hébergeur n'apparaît pas sur le site et la publication le rappelle dans ses avertissements ; un champ laissé vide masque seulement sa ligne. La loi demande le nom, l'adresse et le téléphone de l'hébergeur : à remplir avant la mise en ligne.
+- **Directeur de la publication** : même principe (nom à saisir en français, ligne masquée tant qu'il est vide).
+- **Société** (nom, SIRET, SIREN, RCS, APE, TVA) : c'est le même texte que dans le pied de page, modifiable dans **Textes communs → Pied de page · Mentions légales**. Le corriger là change la page et le pied de page.
+- Les libellés (« Société : », « Adresse : »…) et les paragraphes se traduisent comme le reste ; changer un paragraphe en français fait passer ses traductions « à revoir ».
+
 ### Menus et liens
 
 **Menus et liens** regroupe toutes les listes de liens du site :

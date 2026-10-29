@@ -73,7 +73,7 @@ export function entryKind(entry) {
   const part = entry.key.split('.').slice(1).join('.').replace(/^\d+-/, '');
   const [tag, attr] = part.split('@');
   if (attr) return ATTRS[attr] || `Attribut ${attr}`;
-  return TAGS[tag] || 'Texte';
+  return TAGS[tag] || entry.label || 'Texte';
 }
 
 export function slugify(text) {

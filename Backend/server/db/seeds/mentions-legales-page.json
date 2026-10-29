@@ -1,0 +1,961 @@
+{
+  "page": {
+    "key": "mentions-legales",
+    "parent": "accueil",
+    "i18n": {
+      "fr": {
+        "slug": "mentions-legales",
+        "title": "Mentions légales | Hôtel Aston La Scala, Nice",
+        "description": "Mentions légales du site de l'Hôtel Aston La Scala à Nice : éditeur, hébergeur, propriété intellectuelle, médiateur de la consommation, droit de rétractation."
+      },
+      "en": {
+        "slug": "legal-notice",
+        "title": "Legal notice | Hôtel Aston La Scala, Nice",
+        "description": "Legal notice for the Hôtel Aston La Scala website in Nice: publisher, hosting, intellectual property, consumer mediation and right of withdrawal."
+      },
+      "es": {
+        "slug": "aviso-legal",
+        "title": "Aviso legal | Hôtel Aston La Scala, Niza",
+        "description": "Aviso legal del sitio web del Hôtel Aston La Scala en Niza: editor, alojamiento, propiedad intelectual, mediación de consumo y derecho de desistimiento."
+      },
+      "it": {
+        "slug": "note-legali",
+        "title": "Note legali | Hôtel Aston La Scala, Nizza",
+        "description": "Note legali del sito dell'Hôtel Aston La Scala a Nizza: editore, hosting, proprietà intellettuale, mediazione dei consumatori e diritto di recesso."
+      },
+      "de": {
+        "slug": "impressum",
+        "title": "Impressum | Hôtel Aston La Scala, Nizza",
+        "description": "Impressum der Website des Hôtel Aston La Scala in Nizza: Herausgeber, Hosting, geistiges Eigentum, Verbraucherschlichtung und Widerrufsrecht."
+      },
+      "pt": {
+        "slug": "aviso-legal",
+        "title": "Aviso legal | Hôtel Aston La Scala, Nice",
+        "description": "Aviso legal do site do Hôtel Aston La Scala em Nice: editor, alojamento, propriedade intelectual, mediação do consumidor e direito de livre resolução."
+      },
+      "sv": {
+        "slug": "rattslig-information",
+        "title": "Rättslig information | Hôtel Aston La Scala, Nice",
+        "description": "Rättslig information om webbplatsen för Hôtel Aston La Scala i Nice: utgivare, webbhotell, immateriella rättigheter, konsumentmedling och ångerrätt."
+      },
+      "no": {
+        "slug": "juridisk-informasjon",
+        "title": "Juridisk informasjon | Hôtel Aston La Scala, Nice",
+        "description": "Juridisk informasjon om nettstedet til Hôtel Aston La Scala i Nice: utgiver, webhotell, immaterielle rettigheter, forbrukermegling og angrerett."
+      },
+      "el": {
+        "slug": "nomiki-simeiosi",
+        "title": "Νομική σημείωση | Hôtel Aston La Scala, Νίκαια",
+        "description": "Νομική σημείωση του ιστότοπου του Hôtel Aston La Scala στη Νίκαια: εκδότης, φιλοξενία, πνευματική ιδιοκτησία, διαμεσολάβηση καταναλωτών, υπαναχώρηση."
+      },
+      "ru": {
+        "slug": "pravovaya-informatsiya",
+        "title": "Правовая информация | Hôtel Aston La Scala, Ницца",
+        "description": "Правовая информация сайта Hôtel Aston La Scala в Ницце: издатель, хостинг, интеллектуальная собственность, потребительская медиация, право на отказ."
+      },
+      "ja": {
+        "slug": "legal-notice",
+        "title": "法的情報 | Hôtel Aston La Scala（ニース）",
+        "description": "ニースのHôtel Aston La Scalaのウェブサイトに関する法的情報：運営者、ホスティング、知的財産権、消費者調停、撤回権。"
+      },
+      "zh": {
+        "slug": "legal-notice",
+        "title": "法律声明 | Hôtel Aston La Scala，尼斯",
+        "description": "尼斯 Hôtel Aston La Scala 网站法律声明：网站发布者、托管、知识产权、消费者调解及撤销权。"
+      },
+      "ko": {
+        "slug": "legal-notice",
+        "title": "법적 고지 | Hôtel Aston La Scala, 니스",
+        "description": "니스 Hôtel Aston La Scala 웹사이트 법적 고지: 발행인, 호스팅, 지적 재산권, 소비자 조정 및 청약 철회권."
+      }
+    }
+  },
+  "entries": {
+    "mentions-legales.fil-aria": {
+      "section": "Fil d’Ariane",
+      "label": "Fil d’Ariane (lu par les lecteurs d’écran)",
+      "type": "text",
+      "translatable": 1,
+      "required": 1,
+      "values": {
+        "fr": "Fil d'Ariane",
+        "en": "Breadcrumb",
+        "es": "Ruta de navegación",
+        "it": "Percorso di navigazione",
+        "de": "Brotkrümelnavigation",
+        "pt": "Navegação estrutural",
+        "sv": "Brödsmulor",
+        "no": "Brødsmulesti",
+        "el": "Διαδρομή πλοήγησης",
+        "ru": "Навигационная цепочка",
+        "ja": "パンくずリスト",
+        "zh": "面包屑导航",
+        "ko": "이동 경로"
+      }
+    },
+    "mentions-legales.fil-accueil": {
+      "section": "Fil d’Ariane",
+      "label": "Fil d’Ariane : Accueil",
+      "type": "text",
+      "translatable": 1,
+      "required": 1,
+      "values": {
+        "fr": "Accueil",
+        "en": "Home",
+        "es": "Inicio",
+        "it": "Home",
+        "de": "Startseite",
+        "pt": "Início",
+        "sv": "Startsida",
+        "no": "Forside",
+        "el": "Αρχική",
+        "ru": "Главная",
+        "ja": "ホーム",
+        "zh": "首页",
+        "ko": "홈"
+      }
+    },
+    "mentions-legales.fil-page": {
+      "section": "Fil d’Ariane",
+      "label": "Fil d’Ariane : page en cours",
+      "type": "text",
+      "translatable": 1,
+      "required": 1,
+      "values": {
+        "fr": "Mentions légales",
+        "en": "Legal notice",
+        "es": "Aviso legal",
+        "it": "Note legali",
+        "de": "Impressum",
+        "pt": "Aviso legal",
+        "sv": "Rättslig information",
+        "no": "Juridisk informasjon",
+        "el": "Νομική σημείωση",
+        "ru": "Правовая информация",
+        "ja": "法的情報",
+        "zh": "法律声明",
+        "ko": "법적 고지"
+      }
+    },
+    "mentions-legales.titre": {
+      "section": "En-tête",
+      "label": "Titre de la page (H1)",
+      "type": "text",
+      "translatable": 1,
+      "required": 1,
+      "values": {
+        "fr": "Mentions légales",
+        "en": "Legal notice",
+        "es": "Aviso legal",
+        "it": "Note legali",
+        "de": "Impressum",
+        "pt": "Aviso legal",
+        "sv": "Rättslig information",
+        "no": "Juridisk informasjon",
+        "el": "Νομική σημείωση",
+        "ru": "Правовая информация",
+        "ja": "法的情報",
+        "zh": "法律声明",
+        "ko": "법적 고지"
+      }
+    },
+    "mentions-legales.editeur-titre": {
+      "section": "Éditeur",
+      "label": "Titre de la rubrique",
+      "type": "text",
+      "translatable": 1,
+      "required": 1,
+      "values": {
+        "fr": "Éditeur",
+        "en": "Publisher",
+        "es": "Editor",
+        "it": "Editore",
+        "de": "Herausgeber",
+        "pt": "Editor",
+        "sv": "Utgivare",
+        "no": "Utgiver",
+        "el": "Εκδότης",
+        "ru": "Издатель",
+        "ja": "運営者",
+        "zh": "网站发布者",
+        "ko": "발행인"
+      }
+    },
+    "mentions-legales.editeur": {
+      "section": "Éditeur",
+      "label": "Éditeur du site (société, capital, siège, téléphone)",
+      "type": "richtext",
+      "translatable": 1,
+      "required": 1,
+      "values": {
+        "fr": "Le site internet accessible, notamment, à l'adresse https://hotel-aston.com/ (ci-après : le « Site ») est édité par la société HOTEL ASTON LA SCALA, société de droit français au capital social de 10 000 euros, dont le siège social est situé 12 avenue Félix Faure, 06000 Nice ; numéro de téléphone : 04 92 17 53 00 (ci-après dénommée « HOTEL ASTON LA SCALA »).",
+        "en": "The website accessible in particular at https://hotel-aston.com/ (hereinafter the “Site”) is published by HOTEL ASTON LA SCALA, a company governed by French law with a share capital of 10,000 euros, whose registered office is at 12 avenue Félix Faure, 06000 Nice, France; telephone: +33 4 92 17 53 00 (hereinafter “HOTEL ASTON LA SCALA”).",
+        "es": "El sitio web accesible, en particular, en la dirección https://hotel-aston.com/ (en adelante, el «Sitio») es editado por la sociedad HOTEL ASTON LA SCALA, sociedad de derecho francés con un capital social de 10 000 euros, cuyo domicilio social se encuentra en 12 avenue Félix Faure, 06000 Niza (Francia); teléfono: +33 4 92 17 53 00 (en adelante, «HOTEL ASTON LA SCALA»).",
+        "it": "Il sito internet accessibile, in particolare, all'indirizzo https://hotel-aston.com/ (di seguito il «Sito») è pubblicato dalla società HOTEL ASTON LA SCALA, società di diritto francese con capitale sociale di 10.000 euro, con sede legale in 12 avenue Félix Faure, 06000 Nizza (Francia); telefono: +33 4 92 17 53 00 (di seguito «HOTEL ASTON LA SCALA»).",
+        "de": "Die insbesondere unter der Adresse https://hotel-aston.com/ erreichbare Website (nachfolgend die „Website“) wird herausgegeben von der Gesellschaft HOTEL ASTON LA SCALA, einer Gesellschaft französischen Rechts mit einem Stammkapital von 10.000 Euro und Sitz in 12 avenue Félix Faure, 06000 Nizza (Frankreich); Telefon: +33 4 92 17 53 00 (nachfolgend „HOTEL ASTON LA SCALA“).",
+        "pt": "O site acessível, nomeadamente, no endereço https://hotel-aston.com/ (doravante o «Site») é editado pela sociedade HOTEL ASTON LA SCALA, sociedade de direito francês com um capital social de 10 000 euros, com sede social em 12 avenue Félix Faure, 06000 Nice (França); telefone: +33 4 92 17 53 00 (doravante «HOTEL ASTON LA SCALA»).",
+        "sv": "Webbplatsen som bland annat nås på adressen https://hotel-aston.com/ (nedan ”Webbplatsen”) ges ut av bolaget HOTEL ASTON LA SCALA, ett bolag enligt fransk rätt med ett aktiekapital på 10 000 euro och med säte på 12 avenue Félix Faure, 06000 Nice, Frankrike; telefon: +33 4 92 17 53 00 (nedan ”HOTEL ASTON LA SCALA”).",
+        "no": "Nettstedet som blant annet er tilgjengelig på adressen https://hotel-aston.com/ (heretter «Nettstedet») utgis av selskapet HOTEL ASTON LA SCALA, et selskap underlagt fransk rett med en aksjekapital på 10 000 euro og forretningsadresse 12 avenue Félix Faure, 06000 Nice, Frankrike; telefon: +33 4 92 17 53 00 (heretter «HOTEL ASTON LA SCALA»).",
+        "el": "Ο ιστότοπος που είναι προσβάσιμος, μεταξύ άλλων, στη διεύθυνση https://hotel-aston.com/ (εφεξής ο «Ιστότοπος») εκδίδεται από την εταιρεία HOTEL ASTON LA SCALA, εταιρεία γαλλικού δικαίου με μετοχικό κεφάλαιο 10.000 ευρώ, με έδρα στη διεύθυνση 12 avenue Félix Faure, 06000 Νίκαια, Γαλλία· τηλέφωνο: +33 4 92 17 53 00 (εφεξής η «HOTEL ASTON LA SCALA»).",
+        "ru": "Сайт, доступный, в частности, по адресу https://hotel-aston.com/ (далее — «Сайт»), издаётся компанией HOTEL ASTON LA SCALA — обществом, учреждённым по французскому праву, с уставным капиталом 10 000 евро, зарегистрированный офис которого находится по адресу: 12 avenue Félix Faure, 06000 Ницца, Франция; телефон: +33 4 92 17 53 00 (далее — «HOTEL ASTON LA SCALA»).",
+        "ja": "主に https://hotel-aston.com/ でアクセスできるウェブサイト（以下「本サイト」）は、フランス法に基づく会社 HOTEL ASTON LA SCALA（資本金10,000ユーロ、本店所在地：12 avenue Félix Faure, 06000 Nice, France、電話：+33 4 92 17 53 00、以下「HOTEL ASTON LA SCALA」）が運営しています。",
+        "zh": "主要通过 https://hotel-aston.com/ 访问的网站（以下简称“本网站”）由 HOTEL ASTON LA SCALA 公司发布。该公司为依据法国法律设立的公司，注册资本为 10,000 欧元，注册地址为 12 avenue Félix Faure, 06000 Nice, France（法国尼斯），电话：+33 4 92 17 53 00（以下简称“HOTEL ASTON LA SCALA”）。",
+        "ko": "주로 https://hotel-aston.com/ 에서 접속할 수 있는 웹사이트(이하 “본 사이트”)는 프랑스 법에 따라 설립된 회사인 HOTEL ASTON LA SCALA(자본금 10,000유로, 본사 소재지: 12 avenue Félix Faure, 06000 Nice, France, 전화: +33 4 92 17 53 00, 이하 “HOTEL ASTON LA SCALA”)가 발행합니다."
+      }
+    },
+    "mentions-legales.directeur-libelle": {
+      "section": "Éditeur",
+      "label": "Libellé « Directeur de la publication »",
+      "type": "text",
+      "translatable": 1,
+      "required": 1,
+      "values": {
+        "fr": "Directeur de la publication :",
+        "en": "Publication director:",
+        "es": "Director de la publicación:",
+        "it": "Direttore della pubblicazione:",
+        "de": "Verantwortlich für den Inhalt:",
+        "pt": "Diretor da publicação:",
+        "sv": "Ansvarig utgivare:",
+        "no": "Ansvarlig redaktør:",
+        "el": "Διευθυντής δημοσίευσης:",
+        "ru": "Ответственный за публикацию:",
+        "ja": "発行責任者：",
+        "zh": "出版负责人：",
+        "ko": "발행 책임자:"
+      }
+    },
+    "mentions-legales.directeur-nom": {
+      "section": "Éditeur",
+      "label": "Directeur de la publication : nom (vide = ligne masquée)",
+      "type": "text",
+      "translatable": 0,
+      "required": 0,
+      "values": {
+        "fr": ""
+      }
+    },
+    "mentions-legales.conditions": {
+      "section": "Éditeur",
+      "label": "Conditions d’utilisation (paragraphe)",
+      "type": "richtext",
+      "translatable": 1,
+      "required": 1,
+      "values": {
+        "fr": "L'accès au Site ainsi que l'utilisation de son contenu s'effectuent dans le cadre des mentions d'utilisation décrites ci-après. Le fait d'accéder et de naviguer sur le Site constitue de la part de l'internaute une acceptation sans réserve des précisions suivantes.",
+        "en": "Access to the Site and use of its content are subject to the terms of use set out below. By accessing and browsing the Site, users accept the following provisions without reservation.",
+        "es": "El acceso al Sitio y el uso de su contenido se rigen por las condiciones de uso que se describen a continuación. El hecho de acceder al Sitio y navegar por él implica, por parte del internauta, la aceptación sin reservas de las siguientes disposiciones.",
+        "it": "L'accesso al Sito e l'utilizzo dei suoi contenuti sono disciplinati dalle condizioni d'uso descritte di seguito. Accedendo al Sito e navigandovi, l'utente accetta senza riserve le seguenti disposizioni.",
+        "de": "Der Zugang zur Website und die Nutzung ihrer Inhalte erfolgen im Rahmen der nachstehend beschriebenen Nutzungsbedingungen. Mit dem Aufrufen und Besuchen der Website erkennt der Nutzer die folgenden Bestimmungen vorbehaltlos an.",
+        "pt": "O acesso ao Site e a utilização do seu conteúdo estão sujeitos às condições de utilização descritas abaixo. O facto de aceder e navegar no Site implica, por parte do utilizador, a aceitação sem reservas das seguintes disposições.",
+        "sv": "Tillgången till Webbplatsen och användningen av dess innehåll omfattas av de användarvillkor som beskrivs nedan. Genom att besöka och navigera på Webbplatsen godtar användaren utan förbehåll följande bestämmelser.",
+        "no": "Tilgangen til Nettstedet og bruken av innholdet skjer i henhold til bruksvilkårene som er beskrevet nedenfor. Ved å besøke og navigere på Nettstedet godtar brukeren uten forbehold følgende bestemmelser.",
+        "el": "Η πρόσβαση στον Ιστότοπο και η χρήση του περιεχομένου του διέπονται από τους όρους χρήσης που περιγράφονται παρακάτω. Με την πρόσβαση και την περιήγηση στον Ιστότοπο, ο χρήστης αποδέχεται ανεπιφύλακτα τις ακόλουθες διατάξεις.",
+        "ru": "Доступ к Сайту и использование его содержимого осуществляются в соответствии с условиями использования, изложенными ниже. Заходя на Сайт и просматривая его, пользователь безоговорочно принимает следующие положения.",
+        "ja": "本サイトへのアクセスおよびそのコンテンツの利用には、以下に定める利用条件が適用されます。本サイトにアクセスし閲覧することにより、利用者は以下の規定を無条件で承諾したものとみなされます。",
+        "zh": "访问本网站及使用其内容须遵守下文所述的使用条款。访问和浏览本网站即表示用户无保留地接受以下条款。",
+        "ko": "본 사이트에 대한 접속과 콘텐츠 이용에는 아래에 기술된 이용 조건이 적용됩니다. 본 사이트에 접속하여 둘러보는 것은 이용자가 다음 사항을 조건 없이 수락하는 것으로 간주됩니다."
+      }
+    },
+    "mentions-legales.hebergeur-titre": {
+      "section": "Hébergeur",
+      "label": "Titre de la rubrique",
+      "type": "text",
+      "translatable": 1,
+      "required": 1,
+      "values": {
+        "fr": "Hébergeur",
+        "en": "Hosting",
+        "es": "Alojamiento",
+        "it": "Hosting",
+        "de": "Hosting",
+        "pt": "Alojamento",
+        "sv": "Webbhotell",
+        "no": "Webhotell",
+        "el": "Φιλοξενία",
+        "ru": "Хостинг",
+        "ja": "ホスティング",
+        "zh": "网站托管",
+        "ko": "호스팅"
+      }
+    },
+    "mentions-legales.hebergeur-intro": {
+      "section": "Hébergeur",
+      "label": "Phrase d’introduction",
+      "type": "text",
+      "translatable": 1,
+      "required": 1,
+      "values": {
+        "fr": "Le Site est hébergé par :",
+        "en": "The Site is hosted by:",
+        "es": "El Sitio está alojado por:",
+        "it": "Il Sito è ospitato da:",
+        "de": "Die Website wird gehostet von:",
+        "pt": "O Site é alojado por:",
+        "sv": "Webbplatsen tillhandahålls av följande webbhotell:",
+        "no": "Nettstedet driftes av:",
+        "el": "Ο Ιστότοπος φιλοξενείται από:",
+        "ru": "Хостинг Сайта обеспечивает:",
+        "ja": "本サイトのホスティング事業者：",
+        "zh": "本网站由以下服务商托管：",
+        "ko": "본 사이트의 호스팅 업체:"
+      }
+    },
+    "mentions-legales.hebergeur-nom-libelle": {
+      "section": "Hébergeur",
+      "label": "Libellé « Société »",
+      "type": "text",
+      "translatable": 1,
+      "required": 1,
+      "values": {
+        "fr": "Société :",
+        "en": "Company:",
+        "es": "Empresa:",
+        "it": "Società:",
+        "de": "Unternehmen:",
+        "pt": "Empresa:",
+        "sv": "Företag:",
+        "no": "Selskap:",
+        "el": "Εταιρεία:",
+        "ru": "Компания:",
+        "ja": "会社名：",
+        "zh": "公司：",
+        "ko": "회사:"
+      }
+    },
+    "mentions-legales.hebergeur-nom": {
+      "section": "Hébergeur",
+      "label": "Hébergeur : raison sociale (à remplir)",
+      "type": "text",
+      "translatable": 0,
+      "required": 0,
+      "values": {
+        "fr": ""
+      }
+    },
+    "mentions-legales.hebergeur-adresse-libelle": {
+      "section": "Hébergeur",
+      "label": "Libellé « Adresse »",
+      "type": "text",
+      "translatable": 1,
+      "required": 1,
+      "values": {
+        "fr": "Adresse :",
+        "en": "Address:",
+        "es": "Dirección:",
+        "it": "Indirizzo:",
+        "de": "Adresse:",
+        "pt": "Morada:",
+        "sv": "Adress:",
+        "no": "Adresse:",
+        "el": "Διεύθυνση:",
+        "ru": "Адрес:",
+        "ja": "住所：",
+        "zh": "地址：",
+        "ko": "주소:"
+      }
+    },
+    "mentions-legales.hebergeur-adresse": {
+      "section": "Hébergeur",
+      "label": "Hébergeur : adresse postale (à remplir)",
+      "type": "text",
+      "translatable": 0,
+      "required": 0,
+      "values": {
+        "fr": ""
+      }
+    },
+    "mentions-legales.hebergeur-telephone-libelle": {
+      "section": "Hébergeur",
+      "label": "Libellé « Téléphone »",
+      "type": "text",
+      "translatable": 1,
+      "required": 1,
+      "values": {
+        "fr": "Téléphone :",
+        "en": "Telephone:",
+        "es": "Teléfono:",
+        "it": "Telefono:",
+        "de": "Telefon:",
+        "pt": "Telefone:",
+        "sv": "Telefon:",
+        "no": "Telefon:",
+        "el": "Τηλέφωνο:",
+        "ru": "Телефон:",
+        "ja": "電話：",
+        "zh": "电话：",
+        "ko": "전화:"
+      }
+    },
+    "mentions-legales.hebergeur-telephone": {
+      "section": "Hébergeur",
+      "label": "Hébergeur : téléphone (à remplir)",
+      "type": "text",
+      "translatable": 0,
+      "required": 0,
+      "values": {
+        "fr": ""
+      }
+    },
+    "mentions-legales.hebergeur-site-libelle": {
+      "section": "Hébergeur",
+      "label": "Libellé « Site internet »",
+      "type": "text",
+      "translatable": 1,
+      "required": 1,
+      "values": {
+        "fr": "Site internet :",
+        "en": "Website:",
+        "es": "Sitio web:",
+        "it": "Sito internet:",
+        "de": "Website:",
+        "pt": "Site:",
+        "sv": "Webbplats:",
+        "no": "Nettsted:",
+        "el": "Ιστότοπος:",
+        "ru": "Сайт:",
+        "ja": "ウェブサイト：",
+        "zh": "网站：",
+        "ko": "웹사이트:"
+      }
+    },
+    "mentions-legales.hebergeur-site": {
+      "section": "Hébergeur",
+      "label": "Hébergeur : site internet, https://… (à remplir)",
+      "type": "url",
+      "translatable": 0,
+      "required": 0,
+      "values": {
+        "fr": ""
+      }
+    },
+    "mentions-legales.propriete-titre": {
+      "section": "Propriété intellectuelle",
+      "label": "Titre de la rubrique",
+      "type": "text",
+      "translatable": 1,
+      "required": 1,
+      "values": {
+        "fr": "Propriété intellectuelle",
+        "en": "Intellectual property",
+        "es": "Propiedad intelectual",
+        "it": "Proprietà intellettuale",
+        "de": "Geistiges Eigentum",
+        "pt": "Propriedade intelectual",
+        "sv": "Immateriella rättigheter",
+        "no": "Immaterielle rettigheter",
+        "el": "Πνευματική ιδιοκτησία",
+        "ru": "Интеллектуальная собственность",
+        "ja": "知的財産権",
+        "zh": "知识产权",
+        "ko": "지적 재산권"
+      }
+    },
+    "mentions-legales.propriete-1": {
+      "section": "Propriété intellectuelle",
+      "label": "Paragraphe 1 : œuvres protégées",
+      "type": "richtext",
+      "translatable": 1,
+      "required": 1,
+      "values": {
+        "fr": "Le Site dans son ensemble, ainsi que chacun des éléments qui le composent (notamment textes, schémas, arborescences, logiciels, animations, images, photographies, illustrations, vidéos, représentations graphiques ou éditoriales, logos, etc.), constituent des œuvres de l'esprit protégées par le Code de la propriété intellectuelle ainsi que par toute autre législation internationale applicable.",
+        "en": "The Site as a whole, and each of its components (including texts, diagrams, site structure, software, animations, images, photographs, illustrations, videos, graphic or editorial representations, logos, etc.), are works protected by the French Intellectual Property Code and by any other applicable international legislation.",
+        "es": "El Sitio en su conjunto, así como cada uno de los elementos que lo componen (en particular textos, esquemas, estructura, programas informáticos, animaciones, imágenes, fotografías, ilustraciones, vídeos, representaciones gráficas o editoriales, logotipos, etc.), constituyen obras protegidas por el Código francés de la propiedad intelectual y por cualquier otra legislación internacional aplicable.",
+        "it": "Il Sito nel suo insieme, così come ciascuno degli elementi che lo compongono (in particolare testi, schemi, struttura, software, animazioni, immagini, fotografie, illustrazioni, video, rappresentazioni grafiche o editoriali, loghi, ecc.), costituiscono opere dell'ingegno tutelate dal Codice francese della proprietà intellettuale e da ogni altra normativa internazionale applicabile.",
+        "de": "Die Website als Ganzes sowie jeder ihrer Bestandteile (insbesondere Texte, Schemata, Strukturen, Software, Animationen, Bilder, Fotografien, Illustrationen, Videos, grafische oder redaktionelle Darstellungen, Logos usw.) sind geistige Werke, die durch das französische Gesetzbuch über das geistige Eigentum (Code de la propriété intellectuelle) sowie durch alle anderen anwendbaren internationalen Rechtsvorschriften geschützt sind.",
+        "pt": "O Site no seu conjunto, bem como cada um dos elementos que o compõem (nomeadamente textos, esquemas, estrutura, software, animações, imagens, fotografias, ilustrações, vídeos, representações gráficas ou editoriais, logótipos, etc.), constituem obras protegidas pelo Código francês da propriedade intelectual e por qualquer outra legislação internacional aplicável.",
+        "sv": "Webbplatsen i sin helhet, liksom vart och ett av de element som den består av (bland annat texter, scheman, strukturer, programvara, animationer, bilder, fotografier, illustrationer, videor, grafiska eller redaktionella framställningar, logotyper osv.), utgör verk som skyddas av den franska immaterialrättslagen (Code de la propriété intellectuelle) och av all annan tillämplig internationell lagstiftning.",
+        "no": "Nettstedet som helhet, og hvert av elementene det består av (blant annet tekster, skjemaer, strukturer, programvare, animasjoner, bilder, fotografier, illustrasjoner, videoer, grafiske eller redaksjonelle fremstillinger, logoer osv.), er åndsverk som er beskyttet av den franske loven om immaterielle rettigheter (Code de la propriété intellectuelle) og av all annen gjeldende internasjonal lovgivning.",
+        "el": "Ο Ιστότοπος στο σύνολό του, καθώς και καθένα από τα στοιχεία που τον αποτελούν (ιδίως κείμενα, διαγράμματα, δομή, λογισμικό, κινούμενες εικόνες, εικόνες, φωτογραφίες, εικονογραφήσεις, βίντεο, γραφικές ή συντακτικές αναπαραστάσεις, λογότυπα κ.λπ.), αποτελούν πνευματικά έργα που προστατεύονται από τον γαλλικό Κώδικα Πνευματικής Ιδιοκτησίας και από κάθε άλλη εφαρμοστέα διεθνή νομοθεσία.",
+        "ru": "Сайт в целом, а также каждый из составляющих его элементов (в частности, тексты, схемы, структура, программное обеспечение, анимация, изображения, фотографии, иллюстрации, видео, графические или редакционные материалы, логотипы и т. д.) являются произведениями, охраняемыми Кодексом интеллектуальной собственности Франции, а также любым другим применимым международным законодательством.",
+        "ja": "本サイト全体および本サイトを構成する各要素（テキスト、図表、構成、ソフトウェア、アニメーション、画像、写真、イラスト、動画、グラフィックまたは編集上の表現、ロゴなど）は、フランス知的財産法典およびその他の適用される国際法令によって保護される著作物です。",
+        "zh": "本网站整体及其各组成部分（包括但不限于文字、图表、结构、软件、动画、图像、照片、插图、视频、图形或编辑表现形式、标识等）均为受《法国知识产权法典》及其他适用的国际法律保护的作品。",
+        "ko": "본 사이트 전체와 이를 구성하는 각 요소(텍스트, 도표, 구조, 소프트웨어, 애니메이션, 이미지, 사진, 일러스트레이션, 동영상, 그래픽 또는 편집상의 표현, 로고 등)는 프랑스 지적재산권법 및 기타 적용 가능한 모든 국제 법령에 의해 보호되는 저작물입니다."
+      }
+    },
+    "mentions-legales.propriete-2": {
+      "section": "Propriété intellectuelle",
+      "label": "Paragraphe 2 : droits de l’hôtel",
+      "type": "richtext",
+      "translatable": 1,
+      "required": 1,
+      "values": {
+        "fr": "HOTEL ASTON LA SCALA est seule habilitée (directement ou par l'effet de licences ou d'autorisations) à utiliser les éléments composant le Site, les noms de domaine, les marques, les modèles, etc., ainsi que les images et contenus éditoriaux qui y sont reproduits.",
+        "en": "HOTEL ASTON LA SCALA alone is authorised (directly or by virtue of licences or authorisations) to use the components of the Site, the domain names, trademarks, designs, etc., as well as the images and editorial content reproduced on it.",
+        "es": "Solo HOTEL ASTON LA SCALA está facultada (directamente o en virtud de licencias o autorizaciones) para utilizar los elementos que componen el Sitio, los nombres de dominio, las marcas, los modelos, etc., así como las imágenes y los contenidos editoriales que en él se reproducen.",
+        "it": "Solo HOTEL ASTON LA SCALA è autorizzata (direttamente o in virtù di licenze o autorizzazioni) a utilizzare gli elementi che compongono il Sito, i nomi di dominio, i marchi, i modelli, ecc., nonché le immagini e i contenuti editoriali che vi sono riprodotti.",
+        "de": "Allein HOTEL ASTON LA SCALA ist (unmittelbar oder aufgrund von Lizenzen oder Genehmigungen) berechtigt, die Bestandteile der Website, die Domainnamen, Marken, Designs usw. sowie die darauf wiedergegebenen Bilder und redaktionellen Inhalte zu nutzen.",
+        "pt": "Apenas a HOTEL ASTON LA SCALA está habilitada (diretamente ou por força de licenças ou autorizações) a utilizar os elementos que compõem o Site, os nomes de domínio, as marcas, os modelos, etc., bem como as imagens e os conteúdos editoriais nele reproduzidos.",
+        "sv": "Endast HOTEL ASTON LA SCALA har rätt (direkt eller genom licenser eller tillstånd) att använda de element som Webbplatsen består av, domännamnen, varumärkena, mönstren osv., liksom de bilder och det redaktionella innehåll som återges där.",
+        "no": "Kun HOTEL ASTON LA SCALA har rett (direkte eller i kraft av lisenser eller tillatelser) til å bruke elementene som Nettstedet består av, domenenavnene, varemerkene, designene osv., samt bildene og det redaksjonelle innholdet som gjengis der.",
+        "el": "Μόνο η HOTEL ASTON LA SCALA έχει το δικαίωμα (άμεσα ή βάσει αδειών ή εξουσιοδοτήσεων) να χρησιμοποιεί τα στοιχεία που αποτελούν τον Ιστότοπο, τα ονόματα τομέα, τα εμπορικά σήματα, τα σχέδια κ.λπ., καθώς και τις εικόνες και το συντακτικό περιεχόμενο που αναπαράγονται σε αυτόν.",
+        "ru": "Только HOTEL ASTON LA SCALA вправе (непосредственно или на основании лицензий или разрешений) использовать элементы, составляющие Сайт, доменные имена, товарные знаки, образцы и т. д., а также воспроизведённые на нём изображения и редакционные материалы.",
+        "ja": "本サイトを構成する要素、ドメイン名、商標、意匠など、ならびに本サイトに掲載されている画像および編集コンテンツを使用する権利を有するのは、HOTEL ASTON LA SCALA のみです（直接、またはライセンスもしくは許諾に基づく）。",
+        "zh": "只有 HOTEL ASTON LA SCALA 有权（直接或通过许可或授权）使用构成本网站的各项内容、域名、商标、外观设计等，以及本网站上转载的图像和编辑内容。",
+        "ko": "본 사이트를 구성하는 요소, 도메인 이름, 상표, 디자인 등과 본 사이트에 게재된 이미지 및 편집 콘텐츠를 사용할 권한은(직접 또는 라이선스나 허가에 따라) HOTEL ASTON LA SCALA에게만 있습니다."
+      }
+    },
+    "mentions-legales.propriete-3": {
+      "section": "Propriété intellectuelle",
+      "label": "Paragraphe 3 : usages interdits",
+      "type": "richtext",
+      "translatable": 1,
+      "required": 1,
+      "values": {
+        "fr": "L'usage de tout ou partie du Site, notamment par téléchargement, reproduction, transmission, représentation ou diffusion, à d'autres fins que la consultation et l'utilisation du Site à titre personnel et privé par l'internaute dans un but non commercial, est strictement interdit. La violation de ces dispositions expose son auteur aux sanctions prévues tant par le Code de la propriété intellectuelle, au titre notamment de la contrefaçon de droits d'auteur et du droit des marques, que par le Code civil en matière de responsabilité civile.",
+        "en": "Any use of all or part of the Site, in particular by downloading, reproduction, transmission, representation or distribution, for purposes other than consulting and using the Site on a personal, private and non-commercial basis, is strictly prohibited. Any breach of these provisions exposes its author to the penalties provided for both by the French Intellectual Property Code, in particular for infringement of copyright and trademark rights, and by the French Civil Code with regard to civil liability.",
+        "es": "Queda estrictamente prohibido el uso de la totalidad o de parte del Sitio, en particular mediante descarga, reproducción, transmisión, representación o difusión, con fines distintos de la consulta y el uso del Sitio a título personal y privado por parte del internauta y sin fines comerciales. El incumplimiento de estas disposiciones expone a su autor a las sanciones previstas tanto por el Código francés de la propiedad intelectual, en particular por infracción de los derechos de autor y del derecho de marcas, como por el Código civil francés en materia de responsabilidad civil.",
+        "it": "È severamente vietato l'utilizzo di tutto o parte del Sito, in particolare mediante download, riproduzione, trasmissione, rappresentazione o diffusione, per fini diversi dalla consultazione e dall'utilizzo del Sito a titolo personale e privato da parte dell'utente e senza scopo commerciale. La violazione di tali disposizioni espone il suo autore alle sanzioni previste sia dal Codice francese della proprietà intellettuale, in particolare per contraffazione del diritto d'autore e del diritto dei marchi, sia dal Codice civile francese in materia di responsabilità civile.",
+        "de": "Jede Nutzung der Website ganz oder in Teilen, insbesondere durch Herunterladen, Vervielfältigung, Übertragung, Darstellung oder Verbreitung, zu anderen Zwecken als dem Aufrufen und der Nutzung der Website durch den Nutzer für persönliche, private und nicht kommerzielle Zwecke ist strengstens untersagt. Wer gegen diese Bestimmungen verstößt, setzt sich den Sanktionen aus, die sowohl das französische Gesetzbuch über das geistige Eigentum, insbesondere wegen Verletzung von Urheber- und Markenrechten, als auch das französische Zivilgesetzbuch im Bereich der zivilrechtlichen Haftung vorsehen.",
+        "pt": "É estritamente proibida a utilização da totalidade ou de parte do Site, nomeadamente por descarregamento, reprodução, transmissão, representação ou difusão, para fins que não sejam a consulta e a utilização do Site a título pessoal e privado pelo utilizador, sem fins comerciais. A violação destas disposições expõe o seu autor às sanções previstas tanto pelo Código francês da propriedade intelectual, nomeadamente por contrafação de direitos de autor e de direitos de marca, como pelo Código civil francês em matéria de responsabilidade civil.",
+        "sv": "All användning av Webbplatsen helt eller delvis, särskilt genom nedladdning, kopiering, överföring, återgivning eller spridning, för andra ändamål än användarens personliga, privata och icke-kommersiella visning och användning av Webbplatsen är strängt förbjuden. Den som bryter mot dessa bestämmelser kan drabbas av de påföljder som föreskrivs både i den franska immaterialrättslagen, särskilt för intrång i upphovsrätt och varumärkesrätt, och i den franska civillagen i fråga om skadeståndsansvar.",
+        "no": "All bruk av hele eller deler av Nettstedet, særlig ved nedlasting, kopiering, overføring, fremføring eller spredning, til andre formål enn brukerens personlige, private og ikke-kommersielle visning og bruk av Nettstedet, er strengt forbudt. Brudd på disse bestemmelsene kan medføre sanksjoner etter både den franske loven om immaterielle rettigheter, særlig for krenkelse av opphavsrett og varemerkerett, og den franske sivilloven når det gjelder erstatningsansvar.",
+        "el": "Απαγορεύεται αυστηρά η χρήση του συνόλου ή μέρους του Ιστότοπου, ιδίως μέσω λήψης, αναπαραγωγής, μετάδοσης, παρουσίασης ή διάδοσης, για σκοπούς άλλους από την περιήγηση και τη χρήση του Ιστότοπου από τον χρήστη για προσωπικούς, ιδιωτικούς και μη εμπορικούς σκοπούς. Η παραβίαση των διατάξεων αυτών εκθέτει τον παραβάτη στις κυρώσεις που προβλέπονται τόσο από τον γαλλικό Κώδικα Πνευματικής Ιδιοκτησίας, ιδίως για προσβολή του δικαιώματος του δημιουργού και των δικαιωμάτων επί σημάτων, όσο και από τον γαλλικό Αστικό Κώδικα όσον αφορά την αστική ευθύνη.",
+        "ru": "Любое использование Сайта полностью или частично, в частности путём скачивания, воспроизведения, передачи, публичного показа или распространения, в целях, отличных от просмотра и использования Сайта пользователем в личных, частных и некоммерческих целях, строго запрещено. Нарушение этих положений влечёт за собой санкции, предусмотренные как Кодексом интеллектуальной собственности Франции, в частности за нарушение авторских прав и прав на товарные знаки, так и Гражданским кодексом Франции в части гражданской ответственности.",
+        "ja": "利用者が個人的、私的かつ非商業的な目的で本サイトを閲覧・利用する場合を除き、本サイトの全部または一部を、ダウンロード、複製、送信、上演・上映または頒布などの方法で使用することは固く禁じられています。これらの規定に違反した者は、フランス知的財産法典（特に著作権および商標権の侵害）ならびに民事責任に関するフランス民法典に定める制裁の対象となります。",
+        "zh": "除用户出于个人、私人及非商业目的浏览和使用本网站外，严禁以任何方式（包括下载、复制、传输、展示或传播）使用本网站的全部或部分内容。违反上述规定者将承担《法国知识产权法典》（尤其是侵犯著作权和商标权）以及《法国民法典》有关民事责任所规定的处罚。",
+        "ko": "이용자가 개인적·사적·비상업적 목적으로 본 사이트를 열람하고 이용하는 경우를 제외하고, 다운로드, 복제, 전송, 공연·상영 또는 배포 등의 방법으로 본 사이트의 전부 또는 일부를 사용하는 것은 엄격히 금지됩니다. 이를 위반하는 자는 프랑스 지적재산권법(특히 저작권 및 상표권 침해)과 민사 책임에 관한 프랑스 민법에 규정된 제재를 받을 수 있습니다."
+      }
+    },
+    "mentions-legales.propriete-4": {
+      "section": "Propriété intellectuelle",
+      "label": "Paragraphe 4 : liens hypertextes",
+      "type": "richtext",
+      "translatable": 1,
+      "required": 1,
+      "values": {
+        "fr": "La création de tout lien hypertexte renvoyant à l'une quelconque des pages ou des éléments composant le Site est interdite sauf autorisation écrite et préalable d'HOTEL ASTON LA SCALA, laquelle autorisation peut être révoquée à tout moment. Les contenus, sites internet ou autres ayant un lien hypertexte dirigeant vers le Site ou vers l'un quelconque des éléments qui le composent ne sont pas sous le contrôle d'HOTEL ASTON LA SCALA, qui décline par conséquent toute responsabilité (notamment éditoriale) concernant l'accès à ces sites et leur contenu.",
+        "en": "Creating any hyperlink to any page or component of the Site is prohibited without the prior written authorisation of HOTEL ASTON LA SCALA, which may be revoked at any time. Content, websites or other resources containing a hyperlink to the Site or to any of its components are not under the control of HOTEL ASTON LA SCALA, which therefore accepts no liability (in particular editorial liability) for access to such sites or for their content.",
+        "es": "Queda prohibida la creación de cualquier hipervínculo que remita a cualquiera de las páginas o elementos que componen el Sitio sin la autorización previa y por escrito de HOTEL ASTON LA SCALA, que podrá revocarse en cualquier momento. Los contenidos, sitios web u otros recursos que contengan un hipervínculo hacia el Sitio o hacia cualquiera de sus elementos no están bajo el control de HOTEL ASTON LA SCALA, que declina por tanto toda responsabilidad (en particular editorial) en cuanto al acceso a dichos sitios y a su contenido.",
+        "it": "La creazione di qualsiasi collegamento ipertestuale verso una qualsiasi delle pagine o degli elementi che compongono il Sito è vietata senza l'autorizzazione scritta e preventiva di HOTEL ASTON LA SCALA, che può essere revocata in qualsiasi momento. I contenuti, i siti internet o altre risorse che contengono un collegamento ipertestuale verso il Sito o verso uno qualsiasi dei suoi elementi non sono sotto il controllo di HOTEL ASTON LA SCALA, che declina pertanto ogni responsabilità (in particolare editoriale) per l'accesso a tali siti e per il loro contenuto.",
+        "de": "Das Setzen eines Hyperlinks auf eine Seite oder einen Bestandteil der Website ist ohne vorherige schriftliche Genehmigung von HOTEL ASTON LA SCALA untersagt; diese Genehmigung kann jederzeit widerrufen werden. Inhalte, Websites oder sonstige Angebote, die einen Hyperlink auf die Website oder einen ihrer Bestandteile enthalten, unterliegen nicht der Kontrolle von HOTEL ASTON LA SCALA, die daher jede Verantwortung (insbesondere redaktioneller Art) für den Zugang zu diesen Websites und deren Inhalte ablehnt.",
+        "pt": "É proibida a criação de qualquer hiperligação para qualquer página ou elemento que componha o Site sem a autorização prévia e por escrito da HOTEL ASTON LA SCALA, a qual pode ser revogada a qualquer momento. Os conteúdos, sites ou outros recursos que contenham uma hiperligação para o Site ou para qualquer um dos seus elementos não estão sob o controlo da HOTEL ASTON LA SCALA, que declina, por conseguinte, qualquer responsabilidade (nomeadamente editorial) relativamente ao acesso a esses sites e ao seu conteúdo.",
+        "sv": "Det är förbjudet att skapa hyperlänkar till någon av Webbplatsens sidor eller element utan föregående skriftligt tillstånd från HOTEL ASTON LA SCALA, och ett sådant tillstånd kan när som helst återkallas. Innehåll, webbplatser eller annat som innehåller en hyperlänk till Webbplatsen eller till något av dess element står inte under HOTEL ASTON LA SCALA:s kontroll, och HOTEL ASTON LA SCALA frånsäger sig därför allt ansvar (särskilt redaktionellt) för tillgången till dessa webbplatser och deras innehåll.",
+        "no": "Det er forbudt å opprette hyperkoblinger til noen av Nettstedets sider eller elementer uten skriftlig forhåndstillatelse fra HOTEL ASTON LA SCALA, og en slik tillatelse kan når som helst trekkes tilbake. Innhold, nettsteder eller annet som inneholder en hyperkobling til Nettstedet eller til noen av elementene det består av, er ikke under HOTEL ASTON LA SCALAs kontroll, og HOTEL ASTON LA SCALA fraskriver seg derfor ethvert ansvar (særlig redaksjonelt) for tilgangen til disse nettstedene og innholdet på dem.",
+        "el": "Η δημιουργία οποιουδήποτε υπερσυνδέσμου προς οποιαδήποτε σελίδα ή στοιχείο του Ιστότοπου απαγορεύεται χωρίς την προηγούμενη έγγραφη άδεια της HOTEL ASTON LA SCALA, η οποία μπορεί να ανακληθεί ανά πάσα στιγμή. Περιεχόμενα, ιστότοποι ή άλλοι πόροι που περιέχουν υπερσύνδεσμο προς τον Ιστότοπο ή προς οποιοδήποτε από τα στοιχεία του δεν υπόκεινται στον έλεγχο της HOTEL ASTON LA SCALA, η οποία ως εκ τούτου αποποιείται κάθε ευθύνη (ιδίως συντακτική) όσον αφορά την πρόσβαση σε αυτούς τους ιστότοπους και το περιεχόμενό τους.",
+        "ru": "Создание любой гиперссылки на любую страницу или элемент Сайта запрещено без предварительного письменного разрешения HOTEL ASTON LA SCALA, которое может быть отозвано в любое время. Материалы, сайты и иные ресурсы, содержащие гиперссылку на Сайт или на любой из его элементов, не контролируются HOTEL ASTON LA SCALA, которая в связи с этим не несёт никакой ответственности (в том числе редакционной) за доступ к таким сайтам и их содержимое.",
+        "ja": "HOTEL ASTON LA SCALA の書面による事前の許可なく、本サイトのいずれかのページまたは要素へのハイパーリンクを設定することは禁止されています。なお、この許可はいつでも取り消すことができます。本サイトまたはその構成要素へのハイパーリンクを含むコンテンツ、ウェブサイトその他は HOTEL ASTON LA SCALA の管理下にないため、HOTEL ASTON LA SCALA は、それらのサイトへのアクセスおよびその内容について一切の責任（特に編集上の責任）を負いません。",
+        "zh": "未经 HOTEL ASTON LA SCALA 事先书面许可，禁止创建指向本网站任何页面或组成部分的超链接，该许可可随时撤销。包含指向本网站或其任何组成部分的超链接的内容、网站或其他资源不受 HOTEL ASTON LA SCALA 控制，因此 HOTEL ASTON LA SCALA 对访问此类网站及其内容不承担任何责任（尤其是编辑责任）。",
+        "ko": "HOTEL ASTON LA SCALA의 사전 서면 허가 없이 본 사이트의 페이지나 구성 요소로 연결되는 하이퍼링크를 만드는 것은 금지되며, 이 허가는 언제든지 철회될 수 있습니다. 본 사이트 또는 그 구성 요소로 연결되는 하이퍼링크를 포함한 콘텐츠, 웹사이트 등은 HOTEL ASTON LA SCALA의 관리하에 있지 않으므로, HOTEL ASTON LA SCALA는 해당 사이트에 대한 접속 및 그 내용에 대해 어떠한 책임(특히 편집상의 책임)도 지지 않습니다."
+      }
+    },
+    "mentions-legales.credits": {
+      "section": "Propriété intellectuelle",
+      "label": "Crédits photo",
+      "type": "richtext",
+      "translatable": 1,
+      "required": 1,
+      "values": {
+        "fr": "Photo &amp; cinémagraphe : © Images virtuelles",
+        "en": "Photography and cinemagraph: © Images virtuelles",
+        "es": "Fotografía y cinemagrafía: © Images virtuelles",
+        "it": "Foto e cinemagraph: © Images virtuelles",
+        "de": "Foto und Cinemagraph: © Images virtuelles",
+        "pt": "Fotografia e cinemagrafia: © Images virtuelles",
+        "sv": "Foto och cinemagraf: © Images virtuelles",
+        "no": "Foto og cinemagraf: © Images virtuelles",
+        "el": "Φωτογραφία και cinemagraph: © Images virtuelles",
+        "ru": "Фото и синемаграфия: © Images virtuelles",
+        "ja": "写真およびシネマグラフ：© Images virtuelles",
+        "zh": "照片及动态影像：© Images virtuelles",
+        "ko": "사진 및 시네마그래프: © Images virtuelles"
+      }
+    },
+    "mentions-legales.disponibilite-titre": {
+      "section": "Disponibilité du site",
+      "label": "Titre de la rubrique",
+      "type": "text",
+      "translatable": 1,
+      "required": 1,
+      "values": {
+        "fr": "Disponibilité du site",
+        "en": "Availability of the Site",
+        "es": "Disponibilidad del Sitio",
+        "it": "Disponibilità del Sito",
+        "de": "Verfügbarkeit der Website",
+        "pt": "Disponibilidade do Site",
+        "sv": "Webbplatsens tillgänglighet",
+        "no": "Nettstedets tilgjengelighet",
+        "el": "Διαθεσιμότητα του Ιστότοπου",
+        "ru": "Доступность Сайта",
+        "ja": "本サイトの利用可能性",
+        "zh": "网站可用性",
+        "ko": "사이트 이용 가능성"
+      }
+    },
+    "mentions-legales.disponibilite-1": {
+      "section": "Disponibilité du site",
+      "label": "Paragraphe 1",
+      "type": "richtext",
+      "translatable": 1,
+      "required": 1,
+      "values": {
+        "fr": "HOTEL ASTON LA SCALA s'efforce, dans la mesure du possible, de maintenir le Site accessible de manière permanente, mais n'est tenue à aucune obligation d'y parvenir. HOTEL ASTON LA SCALA peut donc interrompre l'accès au Site, notamment pour des raisons de maintenance ou de mise à jour, ou pour toute autre raison, notamment technique ou éditoriale, et ce sans préavis ni information préalable des internautes, sans pouvoir être tenue pour responsable des conséquences de ces interruptions, aussi bien à l'égard des internautes que de tout tiers.",
+        "en": "HOTEL ASTON LA SCALA endeavours, as far as possible, to keep the Site permanently accessible, but is under no obligation to do so. HOTEL ASTON LA SCALA may therefore interrupt access to the Site, in particular for maintenance or updates, or for any other reason, notably technical or editorial, without prior notice or information to users, and cannot be held liable for the consequences of such interruptions, either towards users or towards any third party.",
+        "es": "HOTEL ASTON LA SCALA se esfuerza, en la medida de lo posible, por mantener el Sitio accesible de forma permanente, pero no está sujeta a ninguna obligación de conseguirlo. Por tanto, HOTEL ASTON LA SCALA puede interrumpir el acceso al Sitio, en particular por motivos de mantenimiento o actualización, o por cualquier otro motivo, especialmente técnico o editorial, sin previo aviso ni información a los internautas, sin que pueda ser considerada responsable de las consecuencias de dichas interrupciones, ni frente a los internautas ni frente a terceros.",
+        "it": "HOTEL ASTON LA SCALA si impegna, per quanto possibile, a mantenere il Sito accessibile in modo permanente, ma non è tenuta ad alcun obbligo di risultato. HOTEL ASTON LA SCALA può quindi interrompere l'accesso al Sito, in particolare per motivi di manutenzione o di aggiornamento, o per qualsiasi altro motivo, in particolare tecnico o editoriale, senza preavviso né informazione preventiva agli utenti, senza poter essere ritenuta responsabile delle conseguenze di tali interruzioni, né nei confronti degli utenti né nei confronti di terzi.",
+        "de": "HOTEL ASTON LA SCALA bemüht sich, die Website nach Möglichkeit dauerhaft zugänglich zu halten, ist hierzu jedoch nicht verpflichtet. HOTEL ASTON LA SCALA kann den Zugang zur Website daher unterbrechen, insbesondere zu Wartungs- oder Aktualisierungszwecken oder aus anderen, insbesondere technischen oder redaktionellen Gründen, und zwar ohne Vorankündigung oder vorherige Information der Nutzer, ohne für die Folgen dieser Unterbrechungen gegenüber den Nutzern oder Dritten haftbar gemacht werden zu können.",
+        "pt": "A HOTEL ASTON LA SCALA esforça-se, na medida do possível, por manter o Site permanentemente acessível, mas não está sujeita a qualquer obrigação de o conseguir. A HOTEL ASTON LA SCALA pode, portanto, interromper o acesso ao Site, nomeadamente por motivos de manutenção ou atualização, ou por qualquer outro motivo, nomeadamente técnico ou editorial, sem aviso nem informação prévia aos utilizadores, sem poder ser responsabilizada pelas consequências dessas interrupções, tanto perante os utilizadores como perante terceiros.",
+        "sv": "HOTEL ASTON LA SCALA strävar efter att i möjligaste mån hålla Webbplatsen ständigt tillgänglig, men har ingen skyldighet att lyckas med detta. HOTEL ASTON LA SCALA kan därför avbryta tillgången till Webbplatsen, särskilt för underhåll eller uppdateringar eller av andra skäl, bland annat tekniska eller redaktionella, utan förvarning eller föregående information till användarna, och kan inte hållas ansvarigt för följderna av sådana avbrott, varken gentemot användarna eller gentemot tredje part.",
+        "no": "HOTEL ASTON LA SCALA bestreber seg så langt det er mulig på å holde Nettstedet permanent tilgjengelig, men har ingen plikt til å lykkes med dette. HOTEL ASTON LA SCALA kan derfor avbryte tilgangen til Nettstedet, særlig på grunn av vedlikehold eller oppdateringer, eller av andre grunner, blant annet tekniske eller redaksjonelle, uten forvarsel eller forhåndsinformasjon til brukerne, og kan ikke holdes ansvarlig for følgene av slike avbrudd, verken overfor brukerne eller overfor tredjeparter.",
+        "el": "Η HOTEL ASTON LA SCALA καταβάλλει κάθε δυνατή προσπάθεια ώστε ο Ιστότοπος να είναι μόνιμα προσβάσιμος, χωρίς ωστόσο να υπέχει υποχρέωση επίτευξης αυτού του αποτελέσματος. Η HOTEL ASTON LA SCALA μπορεί επομένως να διακόψει την πρόσβαση στον Ιστότοπο, ιδίως για λόγους συντήρησης ή ενημέρωσης ή για οποιονδήποτε άλλο λόγο, ιδίως τεχνικό ή συντακτικό, χωρίς προειδοποίηση ή προηγούμενη ενημέρωση των χρηστών, χωρίς να μπορεί να θεωρηθεί υπεύθυνη για τις συνέπειες των διακοπών αυτών, είτε έναντι των χρηστών είτε έναντι τρίτων.",
+        "ru": "HOTEL ASTON LA SCALA по мере возможности стремится обеспечивать постоянную доступность Сайта, но не берёт на себя обязательства достичь этого. Поэтому HOTEL ASTON LA SCALA может прервать доступ к Сайту, в частности для технического обслуживания или обновления, а также по любым другим причинам, в том числе техническим или редакционным, без предварительного уведомления пользователей и не неся ответственности за последствия таких перерывов ни перед пользователями, ни перед третьими лицами.",
+        "ja": "HOTEL ASTON LA SCALA は、可能な限り本サイトを常時アクセス可能な状態に保つよう努めますが、その実現を保証するものではありません。HOTEL ASTON LA SCALA は、保守や更新のため、またはその他の理由（特に技術上または編集上の理由）により、利用者への予告や事前の通知なく本サイトへのアクセスを中断することがあり、その中断により利用者または第三者に生じた結果について責任を負いません。",
+        "zh": "HOTEL ASTON LA SCALA 将尽可能保持本网站持续可访问，但不承担必须实现这一目标的义务。因此，HOTEL ASTON LA SCALA 可能因维护、更新或任何其他原因（尤其是技术或编辑原因）中断本网站的访问，且无需事先通知用户，亦不对此类中断给用户或任何第三方造成的后果承担责任。",
+        "ko": "HOTEL ASTON LA SCALA는 가능한 한 본 사이트를 상시 이용할 수 있도록 노력하지만, 이를 보장할 의무는 없습니다. 따라서 HOTEL ASTON LA SCALA는 유지 보수나 업데이트, 또는 기타 사유(특히 기술적 또는 편집상의 사유)로 이용자에게 사전 예고나 통지 없이 본 사이트 접속을 중단할 수 있으며, 이러한 중단으로 인해 이용자나 제3자에게 발생한 결과에 대해 책임을 지지 않습니다."
+      }
+    },
+    "mentions-legales.disponibilite-2": {
+      "section": "Disponibilité du site",
+      "label": "Paragraphe 2 (avant la liste)",
+      "type": "richtext",
+      "translatable": 1,
+      "required": 1,
+      "values": {
+        "fr": "Par ailleurs, HOTEL ASTON LA SCALA ne saurait être tenue pour responsable si des internautes ne parvenaient pas à accéder à tout ou partie du Site du fait de tout défaut technique ou de tout problème, notamment et non limitativement lié à :",
+        "en": "Furthermore, HOTEL ASTON LA SCALA cannot be held liable if users are unable to access all or part of the Site because of any technical fault or problem, including but not limited to:",
+        "es": "Asimismo, HOTEL ASTON LA SCALA no será responsable si los internautas no pudieran acceder a la totalidad o a parte del Sitio debido a cualquier fallo técnico o problema, en particular y de forma no exhaustiva relacionado con:",
+        "it": "Inoltre, HOTEL ASTON LA SCALA non potrà essere ritenuta responsabile qualora gli utenti non riuscissero ad accedere a tutto o parte del Sito a causa di qualsiasi difetto tecnico o problema, in particolare e non esclusivamente legato a:",
+        "de": "Darüber hinaus haftet HOTEL ASTON LA SCALA nicht, wenn Nutzer aufgrund eines technischen Defekts oder Problems ganz oder teilweise keinen Zugang zur Website haben, insbesondere, aber nicht ausschließlich, im Zusammenhang mit:",
+        "pt": "Além disso, a HOTEL ASTON LA SCALA não poderá ser responsabilizada se os utilizadores não conseguirem aceder à totalidade ou a parte do Site devido a qualquer defeito técnico ou problema, nomeadamente e não exclusivamente relacionado com:",
+        "sv": "HOTEL ASTON LA SCALA kan inte heller hållas ansvarigt om användare inte kan komma åt hela eller delar av Webbplatsen på grund av tekniska fel eller problem, bland annat men inte uteslutande till följd av:",
+        "no": "HOTEL ASTON LA SCALA kan heller ikke holdes ansvarlig dersom brukere ikke får tilgang til hele eller deler av Nettstedet på grunn av tekniske feil eller problemer, blant annet, men ikke utelukkende, knyttet til:",
+        "el": "Επιπλέον, η HOTEL ASTON LA SCALA δεν φέρει ευθύνη εάν οι χρήστες δεν μπορούν να αποκτήσουν πρόσβαση στο σύνολο ή σε μέρος του Ιστότοπου λόγω οποιασδήποτε τεχνικής βλάβης ή προβλήματος, ιδίως αλλά όχι αποκλειστικά λόγω:",
+        "ru": "Кроме того, HOTEL ASTON LA SCALA не несёт ответственности, если пользователи не могут получить доступ ко всему Сайту или к его части из-за технической неисправности или иной проблемы, связанной, в частности, но не исключительно, с:",
+        "ja": "また、以下を含むがこれらに限られない技術的な不具合や問題により、利用者が本サイトの全部または一部にアクセスできない場合も、HOTEL ASTON LA SCALA は責任を負いません。",
+        "zh": "此外，如因任何技术故障或问题导致用户无法访问本网站的全部或部分内容，HOTEL ASTON LA SCALA 概不负责，此类故障或问题包括但不限于：",
+        "ko": "또한 다음을 포함하되 이에 국한되지 않는 기술적 결함이나 문제로 인해 이용자가 본 사이트의 전부 또는 일부에 접속하지 못하는 경우에도 HOTEL ASTON LA SCALA는 책임을 지지 않습니다."
+      }
+    },
+    "mentions-legales.disponibilite-cause-1": {
+      "section": "Disponibilité du site",
+      "label": "Liste : cause 1",
+      "type": "text",
+      "translatable": 1,
+      "required": 1,
+      "values": {
+        "fr": "une défaillance et/ou un encombrement du réseau Internet,",
+        "en": "a failure and/or congestion of the Internet network,",
+        "es": "un fallo y/o una saturación de la red Internet,",
+        "it": "un guasto e/o una congestione della rete Internet,",
+        "de": "einem Ausfall und/oder einer Überlastung des Internets,",
+        "pt": "uma falha e/ou um congestionamento da rede Internet,",
+        "sv": "fel och/eller överbelastning i internetnätet,",
+        "no": "feil og/eller overbelastning i internettnettverket,",
+        "el": "βλάβης και/ή συμφόρησης του διαδικτύου,",
+        "ru": "сбоем и (или) перегрузкой сети Интернет,",
+        "ja": "インターネット回線の障害または混雑",
+        "zh": "互联网网络故障和/或拥堵；",
+        "ko": "인터넷 네트워크의 장애 및/또는 혼잡"
+      }
+    },
+    "mentions-legales.disponibilite-cause-2": {
+      "section": "Disponibilité du site",
+      "label": "Liste : cause 2",
+      "type": "text",
+      "translatable": 1,
+      "required": 1,
+      "values": {
+        "fr": "une défaillance des fournisseurs d'accès à Internet,",
+        "en": "a failure of Internet access providers,",
+        "es": "un fallo de los proveedores de acceso a Internet,",
+        "it": "un guasto dei fornitori di accesso a Internet,",
+        "de": "einem Ausfall der Internetzugangsanbieter,",
+        "pt": "uma falha dos fornecedores de acesso à Internet,",
+        "sv": "fel hos internetleverantörer,",
+        "no": "feil hos internettleverandører,",
+        "el": "βλάβης των παρόχων πρόσβασης στο διαδίκτυο,",
+        "ru": "сбоем у интернет-провайдеров,",
+        "ja": "インターネット接続事業者の障害",
+        "zh": "互联网接入服务商故障；",
+        "ko": "인터넷 접속 서비스 제공업체의 장애"
+      }
+    },
+    "mentions-legales.disponibilite-cause-3": {
+      "section": "Disponibilité du site",
+      "label": "Liste : cause 3",
+      "type": "text",
+      "translatable": 1,
+      "required": 1,
+      "values": {
+        "fr": "une erreur humaine ou d'origine électrique,",
+        "en": "human or electrical error,",
+        "es": "un error humano o de origen eléctrico,",
+        "it": "un errore umano o di origine elettrica,",
+        "de": "menschlichem Versagen oder einem elektrischen Fehler,",
+        "pt": "um erro humano ou de origem elétrica,",
+        "sv": "mänskliga eller elektriska fel,",
+        "no": "menneskelige eller elektriske feil,",
+        "el": "ανθρώπινου σφάλματος ή σφάλματος ηλεκτρικής προέλευσης,",
+        "ru": "человеческой ошибкой или неполадками электропитания,",
+        "ja": "人為的ミスまたは電気的な原因による障害",
+        "zh": "人为错误或电力故障；",
+        "ko": "인적 오류 또는 전기적 원인에 의한 오류"
+      }
+    },
+    "mentions-legales.disponibilite-cause-4": {
+      "section": "Disponibilité du site",
+      "label": "Liste : cause 4",
+      "type": "text",
+      "translatable": 1,
+      "required": 1,
+      "values": {
+        "fr": "toute intervention malveillante,",
+        "en": "any malicious intervention,",
+        "es": "cualquier intervención malintencionada,",
+        "it": "qualsiasi intervento doloso,",
+        "de": "böswilligen Eingriffen,",
+        "pt": "qualquer intervenção maliciosa,",
+        "sv": "illasinnade ingrepp,",
+        "no": "ondsinnede inngrep,",
+        "el": "οποιασδήποτε κακόβουλης παρέμβασης,",
+        "ru": "любым злонамеренным вмешательством,",
+        "ja": "悪意のある干渉",
+        "zh": "任何恶意干预；",
+        "ko": "모든 악의적인 개입"
+      }
+    },
+    "mentions-legales.disponibilite-cause-5": {
+      "section": "Disponibilité du site",
+      "label": "Liste : cause 5",
+      "type": "text",
+      "translatable": 1,
+      "required": 1,
+      "values": {
+        "fr": "tout dysfonctionnement de logiciel ou de matériel,",
+        "en": "any software or hardware malfunction,",
+        "es": "cualquier mal funcionamiento del software o del hardware,",
+        "it": "qualsiasi malfunzionamento del software o dell'hardware,",
+        "de": "Fehlfunktionen von Software oder Hardware,",
+        "pt": "qualquer avaria de software ou de hardware,",
+        "sv": "funktionsfel i programvara eller maskinvara,",
+        "no": "funksjonsfeil i programvare eller maskinvare,",
+        "el": "οποιασδήποτε δυσλειτουργίας λογισμικού ή υλικού,",
+        "ru": "любым сбоем программного обеспечения или оборудования,",
+        "ja": "ソフトウェアまたはハードウェアの誤作動",
+        "zh": "任何软件或硬件故障；",
+        "ko": "소프트웨어 또는 하드웨어의 오작동"
+      }
+    },
+    "mentions-legales.disponibilite-cause-6": {
+      "section": "Disponibilité du site",
+      "label": "Liste : cause 6",
+      "type": "text",
+      "translatable": 1,
+      "required": 1,
+      "values": {
+        "fr": "un cas de force majeure.",
+        "en": "a case of force majeure.",
+        "es": "un caso de fuerza mayor.",
+        "it": "un caso di forza maggiore.",
+        "de": "höherer Gewalt.",
+        "pt": "um caso de força maior.",
+        "sv": "force majeure.",
+        "no": "force majeure.",
+        "el": "ανωτέρας βίας.",
+        "ru": "обстоятельствами непреодолимой силы.",
+        "ja": "不可抗力",
+        "zh": "不可抗力。",
+        "ko": "불가항력"
+      }
+    },
+    "mentions-legales.mediateur-titre": {
+      "section": "Médiateur de la consommation",
+      "label": "Titre de la rubrique",
+      "type": "text",
+      "translatable": 1,
+      "required": 1,
+      "values": {
+        "fr": "Médiateur de la consommation",
+        "en": "Consumer mediation",
+        "es": "Mediador de consumo",
+        "it": "Mediatore dei consumatori",
+        "de": "Verbraucherschlichtung",
+        "pt": "Mediador do consumidor",
+        "sv": "Konsumentmedling",
+        "no": "Forbrukermegling",
+        "el": "Διαμεσολάβηση καταναλωτών",
+        "ru": "Потребительская медиация",
+        "ja": "消費者調停",
+        "zh": "消费者调解",
+        "ko": "소비자 조정"
+      }
+    },
+    "mentions-legales.mediateur-intro": {
+      "section": "Médiateur de la consommation",
+      "label": "Paragraphe d’introduction",
+      "type": "richtext",
+      "translatable": 1,
+      "required": 1,
+      "values": {
+        "fr": "Après avoir saisi la Direction de l'hôtel, et à défaut de réponse satisfaisante dans un délai d'un mois, le client peut saisir le Médiateur du Tourisme et du Voyage, dont les coordonnées figurent ci-après :",
+        "en": "After contacting the hotel management, and failing a satisfactory reply within one month, the customer may refer the matter to the Médiateur du Tourisme et du Voyage (Tourism and Travel Mediator), whose contact details are as follows:",
+        "es": "Tras haber presentado su reclamación a la Dirección del hotel y, a falta de respuesta satisfactoria en el plazo de un mes, el cliente puede acudir al Médiateur du Tourisme et du Voyage (mediador de turismo y viajes), cuyos datos de contacto son los siguientes:",
+        "it": "Dopo aver contattato la Direzione dell'hotel, e in mancanza di una risposta soddisfacente entro un mese, il cliente può rivolgersi al Médiateur du Tourisme et du Voyage (mediatore del turismo e dei viaggi), i cui recapiti sono i seguenti:",
+        "de": "Hat sich der Kunde zunächst an die Hoteldirektion gewandt und innerhalb eines Monats keine zufriedenstellende Antwort erhalten, kann er sich an den Médiateur du Tourisme et du Voyage (Schlichtungsstelle für Tourismus und Reisen) wenden, dessen Kontaktdaten wie folgt lauten:",
+        "pt": "Após ter contactado a Direção do hotel e na falta de resposta satisfatória no prazo de um mês, o cliente pode recorrer ao Médiateur du Tourisme et du Voyage (mediador do turismo e das viagens), cujos contactos são os seguintes:",
+        "sv": "Om kunden först har vänt sig till hotellets ledning och inte fått ett tillfredsställande svar inom en månad kan kunden vända sig till Médiateur du Tourisme et du Voyage (medlare för turism och resor), med följande kontaktuppgifter:",
+        "no": "Dersom kunden først har henvendt seg til hotellets ledelse uten å få et tilfredsstillende svar innen én måned, kan kunden henvende seg til Médiateur du Tourisme et du Voyage (megler for turisme og reiser), med følgende kontaktopplysninger:",
+        "el": "Αφού απευθυνθεί στη Διεύθυνση του ξενοδοχείου και ελλείψει ικανοποιητικής απάντησης εντός ενός μηνός, ο πελάτης μπορεί να προσφύγει στον Médiateur du Tourisme et du Voyage (διαμεσολαβητής τουρισμού και ταξιδιών), τα στοιχεία επικοινωνίας του οποίου είναι τα εξής:",
+        "ru": "Если после обращения к руководству отеля клиент не получил удовлетворительного ответа в течение одного месяца, он может обратиться к Médiateur du Tourisme et du Voyage (медиатор по вопросам туризма и путешествий), контактные данные которого приведены ниже:",
+        "ja": "ホテル経営陣に申し立てた後、1か月以内に満足のいく回答が得られない場合、お客様は Médiateur du Tourisme et du Voyage（観光・旅行調停機関）に申し立てることができます。連絡先は以下のとおりです。",
+        "zh": "客户在向酒店管理层提出申诉后，如一个月内未获得满意答复，可向 Médiateur du Tourisme et du Voyage（旅游与旅行调解机构）申请调解，其联系方式如下：",
+        "ko": "호텔 경영진에 먼저 문의한 후 1개월 이내에 만족스러운 답변을 받지 못한 경우, 고객은 Médiateur du Tourisme et du Voyage(관광·여행 조정 기관)에 조정을 신청할 수 있으며, 연락처는 다음과 같습니다."
+      }
+    },
+    "mentions-legales.mediateur-coordonnees": {
+      "section": "Médiateur de la consommation",
+      "label": "Coordonnées du médiateur",
+      "type": "richtext",
+      "translatable": 1,
+      "required": 1,
+      "values": {
+        "fr": "Médiateur du Tourisme et du Voyage<br>Service dépôt des saisines<br>CS 30958<br>75383 Paris Cedex 08<br>Site : <a href=\"https://www.mtv.travel/\" rel=\"noopener\">www.mtv.travel</a><br>E-mail : <a href=\"mailto:info@mtv.travel\">info@mtv.travel</a>",
+        "en": "Médiateur du Tourisme et du Voyage<br>Service dépôt des saisines<br>CS 30958<br>75383 Paris Cedex 08<br>Website: <a href=\"https://www.mtv.travel/\" rel=\"noopener\">www.mtv.travel</a><br>Email: <a href=\"mailto:info@mtv.travel\">info@mtv.travel</a>",
+        "es": "Médiateur du Tourisme et du Voyage<br>Service dépôt des saisines<br>CS 30958<br>75383 Paris Cedex 08<br>Sitio web: <a href=\"https://www.mtv.travel/\" rel=\"noopener\">www.mtv.travel</a><br>Correo electrónico: <a href=\"mailto:info@mtv.travel\">info@mtv.travel</a>",
+        "it": "Médiateur du Tourisme et du Voyage<br>Service dépôt des saisines<br>CS 30958<br>75383 Paris Cedex 08<br>Sito: <a href=\"https://www.mtv.travel/\" rel=\"noopener\">www.mtv.travel</a><br>E-mail: <a href=\"mailto:info@mtv.travel\">info@mtv.travel</a>",
+        "de": "Médiateur du Tourisme et du Voyage<br>Service dépôt des saisines<br>CS 30958<br>75383 Paris Cedex 08<br>Website: <a href=\"https://www.mtv.travel/\" rel=\"noopener\">www.mtv.travel</a><br>E-Mail: <a href=\"mailto:info@mtv.travel\">info@mtv.travel</a>",
+        "pt": "Médiateur du Tourisme et du Voyage<br>Service dépôt des saisines<br>CS 30958<br>75383 Paris Cedex 08<br>Site: <a href=\"https://www.mtv.travel/\" rel=\"noopener\">www.mtv.travel</a><br>E-mail: <a href=\"mailto:info@mtv.travel\">info@mtv.travel</a>",
+        "sv": "Médiateur du Tourisme et du Voyage<br>Service dépôt des saisines<br>CS 30958<br>75383 Paris Cedex 08<br>Webbplats: <a href=\"https://www.mtv.travel/\" rel=\"noopener\">www.mtv.travel</a><br>E-post: <a href=\"mailto:info@mtv.travel\">info@mtv.travel</a>",
+        "no": "Médiateur du Tourisme et du Voyage<br>Service dépôt des saisines<br>CS 30958<br>75383 Paris Cedex 08<br>Nettsted: <a href=\"https://www.mtv.travel/\" rel=\"noopener\">www.mtv.travel</a><br>E-post: <a href=\"mailto:info@mtv.travel\">info@mtv.travel</a>",
+        "el": "Médiateur du Tourisme et du Voyage<br>Service dépôt des saisines<br>CS 30958<br>75383 Paris Cedex 08<br>Ιστότοπος: <a href=\"https://www.mtv.travel/\" rel=\"noopener\">www.mtv.travel</a><br>E-mail: <a href=\"mailto:info@mtv.travel\">info@mtv.travel</a>",
+        "ru": "Médiateur du Tourisme et du Voyage<br>Service dépôt des saisines<br>CS 30958<br>75383 Paris Cedex 08<br>Сайт: <a href=\"https://www.mtv.travel/\" rel=\"noopener\">www.mtv.travel</a><br>Эл. почта: <a href=\"mailto:info@mtv.travel\">info@mtv.travel</a>",
+        "ja": "Médiateur du Tourisme et du Voyage<br>Service dépôt des saisines<br>CS 30958<br>75383 Paris Cedex 08<br>ウェブサイト： <a href=\"https://www.mtv.travel/\" rel=\"noopener\">www.mtv.travel</a><br>メール： <a href=\"mailto:info@mtv.travel\">info@mtv.travel</a>",
+        "zh": "Médiateur du Tourisme et du Voyage<br>Service dépôt des saisines<br>CS 30958<br>75383 Paris Cedex 08<br>网站： <a href=\"https://www.mtv.travel/\" rel=\"noopener\">www.mtv.travel</a><br>电子邮件： <a href=\"mailto:info@mtv.travel\">info@mtv.travel</a>",
+        "ko": "Médiateur du Tourisme et du Voyage<br>Service dépôt des saisines<br>CS 30958<br>75383 Paris Cedex 08<br>웹사이트: <a href=\"https://www.mtv.travel/\" rel=\"noopener\">www.mtv.travel</a><br>이메일: <a href=\"mailto:info@mtv.travel\">info@mtv.travel</a>"
+      }
+    },
+    "mentions-legales.bloctel-titre": {
+      "section": "Bloctel",
+      "label": "Titre de la rubrique",
+      "type": "text",
+      "translatable": 1,
+      "required": 1,
+      "values": {
+        "fr": "Dispositif Bloctel",
+        "en": "Bloctel",
+        "es": "Sistema Bloctel",
+        "it": "Servizio Bloctel",
+        "de": "Bloctel-Liste",
+        "pt": "Serviço Bloctel",
+        "sv": "Bloctel",
+        "no": "Bloctel",
+        "el": "Σύστημα Bloctel",
+        "ru": "Система Bloctel",
+        "ja": "Bloctel（迷惑電話拒否リスト）",
+        "zh": "Bloctel 拒接推销电话名单",
+        "ko": "Bloctel 제도"
+      }
+    },
+    "mentions-legales.bloctel": {
+      "section": "Bloctel",
+      "label": "Paragraphe",
+      "type": "richtext",
+      "translatable": 1,
+      "required": 1,
+      "values": {
+        "fr": "Pour ne plus recevoir d'appels téléphoniques commerciaux non sollicités, vous pouvez vous inscrire sur la liste <a href=\"https://www.bloctel.gouv.fr/accueil\" rel=\"noopener\">Bloctel</a>.",
+        "en": "To stop receiving unsolicited commercial phone calls, you can register on the <a href=\"https://www.bloctel.gouv.fr/accueil\" rel=\"noopener\">Bloctel</a> list.",
+        "es": "Para dejar de recibir llamadas comerciales no solicitadas, puede inscribirse en la lista <a href=\"https://www.bloctel.gouv.fr/accueil\" rel=\"noopener\">Bloctel</a>.",
+        "it": "Per non ricevere più chiamate commerciali indesiderate, è possibile iscriversi alla lista <a href=\"https://www.bloctel.gouv.fr/accueil\" rel=\"noopener\">Bloctel</a>.",
+        "de": "Wenn Sie keine unerwünschten Werbeanrufe mehr erhalten möchten, können Sie sich in die <a href=\"https://www.bloctel.gouv.fr/accueil\" rel=\"noopener\">Bloctel</a>-Liste eintragen.",
+        "pt": "Para deixar de receber chamadas comerciais não solicitadas, pode inscrever-se na lista <a href=\"https://www.bloctel.gouv.fr/accueil\" rel=\"noopener\">Bloctel</a>.",
+        "sv": "Om du inte längre vill ta emot oönskade telefonförsäljningssamtal kan du registrera dig på <a href=\"https://www.bloctel.gouv.fr/accueil\" rel=\"noopener\">Bloctel</a>-listan.",
+        "no": "Hvis du ikke lenger ønsker å motta uønskede telefonsalgsanrop, kan du registrere deg på <a href=\"https://www.bloctel.gouv.fr/accueil\" rel=\"noopener\">Bloctel</a>-listen.",
+        "el": "Για να μη λαμβάνετε πλέον ανεπιθύμητες εμπορικές τηλεφωνικές κλήσεις, μπορείτε να εγγραφείτε στη λίστα <a href=\"https://www.bloctel.gouv.fr/accueil\" rel=\"noopener\">Bloctel</a>.",
+        "ru": "Чтобы больше не получать нежелательные рекламные звонки, вы можете зарегистрироваться в списке <a href=\"https://www.bloctel.gouv.fr/accueil\" rel=\"noopener\">Bloctel</a>.",
+        "ja": "迷惑な営業電話を受けたくない場合は、<a href=\"https://www.bloctel.gouv.fr/accueil\" rel=\"noopener\">Bloctel</a> のリストに登録することができます。",
+        "zh": "如您不希望再接到未经请求的商业推销电话，可登记加入 <a href=\"https://www.bloctel.gouv.fr/accueil\" rel=\"noopener\">Bloctel</a> 名单。",
+        "ko": "원치 않는 상업용 전화를 더 이상 받지 않으려면 <a href=\"https://www.bloctel.gouv.fr/accueil\" rel=\"noopener\">Bloctel</a> 목록에 등록할 수 있습니다."
+      }
+    },
+    "mentions-legales.litiges-titre": {
+      "section": "Litiges",
+      "label": "Titre de la rubrique",
+      "type": "text",
+      "translatable": 1,
+      "required": 1,
+      "values": {
+        "fr": "Litiges",
+        "en": "Disputes",
+        "es": "Litigios",
+        "it": "Controversie",
+        "de": "Streitigkeiten",
+        "pt": "Litígios",
+        "sv": "Tvister",
+        "no": "Tvister",
+        "el": "Διαφορές",
+        "ru": "Споры",
+        "ja": "紛争",
+        "zh": "争议",
+        "ko": "분쟁"
+      }
+    },
+    "mentions-legales.litiges": {
+      "section": "Litiges",
+      "label": "Paragraphe",
+      "type": "richtext",
+      "translatable": 1,
+      "required": 1,
+      "values": {
+        "fr": "En cas de litige entre le professionnel et le consommateur, ceux-ci s'efforceront de trouver une solution amiable. À défaut, le consommateur peut saisir le médiateur de la consommation mentionné ci-dessus.",
+        "en": "In the event of a dispute between the professional and the consumer, both parties will endeavour to find an amicable solution. Failing that, the consumer may refer the matter to the consumer mediator mentioned above.",
+        "es": "En caso de litigio entre el profesional y el consumidor, ambos procurarán encontrar una solución amistosa. En su defecto, el consumidor podrá acudir al mediador de consumo mencionado anteriormente.",
+        "it": "In caso di controversia tra il professionista e il consumatore, le parti si adopereranno per trovare una soluzione amichevole. In mancanza, il consumatore può rivolgersi al mediatore dei consumatori indicato sopra.",
+        "de": "Im Falle einer Streitigkeit zwischen dem Unternehmen und dem Verbraucher bemühen sich beide Seiten um eine gütliche Einigung. Gelingt dies nicht, kann der Verbraucher die oben genannte Verbraucherschlichtungsstelle anrufen.",
+        "pt": "Em caso de litígio entre o profissional e o consumidor, ambos procurarão encontrar uma solução amigável. Na falta desta, o consumidor pode recorrer ao mediador do consumidor acima indicado.",
+        "sv": "Vid en tvist mellan näringsidkaren och konsumenten ska parterna sträva efter att hitta en lösning i godo. Om detta inte lyckas kan konsumenten vända sig till den konsumentmedlare som anges ovan.",
+        "no": "Ved en tvist mellom den næringsdrivende og forbrukeren skal partene forsøke å finne en minnelig løsning. Lykkes ikke dette, kan forbrukeren henvende seg til forbrukermegleren nevnt ovenfor.",
+        "el": "Σε περίπτωση διαφοράς μεταξύ του επαγγελματία και του καταναλωτή, τα μέρη θα επιδιώξουν να βρουν φιλική λύση. Διαφορετικά, ο καταναλωτής μπορεί να προσφύγει στον διαμεσολαβητή καταναλωτών που αναφέρεται παραπάνω.",
+        "ru": "В случае спора между профессионалом и потребителем стороны постараются найти мирное решение. В противном случае потребитель может обратиться к указанному выше медиатору по защите прав потребителей.",
+        "ja": "事業者と消費者の間で紛争が生じた場合、両者は友好的な解決に努めます。解決に至らない場合、消費者は上記の消費者調停機関に申し立てることができます。",
+        "zh": "如经营者与消费者之间发生争议，双方将努力寻求友好解决。若未能解决，消费者可向上述消费者调解机构申请调解。",
+        "ko": "사업자와 소비자 간에 분쟁이 발생하는 경우, 양측은 원만한 해결을 위해 노력합니다. 해결되지 않으면 소비자는 위에 언급된 소비자 조정 기관에 조정을 신청할 수 있습니다."
+      }
+    },
+    "mentions-legales.retractation-titre": {
+      "section": "Droit de rétractation",
+      "label": "Titre de la rubrique",
+      "type": "text",
+      "translatable": 1,
+      "required": 1,
+      "values": {
+        "fr": "Droit de rétractation",
+        "en": "Right of withdrawal",
+        "es": "Derecho de desistimiento",
+        "it": "Diritto di recesso",
+        "de": "Widerrufsrecht",
+        "pt": "Direito de livre resolução",
+        "sv": "Ångerrätt",
+        "no": "Angrerett",
+        "el": "Δικαίωμα υπαναχώρησης",
+        "ru": "Право на отказ от договора",
+        "ja": "撤回権",
+        "zh": "撤销权",
+        "ko": "청약 철회권"
+      }
+    },
+    "mentions-legales.retractation": {
+      "section": "Droit de rétractation",
+      "label": "Paragraphe",
+      "type": "richtext",
+      "translatable": 1,
+      "required": 1,
+      "values": {
+        "fr": "En application de l'article L221-28 du Code de la consommation, le consommateur ne bénéficie pas du droit de rétractation.",
+        "en": "Pursuant to Article L221-28 of the French Consumer Code, the consumer does not have a right of withdrawal.",
+        "es": "En aplicación del artículo L221-28 del Código de consumo francés, el consumidor no dispone del derecho de desistimiento.",
+        "it": "Ai sensi dell'articolo L221-28 del Codice del consumo francese, il consumatore non beneficia del diritto di recesso.",
+        "de": "Gemäß Artikel L221-28 des französischen Verbrauchergesetzbuchs (Code de la consommation) steht dem Verbraucher kein Widerrufsrecht zu.",
+        "pt": "Nos termos do artigo L221-28 do Código do consumo francês, o consumidor não beneficia do direito de livre resolução.",
+        "sv": "Enligt artikel L221-28 i den franska konsumentlagen (Code de la consommation) har konsumenten ingen ångerrätt.",
+        "no": "I henhold til artikkel L221-28 i den franske forbrukerloven (Code de la consommation) har forbrukeren ikke angrerett.",
+        "el": "Σύμφωνα με το άρθρο L221-28 του γαλλικού Κώδικα Καταναλωτή, ο καταναλωτής δεν διαθέτει δικαίωμα υπαναχώρησης.",
+        "ru": "В соответствии со статьёй L221-28 Кодекса о защите прав потребителей Франции потребитель не имеет права на отказ от договора.",
+        "ja": "フランス消費法典第L221-28条に基づき、消費者には撤回権がありません。",
+        "zh": "根据《法国消费法典》第 L221-28 条，消费者不享有撤销权。",
+        "ko": "프랑스 소비자법 제L221-28조에 따라 소비자는 청약 철회권을 갖지 않습니다."
+      }
+    }
+  }
+}

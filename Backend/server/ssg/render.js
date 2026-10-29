@@ -49,6 +49,22 @@ function insertAfter(anchor, nodes) {
 }
 
 /**
+ * Retire les éléments data-cms-optional dont aucun texte facultatif (required = 0) n'est rempli :
+ * coordonnées de l'hébergeur pas encore connues, par exemple. Un élément qui porte un nom
+ * (data-cms-optional="Hébergeur…") le signale dans les avertissements du build quand il est retiré.
+ */
+function hideEmptyOptional($, source, warn) {
+  const optional = (el) => source.entries.get(el.attribs['data-cms-key'] || el.attribs['data-cms-html'])?.required === 0;
+  $('[data-cms-optional]').each((i, el) => {
+    const filled = $(el).find('[data-cms-key], [data-cms-html]').filter((j, n) => optional(n) && $(n).text().trim() !== '');
+    if (filled.length) return;
+    const name = el.attribs['data-cms-optional'];
+    if (name) warn(`« ${name} » vide : bloc masqué sur le site, à remplir dans l’admin`);
+    $(el).remove();
+  });
+}
+
+/**
  * @param site   contexte du build (voir build.js) : source, mode, basePath, gabarits, routes, fichiers…
  * @param lang   code de langue
  * @param target { type: 'page', page } ou { type: 'item', collection, item, route, view, template }
@@ -97,6 +113,8 @@ export function renderPage(site, lang, target, head) {
   // Salles de séminaire : tableau de la page Séminaires et liste du formulaire de devis
   renderMeetingRooms($, { source, lang, now: site.now, cdn: source.settings.cdn_base || '' });
   injectTexts($, (key) => text(key), mark);
+  // Lignes facultatives (data-cms-optional) : retirées tant que leurs textes facultatifs sont vides
+  hideEmptyOptional($, source, site.warn);
   syncCounters($);
   injectMedia($, source, lang, (key) => missing.add(key));
 
