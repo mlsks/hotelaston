@@ -220,7 +220,7 @@ export default function contentRoutes(app, { db, defaultLang }) {
     if (id) { where.push('e.id = @id'); params.id = id; }
     if (page) { where.push('e.page_id = @page'); params.page = page; }
     if (pages) where.push(`e.page_id IN (${pages.map(Number).join(',') || 'NULL'})`);
-    if (scope === 'global') where.push("e.page_id IS NULL AND e.key NOT LIKE 'ui.%'");
+    if (scope === 'global') where.push("e.page_id IS NULL AND e.key NOT LIKE 'ui.%' AND e.key NOT LIKE 'jsonld.%'");
     if (scope === 'ui') where.push("e.key LIKE 'ui.%'");
     if (scope && !['global', 'ui'].includes(scope)) { where.push('e.key LIKE @prefix'); params.prefix = `${scope}.%`; }
     if (q) { where.push('(e.key LIKE @q OR e.label LIKE @q OR EXISTS (SELECT 1 FROM cms_entry_values v2 WHERE v2.entry_id = e.id AND v2.value LIKE @q))'); params.q = `%${q}%`; }
@@ -310,6 +310,7 @@ export default function contentRoutes(app, { db, defaultLang }) {
     const unknown = Object.keys(req.body).filter((k) => !SETTINGS_EDITABLE.includes(k));
     if (unknown.length) throw badRequest(`Réglage non modifiable : ${unknown.join(', ')}`);
     if ('x_default_lang' in req.body) assertLang(db, req.body.x_default_lang);
+    if ('jsonld_graph' in req.body && !Array.isArray(req.body.jsonld_graph?.['@graph'])) throw badRequest('Données structurées : un objet avec une liste « @graph » est attendu.');
     const upsert = db.prepare(`INSERT INTO cms_settings (key, value, updated_at) VALUES (?, ?, ?)
       ON CONFLICT (key) DO UPDATE SET value = excluded.value, updated_at = excluded.updated_at`);
     db.transaction(() => {

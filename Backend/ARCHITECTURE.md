@@ -780,7 +780,7 @@ Règle de publication par langue : une page n'est publiée dans une langue que s
 **Technique, automatique à chaque build**
 - **Adresses** : une vraie adresse par page et par langue, en minuscules, avec une barre finale cohérente. Redirections 301 de `http` vers `https`, de la variante sans `www`, de `/fr/index.html` vers `/fr/`, et des anciennes adresses du site actuel.
 - **Balises** : `<title>`, meta description, canonical vers la page elle-même, `hreflang` réciproques (vérifiés), `<html lang>`, Open Graph et carte Twitter avec une image par page.
-- **Données structurées JSON-LD**, générées depuis la base dans chaque langue et validées au build (propriétés obligatoires présentes) :
+- **Données structurées JSON-LD**, générées depuis la base dans chaque langue. Le graphe commun est un modèle unique (réglage `jsonld_graph`, `ssg/jsonld.js` → `resolveGraph`) : clés Schema.org fixes, `{{clé}}` pour un texte traduisible `jsonld.*` (repli anglais prêt puis langue par défaut, `Source.relayText`), `{{url:page}}` pour l'adresse d'une page dans la langue, `{{inLanguage}}`. L'ancien graphe français par langue est converti au démarrage (`ssg/jsonld-texts.js`, traductions livrées dans `db/seeds/jsonld.json`, prêtes seulement si le français n'a pas changé) :
   - `Hotel` : adresse, coordonnées GPS, téléphone, étoiles, horaires d'arrivée et de départ, équipements ;
   - `HotelRoom` + `Offer` : surface, capacité, lits, prix quand il est connu ;
   - `Restaurant` et `BarOrPub` : horaires, réservation ;

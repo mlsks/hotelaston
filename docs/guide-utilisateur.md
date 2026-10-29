@@ -426,6 +426,14 @@ Pour chaque page et chaque langue :
 
 Les points relevés à chaque génération : longueur des titles et descriptions, doublons, liens cassés, textes non traduits… regroupés par page, pour le site en ligne ou la prévisualisation. **Corriger** mène au bon écran. Le rapport est vide tant qu'aucune prévisualisation ni publication n'a été faite.
 
+### Données structurées (JSON-LD)
+
+Chaque page porte, invisible pour le visiteur, une fiche lue par Google et les assistants IA : l'hôtel (adresse, téléphone, étoiles, horaires d'arrivée et de départ, équipements), le restaurant L'Horloge, le Moon Bar, L'Aston Club, et ce qui vient de la page elle-même (fil d'Ariane, questions fréquentes, chambre, concerts). Elle est écrite dans la langue de la page, avec les adresses de cette langue (`/en/…`, `/es/…`) et la langue indiquée (`inLanguage`).
+
+- **Les textes** (description de l'hôtel, équipements, description du restaurant et des bars, cuisine, gamme de prix) se modifient et se traduisent comme les autres : **Pages** → carte **Données structurées (JSON-LD)**, avec les onglets de langue. Ils apparaissent aussi dans **Traductions**. Une langue sans traduction prête reprend l'anglais s'il est prêt, sinon le français ; elle n'est jamais bloquée pour autant.
+- **La structure** (types, adresse, coordonnées GPS, téléphones, horaires, `@id`) ne se traduit pas : elle se règle une seule fois dans **Réglages** → **Données structurées (JSON-LD)**. Les clés Schema.org y restent en anglais. Dans ce modèle, `{{jsonld.hotel.description}}` désigne un texte traduit, `{{url:moon-bar}}` l'adresse d'une page dans la langue (par son nom interne : `accueil`, `restaurant-horloge`, `moon-bar`, `aston-club`, `menu-restaurant-horloge`, `carte-moon-bar`…), `{{inLanguage}}` la langue de la page. Une page inconnue ou un texte vide retire la ligne concernée et le signale dans le rapport de la prévisualisation.
+- Les noms propres (Hôtel Aston La Scala, L'Horloge, L'Aston Club) ne se traduisent pas. Les cartes du restaurant et du Moon Bar sont liées par leur page (`hasMenu`), sans recopier les plats.
+
 ### Redirections
 
 Une ancienne adresse renvoie vers une page du site ou une adresse externe, pour que les favoris, les liens et Google suivent. Saisir l'ancienne adresse (par exemple `/fr/ancienne-page.html`), choisir la page ou l'adresse de destination, le type (**Définitive (301)** en général), puis **Ajouter**.
@@ -454,7 +462,7 @@ Paramètres communs à tout le site, appliqués à la prochaine publication :
 - **Site** : nom du site, langue proposée aux visiteurs dont la langue n'est pas proposée (x-default), image de partage par défaut ;
 - **Moteur de réservation (D-Edge)** : adresse du moteur (`{locale}` y devient `fr-FR`, `en-GB`…), noms des paramètres qui transmettent les dates, les voyageurs, la chambre et l'offre (laisser un nom vide pour ne pas envoyer l'information), codes chambre et codes tarif de D-Edge (une ligne par chambre ou offre : `privilege = code D-Edge`). Ces noms et codes sont fournis par D-Edge ; s'ils sont faux, le moteur s'ouvre sans les choix du visiteur ;
 - **Avis clients** : **Exemples** ou **Avis réels de clients**, note et lien Google, note minimale pour l'accueil ;
-- **Données structurées (JSON-LD)** : réservé aux personnes à l'aise avec le format ;
+- **Données structurées (JSON-LD)** : le modèle unique, pour toutes les langues, des informations lues par Google et les assistants IA (voir [Données structurées (JSON-LD)](#donnees-structurees-json-ld)). Réservé aux personnes à l'aise avec le format ;
 - **Maintenance** : **Effacer la corbeille maintenant**.
 
 ### Journal des modifications

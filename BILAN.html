@@ -1,31 +1,16 @@
 <!doctype html>
+<!-- Généré par tools/md-to-html.mjs depuis BILAN.md : modifier le Markdown, puis relancer la commande. -->
 <html lang="fr">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex">
-<title>Bilan du projet · Aston La Scala</title>
+<title>Hôtel Aston La Scala — bilan du projet · Aston La Scala</title>
 <style>
   :root {
     color-scheme: light;
-    --bg: #fbf8f2;
-    --paper: #ffffff;
-    --ink: #1b2330;
-    --ink-2: #47515f;
-    --ink-3: #6b7482;
-    --line: rgba(20, 56, 92, 0.14);
-    --navy: #14385c;
-    --navy-deep: #0b1f34;
-    --brass: #a8834b;
-    --gold: #c9a45e;
-    --soft: #efe8db;
-    --ok: #2d7656;
-    --ok-bg: #e8f3ed;
-    --warn: #8a5a12;
-    --warn-bg: #fbf1dc;
-    --todo: #a33a2c;
-    --todo-bg: #fbeae7;
-    --info-bg: #e7eef5;
+    --bg: #fbf8f2; --paper: #ffffff; --ink: #1b2330; --ink-2: #47515f; --ink-3: #6b7482;
+    --line: rgba(20, 56, 92, 0.14); --navy: #14385c; --navy-deep: #0b1f34; --brass: #a8834b; --gold: #c9a45e; --soft: #efe8db;
     --serif: "Cormorant Garamond", "Cormorant", Georgia, "Times New Roman", serif;
     --sans: "Jost", "Avenir Next", "Segoe UI", system-ui, -apple-system, sans-serif;
     --mono: ui-monospace, "Cascadia Mono", Consolas, monospace;
@@ -33,125 +18,63 @@
   @media (prefers-color-scheme: dark) {
     :root:not([data-theme="light"]) {
       color-scheme: dark;
-      --bg: #0d1724;
-      --paper: #142233;
-      --ink: #e9edf2;
-      --ink-2: #b9c3cf;
-      --ink-3: #8d99a8;
-      --line: rgba(201, 164, 94, 0.18);
-      --navy: #8fb4d9;
-      --navy-deep: #e9edf2;
-      --soft: #1c2c40;
-      --ok: #7fcfa6;
-      --ok-bg: rgba(45, 118, 86, 0.22);
-      --warn: #f0c271;
-      --warn-bg: rgba(201, 164, 94, 0.16);
-      --todo: #f2a497;
-      --todo-bg: rgba(163, 58, 44, 0.22);
-      --info-bg: rgba(143, 180, 217, 0.14);
+      --bg: #0d1724; --paper: #142233; --ink: #e9edf2; --ink-2: #b9c3cf; --ink-3: #8d99a8;
+      --line: rgba(201, 164, 94, 0.18); --navy: #8fb4d9; --navy-deep: #e9edf2; --soft: #1c2c40;
     }
   }
   :root[data-theme="dark"] {
     color-scheme: dark;
-    --bg: #0d1724; --paper: #142233; --ink: #e9edf2; --ink-2: #b9c3cf; --ink-3: #8d99a8; --line: rgba(201, 164, 94, 0.18);
-    --navy: #8fb4d9; --navy-deep: #e9edf2; --soft: #1c2c40; --ok: #7fcfa6; --ok-bg: rgba(45, 118, 86, 0.22);
-    --warn: #f0c271; --warn-bg: rgba(201, 164, 94, 0.16); --todo: #f2a497; --todo-bg: rgba(163, 58, 44, 0.22); --info-bg: rgba(143, 180, 217, 0.14);
+    --bg: #0d1724; --paper: #142233; --ink: #e9edf2; --ink-2: #b9c3cf; --ink-3: #8d99a8;
+    --line: rgba(201, 164, 94, 0.18); --navy: #8fb4d9; --navy-deep: #e9edf2; --soft: #1c2c40;
   }
 
   * { box-sizing: border-box; }
   html { scroll-behavior: smooth; }
   body { margin: 0; background: var(--bg); color: var(--ink); font: 16px/1.6 var(--sans); -webkit-font-smoothing: antialiased; }
-  .wrap { width: min(1080px, 100%); margin: 0 auto; padding: 0 16px; }
+  .wrap { width: min(900px, 100%); margin: 0 auto; padding: 0 16px; }
   a { color: var(--navy); }
   code { font: 0.86em var(--mono); background: var(--soft); padding: 0.1em 0.35em; border-radius: 4px; overflow-wrap: anywhere; }
-  h1, h2, h3 { font-family: var(--serif); color: var(--navy-deep); line-height: 1.15; margin: 0; }
-  h2 { font-size: clamp(1.8rem, 1.4rem + 1.4vw, 2.4rem); }
-  h3 { font-size: 1.45rem; margin-bottom: 0.6rem; }
+  h1, h2, h3, h4 { font-family: var(--serif); color: var(--navy-deep); line-height: 1.15; }
+  h2 { font-size: clamp(1.7rem, 1.4rem + 1.2vw, 2.2rem); margin: 2.6rem 0 0.8rem; padding-top: 1.4rem; border-top: 1px solid var(--line); scroll-margin-top: 12px; }
+  h3 { font-size: 1.4rem; margin: 1.8rem 0 0.5rem; scroll-margin-top: 12px; }
+  h4 { font-size: 1.15rem; margin: 1.4rem 0 0.4rem; }
   p { margin: 0 0 0.8rem; }
+  ul, ol { margin: 0 0 1rem; padding-left: 1.4em; }
+  li { margin: 0.3rem 0; }
+  li::marker { color: var(--brass); }
+  li > ul, li > ol, li > pre { margin-top: 0.4rem; }
+  strong { color: var(--navy-deep); }
 
-  /* En-tête */
-  .hero { background: #0b1f34; color: #e9edf2; padding: 48px 0 40px; border-bottom: 3px solid var(--gold); }
+  .hero { background: #0b1f34; color: #e9edf2; padding: 44px 0 36px; border-bottom: 3px solid var(--gold); }
   .eyebrow { margin: 0 0 6px; font-size: 0.72rem; font-weight: 600; letter-spacing: 0.24em; text-transform: uppercase; color: var(--gold); }
-  .hero h1 { color: #fff; font-size: clamp(2.4rem, 1.8rem + 2.6vw, 3.6rem); }
-  .hero .date { margin-top: 6px; color: #b9c3cf; }
-  .status { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px; margin-top: 28px; }
-  .status div { background: rgba(255, 255, 255, 0.06); border: 1px solid rgba(201, 164, 94, 0.28); border-radius: 10px; padding: 14px 16px; }
-  .status b { display: block; font-size: 0.78rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--gold); }
-  .status span { display: block; margin-top: 2px; font-size: 1.05rem; color: #fff; }
+  .hero h1 { margin: 0; color: #fff; font-size: clamp(2.2rem, 1.7rem + 2.4vw, 3.4rem); }
+  .hero .date { margin: 6px 0 0; color: #b9c3cf; }
   .toc { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 22px; }
-  .toc a { color: #e9edf2; text-decoration: none; font-size: 0.9rem; padding: 6px 12px; border: 1px solid rgba(255, 255, 255, 0.2); border-radius: 999px; }
+  .toc a { color: #e9edf2; text-decoration: none; font-size: 0.85rem; padding: 5px 11px; border: 1px solid rgba(255, 255, 255, 0.2); border-radius: 999px; }
   .toc a:hover { border-color: var(--gold); color: var(--gold); }
-
-  main section { padding: 44px 0 8px; }
-  .lead { color: var(--ink-2); max-width: 70ch; }
-
-  /* Chiffres */
-  .figures { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px; margin-top: 20px; }
-  .figure { background: var(--paper); border: 1px solid var(--line); border-radius: 12px; padding: 16px; }
-  .figure strong { display: block; font-family: var(--serif); font-size: 2.2rem; line-height: 1; color: var(--navy-deep); }
-  .figure span { display: block; margin-top: 6px; font-size: 0.9rem; color: var(--ink-2); }
-
-  /* Cartes */
-  .grid2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 420px), 1fr)); gap: 16px; margin-top: 20px; }
-  .card { background: var(--paper); border: 1px solid var(--line); border-radius: 14px; padding: 22px; min-width: 0; }
-  .card ul { margin: 0; padding-left: 1.15em; }
-  .card li { margin: 0.35rem 0; }
-  .card li::marker { color: var(--brass); }
-
-  /* Briques */
-  .bricks { display: grid; gap: 10px; margin-top: 4px; }
-  .brick { display: grid; grid-template-columns: 2.4rem 1fr; gap: 12px; align-items: start; padding: 12px 0; border-top: 1px solid var(--line); }
-  .brick:first-child { border-top: 0; padding-top: 0; }
-  .num { display: grid; place-items: center; width: 2.4rem; height: 2.4rem; border-radius: 50%; background: var(--navy); color: var(--paper); font-weight: 600; }
-  .brick h4 { margin: 0.2rem 0 0.15rem; font-size: 1rem; }
-  .brick p { margin: 0; color: var(--ink-2); font-size: 0.95rem; }
-
-  .checks { list-style: none; padding: 0 !important; display: grid; gap: 8px; }
-  .checks li { position: relative; padding-left: 28px; margin: 0 !important; }
-  .checks li::before { content: ""; position: absolute; left: 0; top: 0.3em; width: 18px; height: 18px; border-radius: 50%; background: var(--ok-bg); border: 1px solid var(--ok); }
-  .checks li::after { content: ""; position: absolute; left: 6px; top: calc(0.3em + 4px); width: 5px; height: 8px; border: solid var(--ok); border-width: 0 2px 2px 0; transform: rotate(45deg); }
-
-  /* Reste à faire */
-  .todo { display: grid; gap: 10px; margin-top: 18px; }
-  .item { display: grid; grid-template-columns: auto 1fr; gap: 14px; align-items: start; background: var(--paper); border: 1px solid var(--line); border-radius: 12px; padding: 14px 16px; }
-  .item input { width: 20px; height: 20px; margin: 3px 0 0; accent-color: var(--navy); cursor: pointer; }
-  .item h4 { margin: 0 0 4px; font-size: 1rem; display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
-  .item p { margin: 0; color: var(--ink-2); font-size: 0.95rem; }
-  .item.done { opacity: 0.55; }
-  .item.done h4 span.t { text-decoration: line-through; }
-  .tag { font-family: var(--sans); font-size: 0.7rem; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; padding: 2px 8px; border-radius: 999px; white-space: nowrap; }
-  .tag.must { background: var(--todo-bg); color: var(--todo); }
-  .tag.next { background: var(--warn-bg); color: var(--warn); }
-  .tag.opt { background: var(--info-bg); color: var(--navy); }
-  .tag.hotel { background: var(--soft); color: var(--brass); }
-  .progress { margin-top: 14px; font-size: 0.9rem; color: var(--ink-3); }
-
-  /* Étapes */
-  .steps { counter-reset: step; list-style: none; padding: 0; margin: 18px 0 0; display: grid; gap: 0; }
-  .steps li { counter-increment: step; position: relative; padding: 0 0 18px 52px; }
-  .steps li::before { content: counter(step); position: absolute; left: 0; top: 0; width: 34px; height: 34px; display: grid; place-items: center; border-radius: 50%; background: var(--gold); color: #0b1f34; font-weight: 700; }
-  .steps li:not(:last-child)::after { content: ""; position: absolute; left: 16px; top: 36px; bottom: 2px; width: 2px; background: var(--line); }
-  .steps strong { display: block; }
-  .steps span { color: var(--ink-2); font-size: 0.95rem; }
-
-  pre { margin: 0.4rem 0 1rem; padding: 12px 14px; background: #0b1f34; color: #e9edf2; border-radius: 10px; overflow-x: auto; font: 0.88rem/1.5 var(--mono); }
-  footer { margin-top: 40px; padding: 26px 0 40px; border-top: 1px solid var(--line); color: var(--ink-3); font-size: 0.9rem; }
   .theme { float: right; background: none; border: 1px solid rgba(255, 255, 255, 0.25); color: #e9edf2; border-radius: 999px; padding: 5px 12px; font: inherit; font-size: 0.85rem; cursor: pointer; }
 
+  main.wrap { padding-top: 28px; }
+  .table { overflow-x: auto; margin: 0.4rem 0 1.2rem; border: 1px solid var(--line); border-radius: 10px; background: var(--paper); }
+  table { border-collapse: collapse; width: 100%; font-size: 0.94rem; }
+  th, td { text-align: left; vertical-align: top; padding: 9px 12px; border-top: 1px solid var(--line); }
+  thead th { border-top: 0; background: var(--soft); font-weight: 600; }
+  pre { margin: 0.4rem 0 1rem; padding: 12px 14px; background: #0b1f34; color: #e9edf2; border-radius: 10px; overflow-x: auto; font: 0.88rem/1.5 var(--mono); }
+  pre code { background: none; padding: 0; font-size: inherit; color: inherit; }
+  footer { margin-top: 40px; padding: 22px 0 40px; border-top: 1px solid var(--line); color: var(--ink-3); font-size: 0.9rem; }
+
   @media (max-width: 560px) {
-    .hero { padding: 32px 0 28px; }
-    .card { padding: 18px 16px; }
-    .item { padding: 12px; gap: 10px; }
+    .hero { padding: 30px 0 26px; }
     .theme { float: none; margin-bottom: 14px; }
   }
   @media print {
     body { background: #fff; color: #000; }
     .hero { background: #fff; color: #000; border-bottom: 2px solid #000; padding: 0 0 16px; }
-    .hero h1, .status span { color: #000; }
-    .status div { border-color: #999; background: none; }
-    .toc, .theme, .progress, .item input { display: none; }
-    .card, .item, .figure { break-inside: avoid; }
-    main section { padding-top: 24px; }
+    .hero h1 { color: #000; }
+    .toc, .theme { display: none; }
+    pre { background: #f3f3f3; color: #000; }
+    h2, h3 { break-after: avoid; }
+    .table, pre { break-inside: avoid; }
   }
 </style>
 </head>
@@ -159,225 +82,161 @@
 <header class="hero">
   <div class="wrap">
     <button class="theme" type="button" id="theme" aria-label="Changer de thème">Thème</button>
-    <p class="eyebrow">Hôtel Aston La Scala · Nice</p>
-    <h1>Bilan du projet</h1>
-    <p class="date">Refonte du site et back-office · état au 26 octobre 2026</p>
-    <div class="status">
-      <div><b>Le site</b><span>Maquette fonctionnelle prête</span></div>
-      <div><b>Le back-office</b><span>Terminé et testé en local</span></div>
-      <div><b>Mise en ligne</b><span>Pas encore : déploiement à préparer</span></div>
-    </div>
+    <p class="eyebrow"></p>
+    <h1>Hôtel Aston La Scala — bilan du projet</h1>
+    <p class="date">État au 26 octobre 2026. Version HTML du même document : <a href="BILAN.html">BILAN.html</a>.</p>
     <nav class="toc" aria-label="Sommaire">
-      <a href="#fait">Ce qui est fait</a>
-      <a href="#hotel">À obtenir de l’hôtel</a>
-      <a href="#dev">Développement restant</a>
-      <a href="#etapes">Mise en ligne</a>
-      <a href="#reprendre">Reprendre le travail</a>
+      <a href="#en-bref">En bref</a>
+      <a href="#1-ce-qui-est-fait">1. Ce qui est fait</a>
+      <a href="#2-ce-qu-il-reste-a-faire">2. Ce qu'il reste à faire</a>
+      <a href="#3-ordre-conseille-pour-la-mise-en-ligne">3. Ordre conseillé pour la mise en ligne</a>
+      <a href="#4-pour-reprendre-le-travail">4. Pour reprendre le travail</a>
     </nav>
   </div>
 </header>
 
 <main class="wrap">
-  <section aria-labelledby="bref">
-    <h2 id="bref">En bref</h2>
-    <p class="lead">Le nouveau site suit la revue UX et toutes ses pages sont prêtes. Le back-office qui le fait vivre est complet : contenus et traductions, médias, bandeaux, publication avec retour arrière, statistiques sans cookie. Rien n’est encore en ligne : il reste les fichiers de déploiement, quelques développements secondaires et des informations à obtenir de l’hôtel.</p>
-    <div class="figures">
-      <div class="figure"><strong>35</strong><span>pages générées (25 pages, 6 fiches chambre, 4 fiches service)</span></div>
-      <div class="figure"><strong>1 294</strong><span>textes modifiables, dont 57 affichés par le JavaScript</span></div>
-      <div class="figure"><strong>35 / 36</strong><span>recommandations de la revue UX appliquées</span></div>
-      <div class="figure"><strong>22</strong><span>écrans d’administration</span></div>
-      <div class="figure"><strong>44</strong><span>tests automatiques, tous réussis</span></div>
-    </div>
-  </section>
-
-  <section id="fait" aria-labelledby="fait-t">
-    <h2 id="fait-t">1. Ce qui est fait</h2>
-    <div class="grid2">
-      <article class="card">
-        <h3>Le site</h3>
-        <ul>
-          <li><strong>Toutes les pages</strong> :
-            <ul>
-              <li>accueil ;</li>
-              <li>chambres et leurs 6 fiches ;</li>
-              <li>L’Horloge, Moon Bar, L’Aston Club et leurs cartes ;</li>
-              <li>rooftop et piscine, Live Music ;</li>
-              <li>séminaires avec devis, offres ;</li>
-              <li>services et leurs 4 fiches ;</li>
-              <li>accès, avis, FAQ, histoire ;</li>
-              <li>pages de recherche locales, blog ;</li>
-              <li>passerelle Appartements.</li>
-            </ul>
-          </li>
-          <li><strong>Réservation</strong> :
-            <ul>
-              <li>module visible dès l’arrivée ;</li>
-              <li>bouton fixe en bas d’écran sur mobile ;</li>
-              <li>dates, voyageurs, chambre ou offre transmis au moteur D-Edge.</li>
-            </ul>
-          </li>
-          <li><strong>Revue UX</strong> : 35 recommandations sur 36. Les avis sur les pages restaurant et bars sont reportés à votre demande.</li>
-          <li><strong>Hero</strong> : photo de la piscine du toit, recadrée pour mobile ; boucle vidéo prête en attente de la prise de vue définitive.</li>
-          <li><strong>Corrections du parcours</strong> :
-            <ul>
-              <li>un seul bar ouvert à la fois (Moon Bar si le temps le permet, sinon L’Aston Club), sans mention « jazz » ;</li>
-              <li>page Appartements ;</li>
-              <li>QR code en chambre ;</li>
-              <li>phrase de la plage.</li>
-            </ul>
-          </li>
-          <li><strong>Prudence</strong> :
-            <ul>
-              <li>rien n’a été inventé : 32 passages sont marqués « à confirmer » ;</li>
-              <li>les avis de démonstration sont étiquetés « Exemple ».</li>
-            </ul>
-          </li>
-        </ul>
-      </article>
-
-      <article class="card">
-        <h3>Le back-office</h3>
-        <div class="bricks">
-          <div class="brick"><span class="num">1</span><div><h4>Base et générateur</h4>
-            <p>Site actuel importé à l’identique, une page par adresse et par langue, prévisualisation privée, publication figée, 3 versions conservées et restauration en un clic, régénération chaque nuit, plan du site fiable, IndexNow, hreflang, redirections 301 automatiques.</p></div></div>
-          <div class="brick"><span class="num">2</span><div><h4>Connexion, rôles, médias, bandeaux, popup</h4>
-            <p>Administrateur, éditeur, traducteur ; journal des modifications. Photos en WebP et recadrage portrait centré sur le sujet, vidéos avec poster, bandeaux programmés, popup respectueux du mobile.</p></div></div>
-          <div class="brick"><span class="num">LM</span><div><h4>Éditeur Live Music</h4>
-            <p>Compte limité à la page Live Music, au programme des concerts, à ses bandeaux et à ses médias ; il publie sa partie sans emporter les brouillons des autres.</p></div></div>
-          <div class="brick"><span class="num">3</span><div><h4>Statistiques sans cookie</h4>
-            <p>Canaux (dont assistants IA et comparateurs), parcours jusqu’au moteur de réservation, calendrier de la demande, efficacité des bandeaux, vitesse ressentie. Aucune adresse IP conservée.</p></div></div>
-          <div class="brick"><span class="num">4</span><div><h4>Interface d’administration</h4>
-            <p>22 écrans sur <code>/admin/</code> : pages et SEO avec aperçu Google, textes, fiches, médiathèque, bandeaux, popup, traductions, versions, statistiques, utilisateurs, réglages. Utilisable sur téléphone.</p></div></div>
-        </div>
-      </article>
-    </div>
-
-    <article class="card" style="margin-top:16px">
-      <h3>Vérifié</h3>
-      <ul class="checks">
-        <li>Les 34 pages françaises générées reprennent exactement le texte et la structure de la maquette.</li>
-        <li>36 tests automatiques : droits, traductions, médias, bandeaux, popup, publication et restauration, Live Music, statistiques, sécurité de l’admin.</li>
-        <li>Parcours complet dans le navigateur : modifier un texte, le traduire, prévisualiser, publier, revenir à la version précédente.</li>
-        <li>Ajout d’un concert, envoi d’une photo, comptes traducteur et Live Music, affichage sur téléphone.</li>
-        <li>Admin sans CDN tiers : bibliothèques aux versions figées, servies par le serveur, politique de sécurité stricte.</li>
-      </ul>
-    </article>
-  </section>
-
-  <section id="hotel" aria-labelledby="hotel-t">
-    <h2 id="hotel-t">2. Ce qu’il reste à faire</h2>
-    <h3 style="margin-top:18px">2.1 À obtenir ou à décider côté hôtel</h3>
-    <div class="todo" data-list="hotel">
-      <label class="item"><input type="checkbox" data-id="h1"><div><h4><span class="t">Données « à confirmer »</span><span class="tag must">Avant mise en ligne</span></h4>
-        <p>Prix, économies et conditions des offres ; annulation et paiement ; capacités des salons, de Matisse et de L’Aston Club ; tram depuis la gare ; programme Live Music.</p></div></label>
-      <label class="item"><input type="checkbox" data-id="h2"><div><h4><span class="t">Incohérences du site actuel</span><span class="tag must">Avant mise en ligne</span></h4>
-        <p>Saison du Moon Bar (mai–octobre ou juin–septembre), fermeture (00 h 30 ou minuit), étage (7e ou 8e), numéro de réservation du rooftop (04 92 17 53 09 ou 04 89 22 20 06).</p></div></label>
-      <label class="item"><input type="checkbox" data-id="h3"><div><h4><span class="t">Moteur de réservation D-Edge</span><span class="tag must">Avant mise en ligne</span></h4>
-        <p>Lien profond trouvé le 28/10/2026 (dates, adultes et enfants transmis). Reste à confirmer les langues autres que le français et, en option, un paramètre d'offre.</p></div></label>
-      <label class="item"><input type="checkbox" data-id="h4"><div><h4><span class="t">Avis réels</span><span class="tag must">Avant mise en ligne</span></h4>
-        <p>Remplacer les avis de démonstration par les vrais (fiche Google), puis régler « Avis affichés » sur « Avis réels ».</p></div></label>
-      <label class="item"><input type="checkbox" data-id="h5"><div><h4><span class="t">Anciennes adresses</span><span class="tag must">Avant mise en ligne</span></h4>
-        <p>Relever les adresses actuelles de hotel-aston.com pour créer les redirections 301 et garder le référencement.</p></div></label>
-      <label class="item"><input type="checkbox" data-id="h6"><div><h4><span class="t">Politique de confidentialité</span><span class="tag must">Avant mise en ligne</span></h4>
-        <p>Paragraphe sur la mesure d’audience : sans cookie, données agrégées, 13 mois, comment s’y opposer.</p></div></label>
-      <label class="item"><input type="checkbox" data-id="h7"><div><h4><span class="t">Géolocalisation des statistiques</span><span class="tag hotel">Accord</span></h4>
-        <p>Autoriser le téléchargement de la base gratuite DB-IP (pays et régions), renouvelée chaque mois.</p></div></label>
-      <label class="item"><input type="checkbox" data-id="h8"><div><h4><span class="t">Traductions</span><span class="tag next">Ensuite</span></h4>
-        <p>L’anglais est activé mais aucune page n’est entièrement traduite : seul le français sera publié d’ici là. Désigner les traducteurs, puis l’italien et l’allemand.</p></div></label>
-      <label class="item"><input type="checkbox" data-id="h9"><div><h4><span class="t">Vidéo du Hero</span><span class="tag next">Ensuite</span></h4>
-        <p>Fournir la prise de vue définitive : elle sera traitée en boucle et la vidéo réactivée.</p></div></label>
-      <label class="item"><input type="checkbox" data-id="h10"><div><h4><span class="t">Résidence Aston La Scala</span><span class="tag next">Ensuite</span></h4>
-        <p>Lien vers l’hôtel sur residenceastonlascala.com (extrait prêt) ; 17 appartements annoncés, 16 détaillés ; accès à la piscine ; moteur de réservation (D-Edge <code>J1P3</code>, <code>hotelId=29961</code>) à valider.</p></div></label>
-    </div>
-
-    <h3 id="dev" style="margin-top:34px">2.2 Développement restant</h3>
-    <div class="todo" data-list="dev">
-      <label class="item"><input type="checkbox" data-id="d1"><div><h4><span class="t">Fichiers de déploiement</span><span class="tag must">Avant mise en ligne</span></h4>
-        <p>Caddyfile (HTTPS, cache, redirections, <code>/api</code>, <code>/admin</code> et <code>/preview</code> vers Node), PM2, Dockerfile.</p></div></label>
-      <label class="item"><input type="checkbox" data-id="d2"><div><h4><span class="t">Sauvegardes</span><span class="tag must">Avant mise en ligne</span></h4>
-        <p>Copie nocturne de la base sur 7 jours (aujourd’hui seulement avant une restauration) et synchronisation des médias hors du serveur.</p></div></label>
-      <label class="item"><input type="checkbox" data-id="d3"><div><h4><span class="t">Photos du site</span><span class="tag must">Avant mise en ligne</span></h4>
-        <p>Importer dans la médiathèque les photos encore lues sur le CDN du site actuel, puis basculer les gabarits.</p></div></label>
-      <label class="item"><input type="checkbox" data-id="d4"><div><h4><span class="t">Comptes du serveur</span><span class="tag must">Avant mise en ligne</span></h4>
-        <p>Créer les vrais comptes ; les comptes de développement restent en local.</p></div></label>
-      <label class="item"><input type="checkbox" data-id="d5"><div><h4><span class="t">SEO et GEO</span><span class="tag next">Fait le 27/10</span></h4>
-        <p>54 remarques corrigées ; robots IA autorisés, llms.txt, données structurées par page. Textes à relire : docs/seo-geo.md.</p></div></label>
-      <label class="item"><input type="checkbox" data-id="d6"><div><h4><span class="t">Avis sur L’Horloge, Moon Bar, L’Aston Club</span><span class="tag next">Ensuite</span></h4>
-        <p>Dernière recommandation de la revue UX, reportée à votre demande.</p></div></label>
-      <label class="item"><input type="checkbox" data-id="d7"><div><h4><span class="t">Vidéos YouTube / Vimeo</span><span class="tag next">Ensuite</span></h4>
-        <p>Lecteur chargé au clic du visiteur (aujourd’hui un simple lien).</p></div></label>
-      <label class="item"><input type="checkbox" data-id="d8"><div><h4><span class="t">Statistiques niveaux 2 et 3</span><span class="tag opt">Option</span></h4>
-        <p>Visiteurs qui reviennent (avec possibilité de refus) ; import des réservations D-Edge et de Google Search Console : chiffre d’affaires par canal, positions dans Google.</p></div></label>
-      <label class="item"><input type="checkbox" data-id="d9"><div><h4><span class="t">Rapport hebdomadaire par e-mail</span><span class="tag opt">Option</span></h4>
-        <p>Résumé des statistiques chaque semaine (il faut un serveur d’envoi).</p></div></label>
-    </div>
-    <p class="progress" id="progress" aria-live="polite"></p>
-  </section>
-
-  <section id="etapes" aria-labelledby="etapes-t">
-    <h2 id="etapes-t">3. Ordre conseillé pour la mise en ligne</h2>
-    <ol class="steps">
-      <li><strong>Réponses de l’hôtel</strong><span>Données à confirmer, incohérences, moteur D-Edge, avis ; corrections directement dans l’admin.</span></li>
-      <li><strong>Serveur</strong><span>Fichiers de déploiement et sauvegardes ; installation de Node.js 24, ffmpeg et Caddy.</span></li>
-      <li><strong>Contenus</strong><span>Import des photos, création des comptes, redirections des anciennes adresses.</span></li>
-      <li><strong>Publication</strong><span>Prévisualisation complète, puis publication.</span></li>
-      <li><strong>Bascule</strong><span>Nom de domaine, plan du site déclaré dans Google Search Console, clé IndexNow.</span></li>
-      <li><strong>Langues</strong><span>Traductions anglaises publiées page par page dès qu’elles sont complètes, puis italien et allemand.</span></li>
-    </ol>
-  </section>
-
-  <section id="reprendre" aria-labelledby="reprendre-t">
-    <h2 id="reprendre-t">4. Pour reprendre le travail</h2>
-    <div class="grid2">
-      <article class="card">
-        <h3>Lancer le back-office</h3>
-        <pre>npm --prefix hotelaston/Backend start</pre>
-        <p>Admin : <code>http://localhost:3020/admin/</code>. Identifiants de développement dans <code>Backend/.dev-credentials</code> (non versionné).</p>
-        <pre>npm --prefix hotelaston/Backend test</pre>
-      </article>
-      <article class="card">
-        <h3>Documentation</h3>
-        <ul>
-          <li><a href="README.md">README.md</a> : la maquette du site, les vidéos, les données à confirmer.</li>
-          <li><a href="Backend/README.md">Backend/README.md</a> : commandes, rôles, écrans, API.</li>
-          <li><a href="Backend/ARCHITECTURE.md">Backend/ARCHITECTURE.md</a> : architecture et modèle de données.</li>
-          <li><a href="BILAN.md">BILAN.md</a> : ce bilan en Markdown.</li>
-          <li><code>.claude/</code> : consignes et mémoire du projet pour Claude. Sur un autre ordinateur, garder l’emplacement <code>C:\dev\Claude\Remotion\hotelaston</code> (chemins absolus dans la base).</li>
-        </ul>
-      </article>
-    </div>
-  </section>
-
-  <footer>Bilan établi le 26 octobre 2026. Les cases cochées sont mémorisées dans ce navigateur seulement.</footer>
+<h2 id="en-bref">En bref</h2>
+<ul>
+<li><strong>Le nouveau site est prêt en maquette fonctionnelle</strong> : toutes les pages, le module de réservation, le chat, les formulaires, les données structurées pour Google. Il suit la revue UX (35 recommandations sur 36 appliquées).</li>
+<li><strong>Le back-office est terminé et testé en local</strong> (<code>hotelaston/Backend/</code>) : gestion des contenus et des traductions, médiathèque, bandeaux, popup, génération du site en pages statiques, publication et retour arrière, statistiques sans cookie, interface d'administration complète.</li>
+<li><strong>Rien n'est encore en ligne.</strong> Restent les fichiers de déploiement, quelques développements secondaires, et surtout des informations à obtenir de l'hôtel.</li>
+</ul>
+<div class="table"><table>
+<thead><tr><th>Repère</th><th>Valeur</th></tr></thead>
+<tbody>
+<tr><td>Pages générées</td><td>35 (25 pages + 6 fiches chambre + 4 fiches service)</td></tr>
+<tr><td>Textes gérés</td><td>1 294, dont 57 textes affichés par le JavaScript</td></tr>
+<tr><td>Langues</td><td>Français en ligne · anglais activé, à traduire · italien et allemand préparés</td></tr>
+<tr><td>Tests automatiques</td><td>44, tous réussis (1 sauté sans ffmpeg)</td></tr>
+<tr><td>Écrans d'administration</td><td>22</td></tr>
+</tbody></table></div>
+<h2 id="1-ce-qui-est-fait">1. Ce qui est fait</h2>
+<h3 id="1-1-le-site">1.1 Le site</h3>
+<p>Maquette HTML / CSS / JavaScript dans <code>hotelaston/</code> (<code>index.html</code>, <code>styles.css</code>, <code>remotion-vanilla.js</code>).</p>
+<ul>
+<li><strong>Pages</strong> :
+<ul>
+<li>accueil ;</li>
+<li>chambres et leurs 6 fiches ;</li>
+<li>restaurant et bars : L'Horloge, Moon Bar, L'Aston Club, cartes ;</li>
+<li>rooftop et piscine, Live Music ;</li>
+<li>séminaires avec demande de devis, offres ;</li>
+<li>services et leurs 4 fiches ;</li>
+<li>accès et contact, avis, FAQ, notre histoire ;</li>
+<li>pages de recherche locales (hôtel vieille ville, salle de séminaire, comité d'entreprise…), blog ;</li>
+<li>page passerelle « Appartements » vers la Résidence.</li>
+</ul></li>
+<li><strong>Réservation</strong> :
+<ul>
+<li>module visible dès l'arrivée ;</li>
+<li>bouton fixe en bas d'écran sur mobile ;</li>
+<li>liens directs vers le moteur D-Edge avec dates, voyageurs, chambre ou offre.</li>
+</ul></li>
+<li><strong>Revue UX</strong> (<code>revue-ux-hotel-aston-relecture.pdf</code>) : 35 recommandations sur 36 appliquées. La dernière, des avis sur les pages L'Horloge, Moon Bar et L'Aston Club, est reportée à votre demande.</li>
+<li><strong>Hero</strong> : photo de la piscine du toit (WebP, recadrage portrait pour mobile). La boucle vidéo est prête mais désactivée, en attendant la prise de vue définitive. Boucle du Moon Bar rendue avec Remotion.</li>
+<li><strong>Corrections demandées en cours de route</strong> :
+<ul>
+<li>un seul bar ouvert à la fois : le Moon Bar quand le temps le permet, sinon L'Aston Club ;</li>
+<li>plus de mention « jazz » ;</li>
+<li>page passerelle Appartements avec liens suivis ;</li>
+<li>texte du QR code en chambre ;</li>
+<li>phrase de la plage.</li>
+</ul></li>
+<li><strong>Prudence sur les données</strong> :
+<ul>
+<li>ce que le site actuel ne dit pas n'a pas été inventé : 32 passages sont marqués « à confirmer », visibles avec <code>?audit</code> ;</li>
+<li>les avis de démonstration sont étiquetés « Exemple ».</li>
+</ul></li>
+</ul>
+<h3 id="1-2-le-back-office-hotelaston-backend">1.2 Le back-office (<code>hotelaston/Backend/</code>)</h3>
+<p>Node.js, Fastify, SQLite. Le site public reste 100 % statique : rapide, sûr, peu coûteux à héberger.</p>
+<div class="table"><table>
+<thead><tr><th>Brique</th><th>Contenu</th></tr></thead>
+<tbody>
+<tr><td>1. Base et générateur</td><td>Import du site actuel (les 34 pages françaises générées sont identiques à la maquette). Une page par adresse et par langue, prévisualisation privée, publication figée, 3 versions conservées et restauration en un clic, régénération chaque nuit. Plan du site avec dates de mise à jour fiables, IndexNow, balises hreflang, données structurées, redirections 301 automatiques quand une adresse change.</td></tr>
+<tr><td>2. API, rôles, médias</td><td>Connexion sécurisée (mots de passe argon2id, jeton CSRF, limite de tentatives, journal des modifications). Rôles administrateur, éditeur et traducteur. Médias : WebP en 4 tailles, recadrage portrait centré sur le point d'intérêt, poster des vidéos, doublons détectés, corbeille. Bandeaux programmés sur 4 emplacements, popup (fenêtre sur ordinateur, panneau bas sur mobile, jamais avant un geste du visiteur). Textes du JavaScript traduisibles.</td></tr>
+<tr><td>Éditeur Live Music</td><td>Compte limité à la page Live Music, au programme des concerts, à ses bandeaux et à ses médias. Il publie sa partie sans emporter les brouillons des autres.</td></tr>
+<tr><td>3. Statistiques</td><td>Sans cookie ni bandeau de consentement ; ni adresse IP ni identifiant conservés. Canaux d'arrivée, dont les assistants IA et les comparateurs. Du visiteur au moteur de réservation, calendrier de la demande (dates d'arrivée recherchées), efficacité des bandeaux et du popup, vitesse ressentie (Core Web Vitals). Purge après 13 mois, exports CSV.</td></tr>
+<tr><td>4. Interface d'administration</td><td>22 écrans sur <code>/admin/</code> : pages et SEO (aperçu Google, contrôles), textes, fiches, médiathèque, bandeaux, popup, traductions, langues, publication et versions, rapport SEO, statistiques, redirections, utilisateurs, réglages, journal, compte. Utilisable sur téléphone.</td></tr>
+</tbody></table></div>
+<p><strong>Vérifié</strong> :</p>
+<ul>
+<li><strong>Tests automatiques</strong> : 36 tests (connexion et droits, traductions, médias, bandeaux, popup, publication et restauration, éditeur Live Music, statistiques, sécurité de l'admin).</li>
+<li><strong>Dans le navigateur, parcours complet</strong> : modifier un texte, le traduire, prévisualiser, publier, puis revenir à la version précédente.</li>
+<li><strong>Dans le navigateur, autres essais</strong> :
+<ul>
+<li>ajout d'un concert ;</li>
+<li>envoi d'une photo ;</li>
+<li>compte traducteur et compte Live Music ;</li>
+<li>affichage sur téléphone.</li>
+</ul></li>
+<li><strong>Sécurité</strong> : les bibliothèques de l'admin (Alpine.js 3.17.4, Tailwind 4.3.3, Chart.js 4.5.1) sont servies par le serveur lui-même, sans CDN tiers, avec une politique de sécurité stricte.</li>
+</ul>
+<p>Documentation : <a href="Backend/README.md">Backend/README.md</a> (commandes, rôles, écrans, API) et <a href="Backend/ARCHITECTURE.md">Backend/ARCHITECTURE.md</a> (architecture et modèle de données).</p>
+<h2 id="2-ce-qu-il-reste-a-faire">2. Ce qu'il reste à faire</h2>
+<h3 id="2-1-a-obtenir-ou-a-decider-cote-hotel">2.1 À obtenir ou à décider côté hôtel</h3>
+<div class="table"><table>
+<thead><tr><th>#</th><th>Sujet</th><th>Détail</th></tr></thead>
+<tbody>
+<tr><td>1</td><td>Données « à confirmer »</td><td>Prix, économies et conditions des offres (séjour, séminaire) ; politique d'annulation et moyens de paiement ; capacités des salons (cabaret, banquet), de Matisse et de L'Aston Club ; itinéraire en tram depuis la gare ; programme Live Music.</td></tr>
+<tr><td>2</td><td>Incohérences du site actuel</td><td>Saison du Moon Bar (mai–octobre ou juin–septembre) ; heure de fermeture (00 h 30 ou minuit) ; étage (7e ou 8e) ; numéro de réservation du rooftop (04 92 17 53 09 ou 04 89 22 20 06).</td></tr>
+<tr><td>3</td><td>Moteur de réservation D-Edge</td><td>Lien profond trouvé le 28/10/2026 (dates, adultes et enfants transmis). Reste à confirmer avec D-Edge les langues autres que le français et, en option, un paramètre d'offre.</td></tr>
+<tr><td>4</td><td>Avis clients</td><td>Passer aux avis réels (fiche Google), puis basculer le réglage « Avis affichés » sur « Avis réels ».</td></tr>
+<tr><td>5</td><td>Vidéo du Hero</td><td>Fournir la prise de vue définitive : elle sera traitée en boucle et la vidéo réactivée.</td></tr>
+<tr><td>6</td><td>Résidence Aston La Scala</td><td>Ajouter sur residenceastonlascala.com le lien vers l'hôtel (extrait prêt en bas de <code>index.html</code>). 17 appartements annoncés, 16 détaillés. Les clients de la Résidence ont-ils accès à la piscine ? Valider son moteur de réservation (D-Edge <code>J1P3</code>, <code>hotelId=29961</code>).</td></tr>
+<tr><td>7</td><td>Géolocalisation des statistiques</td><td>Donner l'accord pour télécharger la base gratuite DB-IP (pays et régions), à renouveler chaque mois.</td></tr>
+<tr><td>8</td><td>Politique de confidentialité</td><td>Faire valider et ajouter le paragraphe sur la mesure d'audience, prêt dans <a href="docs/confidentialite-mesure-audience.md">docs/confidentialite-mesure-audience.md</a>.</td></tr>
+<tr><td>9</td><td>Traductions</td><td>L'anglais est activé mais aucune page n'est encore entièrement traduite : seul le français sera publié tant que ce n'est pas fait. Désigner les traducteurs (comptes à créer), puis l'italien et l'allemand.</td></tr>
+<tr><td>10</td><td>Anciennes adresses</td><td>Relever les adresses actuelles de hotel-aston.com pour créer les redirections 301 et ne pas perdre le référencement.</td></tr>
+<tr><td>11</td><td>Cartes de L'Horloge</td><td>Reprises le 28/10/2026 de l'ancien site (carte, vins, desserts) dans l'écran <strong>Cartes du restaurant</strong>, aux mêmes adresses. À relire par l'hôtel (prix, millésimes, plats du moment), puis relire la traduction anglaise, préparée en brouillon le 28/10/2026 (l'ancien site avait aussi des descriptions en italien, non reprises). Vérifier aussi les cartes du Moon Bar.</td></tr>
+</tbody></table></div>
+<h3 id="2-2-developpement-restant">2.2 Développement restant</h3>
+<div class="table"><table>
+<thead><tr><th>Priorité</th><th>Sujet</th><th>Détail</th></tr></thead>
+<tbody>
+<tr><td>Fait (27/10)</td><td>Fichiers de déploiement</td><td>Caddyfile, PM2, Dockerfile dans <a href="deploy/README.md">deploy/</a>. Restent l'hébergeur et l'adresse des alertes Let's Encrypt.</td></tr>
+<tr><td>Fait (27/10)</td><td>Sauvegardes</td><td><code>deploy/backup-db.sh</code> (base et snapshots, 7 jours) et <code>deploy/sync-media.sh</code> (rclone). Reste à choisir le stockage externe.</td></tr>
+<tr><td>Fait (27/10)</td><td>Chemins en base</td><td>Chemins des versions et des snapshots relatifs au dossier des données : la base passe du PC Windows au serveur Linux sans retouche.</td></tr>
+<tr><td>Fait (27/10)</td><td>Photos du site</td><td>72 photos du site actuel dans la médiathèque (WebP en plusieurs tailles), 63 emplacements des gabarits, photos des fiches, image de partage (JPEG 1200×630, lu par tous les réseaux sociaux) et JSON-LD basculés : plus aucun appel à l'ancien CDN. Photos modifiables dans l'admin (onglet Textes de chaque page, fiches). Commande <code>media:import-site</code> à relancer sur une base neuve.</td></tr>
+<tr><td>Fait (29/10)</td><td>JSON-LD dans toutes les langues</td><td>Modèle unique dans Réglages, textes <code>jsonld.*</code> traduits dans les 13 langues (Pages → Données structurées), adresses et <code>inLanguage</code> de la langue de la page, <code>hasMenu</code> vers les cartes.</td></tr>
+<tr><td>Avant mise en ligne</td><td>Comptes</td><td>Créer les vrais comptes sur le serveur ; les comptes de développement restent en local.</td></tr>
+<tr><td>Fait (27/10)</td><td>SEO et GEO</td><td>54 remarques corrigées (titles et descriptions raccourcis, sans fait nouveau). Visibilité dans les assistants IA : robots.txt qui autorise les robots IA, <code>llms.txt</code> généré depuis la base, nœud <code>WebPage</code> relié à l'hôtel sur chaque page, FAQ balisée sans les réponses « à confirmer ». Textes à relire et suite : <a href="docs/seo-geo.md">docs/seo-geo.md</a> ; questions 25 à 31 pour l'hôtel.</td></tr>
+<tr><td>Fait (28/10)</td><td>Tout modifier dans l'admin</td><td>Plan en 4 étapes validé le 28/10/2026. <strong>Étape 1 faite</strong> : écran <strong>Menus et liens</strong> (menu principal, menu mobile avec sous-menus, pied de page, cartes du restaurant et du bar, liens de la page Séminaires : ajouter, retirer, renommer, réordonner, masquer ; cible page, PDF ou adresse) et documents PDF dans la médiathèque. Écran <strong>Cartes du restaurant</strong> : une page par carte, rubriques et plats (nom, prix, description) modifiables et traduits, création et masquage d'une carte ; les trois cartes de L'Horloge y sont reprises de l'ancien site. <strong>Étape 2 faite</strong> : la page Chambres et le carrousel de l'accueil sont construits depuis les fiches Chambres (ordre, masquage, ajout, suppression avec redirection vers la page Chambres) ; photo, résumé et carte d'accueil se règlent dans chaque fiche. Après un ajout ou une suppression, revoir les textes qui comptent les chambres (« Six catégories… ») et donner à D-Edge le code de la nouvelle chambre. <strong>Étape 3 faite</strong> : les offres sont des fiches (famille, photo, prix, compris, économie, conditions, bouton réserver, devis ou lien, présence sur l'accueil, dates d'affichage) qui construisent la page Offres et les aperçus de l'accueil ; elles restent des cartes, sans page propre (choix du 28/10). <strong>Étape 4 faite</strong> : onglet <strong>Blocs</strong> des pages Restaurant &amp; bar, L'Horloge, Moon Bar, Aston Club, Séminaires et des trois pages guides séminaires (monter, descendre, masquer, dupliquer une section ou une ligne : horaires, infos pratiques, photos, questions, lieux, chiffres clés ; une copie a ses propres textes et traductions) ; les salles du tableau Séminaires sont des fiches <strong>Salles de séminaire</strong> (nom, photo, surface, capacités) qui construisent aussi la liste du formulaire de devis (choix du 28/10). Les textes qui comptent les salles (« 7 espaces modulables », chiffres clés de la page guide) restent à revoir à la main.</td></tr>
+<tr><td>Ensuite</td><td>Avis sur les pages restaurant et bars</td><td>Reporté à votre demande : L'Horloge, Moon Bar, L'Aston Club.</td></tr>
+<tr><td>Ensuite</td><td>Vidéos externes</td><td>Lecteur YouTube / Vimeo chargé au clic (aujourd'hui un simple lien).</td></tr>
+<tr><td>Option</td><td>Statistiques niveau 2</td><td>Visiteurs qui reviennent (identifiant de 13 mois avec possibilité de refus).</td></tr>
+<tr><td>Option</td><td>Statistiques niveau 3</td><td>Import des réservations D-Edge et de Google Search Console : chiffre d'affaires par canal, positions dans Google.</td></tr>
+<tr><td>Option</td><td>Rapport hebdomadaire</td><td>Résumé des statistiques par e-mail (il faut un serveur d'envoi).</td></tr>
+</tbody></table></div>
+<h2 id="3-ordre-conseille-pour-la-mise-en-ligne">3. Ordre conseillé pour la mise en ligne</h2>
+<ol>
+<li>Réponses de l'hôtel sur les points 1 à 4 de la section 2.1, corrections dans l'admin.</li>
+<li>Fichiers de déploiement et sauvegardes, installation du serveur (Node.js 24, ffmpeg, Caddy).</li>
+<li>Import des photos, création des comptes, redirections des anciennes adresses.</li>
+<li>Prévisualisation complète, puis publication.</li>
+<li>Bascule du nom de domaine, déclaration du plan du site dans Google Search Console, clé IndexNow.</li>
+<li>Traductions anglaises au fil de l'eau (publiées page par page dès qu'elles sont complètes), puis italien et allemand.</li>
+</ol>
+<h2 id="4-pour-reprendre-le-travail">4. Pour reprendre le travail</h2>
+<pre><code>npm --prefix hotelaston/Backend start</code></pre>
+<p>L'admin est sur <a href="http://localhost:3020/admin/">http://localhost:3020/admin/</a>. Les identifiants de développement sont dans <code>Backend/.dev-credentials</code> (non versionné).</p>
+<pre><code>npm --prefix hotelaston/Backend test</code></pre>
+<p>La maquette d'origine se lance avec <code>python -m http.server 8765 --directory hotelaston</code>.</p>
+<p>Le code est sur GitHub (<code>mlsks/hotelaston</code>). La base n'enregistre plus de chemins absolus : le projet peut vivre dans n'importe quel dossier, y compris sur le serveur Linux. Les questions à envoyer à l'hôtel sont dans <a href="docs/questions-hotel.md">docs/questions-hotel.md</a>. Le contexte pour Claude (consignes et mémoire du projet) est dans <code>.claude/</code>.</p>
 </main>
+
+<footer class="wrap">Version HTML générée depuis <a href="BILAN.md">BILAN.md</a>.</footer>
 
 <script>
   (() => {
-    const store = {
-      get(k) { try { return localStorage.getItem(k); } catch { return null; } },
-      set(k, v) { try { localStorage.setItem(k, v); } catch { /* stockage indisponible */ } },
-    };
-    // Cases « fait » mémorisées localement
-    const boxes = [...document.querySelectorAll('.item input[data-id]')];
-    const progress = document.getElementById('progress');
-    const refresh = () => {
-      const done = boxes.filter((b) => b.checked).length;
-      boxes.forEach((b) => b.closest('.item').classList.toggle('done', b.checked));
-      progress.textContent = `${done} sur ${boxes.length} point(s) coché(s).`;
-    };
-    boxes.forEach((b) => {
-      b.checked = store.get(`aston.bilan.${b.dataset.id}`) === '1';
-      b.addEventListener('change', () => { store.set(`aston.bilan.${b.dataset.id}`, b.checked ? '1' : '0'); refresh(); });
-    });
-    refresh();
-    // Thème clair / sombre
     const root = document.documentElement;
-    const saved = store.get('aston.bilan.theme');
-    if (saved) root.dataset.theme = saved;
+    const key = 'aston.guide.theme';
+    try { const t = localStorage.getItem(key); if (t) root.dataset.theme = t; } catch {}
     document.getElementById('theme').addEventListener('click', () => {
       const dark = root.dataset.theme ? root.dataset.theme === 'dark' : matchMedia('(prefers-color-scheme: dark)').matches;
       root.dataset.theme = dark ? 'light' : 'dark';
-      store.set('aston.bilan.theme', root.dataset.theme);
+      try { localStorage.setItem(key, root.dataset.theme); } catch {}
     });
   })();
 </script>

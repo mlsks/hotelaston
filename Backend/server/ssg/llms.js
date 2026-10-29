@@ -20,7 +20,7 @@ function hours(node, h) {
 }
 
 /**
- * @param graph  graphe JSON-LD commun dans la langue par défaut
+ * @param graph  graphe JSON-LD commun, déjà dans la langue du fichier
  * @param pages  [{ lang, path, title, description, kind: 'page' | 'rooms' | 'services', inSitemap }]
  * @param homes  [{ lang, name, url }] accueil de chaque langue publiée
  */

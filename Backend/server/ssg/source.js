@@ -165,6 +165,15 @@ export class Source {
     return { value: fallback?.value ?? '', missing: entry.translatable !== 0 };
   }
 
+  /** Texte des données structurées : traduction de la langue, sinon anglais prêt, sinon langue par défaut. */
+  relayText(key, lang) {
+    const own = this.text(key, lang);
+    if (!own.missing) return own.value;
+    const entry = this.entries.get(key);
+    const row = entry && this.relay(this.values.get(entry.id) || {}, lang);
+    return row?.value || own.value;
+  }
+
   /** Données SEO d'une page dans une langue (repli sur la langue par défaut en prévisualisation). */
   pageMeta(page, lang) {
     const rows = this.pageI18n.get(page.id) || {};

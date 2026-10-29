@@ -52,14 +52,11 @@
 
       <details class="card p-5">
         <summary class="cursor-pointer section-title">Données structurées (JSON-LD) — réservé aux personnes à l’aise avec le format</summary>
-        <p class="hint mt-2">Description de l’hôtel lue par Google (adresse, téléphone, équipements, étoiles…), une par langue.</p>
-        <div class="mt-4 space-y-4">
-          <template x-for="(text, lang) in jsonld" :key="lang">
-            <label class="block"><span class="label" x-text="$store.session.langName(lang)"></span>
-              <textarea class="input font-mono text-xs" rows="10" x-model="jsonld[lang]" @change="checkJson(lang)"></textarea>
-              <span class="hint block text-rose-700" x-show="jsonErrors[lang]" x-text="jsonErrors[lang]"></span></label>
-          </template>
-        </div>
+        <p class="hint mt-2">Description de l’hôtel, du restaurant et des bars lue par Google et les assistants IA (adresse, téléphone, horaires, équipements, étoiles…). Un seul modèle pour toutes les langues : les clés Schema.org restent en anglais, et le build remplace dans chaque langue
+          <code>{{clé}}</code> par le texte traduit (voir <a href="#/textes/jsonld" class="text-azure-700 underline">Données structurées</a>), <code>{{url:page}}</code> par l’adresse de la page dans la langue (par exemple <code>{{url:moon-bar}}</code>) et <code>{{inLanguage}}</code> par la langue de la page.</p>
+        <label class="mt-4 block"><span class="label">Modèle</span>
+          <textarea class="input font-mono text-xs" rows="16" x-model="jsonld" @change="checkJson()"></textarea>
+          <span class="hint block text-rose-700" x-show="jsonError" x-text="jsonError"></span></label>
       </details>
 
       <div class="flex items-center gap-3">

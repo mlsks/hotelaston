@@ -22,6 +22,7 @@ import { ensureRoomCards } from '../ssg/room-cards.js';
 import { ensureOffers } from '../ssg/offer-cards.js';
 import { ensureBlockEntries } from '../ssg/page-blocks.js';
 import { ensureMeetingRooms } from '../ssg/meeting-rooms.js';
+import { ensureJsonLd } from '../ssg/jsonld-texts.js';
 
 const LANG = 'fr';
 const CDN_BASE = 'https://d1i8cf9j7dueks.cloudfront.net/cache/img/';
@@ -381,6 +382,7 @@ export function importLegacy(db, { force = false, forceAssets = false, writeTemp
   ensureOffers(db); // offres de la page Offres et de l'accueil
   ensureMeetingRooms(db); // salles de séminaire (tableau des capacités, formulaire de devis)
   ensureBlockEntries(db); // textes ajoutés avec les blocs des pages (liens, chiffres)
+  ensureJsonLd(db); // données structurées : modèle unique, textes traduisibles jsonld.*
   const counts = { pages: pages.length, entries: ex.entries.length, items: db.prepare('SELECT COUNT(*) FROM cms_items').pluck().get(), copied: copied.length };
   log(`Import : ${counts.pages} pages, ${counts.entries} textes, ${counts.items} éléments de collection, ${counts.copied} fichiers copiés.`);
   return counts;

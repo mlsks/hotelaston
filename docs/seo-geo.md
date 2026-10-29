@@ -66,6 +66,6 @@ Déjà en place avant ce chantier : graphe `Hotel` complet (adresse, GPS, télé
 
 - **Réponses de l'hôtel** : questions 25 à 31 de [questions-hotel.md](questions-hotel.md) (nombre de chambres, fourchette de prix, langues, fiches officielles à relier, animaux, accessibilité, réception), plus les questions 1 à 15 (prix des offres, incohérences, avis réels). Les offres n'ont pas de données structurées `Offer` tant que leurs prix ne sont pas confirmés.
 - **Avis réels** : une fois la fiche Google branchée, ajouter la note moyenne aux données structurées.
-- **Traductions** : le graphe JSON-LD (réglage `jsonld_graph`) n'existe qu'en français ; il faudra une version anglaise en même temps que la traduction des pages.
+- **Traductions** (29/10/2026) : le graphe JSON-LD (réglage `jsonld_graph`) est un modèle unique ; ses textes sont des entrées `jsonld.*` traduites dans toutes les langues (repli anglais puis français), ses adresses `{{url:page}}` suivent la langue de la page, `inLanguage` est posé sur `WebSite` et `WebPage`. `llms.txt` en profite.
 - **Mots-clés principaux** : aucune page n'a encore de mot-clé principal (onglet « Référencement ») ; les contrôles de l'admin le signalent.
 - **Après la mise en ligne** : déclarer le plan du site dans Google Search Console et Bing Webmaster Tools (Bing alimente ChatGPT et Copilot), puis vérifier les pages avec le test des résultats enrichis de Google.

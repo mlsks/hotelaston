@@ -222,7 +222,12 @@ export function renderPage(site, lang, target, head) {
     url: head.canonical, name: title, description, locale: langRow.locale, siteUrl: site.siteUrl, image: images[0],
     breadcrumb: crumbs?.['@id'], mainEntity: entity?.['@id'], faq: faq?.mainEntity,
   });
-  const graph = [...globalGraph(source, lang, homeUrl), webPage, crumbs, entity, ...gigEvents].filter(Boolean);
+  const pageUrl = (key) => {
+    const href = site.routes.get(lang).get(key === 'accueil' ? '' : key);
+    return href ? absolute(href) : null;
+  };
+  const common = globalGraph(source, lang, { text: (key) => source.relayText(key, lang), url: pageUrl, locale: langRow.locale, warn: site.warn }, homeUrl);
+  const graph = [...common, webPage, crumbs, entity, ...gigEvents].filter(Boolean);
   $('head').append($('<script type="application/ld+json">').text(jsonForScript({ '@context': 'https://schema.org', '@graph': graph })));
 
   /* Mesure d'audience : site publié seulement */
