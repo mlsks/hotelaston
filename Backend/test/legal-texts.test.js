@@ -55,12 +55,12 @@ test('textes communs créés, traductions prêtes, numéros et adresse inchangé
   assert.equal(ensureLegalTexts(db), 0); // une seule fois
 });
 
-test('en bas du pied de page, dans la langue de la page', async () => {
+test('au-dessus de la ligne Clef Verte, dans la langue de la page', async () => {
   await runBuild({ kind: 'preview', log: () => {} });
   const fr = company('fr');
   assert.match(fr.text(), /Codes GDS : Amadeus : IW NCE368/);
   assert.match(fr.text(), /Médiateur de la consommation/);
-  assert.equal(fr.next().length, 0); // dernier élément du pied de page
+  assert.ok(fr.next().hasClass('site-footer__bottom')); // juste au-dessus de la ligne Clef Verte
   const en = company('en');
   assert.match(en.text(), /GDS codes: Amadeus: IW NCE368/);
   assert.match(en.text(), /Consumer mediator/);
