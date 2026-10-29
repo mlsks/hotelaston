@@ -15,6 +15,7 @@ import { ensureOffers } from '../ssg/offer-cards.js';
 import { ensureBlockEntries } from '../ssg/page-blocks.js';
 import { ensureMeetingRooms } from '../ssg/meeting-rooms.js';
 import { ensureJsonLd } from '../ssg/jsonld-texts.js';
+import { ensureLegalTexts } from '../ssg/legal-texts.js';
 
 const MIGRATIONS_DIR = path.join(path.dirname(fileURLToPath(import.meta.url)), 'migrations');
 
@@ -49,6 +50,7 @@ export function getDb() {
     ensureMeetingRooms(shared);
     ensureBlockEntries(shared);
     ensureJsonLd(shared);
+    ensureLegalTexts(shared);
   }
   return shared;
 }

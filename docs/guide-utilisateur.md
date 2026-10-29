@@ -112,6 +112,8 @@ Les changements de blocs apparaissent dans la prévisualisation, puis sur le sit
 
 L'en-tête, le pied de page, le fil d'Ariane des fiches, le bouton du bas sur mobile, le chat : les textes présents sur toutes les pages. Une modification ici change toutes les pages à la prochaine publication. Les liens des menus et du pied de page ne sont plus ici : voir [Menus et liens](#menus-et-liens).
 
+Les **mentions légales** du bas du pied de page (codes GDS, nom de la société, SIRET, SIREN, RCS, APE, TVA intracommunautaire, médiateur de la consommation) sont ici aussi, dans le groupe **Pied de page · Mentions légales** : trois textes, un par paragraphe. Elles sont livrées traduites dans toutes les langues : seuls les libellés (« Nom », « Adresse », « Site internet », « Médiateur de la consommation »…) changent d'une langue à l'autre ; les numéros, les noms propres et l'adresse restent identiques. Si un numéro change, le corriger en français puis dans chaque langue (onglets de langue), sinon les autres langues gardent l'ancien.
+
 ### Menus et liens
 
 **Menus et liens** regroupe toutes les listes de liens du site :
