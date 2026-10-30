@@ -25,6 +25,7 @@ import { ensureMeetingRooms } from '../ssg/meeting-rooms.js';
 import { ensureJsonLd } from '../ssg/jsonld-texts.js';
 import { ensureLegalTexts } from '../ssg/legal-texts.js';
 import { ensureLegalPage, ensurePrivacyPage } from '../ssg/legal-page.js';
+import { ensureGoogleReviews } from '../ssg/google-reviews.js';
 
 const LANG = 'fr';
 const CDN_BASE = 'https://d1i8cf9j7dueks.cloudfront.net/cache/img/';
@@ -388,6 +389,7 @@ export function importLegacy(db, { force = false, forceAssets = false, writeTemp
   ensureLegalTexts(db); // mentions légales du bas du pied de page (global.mentions-*)
   ensureLegalPage(db); // page Mentions légales (textes dans toutes les langues, hébergeur à remplir)
   ensurePrivacyPage(db); // page Politique de confidentialité (textes dans toutes les langues, liens de l'ancien site redirigés)
+  ensureGoogleReviews(db); // avis de démonstration → table des avis Google (exemples)
   const counts = { pages: pages.length, entries: ex.entries.length, items: db.prepare('SELECT COUNT(*) FROM cms_items').pluck().get(), copied: copied.length };
   log(`Import : ${counts.pages} pages, ${counts.entries} textes, ${counts.items} éléments de collection, ${counts.copied} fichiers copiés.`);
   return counts;

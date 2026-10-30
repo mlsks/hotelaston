@@ -84,7 +84,7 @@
     <button class="theme" type="button" id="theme" aria-label="Changer de thème">Thème</button>
     <p class="eyebrow">Hôtel Aston La Scala</p>
     <h1>Guide utilisateur du back-office</h1>
-    <p class="date">Mis à jour le 28 octobre 2026</p>
+    <p class="date">Mis à jour le 30 octobre 2026</p>
     <nav class="toc" aria-label="Sommaire">
       <a href="#l-essentiel-en-une-minute">L'essentiel en une minute</a>
       <a href="#1-demarrer-le-back-office">1. Démarrer le back-office</a>
@@ -257,7 +257,6 @@ npm start</code></pre></li>
 <tr><td>Offres</td><td>Une fiche par offre : famille, photo, prix, ce qui est compris, économie, conditions, bouton, présence sur l'accueil. Voir <a href="#les-offres">Les offres</a>.</td></tr>
 <tr><td>Salles de séminaire</td><td>Une fiche par salle : nom, précisions, photo, surface et capacités. Voir <a href="#les-salles-de-seminaire">Les salles de séminaire</a>.</td></tr>
 <tr><td>Équipements</td><td>Les pictogrammes et libellés utilisés par les fiches chambre.</td></tr>
-<tr><td>Avis</td><td>Auteur, mois du séjour, note, chambre, thèmes, texte et réponse de l'hôtel.</td></tr>
 <tr><td>Réponses du chat</td><td>Les mots déclencheurs (si la question du visiteur en contient un, le chat donne cette réponse) et la réponse.</td></tr>
 <tr><td>Programme Live Music, Artistes</td><td>Voir <a href="#5-live-music-concerts-et-artistes">Live Music</a>.</td></tr>
 <tr><td>Bandeaux photo (HERO)</td><td>Le dégradé derrière le texte du grand bandeau en haut de l'Accueil, des Séminaires et du Moon Bar. Voir <a href="#les-bandeaux-photo-hero">Les bandeaux photo (HERO)</a>.</td></tr>
@@ -308,7 +307,7 @@ npm start</code></pre></li>
 <li><strong>Théâtre</strong>, <strong>Classe</strong>, <strong>En U</strong>, <strong>Cabaret</strong>, <strong>Banquet</strong> : un nombre de personnes, <code>—</code> si la configuration n'existe pas dans cette salle, vide pour « Sur demande ». Une valeur vide est repérée « à confirmer » et n'est pas reprise dans les données lues par Google.</li>
 </ul>
 <p>Le lien « Devis pour cette salle » ouvre le formulaire de devis avec la salle déjà choisie. <strong>Ajouter</strong>, <strong>Masquer</strong> ou <strong>Supprimer</strong> une salle met à jour le tableau et le formulaire à la prochaine publication. La liste « Les chiffres clés » de la page guide <em>Salle de séminaire à Nice</em> et les chiffres de la page Séminaires (« 7 espaces modulables ») ne changent pas seuls : les revoir dans <strong>Pages</strong>.</p>
-<p>Les avis livrés avec le site sont des exemples, marqués « Exemple » sur le site. Le passage aux avis réels se fait dans les <a href="#reglages">Réglages</a>.</p>
+<p>Les avis clients ont leur propre écran : voir <a href="#les-avis-google">Les avis Google</a>.</p>
 <h3 id="les-bandeaux-photo-hero">Les bandeaux photo (HERO)</h3>
 <p><strong>Fiches et listes</strong> → <strong>Bandeaux photo (HERO)</strong> montre, sur un seul écran, chaque page qui a un grand bandeau réglable : Accueil, Séminaires et Moon Bar (vidéo). Pour chacune :</p>
 <ul>
@@ -318,6 +317,21 @@ npm start</code></pre></li>
 <li><strong>Enregistrer</strong>, puis <strong>Prévisualiser</strong> ouvre la page dans la prévisualisation.</li>
 </ul>
 <p>Le même réglage se trouve aussi dans l'onglet <strong>Réglages</strong> de la page.</p>
+<h3 id="les-avis-google">Les avis Google</h3>
+<p><strong>Contenu</strong> → <strong>Avis Google</strong> rassemble les avis de la fiche Google de l'hôtel, repris sur l'accueil, la page Avis clients et les fiches chambres.</p>
+<p><strong>Ce que le site affiche.</strong> Seulement les avis <strong>visibles</strong> et <strong>notés 4 ou 5 étoiles</strong>, du plus récent au plus ancien. Chaque avis montre le nom et la photo de l'auteur (son initiale s'il n'a pas de photo), sa note, son texte, la réponse de l'hôtel, le logo Google et un lien « Lire sur Google Maps ». Sous les avis, la mention « Sélection d'avis Google récents notés 4 ou 5 étoiles » et un lien vers tous les avis sur Google Maps. Ces règles viennent de Google et du droit de la consommation (art. L111-7-2) : un site qui ne montre qu'une partie des avis doit dire comment il les choisit. Elles ne se désactivent pas.</p>
+<p><strong>Fiche Google de l'hôtel.</strong> La <strong>note globale</strong> et le <strong>nombre d'avis</strong> sont ceux de la fiche, sur tous les avis : les recopier depuis Google Maps, jamais calculés sur les seuls avis affichés. Vide, la note n'est pas affichée. L'accueil ne l'affiche qu'au-dessus de la note minimale fixée dans les <a href="#reglages">Réglages</a> ; la page Avis clients l'affiche toujours.</p>
+<p><strong>La liste.</strong> Elle s'ouvre sur <strong>4 et 5 étoiles</strong> ; les onglets <strong>Toutes les notes</strong>, <strong>1 à 3 étoiles</strong> et <strong>Masqués</strong> montrent le reste. Pour chaque avis :</p>
+<ul>
+<li><strong>Afficher</strong> : décoché, l'avis n'est plus sur le site (un avis de moins de 4 étoiles n'y est de toute façon jamais) ;</li>
+<li><strong>Modifier</strong> : thèmes (les filtres de la page Avis clients ; sans thème, l'avis compte comme un avis sur le séjour) et chambre concernée (l'avis passe en tête sur sa fiche chambre). Le texte d'un avis venu de l'API Google ne se modifie pas ;</li>
+<li><strong>Supprimer</strong>.</li>
+</ul>
+<p><strong>Ajouter un avis</strong> : recopier un avis de la fiche Google tel quel (auteur, note, date, texte, réponse). Le <strong>lien de l'avis</strong> s'obtient avec le bouton « Partager » de l'avis sur Google Maps ; vide, le lien mène à la fiche.</p>
+<p><strong>Importer un JSON</strong> : un fichier, ou son contenu collé. Sont acceptés une liste d'avis avec les champs de l'écran (<code>author_name</code>, <code>rating</code>, <code>comment</code>, <code>published_at</code>, <code>review_url</code>, <code>author_photo_url</code>, <code>reply_comment</code>, <code>is_visible</code>, <code>topics</code>, <code>room</code>), la réponse de l'API Google Business Profile (<code>reviews</code>, <code>averageRating</code>, <code>totalReviewCount</code> : la note et le nombre d'avis de la fiche sont repris) et les avis de l'API Places. Un avis déjà présent (même identifiant) est mis à jour. Cocher <strong>Ce sont des exemples</strong> pour des avis de démonstration.</p>
+<p><strong>Préparer le fichier depuis Google Maps</strong> : ouvrir <code>tools/avis-google-extracteur.html</code> dans Chrome ou Edge (double-clic) et suivre ses quatre étapes. Il lit le code de la page des avis copié depuis Google Maps (rien n'est envoyé), garde les plus récents notés 4 ou 5 étoiles (8 par défaut) avec la note globale et le nombre d'avis de la fiche, et télécharge <code>reviews-seed.json</code>, à importer ici. Les dates « il y a 3 semaines » deviennent des dates approximatives.</p>
+<p><strong>Les exemples.</strong> Les huit avis de la maquette sont des exemples : marqués « Exemple » sur le site et repérés en orange dans l'écran, à supprimer (<strong>Supprimer les exemples</strong>) dès que les vrais avis sont là. Leur fichier, <code>Backend/server/db/seeds/avis-google-exemples.json</code>, permet de les réimporter.</p>
+<p><strong>Synchronisation automatique.</strong> Dès que l'hôtel aura donné l'accès à sa fiche, les avis et la note arriveront seuls par l'API Google Business Profile, chaque matin, et seront publiés sans le reste du site. La visibilité, les thèmes et la chambre choisis ici sont gardés. La mise en place (identifiants dans <code>Backend/.env</code>) est décrite dans <code>Backend/README.md</code>.</p>
 <h2 id="5-live-music-concerts-et-artistes">5. Live Music : concerts et artistes</h2>
 <p>Un seul bar est ouvert à la fois : le Moon Bar sur le toit quand le temps le permet, sinon L'Aston Club au 7e étage.</p>
 <h3 id="ajouter-un-concert">Ajouter un concert</h3>
@@ -494,7 +508,7 @@ node scripts/i18n-ready.mjs it         # passe les brouillons de l'italien en «
 <ul>
 <li><strong>Site</strong> : nom du site, langue proposée aux visiteurs dont la langue n'est pas proposée (x-default), image de partage par défaut ;</li>
 <li><strong>Moteur de réservation (D-Edge)</strong> : adresse du moteur (<code>{locale}</code> y devient <code>fr-FR</code>, <code>en-GB</code>…), noms des paramètres qui transmettent les dates, les voyageurs, la chambre et l'offre (laisser un nom vide pour ne pas envoyer l'information), codes chambre et codes tarif de D-Edge (une ligne par chambre ou offre : <code>privilege = code D-Edge</code>). Ces noms et codes sont fournis par D-Edge ; s'ils sont faux, le moteur s'ouvre sans les choix du visiteur ;</li>
-<li><strong>Avis clients</strong> : <strong>Exemples</strong> ou <strong>Avis réels de clients</strong>, note et lien Google, note minimale pour l'accueil ;</li>
+<li><strong>Avis clients</strong> : note minimale de la fiche Google pour afficher la note sur l'accueil (les avis eux-mêmes : <a href="#les-avis-google">Les avis Google</a>) ;</li>
 <li><strong>Données structurées (JSON-LD)</strong> : le modèle unique, pour toutes les langues, des informations lues par Google et les assistants IA (voir <a href="#donnees-structurees-json-ld">Données structurées (JSON-LD)</a>). Réservé aux personnes à l'aise avec le format ;</li>
 <li><strong>Maintenance</strong> : <strong>Effacer la corbeille maintenant</strong>.</li>
 </ul>

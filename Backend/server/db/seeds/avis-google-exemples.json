@@ -1,0 +1,130 @@
+{
+  "_note": "Avis de démonstration de la maquette (pas de vrais avis) : importés comme « Exemple » avec node server/cli.js reviews:import server/db/seeds/avis-google-exemples.json --exemples. Ils portent l'étiquette « Exemple » sur le site ; à remplacer par les vrais avis de la fiche Google.",
+  "reviews": [
+    {
+      "review_id": "exemple-avis-01",
+      "author_name": "Claire M.",
+      "author_photo_url": null,
+      "rating": 5,
+      "comment": "Emplacement idéal : la Vieille Ville à cinq minutes et la piscine du toit pour finir la journée. Personnel adorable.",
+      "published_at": "2026-09",
+      "review_url": null,
+      "is_visible": true,
+      "reply_comment": "Merci Claire, le rooftop vous attend l'été prochain !",
+      "topics": [
+        "sejour",
+        "rooftop"
+      ],
+      "room": null
+    },
+    {
+      "review_id": "exemple-avis-02",
+      "author_name": "Thomas R.",
+      "author_photo_url": null,
+      "rating": 4,
+      "comment": "Chambre Deluxe avec terrasse superbe, vue sur les clochers. La literie pourrait être plus ferme.",
+      "published_at": "2026-09",
+      "review_url": null,
+      "is_visible": true,
+      "reply_comment": "Merci Thomas. Nous avons transmis votre remarque à la gouvernante : des surmatelas plus fermes sont disponibles sur demande.",
+      "topics": [
+        "sejour",
+        "chambres"
+      ],
+      "room": "deluxe"
+    },
+    {
+      "review_id": "exemple-avis-03",
+      "author_name": "Sophie L.",
+      "author_photo_url": null,
+      "rating": 4,
+      "comment": "Petit-déjeuner varié et offert en réservant sur le site. Un peu d'attente le dimanche vers 10h.",
+      "published_at": "2026-08",
+      "review_url": null,
+      "is_visible": true,
+      "reply_comment": "Merci Sophie : depuis juillet, le buffet est servi jusqu'à 11h00 le week-end pour fluidifier le service.",
+      "topics": [
+        "petit-dejeuner",
+        "sejour"
+      ],
+      "room": null
+    },
+    {
+      "review_id": "exemple-avis-04",
+      "author_name": "Marc D.",
+      "author_photo_url": null,
+      "rating": 5,
+      "comment": "Séminaire de 40 personnes dans le salon Chagall : salle lumineuse, équipe réactive, déjeuner à L'Horloge très apprécié.",
+      "published_at": "2026-08",
+      "review_url": null,
+      "is_visible": true,
+      "reply_comment": "Merci Marc, au plaisir d'accueillir votre prochaine plénière.",
+      "topics": [
+        "seminaire"
+      ],
+      "room": null
+    },
+    {
+      "review_id": "exemple-avis-05",
+      "author_name": "Elena V.",
+      "author_photo_url": null,
+      "rating": 5,
+      "comment": "Coucher de soleil au Moon Bar inoubliable, cocktails créatifs et tapas généreuses.",
+      "published_at": "2026-07",
+      "review_url": null,
+      "is_visible": true,
+      "reply_comment": "Grazie Elena ! L'équipe du Moon Bar est ravie.",
+      "topics": [
+        "rooftop",
+        "restaurant"
+      ],
+      "room": null
+    },
+    {
+      "review_id": "exemple-avis-06",
+      "author_name": "Paul K.",
+      "author_photo_url": null,
+      "rating": 3,
+      "comment": "Chambre Confort calme côté cour mais petite pour deux grosses valises.",
+      "published_at": "2026-07",
+      "review_url": null,
+      "is_visible": true,
+      "reply_comment": "Merci Paul. Pour les longs séjours, nous recommandons la Privilège (24 m²) : la différence de tarif est souvent faible en réservant en direct.",
+      "topics": [
+        "chambres"
+      ],
+      "room": "confort"
+    },
+    {
+      "review_id": "exemple-avis-07",
+      "author_name": "Nadia B.",
+      "author_photo_url": null,
+      "rating": 5,
+      "comment": "Déjeuner à L'Horloge : menu à 22 € excellent, service rapide, terrasse agréable face au Paillon.",
+      "published_at": "2026-06",
+      "review_url": null,
+      "is_visible": true,
+      "reply_comment": "Merci Nadia, le Chef Furlan vous remercie.",
+      "topics": [
+        "restaurant"
+      ],
+      "room": null
+    },
+    {
+      "review_id": "exemple-avis-08",
+      "author_name": "Julien P.",
+      "author_photo_url": null,
+      "rating": 4,
+      "comment": "Junior Suite parfaite avec deux enfants, la méridienne est confortable.",
+      "published_at": "2026-06",
+      "review_url": null,
+      "is_visible": true,
+      "reply_comment": "Merci Julien, à bientôt en famille !",
+      "topics": [
+        "chambres",
+        "sejour"
+      ],
+      "room": "suites"
+    }
+  ]
+}

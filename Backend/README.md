@@ -68,6 +68,8 @@ La commande `user:add` affiche le mot de passe une seule fois. Se connecter ensu
 | `node scripts/i18n-import.mjs <fichier.json> [--dry]` | Réimporte une traduction de même forme (champ `lang`) par l'API, serveur lancé : tout arrive en **brouillon** et figure au Journal. Signale d'abord les balises, liens, variables `{…}` ou nombres qui diffèrent du français ; `--dry` s'arrête là. |
 | `node scripts/i18n-ready.mjs <langue> [--dry]` | Passe en « prêt » tous les brouillons d'une langue (même valeur, seul le statut change), par l'API : chaque écriture figure au Journal. Il reste à publier. |
 | `node server/cli.js geoip:update [--city]` | Télécharge la base de géolocalisation DB-IP Lite du mois dans `storage/geoip/` (pays ; pays et région avec `--city`, environ 130 Mo). À relancer chaque mois. |
+| `node server/cli.js reviews:import <fichier.json> [--exemples]` | Ajoute ou met à jour des avis Google (mêmes formats que **Importer un JSON** de l'admin). `server/db/seeds/avis-google-exemples.json --exemples` réimporte les huit avis de démonstration. |
+| `node server/cli.js reviews:sync [--publish]` | Synchronise les avis et la note de la fiche par l'API Google Business Profile (`GBP_*` dans `.env`, voir [Avis Google](#avis-google)) ; `--publish` publie ensuite les avis seuls. |
 | `npm start` | Serveur : API, prévisualisation protégée, site, réception des statistiques, cron de minuit (régénération, nettoyage des médias, agrégats des statistiques). |
 | `npm test` | Tests automatiques. |
 
@@ -130,6 +132,7 @@ Sécurité : mots de passe argon2id ; session en cookie `HttpOnly` / `SameSite=S
 | Programme Live Music | Collection `gigs` (`/collections/gigs/items`) : date `AAAA-MM-JJ`, heure `HH:MM`, lieu `selon-meteo`, `moon-bar` ou `aston-club`, `artist` (clé d'une fiche artiste, obligatoire), `description` (précisions sur la soirée, traduites ; vide = présentation de l'artiste) et, pour les concerts d'avant les fiches, `style` s'il diffère de celui de l'artiste. Les concerts à venir sont écrits dans la page avec la photo et le lien de l'artiste, et leurs données `MusicEvent` (`performer` = `MusicGroup` avec nom, genre, présentation, image, `url` et `sameAs`). |
 | Artistes | Collection `artists` (`/collections/artists/items`) : `name` (obligatoire), `website` (facultatif, `https://…`), `media` (photo de la médiathèque), `style` et `bio` traduits. Un artiste programmé ne peut pas être supprimé ; masquer un artiste retire ses concerts du site. Dans le formulaire d'un concert, l'artiste se choisit dans la liste ou se crée sur place (« + Nouvel artiste »). Les concerts saisis avant les fiches (nom libre) sont convertis au démarrage, sans perte (`server/db/gig-artists.js`). |
 | Statistiques | `POST /track` (public, sans cookie, réponse `204`) ; `GET /analytics/summary`, `/analytics/timeseries`, `/analytics/top?dim=`, `/analytics/funnel`, `/analytics/demand`, `/analytics/vitals`, `/analytics/export.csv?report=` (administrateurs et éditeurs sans périmètre) |
+| Avis Google | `GET /google-reviews` (avis, fiche, `syncConfigured`), `POST /google-reviews` (un avis), `POST /google-reviews/import` (`data` : JSON, `sample` : exemples), `PATCH/DELETE /google-reviews/:id`, `PUT /google-reviews/place` (`rating`, `review_count`, `maps_url`). Un avis venu de l'API ne change que `is_visible`, `topics`, `room`. |
 | Builds | `GET /builds`, `GET /builds/:id`, `POST /builds/preview`, `POST /builds/publish`, `POST /builds/restore-previous`, `POST /builds/:id/restore` |
 | Administration | `GET/POST/PATCH/DELETE /users`, `GET/PATCH /settings`, `GET/POST/DELETE /redirects`, `GET /audit`, `POST /maintenance/media-gc` |
 
@@ -167,6 +170,20 @@ Paramètres des statistiques :
    - **Canaux** : direct, recherche naturelle, publicité, réseaux sociaux, e-mail, comparateurs (Booking, Expedia, Trivago…), **assistants IA** (ChatGPT, Perplexity, Gemini, Copilot, Claude…), sites référents.
    - **Chaque nuit** : agrégats par jour. Les événements sont purgés après 13 mois, les agrégats après 25 mois.
    - **Pays et région** : ils demandent la base DB-IP (`geoip:update`). Sans elle, tout fonctionne, sauf le pays et la région.
+
+## Avis Google
+
+- **Stockage** : table `cms_google_reviews` (migration 014), calquée sur l'API Google Business Profile : `review_id`, `author_name`, `author_photo_url`, `rating`, `comment`, `published_at`, `review_url`, `is_visible`, `reply_comment`, `reply_at`, plus `topics` et `room` (propres au site) et `origin` (`sample`, `manual`, `import`, `api`). La note globale, le nombre d'avis et le lien de la fiche sont dans `cms_google_place`. Les huit avis de la maquette y ont été repris comme exemples, et l'ancienne collection `reviews` retirée (`server/ssg/google-reviews.js`).
+- **Site** (`#data-reviews`, `renderReviews` dans `remotion-vanilla.js`) : avis visibles notés 4 ou 5 étoiles (`MIN_RATING`), du plus récent au plus ancien, avec nom, avatar (initiale à défaut, `referrerpolicy=no-referrer`), logo Google, lien « Lire sur Google Maps » (l'avis, sinon la fiche), vraie note globale et nombre d'avis, et la mention `ui.reviews.selection` « Sélection d'avis Google récents notés 4 ou 5 étoiles ». La photo d'un auteur est chargée depuis les serveurs de Google.
+- **Admin** : écran **Avis Google** (`#/avis-google`).
+- **Synchronisation** (`server/reviews/gbp-sync.js`), prête à brancher :
+  1. l'hôtel ajoute le compte qui fera la synchronisation comme gestionnaire de sa fiche Google ;
+  2. dans un projet Google Cloud : demander l'accès à l'API Google Business Profile (formulaire de Google, quelques jours), activer « My Business Account Management API » et l'API des avis, créer un identifiant OAuth (application Web) ;
+  3. obtenir un jeton de renouvellement (refresh token) avec le scope `https://www.googleapis.com/auth/business.manage`, connecté avec le compte gestionnaire (par exemple avec l'OAuth Playground de Google) ;
+  4. relever l'identifiant du compte et de la fiche (`accounts.list`, `accounts.locations.list`) ;
+  5. remplir dans `.env` : `GBP_CLIENT_ID`, `GBP_CLIENT_SECRET`, `GBP_REFRESH_TOKEN`, `GBP_ACCOUNT_ID`, `GBP_LOCATION_ID`, puis `node server/cli.js reviews:sync` pour essayer ;
+  6. `GBP_SYNC_CRON=0 6 * * *` : chaque matin, synchronisation puis publication des seuls avis (snapshot limité aux tables des avis, `REVIEWS_SCOPE` dans `snapshot.js` : les brouillons des autres contenus ne partent pas).
+  La visibilité, les thèmes et la chambre choisis dans l'admin sont gardés ; un avis supprimé sur Google reste dans la base (à masquer ou supprimer dans l'admin).
 
 ## Pas encore fait
 

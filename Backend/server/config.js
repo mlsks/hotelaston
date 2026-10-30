@@ -47,6 +47,16 @@ export const config = {
   // Poids maximal accepté au téléversement, puis seuils d'alerte (Mo)
   uploadMaxMb: { image: Number(env('UPLOAD_MAX_IMAGE_MB', 25)), video: Number(env('UPLOAD_MAX_VIDEO_MB', 200)), audio: Number(env('UPLOAD_MAX_AUDIO_MB', 30)), document: Number(env('UPLOAD_MAX_DOCUMENT_MB', 20)) },
   warnMb: { video: 8, audio: 5, document: 5 },
+
+  // Avis Google : API Google Business Profile (OAuth du compte gestionnaire de la fiche). Vide : pas de synchronisation.
+  gbp: {
+    clientId: env('GBP_CLIENT_ID', ''),
+    clientSecret: env('GBP_CLIENT_SECRET', ''),
+    refreshToken: env('GBP_REFRESH_TOKEN', ''),
+    accountId: env('GBP_ACCOUNT_ID', ''),
+    locationId: env('GBP_LOCATION_ID', ''),
+    cron: env('GBP_SYNC_CRON', ''), // ex. « 0 6 * * * » : chaque matin, puis publication des avis seuls
+  },
 };
 
 /**

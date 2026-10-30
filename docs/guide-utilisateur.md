@@ -1,6 +1,6 @@
 # Guide utilisateur du back-office
 
-Hôtel Aston La Scala · Mis à jour le 28 octobre 2026
+Hôtel Aston La Scala · Mis à jour le 30 octobre 2026
 
 Ce guide explique comment faire vivre le site de l'hôtel depuis le back-office : modifier un texte, changer une photo, annoncer un concert, traduire, publier, revenir en arrière. Il s'adresse aux personnes qui utilisent l'admin au quotidien, sans connaissance technique.
 
@@ -181,7 +181,6 @@ Les textes affichés par le JavaScript du site : module de réservation, avis, f
 | Offres | Une fiche par offre : famille, photo, prix, ce qui est compris, économie, conditions, bouton, présence sur l'accueil. Voir [Les offres](#les-offres). |
 | Salles de séminaire | Une fiche par salle : nom, précisions, photo, surface et capacités. Voir [Les salles de séminaire](#les-salles-de-seminaire). |
 | Équipements | Les pictogrammes et libellés utilisés par les fiches chambre. |
-| Avis | Auteur, mois du séjour, note, chambre, thèmes, texte et réponse de l'hôtel. |
 | Réponses du chat | Les mots déclencheurs (si la question du visiteur en contient un, le chat donne cette réponse) et la réponse. |
 | Programme Live Music, Artistes | Voir [Live Music](#5-live-music-concerts-et-artistes). |
 | Bandeaux photo (HERO) | Le dégradé derrière le texte du grand bandeau en haut de l'Accueil, des Séminaires et du Moon Bar. Voir [Les bandeaux photo (HERO)](#les-bandeaux-photo-hero). |
@@ -240,7 +239,7 @@ Le tableau « Nos salles et leurs configurations » de la page **Séminaires** e
 
 Le lien « Devis pour cette salle » ouvre le formulaire de devis avec la salle déjà choisie. **Ajouter**, **Masquer** ou **Supprimer** une salle met à jour le tableau et le formulaire à la prochaine publication. La liste « Les chiffres clés » de la page guide *Salle de séminaire à Nice* et les chiffres de la page Séminaires (« 7 espaces modulables ») ne changent pas seuls : les revoir dans **Pages**.
 
-Les avis livrés avec le site sont des exemples, marqués « Exemple » sur le site. Le passage aux avis réels se fait dans les [Réglages](#reglages).
+Les avis clients ont leur propre écran : voir [Les avis Google](#les-avis-google).
 
 ### Les bandeaux photo (HERO)
 
@@ -252,6 +251,30 @@ Les avis livrés avec le site sont des exemples, marqués « Exemple » sur le s
 - **Enregistrer**, puis **Prévisualiser** ouvre la page dans la prévisualisation.
 
 Le même réglage se trouve aussi dans l'onglet **Réglages** de la page.
+
+### Les avis Google
+
+**Contenu** → **Avis Google** rassemble les avis de la fiche Google de l'hôtel, repris sur l'accueil, la page Avis clients et les fiches chambres.
+
+**Ce que le site affiche.** Seulement les avis **visibles** et **notés 4 ou 5 étoiles**, du plus récent au plus ancien. Chaque avis montre le nom et la photo de l'auteur (son initiale s'il n'a pas de photo), sa note, son texte, la réponse de l'hôtel, le logo Google et un lien « Lire sur Google Maps ». Sous les avis, la mention « Sélection d'avis Google récents notés 4 ou 5 étoiles » et un lien vers tous les avis sur Google Maps. Ces règles viennent de Google et du droit de la consommation (art. L111-7-2) : un site qui ne montre qu'une partie des avis doit dire comment il les choisit. Elles ne se désactivent pas.
+
+**Fiche Google de l'hôtel.** La **note globale** et le **nombre d'avis** sont ceux de la fiche, sur tous les avis : les recopier depuis Google Maps, jamais calculés sur les seuls avis affichés. Vide, la note n'est pas affichée. L'accueil ne l'affiche qu'au-dessus de la note minimale fixée dans les [Réglages](#reglages) ; la page Avis clients l'affiche toujours.
+
+**La liste.** Elle s'ouvre sur **4 et 5 étoiles** ; les onglets **Toutes les notes**, **1 à 3 étoiles** et **Masqués** montrent le reste. Pour chaque avis :
+
+- **Afficher** : décoché, l'avis n'est plus sur le site (un avis de moins de 4 étoiles n'y est de toute façon jamais) ;
+- **Modifier** : thèmes (les filtres de la page Avis clients ; sans thème, l'avis compte comme un avis sur le séjour) et chambre concernée (l'avis passe en tête sur sa fiche chambre). Le texte d'un avis venu de l'API Google ne se modifie pas ;
+- **Supprimer**.
+
+**Ajouter un avis** : recopier un avis de la fiche Google tel quel (auteur, note, date, texte, réponse). Le **lien de l'avis** s'obtient avec le bouton « Partager » de l'avis sur Google Maps ; vide, le lien mène à la fiche.
+
+**Importer un JSON** : un fichier, ou son contenu collé. Sont acceptés une liste d'avis avec les champs de l'écran (`author_name`, `rating`, `comment`, `published_at`, `review_url`, `author_photo_url`, `reply_comment`, `is_visible`, `topics`, `room`), la réponse de l'API Google Business Profile (`reviews`, `averageRating`, `totalReviewCount` : la note et le nombre d'avis de la fiche sont repris) et les avis de l'API Places. Un avis déjà présent (même identifiant) est mis à jour. Cocher **Ce sont des exemples** pour des avis de démonstration.
+
+**Préparer le fichier depuis Google Maps** : ouvrir `tools/avis-google-extracteur.html` dans Chrome ou Edge (double-clic) et suivre ses quatre étapes. Il lit le code de la page des avis copié depuis Google Maps (rien n'est envoyé), garde les plus récents notés 4 ou 5 étoiles (8 par défaut) avec la note globale et le nombre d'avis de la fiche, et télécharge `reviews-seed.json`, à importer ici. Les dates « il y a 3 semaines » deviennent des dates approximatives.
+
+**Les exemples.** Les huit avis de la maquette sont des exemples : marqués « Exemple » sur le site et repérés en orange dans l'écran, à supprimer (**Supprimer les exemples**) dès que les vrais avis sont là. Leur fichier, `Backend/server/db/seeds/avis-google-exemples.json`, permet de les réimporter.
+
+**Synchronisation automatique.** Dès que l'hôtel aura donné l'accès à sa fiche, les avis et la note arriveront seuls par l'API Google Business Profile, chaque matin, et seront publiés sans le reste du site. La visibilité, les thèmes et la chambre choisis ici sont gardés. La mise en place (identifiants dans `Backend/.env`) est décrite dans `Backend/README.md`.
 
 ## 5. Live Music : concerts et artistes
 
@@ -480,7 +503,7 @@ Paramètres communs à tout le site, appliqués à la prochaine publication :
 
 - **Site** : nom du site, langue proposée aux visiteurs dont la langue n'est pas proposée (x-default), image de partage par défaut ;
 - **Moteur de réservation (D-Edge)** : adresse du moteur (`{locale}` y devient `fr-FR`, `en-GB`…), noms des paramètres qui transmettent les dates, les voyageurs, la chambre et l'offre (laisser un nom vide pour ne pas envoyer l'information), codes chambre et codes tarif de D-Edge (une ligne par chambre ou offre : `privilege = code D-Edge`). Ces noms et codes sont fournis par D-Edge ; s'ils sont faux, le moteur s'ouvre sans les choix du visiteur ;
-- **Avis clients** : **Exemples** ou **Avis réels de clients**, note et lien Google, note minimale pour l'accueil ;
+- **Avis clients** : note minimale de la fiche Google pour afficher la note sur l'accueil (les avis eux-mêmes : [Les avis Google](#les-avis-google)) ;
 - **Données structurées (JSON-LD)** : le modèle unique, pour toutes les langues, des informations lues par Google et les assistants IA (voir [Données structurées (JSON-LD)](#donnees-structurees-json-ld)). Réservé aux personnes à l'aise avec le format ;
 - **Maintenance** : **Effacer la corbeille maintenant**.
 

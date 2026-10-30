@@ -44,7 +44,12 @@ Les blocs A à D sont nécessaires pour la mise en ligne. Les blocs E à I peuve
 
 ## D. Avis clients
 
-15. Nous souhaitons afficher vos avis réels plutôt que des exemples. Pouvez-vous nous confirmer l'adresse de la fiche Google de l'hôtel et nous donner un accès (ou le nom de la personne qui la gère) ?
+15. Le site affichera une sélection de vos avis Google récents (4 et 5 étoiles, avec la mention « Sélection d'avis Google récents notés 4 ou 5 étoiles », la note globale réelle de la fiche et un lien vers tous les avis). Pour les récupérer automatiquement, nous avons besoin d'un **accès gestionnaire à votre fiche Google Business Profile** :
+    - l'adresse de la fiche Google de l'hôtel (le lien « Partager » de Google Maps) ;
+    - le nom de la personne qui en est propriétaire ;
+    - l'ajout de notre compte Google comme **gestionnaire** de la fiche : sur Google, rechercher « Hôtel Aston La Scala », ouvrir le menu ⋮ de la fiche → **Paramètres du profil** → **Personnes et accès** → **Ajouter**, saisir notre adresse et choisir le rôle **Gestionnaire**. Cet accès ne permet ni de supprimer la fiche ni d'en changer le propriétaire, et peut être retiré à tout moment ;
+    - votre accord pour demander à Google l'accès à son API (gratuit, quelques jours de délai), au nom de l'hôtel.
+    En attendant, nous pouvons saisir quelques avis récents à la main : dites-nous si vous préférez choisir vous-mêmes ceux qui seront affichés.
 
 ## E. Vidéo d'accueil
 

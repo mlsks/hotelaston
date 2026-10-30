@@ -7,6 +7,10 @@ import path from 'node:path';
 import { config } from '../config.js';
 import { SCOPES } from '../auth/scopes.js';
 
+/** Publication limitée aux avis Google (après une synchronisation), sans compte ni brouillons des autres. */
+export const REVIEWS_SCOPE = 'avis-google';
+const TABLE_SCOPES = { [REVIEWS_SCOPE]: ['cms_google_reviews', 'cms_google_place'] };
+
 const cmsTables = (db, schema = 'main') => db
   .prepare(`SELECT name, sql FROM ${schema}.sqlite_master WHERE type = 'table' AND substr(name, 1, 4) = 'cms_' ORDER BY name`)
   .all();
@@ -56,11 +60,12 @@ export function createScopedSnapshot(db, buildId, scopes, baseSnapshot) {
   if (!baseSnapshot || !fs.existsSync(baseSnapshot)) {
     throw new Error('Une première publication complète doit être faite par un éditeur sans périmètre.');
   }
-  const pages = [...new Set(scopes.flatMap((s) => SCOPES[s].pages))];
-  const collections = [...new Set(scopes.flatMap((s) => SCOPES[s].collections))];
-  const folders = scopes.map((s) => SCOPES[s].mediaFolder);
+  const accounts = scopes.filter((s) => SCOPES[s]);
+  const pages = [...new Set(accounts.flatMap((s) => SCOPES[s].pages))];
+  const collections = [...new Set(accounts.flatMap((s) => SCOPES[s].collections))];
+  const folders = accounts.map((s) => SCOPES[s].mediaFolder);
   const list = (values) => values.map((v) => `'${String(v).replace(/'/g, "''")}'`).join(',') || 'NULL';
-  const inFolders = (side) => `(${folders.map((f) => `${side}.cms_media.folder = '${f}' OR ${side}.cms_media.folder LIKE '${f}/%'`).join(' OR ')})`;
+  const inFolders = (side) => `(${folders.map((f) => `${side}.cms_media.folder = '${f}' OR ${side}.cms_media.folder LIKE '${f}/%'`).join(' OR ') || '0'})`;
 
   // [table, condition (side = 'main' ou 'snap')] — parents avant enfants
   const sets = [
@@ -78,6 +83,7 @@ export function createScopedSnapshot(db, buildId, scopes, baseSnapshot) {
     ['cms_banners', () => `scope IN (${list(scopes)})`],
     ['cms_banner_i18n', (s) => `banner_id IN (SELECT id FROM ${s}.cms_banners WHERE scope IN (${list(scopes)}))`],
     ['cms_banner_placements', (s) => `banner_id IN (SELECT id FROM ${s}.cms_banners WHERE scope IN (${list(scopes)}))`],
+    ...scopes.flatMap((s) => TABLE_SCOPES[s] || []).map((table) => [table, () => '1']),
   ];
 
   fs.mkdirSync(config.snapshotsDir, { recursive: true });

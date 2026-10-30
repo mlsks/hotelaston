@@ -899,10 +899,6 @@ picture { display: contents; }
 .stars .icon { width: 18px; height: 18px; fill: currentColor; stroke: none; }
 .stars .icon.is-empty { fill: var(--pebble-2); }
 .rating__source { font-size: var(--fs-sm); color: var(--ink-2); }
-.rating-bars { display: grid; gap: 4px; min-width: 220px; font-size: var(--fs-xs); }
-.rating-bars div { display: grid; grid-template-columns: 2.4em 1fr 2em; align-items: center; gap: 8px; }
-.rating-bars i { display: block; height: 6px; border-radius: 3px; background: var(--pebble-2); position: relative; overflow: hidden; }
-.rating-bars i b { position: absolute; inset: 0 auto 0 0; background: var(--gold); }
 .reviews__list { display: grid; gap: 18px; }
 @media (min-width: 768px) { .reviews__list { grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); } }
 .review-card {
@@ -939,6 +935,18 @@ picture { display: contents; }
 }
 .review-card__reply strong { display: block; font-size: var(--fs-xs); color: var(--azure-700); letter-spacing: 0.06em; }
 .reviews__note { font-size: var(--fs-xs); color: var(--ink-3); margin: 12px 0 0; }
+.reviews__note .google-g { vertical-align: -2px; }
+.rating__count { display: block; font-size: var(--fs-xs); color: var(--ink-3); }
+.google-g { display: inline-flex; flex: none; width: 18px; height: 18px; }
+.google-g svg { width: 100%; height: 100%; }
+.review-card__head { display: flex; align-items: center; gap: 12px; }
+.review-card__head .google-g { margin-left: auto; }
+.review-card__avatar { flex: none; width: 40px; height: 40px; border-radius: 50%; object-fit: cover; background: var(--pebble-2); }
+.review-card__avatar--initial { display: inline-grid; place-items: center; font-family: var(--font-serif); font-size: 1.2rem; color: var(--azure-900); }
+.review-card__who { display: grid; min-width: 0; font-size: var(--fs-sm); line-height: 1.3; }
+.review-card__who strong { color: var(--ink); font-weight: 600; overflow-wrap: anywhere; }
+.review-card__who time { font-size: var(--fs-xs); color: var(--ink-3); }
+.review-card__source { margin-left: auto; color: var(--azure-700); }
 .review-invite {
   display: flex;
   flex-wrap: wrap;

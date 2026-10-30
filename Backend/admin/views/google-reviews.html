@@ -1,0 +1,124 @@
+<div x-data="googleReviewsView" class="space-y-6">
+  <div class="flex flex-wrap items-end justify-between gap-4">
+    <div>
+      <h1 class="page-title">Avis Google</h1>
+      <p class="mt-1 max-w-3xl text-slate-600">Les avis de la fiche Google de l’hôtel, repris sur l’accueil, la page Avis clients et les fiches chambres. Le site n’affiche que les avis <strong>visibles notés 4 ou 5 étoiles</strong>, du plus récent au plus ancien, avec le nom, la photo de l’auteur, un lien vers Google Maps, le logo Google et la mention « Sélection d’avis Google récents notés 4 ou 5 étoiles ». Les changements partent à la prochaine publication.</p>
+    </div>
+    <div class="flex flex-wrap gap-2">
+      <button class="btn btn-secondary" :disabled="!$store.session.canContent" @click="openImport()">Importer un JSON</button>
+      <button class="btn btn-primary" :disabled="!$store.session.canContent" @click="add()">Ajouter un avis</button>
+    </div>
+  </div>
+
+  <!-- Fiche Google de l'hôtel -->
+  <form class="card grid gap-4 p-5 md:grid-cols-[10rem_10rem_1fr_auto] md:items-end" @submit.prevent="savePlace()">
+    <p class="section-title md:col-span-4">Fiche Google de l’hôtel</p>
+    <label class="block"><span class="label">Note globale</span><input class="input" type="number" step="0.1" min="1" max="5" x-model="place.rating" placeholder="ex. 4,1"></label>
+    <label class="block"><span class="label">Nombre d’avis</span><input class="input" type="number" step="1" min="0" x-model="place.review_count" placeholder="ex. 1 240"></label>
+    <label class="block"><span class="label">Lien vers la fiche Google Maps</span><input class="input" type="url" x-model="place.maps_url" placeholder="https://maps.app.goo.gl/…"></label>
+    <button class="btn btn-primary" :disabled="busy || !$store.session.canContent">Enregistrer</button>
+    <p class="hint md:col-span-4">La vraie note de la fiche, sur tous les avis (pas seulement ceux affichés) : recopiez-la depuis Google Maps. Vide, elle n’est pas affichée.
+      <span x-show="syncConfigured" x-text="syncedAt ? `Mise à jour automatiquement par l’API Google (dernière synchronisation : ${day(syncedAt)}).` : 'Synchronisation par l’API Google configurée : pas encore lancée.'"></span>
+      <span x-show="!syncConfigured">La synchronisation automatique par l’API Google Business Profile n’est pas encore configurée : avis et note se saisissent ici.</span></p>
+  </form>
+
+  <!-- Ajout / modification -->
+  <template x-if="form">
+    <form class="card grid gap-4 p-5 sm:grid-cols-2" @submit.prevent="saveForm()">
+      <p class="section-title sm:col-span-2" x-text="form.isNew ? 'Nouvel avis' : 'Modifier l’avis'"></p>
+      <p x-show="form.locked" class="hint sm:col-span-2">Avis repris de Google par l’API : son texte ne se modifie pas. Seuls ses thèmes et sa chambre sont propres au site.</p>
+      <template x-if="!form.locked">
+        <div class="contents">
+          <label class="block"><span class="label">Auteur</span><input class="input" x-model="form.author_name" required maxlength="120" placeholder="Nom affiché sur Google"></label>
+          <div class="grid grid-cols-2 gap-4">
+            <label class="block"><span class="label">Note</span>
+              <select class="input" x-model.number="form.rating"><template x-for="n in [5, 4, 3, 2, 1]" :key="n"><option :value="n" x-text="`${n} / 5`" :selected="n === form.rating"></option></template></select></label>
+            <label class="block"><span class="label">Date de l’avis</span><input class="input" type="date" x-model="form.published_at" required></label>
+          </div>
+          <label class="block sm:col-span-2"><span class="label">Avis</span><textarea class="input" rows="4" x-model="form.comment" maxlength="5000" placeholder="Texte de l’avis, recopié tel quel"></textarea></label>
+          <label class="block"><span class="label">Lien de l’avis sur Google Maps</span><input class="input" type="url" x-model="form.review_url" placeholder="https://maps.app.goo.gl/…">
+            <span class="hint block">Bouton « Partager » de l’avis sur Google Maps. Vide : lien vers la fiche.</span></label>
+          <label class="block"><span class="label">Photo de l’auteur (adresse)</span><input class="input" type="url" x-model="form.author_photo_url" placeholder="https://lh3.googleusercontent.com/…">
+            <span class="hint block">Vide : l’initiale du nom.</span></label>
+          <label class="block sm:col-span-2"><span class="label">Réponse de l’hôtel</span><textarea class="input" rows="2" x-model="form.reply_comment" maxlength="5000"></textarea></label>
+        </div>
+      </template>
+      <div class="sm:col-span-2"><span class="label">Thèmes (filtres de la page Avis clients)</span>
+        <div class="flex flex-wrap gap-4 text-sm"><template x-for="t in topics" :key="t">
+          <label class="flex items-center gap-2"><input type="checkbox" :checked="form.topics.includes(t)" @change="toggleTopic(t)"><span x-text="TOPIC_LABELS[t] || t"></span></label>
+        </template></div>
+        <span class="hint block">Sans thème, l’avis compte comme un avis sur le séjour (accueil).</span></div>
+      <label class="block"><span class="label">Chambre concernée</span><input class="input" x-model="form.room" placeholder="ex. deluxe">
+        <span class="hint block">Adresse de la fiche chambre : l’avis passe en tête sur cette fiche.</span></label>
+      <div class="flex items-end gap-2 sm:col-span-2">
+        <button class="btn btn-primary" :disabled="busy">Enregistrer</button>
+        <button type="button" class="btn btn-ghost" @click="form = null">Annuler</button>
+      </div>
+    </form>
+  </template>
+
+  <!-- Import JSON -->
+  <template x-if="importing">
+    <form class="card space-y-4 p-5" @submit.prevent="runImport()">
+      <p class="section-title">Importer des avis (JSON)</p>
+      <p class="text-sm text-slate-600">Formats acceptés : une liste d’avis avec les champs de cet écran (<code>author_name</code>, <code>rating</code>, <code>comment</code>, <code>published_at</code>, <code>review_url</code>, <code>author_photo_url</code>, <code>reply_comment</code>, <code>is_visible</code>…), ou la réponse de l’API Google Business Profile (<code>reviews</code>, <code>averageRating</code>, <code>totalReviewCount</code>), ou les avis de l’API Places. Un avis déjà présent (même identifiant) est mis à jour.</p>
+      <label class="block"><span class="label">Fichier</span><input type="file" accept=".json,application/json" class="text-sm" @change="readFile($event)"></label>
+      <label class="block"><span class="label">… ou contenu collé</span><textarea class="input font-mono text-xs" rows="8" x-model="importing.text" placeholder='[{ "author_name": "…", "rating": 5, "comment": "…", "published_at": "2026-10-28" }]'></textarea></label>
+      <label class="flex items-center gap-2 text-sm"><input type="checkbox" x-model="importing.sample"> Ce sont des exemples (étiquette « Exemple » sur le site)</label>
+      <div class="flex gap-2">
+        <button class="btn btn-primary" :disabled="busy || !importing.text.trim()">Importer</button>
+        <button type="button" class="btn btn-ghost" @click="importing = null">Annuler</button>
+      </div>
+    </form>
+  </template>
+
+  <!-- Liste -->
+  <div class="flex flex-wrap items-center gap-3">
+    <div class="flex flex-wrap gap-1 rounded-lg bg-slate-100 p-1">
+      <template x-for="f in FILTERS" :key="f[0]">
+        <button type="button" class="rounded-md px-3 py-1.5 text-sm font-medium" :class="filter === f[0] ? 'bg-white text-azure-900 shadow-sm' : 'text-slate-600 hover:text-slate-900'" @click="filter = f[0]" x-text="f[1]"></button>
+      </template>
+    </div>
+    <input class="input max-w-xs" type="search" x-model="search" placeholder="Rechercher un auteur, un mot…">
+    <p class="text-sm text-slate-500" x-text="`${onSite} avis affichés sur le site · ${reviews.length} au total`"></p>
+  </div>
+
+  <div x-show="samples" class="flex flex-wrap items-center gap-3 rounded-lg bg-amber-50 px-4 py-3 text-sm text-amber-900 ring-1 ring-amber-200">
+    <span class="flex-1" x-text="`${samples} avis d’exemple (marqués « Exemple » sur le site) : à remplacer par les vrais avis de la fiche Google.`"></span>
+    <button class="btn btn-danger btn-sm" :disabled="!$store.session.canContent" @click="removeSamples()">Supprimer les exemples</button>
+  </div>
+
+  <p x-show="!loading && !shown.length" class="text-slate-500">Aucun avis pour ce filtre.</p>
+  <div class="card divide-y divide-slate-100" x-show="shown.length">
+    <template x-for="r in shown" :key="r.review_id">
+      <div class="flex gap-4 px-4 py-4" :class="(!r.is_visible || r.rating < minRating) && 'bg-slate-50/70'">
+        <template x-if="r.author_photo_url && !r.noPhoto"><img :src="r.author_photo_url" alt="" referrerpolicy="no-referrer" class="size-10 flex-none rounded-full object-cover" @error="r.noPhoto = true"></template>
+        <template x-if="!r.author_photo_url || r.noPhoto"><span class="grid size-10 flex-none place-items-center rounded-full bg-slate-200 font-serif text-lg text-azure-950" x-text="initial(r)"></span></template>
+        <div class="min-w-0 flex-1 space-y-1.5">
+          <div class="flex flex-wrap items-center gap-x-3 gap-y-1">
+            <p class="font-medium" x-text="r.author_name || 'Auteur inconnu'"></p>
+            <span class="tracking-wider text-amber-500" :aria-label="`${r.rating} sur 5`" x-text="stars(r.rating)"></span>
+            <span class="text-sm text-slate-500" x-text="day(r.published_at)"></span>
+            <span class="badge" :class="ORIGINS[r.origin]?.[1]" x-text="ORIGINS[r.origin]?.[0] || r.origin"></span>
+            <template x-for="t in r.topics" :key="t"><span class="badge bg-white text-slate-600 ring-slate-200" x-text="TOPIC_LABELS[t] || t"></span></template>
+            <span x-show="r.room" class="badge bg-white text-slate-600 ring-slate-200" x-text="`Chambre : ${r.room}`"></span>
+          </div>
+          <p class="text-sm text-slate-800" x-show="r.comment" x-text="r.comment"></p>
+          <p class="text-sm italic text-slate-400" x-show="!r.comment">Note sans texte.</p>
+          <p class="border-l-2 border-amber-300 pl-3 text-sm text-slate-600" x-show="r.reply_comment"><span class="font-medium">Réponse de l’hôtel : </span><span x-text="r.reply_comment"></span></p>
+          <p class="text-xs" :class="r.rating < minRating ? 'text-slate-500' : r.is_visible ? 'text-emerald-700' : 'text-amber-700'">
+            <span x-text="status(r)"></span>
+            <template x-if="r.review_url"><span> · <a :href="r.review_url" target="_blank" rel="noopener" class="text-azure-700 underline">Voir sur Google Maps</a></span></template></p>
+        </div>
+        <div class="flex flex-none flex-col items-end gap-2">
+          <label class="flex items-center gap-2 text-sm" :class="r.rating < minRating && 'opacity-50'" :title="r.rating < minRating ? 'Moins de 4 étoiles : jamais affiché sur le site' : ''">
+            <input type="checkbox" :checked="r.is_visible" :disabled="!$store.session.canContent" @change="toggle(r)"> Afficher</label>
+          <div class="flex gap-1">
+            <button class="btn btn-ghost btn-sm" :disabled="!$store.session.canContent" @click="edit(r); $nextTick(() => window.scrollTo({ top: 0, behavior: 'smooth' }))">Modifier</button>
+            <button class="btn btn-ghost btn-sm text-rose-700" :disabled="!$store.session.canContent" @click="remove(r)">Supprimer</button>
+          </div>
+        </div>
+      </div>
+    </template>
+  </div>
+</div>
