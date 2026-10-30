@@ -315,6 +315,41 @@
     { threshold: 0.12, rootMargin: '0px 0px -6% 0px' },
   );
 
+  /* Apparitions posées d'office : les cartes et titres de section des pages sans data-anim montent
+     doucement à leur tour (hors carrousels). Seuls les éléments encore sous la ligne de flottaison sont concernés (aucun
+     clignotement), et les cartes d'une même rangée se décalent de quelques frames. */
+  const AUTO_ANIM = [
+    '.section-head', '.split > *', '.room-card', '.room-index > li', '.offer-card', '.offer-teaser',
+    '.service-tile', '.services-index > li', '.venue-card', '.venue-index > li', '.info-card', '.review-card',
+    '.timeline > li', '.team', '.menu-section', '.post', '.faq',
+  ].join(', ');
+
+  function autoAnim(scope) {
+    if (prefersReducedMotion.matches) return;
+    const fold = window.innerHeight;
+    $$(AUTO_ANIM, scope).forEach((el) => {
+      // Cartes d'un carrousel : hors champ à l'horizontale, elles ne seraient révélées qu'au glissement
+      if (el.closest('[data-anim], [data-slider]') || el.querySelector('[data-anim]')) return;
+      const box = el.getBoundingClientRect();
+      if (!box.height || box.top < fold) return;
+      const siblings = [...el.parentElement.children].filter((s) => s.matches(AUTO_ANIM));
+      el.dataset.anim = 'rise';
+      el.dataset.delay = String((siblings.indexOf(el) % 3) * 4);
+    });
+  }
+
+  /* Photos : fondu à l'arrivée pour celles qui ne sont pas encore chargées (pas la photo du bandeau) */
+  function fadeImages(scope) {
+    if (prefersReducedMotion.matches) return;
+    $$('img', scope).forEach((img) => {
+      if (img.complete || img.fetchPriority === 'high' || img.closest('.hero, .page-head--image, [data-anim="reveal"]')) return;
+      img.classList.add('img-fade');
+      const done = () => img.classList.add('is-loaded');
+      img.addEventListener('load', done, { once: true });
+      img.addEventListener('error', done, { once: true });
+    });
+  }
+
   /* Compteurs : data-count-to="200" data-count-suffix=" m²" */
   const counterObserver = new IntersectionObserver(
     (entries) => {
@@ -1542,6 +1577,8 @@
     initVideos(scope);
     fillHouseRules(scope);
     renderGigs(scope);
+    autoAnim(scope);
+    fadeImages(scope);
     $$('[data-anim]:not(.is-done)', scope).forEach((el) => enterObserver.observe(el));
     $$('[data-count-to]', scope).forEach((el) => counterObserver.observe(el));
   }
