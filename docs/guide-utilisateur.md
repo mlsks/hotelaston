@@ -258,7 +258,7 @@ Le même réglage se trouve aussi dans l'onglet **Réglages** de la page.
 
 **Ce que le site affiche.** Seulement les avis **visibles** et **notés 4 ou 5 étoiles**, du plus récent au plus ancien. Chaque avis montre le nom et la photo de l'auteur (son initiale s'il n'a pas de photo), sa note, son texte, la réponse de l'hôtel, le logo Google et un lien « Lire sur Google Maps ». Sous les avis, la mention « Sélection d'avis Google récents notés 4 ou 5 étoiles » et un lien vers tous les avis sur Google Maps. Ces règles viennent de Google et du droit de la consommation (art. L111-7-2) : un site qui ne montre qu'une partie des avis doit dire comment il les choisit. Elles ne se désactivent pas.
 
-**Fiche Google de l'hôtel.** La **note globale** et le **nombre d'avis** sont ceux de la fiche, sur tous les avis : les recopier depuis Google Maps, jamais calculés sur les seuls avis affichés. Vide, la note n'est pas affichée. L'accueil ne l'affiche qu'au-dessus de la note minimale fixée dans les [Réglages](#reglages) ; la page Avis clients l'affiche toujours.
+**Fiche Google de l'hôtel.** La **note globale** et le **nombre d'avis** sont ceux de la fiche, sur tous les avis : les recopier depuis Google Maps, jamais calculés sur les seuls avis affichés. Vide, la note n'est pas affichée. Elle n'est affichée (chiffre et étoiles), sur toutes les pages, qu'à partir du seuil fixé dans les [Réglages](#reglages) : 4,2 par défaut. En dessous, seuls les avis apparaissent.
 
 **La liste.** Elle s'ouvre sur **4 et 5 étoiles** ; les onglets **Toutes les notes**, **1 à 3 étoiles** et **Masqués** montrent le reste. Pour chaque avis :
 
@@ -270,9 +270,11 @@ Le même réglage se trouve aussi dans l'onglet **Réglages** de la page.
 
 **Importer un JSON** : un fichier, ou son contenu collé. Sont acceptés une liste d'avis avec les champs de l'écran (`author_name`, `rating`, `comment`, `published_at`, `review_url`, `author_photo_url`, `reply_comment`, `is_visible`, `topics`, `room`), la réponse de l'API Google Business Profile (`reviews`, `averageRating`, `totalReviewCount` : la note et le nombre d'avis de la fiche sont repris) et les avis de l'API Places. Un avis déjà présent (même identifiant) est mis à jour. Cocher **Ce sont des exemples** pour des avis de démonstration.
 
-**Préparer le fichier depuis Google Maps** : ouvrir `tools/avis-google-extracteur.html` dans Chrome ou Edge (double-clic) et suivre ses quatre étapes. Il lit le code de la page des avis copié depuis Google Maps (rien n'est envoyé), garde les plus récents notés 4 ou 5 étoiles (8 par défaut) avec la note globale et le nombre d'avis de la fiche, et télécharge `reviews-seed.json`, à importer ici. Les dates « il y a 3 semaines » deviennent des dates approximatives.
+**Préparer le fichier depuis Google Maps** : ouvrir `tools/avis-google-extracteur.html` dans Chrome ou Edge (double-clic). Le plus simple est le **mode automatique** : glisser une fois le bouton **⭐ Extraire les avis** dans la barre des favoris, ouvrir la fiche Google Maps de l'hôtel et cliquer sur ce favori. Il ouvre l'onglet Avis, trie par « Plus récents », fait défiler la liste et déplie les textes jusqu'à avoir les avis voulus (8 notés 4 ou 5 étoiles par défaut), puis télécharge `reviews-seed.json` avec la note globale et le nombre d'avis de la fiche, à importer ici. Si Google a changé sa page et que le favori ne trouve rien, le mode manuel de l'outil lit le code de la page collé. Les dates « il y a 3 semaines » deviennent des dates approximatives.
 
 **Les exemples.** Les huit avis de la maquette sont des exemples : marqués « Exemple » sur le site et repérés en orange dans l'écran, à supprimer (**Supprimer les exemples**) dès que les vrais avis sont là. Leur fichier, `Backend/server/db/seeds/avis-google-exemples.json`, permet de les réimporter.
+
+**Récupérer depuis Google en un clic.** Le bouton **Récupérer depuis Google (Start)** ouvre une page avec un bouton **Start** : connexion avec le compte Google qui gère la fiche de l'hôtel, lecture des vrais avis par l'API Google Business Profile, sélection des 8 plus récents notés 4 ou 5 étoiles, téléchargement de `reviews-seed.json`, import ici avec la note globale et le nombre d'avis, puis un résumé (avis lus, écartés, gardés, période couverte). Il reste à publier. Elle demande, une seule fois, l'identifiant client OAuth du projet Google Cloud (voir `Backend/README.md`, « Avis Google ») et ne fonctionne qu'une fois l'accès à la fiche et à l'API accordé.
 
 **Synchronisation automatique.** Dès que l'hôtel aura donné l'accès à sa fiche, les avis et la note arriveront seuls par l'API Google Business Profile, chaque matin, et seront publiés sans le reste du site. La visibilité, les thèmes et la chambre choisis ici sont gardés. La mise en place (identifiants dans `Backend/.env`) est décrite dans `Backend/README.md`.
 
@@ -503,7 +505,7 @@ Paramètres communs à tout le site, appliqués à la prochaine publication :
 
 - **Site** : nom du site, langue proposée aux visiteurs dont la langue n'est pas proposée (x-default), image de partage par défaut ;
 - **Moteur de réservation (D-Edge)** : adresse du moteur (`{locale}` y devient `fr-FR`, `en-GB`…), noms des paramètres qui transmettent les dates, les voyageurs, la chambre et l'offre (laisser un nom vide pour ne pas envoyer l'information), codes chambre et codes tarif de D-Edge (une ligne par chambre ou offre : `privilege = code D-Edge`). Ces noms et codes sont fournis par D-Edge ; s'ils sont faux, le moteur s'ouvre sans les choix du visiteur ;
-- **Avis clients** : note minimale de la fiche Google pour afficher la note sur l'accueil (les avis eux-mêmes : [Les avis Google](#les-avis-google)) ;
+- **Avis clients** : note moyenne de la fiche Google à partir de laquelle elle est affichée (4,2 par défaut) (les avis eux-mêmes : [Les avis Google](#les-avis-google)) ;
 - **Données structurées (JSON-LD)** : le modèle unique, pour toutes les langues, des informations lues par Google et les assistants IA (voir [Données structurées (JSON-LD)](#donnees-structurees-json-ld)). Réservé aux personnes à l'aise avec le format ;
 - **Maintenance** : **Effacer la corbeille maintenant**.
 

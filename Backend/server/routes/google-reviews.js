@@ -8,6 +8,7 @@ import { notFound, badRequest } from '../lib/http.js';
 import { audit } from '../lib/audit.js';
 import { normalizeReview, parseImport, upsertReviews, reviewRow, getPlace, setPlace, ReviewError, MIN_RATING, TOPICS } from '../reviews/store.js';
 import { gbpConfigured } from '../reviews/gbp-sync.js';
+import { config } from '../config.js';
 
 const PARAM = { type: 'object', required: ['id'], properties: { id: { type: 'string', minLength: 1, maxLength: 200 } } };
 const SITE_FIELDS = ['is_visible', 'topics', 'room'];
@@ -32,6 +33,7 @@ export default function googleReviewRoutes(app, { db }) {
       minRating: MIN_RATING,
       topics: TOPICS,
       syncConfigured: gbpConfigured(),
+      clientId: config.gbp.clientId || null, // identifiant OAuth public (page Avis Google automatique)
       reviews: db.prepare('SELECT * FROM cms_google_reviews ORDER BY published_at DESC, review_id').all().map(reviewRow),
     };
   });

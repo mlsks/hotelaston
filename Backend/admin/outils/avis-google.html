@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Avis Google automatique</title>
+<!--
+  Bouton Start : connexion Google (compte gestionnaire de la fiche), lecture des avis par l'API
+  Google Business Profile, sélection des plus récents notés 4 ou 5 étoiles, résumé, téléchargement
+  de reviews-seed.json et import direct dans le back-office. Servi par le back-office
+  (/admin/outils/avis-google.html) : Google n'accepte pas une page ouverte depuis le disque.
+-->
+<style>
+  :root { --bg: #f7f5f0; --card: #fff; --ink: #1b2330; --muted: #5b6575; --line: #dcd6ca; --accent: #1d4466; --accent-ink: #fff; --ok: #1d7a46; --warn: #9a5b00; --err: #b3261e; --code: #f1eee7; }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) { --bg: #12161d; --card: #1b212b; --ink: #e8ecf2; --muted: #a2acba; --line: #2f3845; --accent: #7fb2e5; --accent-ink: #0b1320; --ok: #5cc98a; --warn: #f0b35a; --err: #ff8a80; --code: #141920; }
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--ink); font: 15px/1.5 system-ui, -apple-system, "Segoe UI", sans-serif; }
+  main { max-width: 860px; margin: 0 auto; padding: 24px 16px 48px; }
+  h1 { font-size: 1.6rem; margin: 0 0 4px; }
+  h2 { font-size: 1.05rem; margin: 0 0 10px; }
+  p { margin: 0 0 10px; }
+  a { color: var(--accent); }
+  .lede { color: var(--muted); margin-bottom: 20px; }
+  .card { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 18px; margin-bottom: 16px; }
+  .row { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 16px; }
+  label.inline { display: inline-flex; align-items: center; gap: 6px; }
+  input[type=text], input[type=number], select { background: var(--card); color: var(--ink); border: 1px solid var(--line); border-radius: 6px; padding: 6px 8px; font: inherit; }
+  input[type=text] { width: min(100%, 520px); font-family: ui-monospace, Menlo, Consolas, monospace; font-size: 13px; }
+  input[type=number] { width: 4.5em; }
+  button { font: inherit; font-weight: 600; border-radius: 8px; padding: 8px 14px; border: 1px solid var(--accent); background: transparent; color: var(--accent); cursor: pointer; }
+  button.primary { background: var(--accent); color: var(--accent-ink); }
+  button.start { font-size: 1.15rem; padding: 12px 34px; }
+  button:disabled { opacity: .45; cursor: not-allowed; }
+  .hint { font-size: .88rem; color: var(--muted); }
+  #steps { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; }
+  #steps li { display: grid; grid-template-columns: 1.6em 1fr; gap: 6px; }
+  #steps li .i { text-align: center; }
+  #steps li.run .i { color: var(--accent); } #steps li.ok .i { color: var(--ok); } #steps li.warn .i { color: var(--warn); } #steps li.err .i { color: var(--err); }
+  #steps li small { color: var(--muted); }
+  .summary { border-color: var(--ok); }
+  .summary.partial { border-color: var(--warn); }
+  .summary.failed { border-color: var(--err); }
+  .summary dl { display: grid; grid-template-columns: max-content 1fr; gap: 4px 16px; margin: 8px 0 12px; }
+  .summary dt { color: var(--muted); }
+  .summary dd { margin: 0; font-weight: 600; }
+  .reviews { display: grid; gap: 8px; margin-top: 10px; }
+  .rev { border: 1px solid var(--line); border-radius: 10px; padding: 8px 12px; display: grid; grid-template-columns: 36px 1fr; gap: 2px 10px; }
+  .rev img, .rev .ini { width: 36px; height: 36px; border-radius: 50%; object-fit: cover; background: var(--code); display: grid; place-items: center; font-weight: 700; }
+  .rev p { grid-column: 2; margin: 0; font-size: .93rem; }
+  .stars { color: #d39b1c; letter-spacing: 1px; }
+  pre { background: var(--code); border: 1px solid var(--line); border-radius: 8px; padding: 10px 12px; max-height: 320px; overflow: auto; white-space: pre-wrap; word-break: break-word; font: 12px/1.45 ui-monospace, Menlo, Consolas, monospace; }
+  details summary { cursor: pointer; font-weight: 600; }
+  [hidden] { display: none !important; }
+</style>
+</head>
+<body>
+<main>
+  <p><a href="/admin/#/avis-google">← Back-office · Avis Google</a></p>
+  <h1>Avis Google automatique</h1>
+  <p class="lede">Un clic sur <strong>Start</strong> : connexion à Google, lecture des avis de la fiche de l’hôtel, sélection des plus récents notés 4 ou 5 étoiles, téléchargement de <code>reviews-seed.json</code> et import dans le back-office, puis un résumé.</p>
+
+  <section class="card">
+    <div class="row">
+      <button type="button" class="primary start" id="start">Start</button>
+      <label class="inline">Avis à garder <input type="number" id="target" min="1" max="50" value="8"></label>
+      <label class="inline">Note minimale <select id="minRating"><option value="4" selected>4 étoiles (3,5 à 5)</option><option value="5">5 étoiles</option></select></label>
+    </div>
+    <div class="row" style="margin-top:10px">
+      <label class="inline"><input type="checkbox" id="autoImport" checked> Importer aussi dans le back-office</label>
+    </div>
+    <details style="margin-top:12px" id="setup">
+      <summary>Réglage Google (une seule fois)</summary>
+      <p class="hint" style="margin-top:8px">Identifiant client OAuth (type « Application Web ») du projet Google Cloud où l’API Google Business Profile est activée, avec <code id="origin"></code> dans les « Origines JavaScript autorisées ». Il vient de <code>GBP_CLIENT_ID</code> dans <code>Backend/.env</code> s’il y est. Le compte Google qui se connecte doit être propriétaire ou gestionnaire de la fiche de l’hôtel.</p>
+      <input type="text" id="clientId" placeholder="123456789-abc….apps.googleusercontent.com" autocomplete="off" spellcheck="false">
+    </details>
+  </section>
+
+  <section class="card" id="progress" hidden>
+    <h2>Avancement</h2>
+    <ul id="steps"></ul>
+  </section>
+
+  <section class="card summary" id="summary" hidden>
+    <h2 id="summaryTitle">Résumé</h2>
+    <dl id="facts"></dl>
+    <div class="row">
+      <button type="button" class="primary" id="download">Télécharger à nouveau reviews-seed.json</button>
+      <button type="button" id="copy">Copier le JSON</button>
+      <a href="/admin/#/avis-google" id="toAdmin">Voir les avis dans le back-office →</a>
+      <span class="hint" id="copyStatus"></span>
+    </div>
+    <div class="reviews" id="cards"></div>
+    <details style="margin-top:12px"><summary>Contenu de reviews-seed.json</summary><pre id="json"></pre></details>
+  </section>
+</main>
+<script src="avis-google.js"></script>
+</body>
+</html>

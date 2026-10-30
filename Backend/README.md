@@ -184,6 +184,7 @@ Paramètres des statistiques :
   5. remplir dans `.env` : `GBP_CLIENT_ID`, `GBP_CLIENT_SECRET`, `GBP_REFRESH_TOKEN`, `GBP_ACCOUNT_ID`, `GBP_LOCATION_ID`, puis `node server/cli.js reviews:sync` pour essayer ;
   6. `GBP_SYNC_CRON=0 6 * * *` : chaque matin, synchronisation puis publication des seuls avis (snapshot limité aux tables des avis, `REVIEWS_SCOPE` dans `snapshot.js` : les brouillons des autres contenus ne partent pas).
   La visibilité, les thèmes et la chambre choisis dans l'admin sont gardés ; un avis supprimé sur Google reste dans la base (à masquer ou supprimer dans l'admin).
+- **Bouton Start** (`admin/outils/avis-google.html`, ouvert depuis l'écran Avis Google) : les mêmes avis, depuis le navigateur, sans refresh token. Connexion Google Identity Services (scope `business.manage`), comptes (`mybusinessaccountmanagement` v1), fiche dont le nom contient « Aston » (`mybusinessbusinessinformation` v1), avis v4 du plus récent au plus ancien jusqu'au nombre voulu, `reviews-seed.json` téléchargé (identifiants Google gardés), import par `POST /api/google-reviews/import`, résumé. Il faut l'identifiant client OAuth (`GBP_CLIENT_ID`, repris tout seul, ou saisi une fois) et l'adresse du back-office (par exemple `http://localhost:3020`) dans les « Origines JavaScript autorisées » de cet identifiant. Seule cette page a le droit d'appeler Google (`GOOGLE_TOOL_HEADERS`, `admin-assets.js`).
 
 ## Pas encore fait
 

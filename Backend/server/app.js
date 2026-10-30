@@ -27,7 +27,7 @@ import googleReviewRoutes from './routes/google-reviews.js';
 import { createIngest } from './analytics/ingest.js';
 import { loadGeoip } from './analytics/geoip.js';
 import { currentBuild } from './ssg/release.js';
-import { adminVendor, ADMIN_HEADERS } from './admin-assets.js';
+import { adminVendor, ADMIN_HEADERS, GOOGLE_TOOL_PATH, GOOGLE_TOOL_HEADERS } from './admin-assets.js';
 
 /** Erreur de validation de schéma en français lisible (le message d'Ajv est en anglais). */
 const FIELDS = { email: 'E-mail', name: 'Nom', password: 'Mot de passe', title: 'Title', slug: 'Adresse', text: 'Texte', meta_description: 'Description', from_path: 'Ancienne adresse', code: 'Code' };
@@ -120,7 +120,8 @@ export async function buildApp({ logger = { level: 'info' }, ingestFlushMs = 200
 
   /* Back-office : en-têtes de sécurité et bibliothèques servies depuis node_modules (versions figées) */
   app.addHook('onSend', async (req, reply) => {
-    if (req.url.startsWith('/admin')) reply.headers(ADMIN_HEADERS);
+    if (req.url.startsWith(GOOGLE_TOOL_PATH)) reply.headers(GOOGLE_TOOL_HEADERS);
+    else if (req.url.startsWith('/admin')) reply.headers(ADMIN_HEADERS);
   });
   const vendor = adminVendor();
   app.get('/admin/vendor/:file', async (req, reply) => {

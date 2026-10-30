@@ -35,3 +35,14 @@ export const ADMIN_HEADERS = {
   'Referrer-Policy': 'same-origin',
   'X-Frame-Options': 'DENY',
 };
+
+/** Page « Avis Google automatique » : connexion Google (Google Identity Services) et API Google Business Profile. */
+export const GOOGLE_TOOL_PATH = '/admin/outils/avis-google';
+export const GOOGLE_TOOL_HEADERS = {
+  ...ADMIN_HEADERS,
+  'Content-Security-Policy': ADMIN_HEADERS['Content-Security-Policy']
+    .replace("script-src 'self' 'unsafe-eval'", "script-src 'self' https://accounts.google.com")
+    .replace("style-src 'self' 'unsafe-inline'", "style-src 'self' 'unsafe-inline' https://accounts.google.com")
+    .replace("connect-src 'self'", "connect-src 'self' https://*.googleapis.com https://accounts.google.com")
+    .replace("frame-src 'self'", "frame-src 'self' https://accounts.google.com"),
+};
