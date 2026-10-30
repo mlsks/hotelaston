@@ -221,3 +221,15 @@ test('synchronisation par l’API : ajout, mise à jour, choix de l’admin gard
   assert.equal((await call('PATCH', '/api/google-reviews/g-9', { comment: 'Retouché' })).statusCode, 400);
   assert.equal((await call('PATCH', '/api/google-reviews/g-9', { topics: ['chambres'], room: 'deluxe' })).statusCode, 200);
 });
+
+test('page Avis Google automatique : servie avec le droit d’appeler Google, et seulement elle', async () => {
+  const tool = await app.inject({ method: 'GET', url: '/admin/outils/avis-google.html' });
+  assert.equal(tool.statusCode, 200);
+  assert.match(tool.headers['content-security-policy'], /script-src 'self' https:\/\/accounts\.google\.com/);
+  assert.match(tool.headers['content-security-policy'], /connect-src 'self' https:\/\/\*\.googleapis\.com/);
+  const js = await app.inject({ method: 'GET', url: '/admin/outils/avis-google.js' });
+  assert.equal(js.statusCode, 200);
+  const admin = await app.inject({ method: 'GET', url: '/admin/' });
+  assert.match(admin.headers['content-security-policy'], /connect-src 'self';/);
+  assert.equal((await call('GET', '/api/google-reviews')).json().clientId, null);
+});

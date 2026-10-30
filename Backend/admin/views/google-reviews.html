@@ -5,6 +5,7 @@
       <p class="mt-1 max-w-3xl text-slate-600">Les avis de la fiche Google de l’hôtel, repris sur l’accueil, la page Avis clients et les fiches chambres. Le site n’affiche que les avis <strong>visibles notés 4 ou 5 étoiles</strong>, du plus récent au plus ancien, avec le nom, la photo de l’auteur, un lien vers Google Maps, le logo Google et la mention « Sélection d’avis Google récents notés 4 ou 5 étoiles ». Les changements partent à la prochaine publication.</p>
     </div>
     <div class="flex flex-wrap gap-2">
+      <a class="btn btn-secondary" href="/admin/outils/avis-google.html" target="_blank" rel="noopener">Récupérer depuis Google (Start)</a>
       <button class="btn btn-secondary" :disabled="!$store.session.canContent" @click="openImport()">Importer un JSON</button>
       <button class="btn btn-primary" :disabled="!$store.session.canContent" @click="add()">Ajouter un avis</button>
     </div>

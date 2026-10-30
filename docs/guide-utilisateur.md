@@ -274,6 +274,8 @@ Le même réglage se trouve aussi dans l'onglet **Réglages** de la page.
 
 **Les exemples.** Les huit avis de la maquette sont des exemples : marqués « Exemple » sur le site et repérés en orange dans l'écran, à supprimer (**Supprimer les exemples**) dès que les vrais avis sont là. Leur fichier, `Backend/server/db/seeds/avis-google-exemples.json`, permet de les réimporter.
 
+**Récupérer depuis Google en un clic.** Le bouton **Récupérer depuis Google (Start)** ouvre une page avec un bouton **Start** : connexion avec le compte Google qui gère la fiche de l'hôtel, lecture des vrais avis par l'API Google Business Profile, sélection des 8 plus récents notés 4 ou 5 étoiles, téléchargement de `reviews-seed.json`, import ici avec la note globale et le nombre d'avis, puis un résumé (avis lus, écartés, gardés, période couverte). Il reste à publier. Elle demande, une seule fois, l'identifiant client OAuth du projet Google Cloud (voir `Backend/README.md`, « Avis Google ») et ne fonctionne qu'une fois l'accès à la fiche et à l'API accordé.
+
 **Synchronisation automatique.** Dès que l'hôtel aura donné l'accès à sa fiche, les avis et la note arriveront seuls par l'API Google Business Profile, chaque matin, et seront publiés sans le reste du site. La visibilité, les thèmes et la chambre choisis ici sont gardés. La mise en place (identifiants dans `Backend/.env`) est décrite dans `Backend/README.md`.
 
 ## 5. Live Music : concerts et artistes
