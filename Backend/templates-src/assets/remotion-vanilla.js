@@ -1019,6 +1019,31 @@
     });
   }
 
+  /** Refus de la mesure d'audience (page Politique de confidentialité) : drapeau lu par track.js. */
+  function initNoStats() {
+    const NO_STATS = 'aston.no-stats';
+    const signal = navigator.doNotTrack === '1' || window.doNotTrack === '1' || navigator.globalPrivacyControl === true;
+    for (const box of $$('[data-no-stats]')) {
+      const button = $('[data-no-stats-toggle]', box);
+      const show = () => {
+        let off = signal;
+        try { off ||= localStorage.getItem(NO_STATS) === '1'; } catch { /* stockage indisponible */ }
+        $('[data-no-stats-off]', box).hidden = !off;
+        button.hidden = signal; // signal du navigateur : rien à changer ici
+        for (const label of $$('[data-no-stats-label]', button)) label.hidden = (label.dataset.noStatsLabel === 'on') !== off;
+      };
+      button.addEventListener('click', () => {
+        try {
+          if (localStorage.getItem(NO_STATS) === '1') localStorage.removeItem(NO_STATS);
+          else localStorage.setItem(NO_STATS, '1');
+        } catch { /* stockage indisponible : choix impossible à retenir */ }
+        show();
+      });
+      show();
+      box.hidden = false;
+    }
+  }
+
   /* =========================================================================
      11. CARTE — plan schématique interactif, Google Maps chargée à la demande
      ========================================================================= */
@@ -1658,6 +1683,7 @@
     safe('réservation', initDialog);
     safe('chat', initChat);
     safe('liens', initLinks);
+    safe('mesure d’audience', initNoStats);
     safe('défilement', initScrollEffects);
     safe('service worker', registerServiceWorker);
     safe('routeur', () => route({ initial: true }));

@@ -1,5 +1,7 @@
 # Paragraphe à ajouter à la politique de confidentialité
 
+> **30/10/2026 : intégré** à la page Politique de confidentialité du site (rubrique Mesure d'audience, modifiable dans l'admin), avec un bouton « Ne plus compter mes visites ». C'est le texte de l'admin qui fait foi ; ce document reste comme trace de la vérification dans le code.
+
 *À faire valider par l'hôtel (direction, juriste ou DPO). Les éléments entre crochets sont à compléter. Texte vérifié le 27/10/2026 contre le code des statistiques (`Backend/server/analytics/`, `Backend/templates-src/assets/track.js`).*
 
 ---

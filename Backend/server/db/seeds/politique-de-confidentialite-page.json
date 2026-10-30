@@ -1,0 +1,723 @@
+{
+  "page": {
+    "key": "politique-de-confidentialite",
+    "parent": "accueil",
+    "i18n": {
+      "fr": {
+        "slug": "politique-de-confidentialite",
+        "title": "Politique de confidentialité | Hôtel Aston La Scala, Nice",
+        "description": "Données personnelles sur le site de l’Hôtel Aston La Scala à Nice : demandes, réservation, mesure d’audience sans cookie, conservation et vos droits."
+      },
+      "en": {
+        "slug": "privacy-policy",
+        "title": "Privacy policy | Hôtel Aston La Scala, Nice",
+        "description": "Personal data on the Hôtel Aston La Scala website in Nice: enquiries, online booking, cookie-free audience measurement, retention periods and your rights."
+      },
+      "es": {
+        "slug": "politica-de-privacidad",
+        "title": "Política de privacidad | Hôtel Aston La Scala, Niza",
+        "description": "Datos personales en el sitio del Hôtel Aston La Scala en Niza: solicitudes, reservas, medición de audiencia sin cookies, conservación y sus derechos."
+      },
+      "it": {
+        "slug": "informativa-privacy",
+        "title": "Informativa sulla privacy | Hôtel Aston La Scala, Nizza",
+        "description": "Dati personali sul sito dell'Hôtel Aston La Scala a Nizza: richieste, prenotazioni, misurazione del pubblico senza cookie, conservazione e diritti."
+      },
+      "de": {
+        "slug": "datenschutz",
+        "title": "Datenschutzerklärung | Hôtel Aston La Scala, Nizza",
+        "description": "Personenbezogene Daten auf der Website des Hôtel Aston La Scala in Nizza: Anfragen, Buchung, cookiefreie Reichweitenmessung, Speicherdauer und Ihre Rechte."
+      },
+      "pt": {
+        "slug": "politica-de-privacidade",
+        "title": "Política de privacidade | Hôtel Aston La Scala, Nice",
+        "description": "Dados pessoais no site do Hôtel Aston La Scala em Nice: pedidos, reservas, medição de audiência sem cookies, prazos de conservação e os seus direitos."
+      },
+      "sv": {
+        "slug": "integritetspolicy",
+        "title": "Integritetspolicy | Hôtel Aston La Scala, Nice",
+        "description": "Personuppgifter på webbplatsen för Hôtel Aston La Scala i Nice: förfrågningar, bokning, besöksmätning utan cookies, lagringstider och dina rättigheter."
+      },
+      "no": {
+        "slug": "personvernerklaering",
+        "title": "Personvernerklæring | Hôtel Aston La Scala, Nice",
+        "description": "Personopplysninger på nettstedet til Hôtel Aston La Scala i Nice: henvendelser, bestilling, besøksmåling uten informasjonskapsler, lagring og rettigheter."
+      },
+      "el": {
+        "slug": "politiki-aporritou",
+        "title": "Πολιτική απορρήτου | Hôtel Aston La Scala, Νίκαια",
+        "description": "Προσωπικά δεδομένα στον ιστότοπο του Hôtel Aston La Scala στη Νίκαια: αιτήματα, κράτηση, μέτρηση επισκεψιμότητας χωρίς cookies, διατήρηση και δικαιώματα."
+      },
+      "ru": {
+        "slug": "politika-konfidentsialnosti",
+        "title": "Политика конфиденциальности | Hôtel Aston La Scala",
+        "description": "Персональные данные на сайте Hôtel Aston La Scala в Ницце: запросы, бронирование, подсчёт посещений без cookie, сроки хранения и ваши права."
+      },
+      "ja": {
+        "slug": "privacy-policy",
+        "title": "プライバシーポリシー | Hôtel Aston La Scala（ニース）",
+        "description": "ニースのHôtel Aston La Scalaのウェブサイトにおける個人データについて：お問い合わせ、オンライン予約、Cookieを使わないアクセス解析、保存期間、お客様の権利。"
+      },
+      "zh": {
+        "slug": "privacy-policy",
+        "title": "隐私政策 | Hôtel Aston La Scala，尼斯",
+        "description": "尼斯Hôtel Aston La Scala酒店网站的个人数据说明：咨询、在线预订、不使用Cookie的访问统计、保存期限以及您的权利。"
+      },
+      "ko": {
+        "slug": "privacy-policy",
+        "title": "개인정보 처리방침 | Hôtel Aston La Scala, 니스",
+        "description": "니스 Hôtel Aston La Scala 웹사이트의 개인정보: 문의, 온라인 예약, 쿠키 없는 방문 통계, 보관 기간 및 이용자의 권리."
+      }
+    }
+  },
+  "entries": {
+    "confidentialite.fil-aria": {
+      "section": "Fil d’Ariane",
+      "label": "Fil d’Ariane (lu par les lecteurs d’écran)",
+      "type": "text",
+      "translatable": 1,
+      "required": 1,
+      "values": {
+        "fr": "Fil d'Ariane",
+        "en": "Breadcrumb",
+        "es": "Ruta de navegación",
+        "it": "Percorso di navigazione",
+        "de": "Brotkrümelnavigation",
+        "pt": "Navegação estrutural",
+        "sv": "Brödsmulor",
+        "no": "Brødsmulesti",
+        "el": "Διαδρομή πλοήγησης",
+        "ru": "Навигационная цепочка",
+        "ja": "パンくずリスト",
+        "zh": "面包屑导航",
+        "ko": "이동 경로"
+      }
+    },
+    "confidentialite.fil-accueil": {
+      "section": "Fil d’Ariane",
+      "label": "Fil d’Ariane : Accueil",
+      "type": "text",
+      "translatable": 1,
+      "required": 1,
+      "values": {
+        "fr": "Accueil",
+        "en": "Home",
+        "es": "Inicio",
+        "it": "Home",
+        "de": "Startseite",
+        "pt": "Início",
+        "sv": "Startsida",
+        "no": "Forside",
+        "el": "Αρχική",
+        "ru": "Главная",
+        "ja": "ホーム",
+        "zh": "首页",
+        "ko": "홈"
+      }
+    },
+    "confidentialite.fil-page": {
+      "section": "Fil d’Ariane",
+      "label": "Fil d’Ariane : page en cours",
+      "type": "text",
+      "translatable": 1,
+      "required": 1,
+      "values": {
+        "fr": "Politique de confidentialité",
+        "en": "Privacy policy",
+        "es": "Política de privacidad",
+        "it": "Informativa sulla privacy",
+        "de": "Datenschutzerklärung",
+        "pt": "Política de privacidade",
+        "sv": "Integritetspolicy",
+        "no": "Personvernerklæring",
+        "el": "Πολιτική απορρήτου",
+        "ru": "Политика конфиденциальности",
+        "ja": "プライバシーポリシー",
+        "zh": "隐私政策",
+        "ko": "개인정보 처리방침"
+      }
+    },
+    "confidentialite.titre": {
+      "section": "En-tête",
+      "label": "Titre de la page (H1)",
+      "type": "text",
+      "translatable": 1,
+      "required": 1,
+      "values": {
+        "fr": "Politique de confidentialité",
+        "en": "Privacy policy",
+        "es": "Política de privacidad",
+        "it": "Informativa sulla privacy",
+        "de": "Datenschutzerklärung",
+        "pt": "Política de privacidade",
+        "sv": "Integritetspolicy",
+        "no": "Personvernerklæring",
+        "el": "Πολιτική απορρήτου",
+        "ru": "Политика конфиденциальности",
+        "ja": "プライバシーポリシー",
+        "zh": "隐私政策",
+        "ko": "개인정보 처리방침"
+      }
+    },
+    "confidentialite.maj-libelle": {
+      "section": "En-tête",
+      "label": "Libellé de la date de mise à jour",
+      "type": "text",
+      "translatable": 1,
+      "required": 1,
+      "values": {
+        "fr": "Dernière mise à jour :",
+        "en": "Last updated:",
+        "es": "Última actualización:",
+        "it": "Ultimo aggiornamento:",
+        "de": "Zuletzt aktualisiert:",
+        "pt": "Última atualização:",
+        "sv": "Senast uppdaterad:",
+        "no": "Sist oppdatert:",
+        "el": "Τελευταία ενημέρωση:",
+        "ru": "Последнее обновление:",
+        "ja": "最終更新日：",
+        "zh": "最后更新：",
+        "ko": "최종 업데이트:"
+      }
+    },
+    "confidentialite.maj-date": {
+      "section": "En-tête",
+      "label": "Date de la dernière mise à jour (ex. 30/10/2026)",
+      "type": "text",
+      "translatable": 0,
+      "required": 0,
+      "values": {
+        "fr": ""
+      }
+    },
+    "confidentialite.intro": {
+      "section": "En-tête",
+      "label": "Introduction",
+      "type": "richtext",
+      "translatable": 1,
+      "required": 1,
+      "values": {
+        "fr": "<p>Cette page explique quelles données personnelles nous recueillons lorsque vous consultez le site de l'Hôtel Aston La Scala ou nous écrivez par son intermédiaire, à quoi elles servent, combien de temps nous les gardons et comment exercer vos droits. Nous ne recueillons que ce qui est utile et nous ne vendons jamais vos données.</p>",
+        "en": "<p>This page explains what personal data we collect when you visit the Hôtel Aston La Scala website or write to us through it, what it is used for, how long we keep it and how to exercise your rights. We only collect what is useful and we never sell your data.</p>",
+        "es": "<p>Esta página explica qué datos personales recogemos cuando usted visita el sitio web del Hôtel Aston La Scala o nos escribe a través de él, para qué sirven, cuánto tiempo los conservamos y cómo ejercer sus derechos. Solo recogemos lo que es útil y nunca vendemos sus datos.</p>",
+        "it": "<p>Questa pagina spiega quali dati personali raccogliamo quando visita il sito dell'Hôtel Aston La Scala o ci scrive tramite esso, a cosa servono, per quanto tempo li conserviamo e come esercitare i suoi diritti. Raccogliamo solo ciò che è utile e non vendiamo mai i suoi dati.</p>",
+        "de": "<p>Diese Seite erklärt, welche personenbezogenen Daten wir erheben, wenn Sie die Website des Hôtel Aston La Scala besuchen oder uns darüber schreiben, wozu sie dienen, wie lange wir sie aufbewahren und wie Sie Ihre Rechte ausüben. Wir erheben nur, was nützlich ist, und verkaufen Ihre Daten niemals.</p>",
+        "pt": "<p>Esta página explica que dados pessoais recolhemos quando visita o site do Hôtel Aston La Scala ou nos escreve através dele, para que servem, durante quanto tempo os conservamos e como exercer os seus direitos. Só recolhemos o que é útil e nunca vendemos os seus dados.</p>",
+        "sv": "<p>Den här sidan förklarar vilka personuppgifter vi samlar in när du besöker webbplatsen för Hôtel Aston La Scala eller skriver till oss via den, vad de används till, hur länge vi sparar dem och hur du utövar dina rättigheter. Vi samlar bara in det som är användbart och säljer aldrig dina uppgifter.</p>",
+        "no": "<p>Denne siden forklarer hvilke personopplysninger vi samler inn når du besøker nettstedet til Hôtel Aston La Scala eller skriver til oss via det, hva de brukes til, hvor lenge vi oppbevarer dem og hvordan du kan utøve rettighetene dine. Vi samler bare inn det som er nyttig, og vi selger aldri opplysningene dine.</p>",
+        "el": "<p>Η σελίδα αυτή εξηγεί ποια προσωπικά δεδομένα συλλέγουμε όταν επισκέπτεστε τον ιστότοπο του Hôtel Aston La Scala ή μας γράφετε μέσω αυτού, σε τι χρησιμεύουν, για πόσο τα διατηρούμε και πώς μπορείτε να ασκήσετε τα δικαιώματά σας. Συλλέγουμε μόνο ό,τι είναι χρήσιμο και δεν πουλάμε ποτέ τα δεδομένα σας.</p>",
+        "ru": "<p>На этой странице объясняется, какие персональные данные мы собираем, когда вы посещаете сайт Hôtel Aston La Scala или пишете нам через него, для чего они используются, как долго мы их храним и как вы можете осуществить свои права. Мы собираем только то, что действительно нужно, и никогда не продаём ваши данные.</p>",
+        "ja": "<p>このページでは、お客様がHôtel Aston La Scalaのウェブサイトを閲覧されるとき、またはサイトを通じて当ホテルにご連絡いただくときに収集する個人データ、その利用目的、保存期間、およびお客様の権利の行使方法についてご説明します。当ホテルは必要なデータのみを収集し、お客様のデータを販売することは決してありません。</p>",
+        "zh": "<p>本页说明您浏览Hôtel Aston La Scala网站或通过网站与我们联系时，我们会收集哪些个人数据、用途为何、保存多久，以及您如何行使自己的权利。我们只收集必要的数据，绝不出售您的数据。</p>",
+        "ko": "<p>이 페이지는 고객님께서 Hôtel Aston La Scala 웹사이트를 방문하거나 웹사이트를 통해 연락하실 때 저희가 수집하는 개인정보, 그 이용 목적, 보관 기간 및 권리 행사 방법을 설명합니다. 저희는 필요한 정보만 수집하며 고객님의 정보를 절대 판매하지 않습니다.</p>"
+      }
+    },
+    "confidentialite.responsable-titre": {
+      "section": "Responsable du traitement",
+      "label": "Titre de la rubrique",
+      "type": "text",
+      "translatable": 1,
+      "required": 1,
+      "values": {
+        "fr": "Responsable du traitement",
+        "en": "Data controller",
+        "es": "Responsable del tratamiento",
+        "it": "Titolare del trattamento",
+        "de": "Verantwortlicher",
+        "pt": "Responsável pelo tratamento",
+        "sv": "Personuppgiftsansvarig",
+        "no": "Behandlingsansvarlig",
+        "el": "Υπεύθυνος επεξεργασίας",
+        "ru": "Оператор данных",
+        "ja": "データ管理者",
+        "zh": "数据控制者",
+        "ko": "개인정보 처리 책임자"
+      }
+    },
+    "confidentialite.responsable": {
+      "section": "Responsable du traitement",
+      "label": "Texte de la rubrique",
+      "type": "richtext",
+      "translatable": 1,
+      "required": 1,
+      "values": {
+        "fr": "<p>Les données sont traitées par la société HOTEL ASTON LA SCALA, 12 avenue Félix Faure, 06000 Nice, France ; téléphone : 04 92 17 53 00. Pour toute question sur vos données, écrivez-nous à <a href=\"mailto:aston@3ahotels.com\">aston@3ahotels.com</a>.</p>",
+        "en": "<p>Your data is processed by HOTEL ASTON LA SCALA, 12 avenue Félix Faure, 06000 Nice, France; telephone: +33 4 92 17 53 00. For any question about your data, write to us at <a href=\"mailto:aston@3ahotels.com\">aston@3ahotels.com</a>.</p>",
+        "es": "<p>Sus datos son tratados por la sociedad HOTEL ASTON LA SCALA, 12 avenue Félix Faure, 06000 Niza, Francia; teléfono: +33 4 92 17 53 00. Para cualquier pregunta sobre sus datos, escríbanos a <a href=\"mailto:aston@3ahotels.com\">aston@3ahotels.com</a>.</p>",
+        "it": "<p>I dati sono trattati dalla società HOTEL ASTON LA SCALA, 12 avenue Félix Faure, 06000 Nizza, Francia; telefono: +33 4 92 17 53 00. Per qualsiasi domanda sui suoi dati, ci scriva a <a href=\"mailto:aston@3ahotels.com\">aston@3ahotels.com</a>.</p>",
+        "de": "<p>Ihre Daten werden von der Gesellschaft HOTEL ASTON LA SCALA, 12 avenue Félix Faure, 06000 Nizza, Frankreich, verarbeitet; Telefon: +33 4 92 17 53 00. Bei Fragen zu Ihren Daten schreiben Sie uns an <a href=\"mailto:aston@3ahotels.com\">aston@3ahotels.com</a>.</p>",
+        "pt": "<p>Os seus dados são tratados pela sociedade HOTEL ASTON LA SCALA, 12 avenue Félix Faure, 06000 Nice, França; telefone: +33 4 92 17 53 00. Para qualquer questão sobre os seus dados, escreva-nos para <a href=\"mailto:aston@3ahotels.com\">aston@3ahotels.com</a>.</p>",
+        "sv": "<p>Dina uppgifter behandlas av bolaget HOTEL ASTON LA SCALA, 12 avenue Félix Faure, 06000 Nice, Frankrike; telefon: +33 4 92 17 53 00. Har du frågor om dina uppgifter kan du skriva till oss på <a href=\"mailto:aston@3ahotels.com\">aston@3ahotels.com</a>.</p>",
+        "no": "<p>Opplysningene dine behandles av selskapet HOTEL ASTON LA SCALA, 12 avenue Félix Faure, 06000 Nice, Frankrike; telefon: +33 4 92 17 53 00. Har du spørsmål om opplysningene dine, kan du skrive til oss på <a href=\"mailto:aston@3ahotels.com\">aston@3ahotels.com</a>.</p>",
+        "el": "<p>Τα δεδομένα σας επεξεργάζεται η εταιρεία HOTEL ASTON LA SCALA, 12 avenue Félix Faure, 06000 Νίκαια, Γαλλία· τηλέφωνο: +33 4 92 17 53 00. Για οποιαδήποτε ερώτηση σχετικά με τα δεδομένα σας, γράψτε μας στο <a href=\"mailto:aston@3ahotels.com\">aston@3ahotels.com</a>.</p>",
+        "ru": "<p>Ваши данные обрабатывает компания HOTEL ASTON LA SCALA, 12 avenue Félix Faure, 06000 Ницца, Франция; телефон: +33 4 92 17 53 00. По любым вопросам о ваших данных пишите нам по адресу <a href=\"mailto:aston@3ahotels.com\">aston@3ahotels.com</a>.</p>",
+        "ja": "<p>お客様のデータは、HOTEL ASTON LA SCALA（12 avenue Félix Faure, 06000 Nice, France、電話：+33 4 92 17 53 00）が取り扱います。データに関するご質問は <a href=\"mailto:aston@3ahotels.com\">aston@3ahotels.com</a> までお寄せください。</p>",
+        "zh": "<p>您的数据由HOTEL ASTON LA SCALA公司处理，地址：12 avenue Félix Faure, 06000 Nice, France；电话：+33 4 92 17 53 00。如对您的数据有任何疑问，请发送邮件至 <a href=\"mailto:aston@3ahotels.com\">aston@3ahotels.com</a>。</p>",
+        "ko": "<p>고객님의 정보는 HOTEL ASTON LA SCALA(12 avenue Félix Faure, 06000 Nice, France, 전화: +33 4 92 17 53 00)가 처리합니다. 개인정보에 관한 문의는 <a href=\"mailto:aston@3ahotels.com\">aston@3ahotels.com</a>으로 보내 주십시오.</p>"
+      }
+    },
+    "confidentialite.demandes-titre": {
+      "section": "Devis, contact et chat",
+      "label": "Titre de la rubrique",
+      "type": "text",
+      "translatable": 1,
+      "required": 1,
+      "values": {
+        "fr": "Devis, contact et chat",
+        "en": "Quotes, contact and chat",
+        "es": "Presupuestos, contacto y chat",
+        "it": "Preventivi, contatti e chat",
+        "de": "Angebote, Kontakt und Chat",
+        "pt": "Orçamentos, contacto e chat",
+        "sv": "Offerter, kontakt och chatt",
+        "no": "Tilbud, kontakt og chat",
+        "el": "Προσφορές, επικοινωνία και συνομιλία",
+        "ru": "Запросы предложений, контакты и чат",
+        "ja": "お見積もり、お問い合わせ、チャット",
+        "zh": "报价、联系与在线咨询",
+        "ko": "견적, 문의 및 채팅"
+      }
+    },
+    "confidentialite.demandes": {
+      "section": "Devis, contact et chat",
+      "label": "Texte de la rubrique",
+      "type": "richtext",
+      "translatable": 1,
+      "required": 1,
+      "values": {
+        "fr": "<p>Les formulaires de demande de devis et de contact, comme le chat lorsque vous demandez un devis ou à être rappelé, n'envoient rien à notre site : ils préparent un e-mail dans votre messagerie, que vous restez libre d'envoyer. Les informations que vous y indiquez (nom, e-mail, téléphone, société, détails de votre séjour ou de votre événement, message) nous parviennent alors par e-mail.</p><p>Elles servent uniquement à répondre à votre demande et, le cas échéant, à préparer votre séjour ou votre événement. Base légale : les mesures précontractuelles prises à votre demande et notre intérêt légitime à répondre aux messages que nous recevons.</p><p>Les questions posées au chat reçoivent une réponse préparée à l'avance : le texte que vous tapez n'est ni enregistré ni envoyé.</p>",
+        "en": "<p>The quote request and contact forms, like the chat when you ask for a quote or a call back, send nothing to our website: they prepare an e-mail in your mail application, which you are free to send or not. The information you enter (name, e-mail, telephone, company, details of your stay or event, message) then reaches us by e-mail.</p><p>It is used solely to answer your request and, where relevant, to prepare your stay or event. Legal basis: pre-contractual steps taken at your request and our legitimate interest in answering the messages we receive.</p><p>Questions asked in the chat receive a prepared answer: the text you type is neither recorded nor sent.</p>",
+        "es": "<p>Los formularios de solicitud de presupuesto y de contacto, al igual que el chat cuando pide un presupuesto o que le llamemos, no envían nada a nuestro sitio: preparan un correo electrónico en su aplicación de correo, que usted es libre de enviar. La información que indica (nombre, correo electrónico, teléfono, empresa, detalles de su estancia o evento, mensaje) nos llega entonces por correo electrónico.</p><p>Solo sirve para responder a su solicitud y, en su caso, para preparar su estancia o evento. Base jurídica: las medidas precontractuales adoptadas a petición suya y nuestro interés legítimo en responder a los mensajes que recibimos.</p><p>Las preguntas del chat reciben una respuesta preparada de antemano: el texto que escribe no se registra ni se envía.</p>",
+        "it": "<p>I moduli di richiesta di preventivo e di contatto, così come la chat quando chiede un preventivo o di essere richiamato, non inviano nulla al nostro sito: preparano un'e-mail nel suo programma di posta, che è libero di inviare. Le informazioni che vi indica (nome, e-mail, telefono, società, dettagli del soggiorno o dell'evento, messaggio) ci giungono quindi per e-mail.</p><p>Servono unicamente a rispondere alla sua richiesta e, se del caso, a preparare il suo soggiorno o il suo evento. Base giuridica: le misure precontrattuali adottate su sua richiesta e il nostro legittimo interesse a rispondere ai messaggi che riceviamo.</p><p>Le domande poste alla chat ricevono una risposta preparata in anticipo: il testo che digita non viene né registrato né inviato.</p>",
+        "de": "<p>Die Formulare für Angebotsanfragen und Kontakt senden ebenso wie der Chat, wenn Sie ein Angebot oder einen Rückruf anfordern, nichts an unsere Website: Sie bereiten eine E-Mail in Ihrem E-Mail-Programm vor, die Sie frei absenden können. Die von Ihnen angegebenen Informationen (Name, E-Mail, Telefon, Firma, Einzelheiten zu Ihrem Aufenthalt oder Ihrer Veranstaltung, Nachricht) erreichen uns dann per E-Mail.</p><p>Sie dienen ausschließlich dazu, Ihre Anfrage zu beantworten und gegebenenfalls Ihren Aufenthalt oder Ihre Veranstaltung vorzubereiten. Rechtsgrundlage: vorvertragliche Maßnahmen auf Ihre Anfrage und unser berechtigtes Interesse, die bei uns eingehenden Nachrichten zu beantworten.</p><p>Fragen im Chat erhalten eine vorbereitete Antwort: Der von Ihnen eingegebene Text wird weder gespeichert noch gesendet.</p>",
+        "pt": "<p>Os formulários de pedido de orçamento e de contacto, tal como o chat quando pede um orçamento ou que lhe liguemos, não enviam nada para o nosso site: preparam um e-mail na sua aplicação de correio, que é livre de enviar. As informações que indica (nome, e-mail, telefone, empresa, detalhes da estadia ou do evento, mensagem) chegam-nos então por e-mail.</p><p>Servem unicamente para responder ao seu pedido e, se for caso disso, preparar a sua estadia ou o seu evento. Fundamento jurídico: as diligências pré-contratuais tomadas a seu pedido e o nosso interesse legítimo em responder às mensagens que recebemos.</p><p>As perguntas feitas no chat recebem uma resposta preparada antecipadamente: o texto que escreve não é registado nem enviado.</p>",
+        "sv": "<p>Formulären för offertförfrågan och kontakt, liksom chatten när du ber om en offert eller att bli uppringd, skickar ingenting till vår webbplats: de förbereder ett e-postmeddelande i ditt e-postprogram, som du själv väljer om du vill skicka. Uppgifterna du anger (namn, e-post, telefon, företag, detaljer om din vistelse eller ditt evenemang, meddelande) når oss då via e-post.</p><p>De används enbart för att besvara din förfrågan och i förekommande fall förbereda din vistelse eller ditt evenemang. Rättslig grund: åtgärder före avtal som vidtas på din begäran och vårt berättigade intresse av att besvara de meddelanden vi får.</p><p>Frågor i chatten får ett i förväg förberett svar: texten du skriver varken sparas eller skickas.</p>",
+        "no": "<p>Skjemaene for tilbudsforespørsel og kontakt, i likhet med chatten når du ber om et tilbud eller å bli ringt opp, sender ingenting til nettstedet vårt: de lager en e-post i e-postprogrammet ditt, som du selv velger om du vil sende. Opplysningene du oppgir (navn, e-post, telefon, firma, detaljer om oppholdet eller arrangementet, melding) når oss da via e-post.</p><p>De brukes utelukkende til å svare på henvendelsen din og eventuelt til å forberede oppholdet eller arrangementet ditt. Rettslig grunnlag: tiltak før avtaleinngåelse som gjøres på din forespørsel, og vår berettigede interesse i å svare på meldingene vi mottar.</p><p>Spørsmål i chatten får et forhåndsutarbeidet svar: teksten du skriver, verken lagres eller sendes.</p>",
+        "el": "<p>Οι φόρμες αιτήματος προσφοράς και επικοινωνίας, όπως και η συνομιλία (chat) όταν ζητάτε προσφορά ή να σας καλέσουμε, δεν στέλνουν τίποτα στον ιστότοπό μας: ετοιμάζουν ένα email στην εφαρμογή αλληλογραφίας σας, το οποίο είστε ελεύθεροι να στείλετε. Οι πληροφορίες που αναφέρετε (όνομα, email, τηλέφωνο, εταιρεία, λεπτομέρειες της διαμονής ή της εκδήλωσής σας, μήνυμα) μας φτάνουν τότε μέσω email.</p><p>Χρησιμοποιούνται αποκλειστικά για να απαντήσουμε στο αίτημά σας και, κατά περίπτωση, για να προετοιμάσουμε τη διαμονή ή την εκδήλωσή σας. Νομική βάση: τα προσυμβατικά μέτρα που λαμβάνονται κατόπιν αιτήματός σας και το έννομο συμφέρον μας να απαντάμε στα μηνύματα που λαμβάνουμε.</p><p>Οι ερωτήσεις στη συνομιλία λαμβάνουν μια προετοιμασμένη απάντηση: το κείμενο που πληκτρολογείτε ούτε καταγράφεται ούτε αποστέλλεται.</p>",
+        "ru": "<p>Формы запроса коммерческого предложения и обратной связи, как и чат, когда вы запрашиваете предложение или обратный звонок, ничего не отправляют на наш сайт: они готовят письмо в вашей почтовой программе, и вы сами решаете, отправлять ли его. Указанные вами сведения (имя, e-mail, телефон, компания, подробности пребывания или мероприятия, сообщение) поступают к нам по электронной почте.</p><p>Они используются исключительно для ответа на ваш запрос и, при необходимости, для подготовки вашего пребывания или мероприятия. Правовое основание: преддоговорные меры, принимаемые по вашему запросу, и наш законный интерес в том, чтобы отвечать на получаемые сообщения.</p><p>На вопросы в чате даётся заранее подготовленный ответ: введённый вами текст не сохраняется и не отправляется.</p>",
+        "ja": "<p>お見積もり依頼フォームとお問い合わせフォーム、およびお見積もりや折り返しのお電話をご希望の際のチャットは、当サイトに何も送信しません。お使いのメールアプリにメールを作成するだけで、送信するかどうかはお客様が決められます。ご記入いただいた情報（お名前、メールアドレス、電話番号、会社名、ご滞在やイベントの詳細、メッセージ）は、その後メールで当ホテルに届きます。</p><p>これらの情報は、お問い合わせへの回答と、必要に応じてご滞在やイベントの準備にのみ使用します。法的根拠：お客様のご依頼に基づく契約前の措置、および受信したメッセージに回答するという当ホテルの正当な利益。</p><p>チャットでのご質問には、あらかじめ用意した回答が表示されます。入力された文章は記録も送信もされません。</p>",
+        "zh": "<p>报价申请表和联系表单，以及您通过在线咨询申请报价或回电时，都不会向我们的网站发送任何内容：它们只是在您的邮件程序中生成一封邮件，是否发送由您决定。您填写的信息（姓名、电子邮箱、电话、公司、住宿或活动详情、留言）随后通过电子邮件发送给我们。</p><p>这些信息仅用于答复您的请求，并在需要时为您的住宿或活动做准备。法律依据：应您的要求采取的订立合同前措施，以及我们答复所收到消息的正当利益。</p><p>在线咨询中的问题会得到预先准备好的回答：您输入的文字既不会被记录，也不会被发送。</p>",
+        "ko": "<p>견적 요청 양식과 문의 양식, 그리고 견적이나 회신 전화를 요청할 때의 채팅은 저희 웹사이트로 아무것도 전송하지 않습니다. 이용하시는 메일 프로그램에 이메일을 작성해 줄 뿐이며, 보낼지 여부는 고객님께서 결정하십니다. 입력하신 정보(이름, 이메일, 전화번호, 회사, 숙박 또는 행사 세부 사항, 메시지)는 이후 이메일로 저희에게 전달됩니다.</p><p>이 정보는 요청에 답변하고, 필요한 경우 숙박이나 행사를 준비하는 데에만 사용됩니다. 법적 근거: 고객님의 요청에 따른 계약 전 조치 및 수신한 메시지에 답변하려는 저희의 정당한 이익.</p><p>채팅 질문에는 미리 준비된 답변이 제공되며, 입력하신 내용은 기록되거나 전송되지 않습니다.</p>"
+      }
+    },
+    "confidentialite.reservation-titre": {
+      "section": "Réservation en ligne",
+      "label": "Titre de la rubrique",
+      "type": "text",
+      "translatable": 1,
+      "required": 1,
+      "values": {
+        "fr": "Réservation en ligne",
+        "en": "Online booking",
+        "es": "Reserva online",
+        "it": "Prenotazione online",
+        "de": "Online-Buchung",
+        "pt": "Reserva online",
+        "sv": "Bokning online",
+        "no": "Bestilling på nett",
+        "el": "Ηλεκτρονική κράτηση",
+        "ru": "Онлайн-бронирование",
+        "ja": "オンライン予約",
+        "zh": "在线预订",
+        "ko": "온라인 예약"
+      }
+    },
+    "confidentialite.reservation": {
+      "section": "Réservation en ligne",
+      "label": "Texte de la rubrique",
+      "type": "richtext",
+      "translatable": 1,
+      "required": 1,
+      "values": {
+        "fr": "<p>Les chambres se réservent sur le moteur de réservation de notre prestataire D-Edge (secure-hotel-booking.com), vers lequel vous dirigent les boutons « Réserver ». Les dates et le nombre de voyageurs choisis sur notre site lui sont transmis dans l'adresse de la page. Les données que vous saisissez ensuite (identité, coordonnées, moyen de paiement) servent à l'exécution de votre réservation, qui en est la base légale. Les pages du moteur de réservation sont soumises à la politique de confidentialité de D-Edge.</p>",
+        "en": "<p>Rooms are booked on the booking engine of our provider D-Edge (secure-hotel-booking.com), to which the “Book” buttons take you. The dates and number of guests chosen on our website are passed to it in the page address. The data you then enter (identity, contact details, means of payment) is used to carry out your booking, which is its legal basis. The booking engine pages are covered by D-Edge’s privacy policy.</p>",
+        "es": "<p>Las habitaciones se reservan en el motor de reservas de nuestro proveedor D-Edge (secure-hotel-booking.com), al que le llevan los botones «Reservar». Las fechas y el número de viajeros elegidos en nuestro sitio se le transmiten en la dirección de la página. Los datos que introduce después (identidad, datos de contacto, medio de pago) sirven para ejecutar su reserva, que constituye su base jurídica. Las páginas del motor de reservas se rigen por la política de privacidad de D-Edge.</p>",
+        "it": "<p>Le camere si prenotano sul motore di prenotazione del nostro fornitore D-Edge (secure-hotel-booking.com), verso cui la indirizzano i pulsanti «Prenota». Le date e il numero di ospiti scelti sul nostro sito gli vengono trasmessi nell'indirizzo della pagina. I dati che inserisce successivamente (identità, recapiti, mezzo di pagamento) servono all'esecuzione della prenotazione, che ne costituisce la base giuridica. Le pagine del motore di prenotazione sono soggette all'informativa sulla privacy di D-Edge.</p>",
+        "de": "<p>Zimmer werden über die Buchungsmaschine unseres Dienstleisters D-Edge (secure-hotel-booking.com) gebucht, zu der Sie die Schaltflächen „Buchen“ führen. Die auf unserer Website gewählten Daten und die Anzahl der Gäste werden ihr in der Seitenadresse übermittelt. Die Daten, die Sie anschließend eingeben (Identität, Kontaktdaten, Zahlungsmittel), dienen der Durchführung Ihrer Buchung, die ihre Rechtsgrundlage bildet. Für die Seiten der Buchungsmaschine gilt die Datenschutzerklärung von D-Edge.</p>",
+        "pt": "<p>Os quartos reservam-se no motor de reservas do nosso prestador D-Edge (secure-hotel-booking.com), para onde o levam os botões «Reservar». As datas e o número de hóspedes escolhidos no nosso site são-lhe transmitidos no endereço da página. Os dados que introduz depois (identidade, contactos, meio de pagamento) servem para executar a sua reserva, que constitui o seu fundamento jurídico. As páginas do motor de reservas estão sujeitas à política de privacidade da D-Edge.</p>",
+        "sv": "<p>Rummen bokas i bokningsmotorn hos vår leverantör D-Edge (secure-hotel-booking.com), dit knapparna ”Boka” leder dig. Datum och antal gäster som du väljer på vår webbplats överförs dit i sidans adress. Uppgifterna du sedan anger (identitet, kontaktuppgifter, betalningsmedel) används för att genomföra din bokning, som utgör den rättsliga grunden. Bokningsmotorns sidor omfattas av D-Edges integritetspolicy.</p>",
+        "no": "<p>Rommene bestilles i bookingmotoren til vår leverandør D-Edge (secure-hotel-booking.com), som knappene «Bestill» leder deg til. Datoene og antall gjester du velger på nettstedet vårt, overføres dit i sidens adresse. Opplysningene du deretter oppgir (identitet, kontaktopplysninger, betalingsmiddel), brukes til å gjennomføre bestillingen, som er det rettslige grunnlaget. Sidene i bookingmotoren er underlagt D-Edges personvernerklæring.</p>",
+        "el": "<p>Οι κρατήσεις δωματίων γίνονται στη μηχανή κρατήσεων του παρόχου μας D-Edge (secure-hotel-booking.com), όπου σας οδηγούν τα κουμπιά «Κράτηση». Οι ημερομηνίες και ο αριθμός επισκεπτών που επιλέγετε στον ιστότοπό μας της διαβιβάζονται στη διεύθυνση της σελίδας. Τα δεδομένα που εισάγετε στη συνέχεια (ταυτότητα, στοιχεία επικοινωνίας, μέσο πληρωμής) χρησιμεύουν για την εκτέλεση της κράτησής σας, η οποία αποτελεί και τη νομική τους βάση. Οι σελίδες της μηχανής κρατήσεων διέπονται από την πολιτική απορρήτου της D-Edge.</p>",
+        "ru": "<p>Номера бронируются в системе бронирования нашего поставщика D-Edge (secure-hotel-booking.com), куда ведут кнопки «Забронировать». Выбранные на нашем сайте даты и число гостей передаются ей в адресе страницы. Данные, которые вы затем вводите (личные данные, контакты, способ оплаты), используются для исполнения бронирования, что и является правовым основанием. На страницы системы бронирования распространяется политика конфиденциальности D-Edge.</p>",
+        "ja": "<p>客室のご予約は、「予約する」ボタンからアクセスする当ホテルの委託先D-Edge（secure-hotel-booking.com）の予約エンジンで行います。当サイトで選択された日程と人数は、ページのアドレスに含めて予約エンジンに渡されます。その後ご入力いただくデータ（氏名、連絡先、お支払い方法）はご予約の履行のために使用され、これが法的根拠となります。予約エンジンのページにはD-Edgeのプライバシーポリシーが適用されます。</p>",
+        "zh": "<p>客房通过我们的服务商D-Edge的预订引擎（secure-hotel-booking.com）预订，点击“预订”按钮即可进入。您在我们网站上选择的日期和人数会通过页面地址传递给预订引擎。您随后填写的数据（身份、联系方式、支付方式）用于履行您的预订，这也是其法律依据。预订引擎的页面适用D-Edge的隐私政策。</p>",
+        "ko": "<p>객실 예약은 \"예약\" 버튼으로 연결되는 저희 서비스 제공업체 D-Edge의 예약 엔진(secure-hotel-booking.com)에서 이루어집니다. 저희 웹사이트에서 선택하신 날짜와 인원은 페이지 주소에 담겨 예약 엔진으로 전달됩니다. 이후 입력하시는 정보(신원, 연락처, 결제 수단)는 예약 이행을 위해 사용되며, 이것이 법적 근거입니다. 예약 엔진 페이지에는 D-Edge의 개인정보 처리방침이 적용됩니다.</p>"
+      }
+    },
+    "confidentialite.audience-titre": {
+      "section": "Mesure d’audience",
+      "label": "Titre de la rubrique",
+      "type": "text",
+      "translatable": 1,
+      "required": 1,
+      "values": {
+        "fr": "Mesure d'audience",
+        "en": "Audience measurement",
+        "es": "Medición de audiencia",
+        "it": "Misurazione del pubblico",
+        "de": "Reichweitenmessung",
+        "pt": "Medição de audiência",
+        "sv": "Besöksmätning",
+        "no": "Besøksmåling",
+        "el": "Μέτρηση επισκεψιμότητας",
+        "ru": "Подсчёт посещений",
+        "ja": "アクセス解析",
+        "zh": "访问统计",
+        "ko": "방문 통계"
+      }
+    },
+    "confidentialite.audience": {
+      "section": "Mesure d’audience",
+      "label": "Texte de la rubrique",
+      "type": "richtext",
+      "translatable": 1,
+      "required": 1,
+      "values": {
+        "fr": "<p>Pour comprendre comment notre site est utilisé et l'améliorer, nous mesurons sa fréquentation avec un outil que nous hébergeons nous-mêmes. Aucune donnée n'est transmise à un service tiers de statistiques ou de publicité.</p><p><strong>Sans cookie ni identifiant durable.</strong> Cette mesure ne dépose aucun cookie sur votre appareil. Votre adresse IP n'est pas conservée : au moment de la visite, elle sert à déduire le pays et la région d'origine, et à calculer une empreinte technique valable une seule journée, qui permet de compter les visiteurs distincts du jour. Cette empreinte ne peut pas être reliée d'un jour à l'autre : nous ne pouvons pas vous reconnaître d'une visite à l'autre.</p><p><strong>Données recueillies.</strong> Pages consultées et temps passé, site d'où vous arrivez (son nom de domaine seulement) et campagne éventuelle, type d'appareil, langue, pays et région, dates de séjour et nombre de voyageurs recherchés dans le module de réservation, clics (réservation, téléphone, e-mail, devis, offres et bandeaux, carte, vidéos, liens vers d'autres sites), thème des questions posées au chat et vitesse d'affichage des pages. Aucun texte que vous saisissez n'est enregistré. Ces données ne sont consultées que sous forme de statistiques globales.</p><p><strong>Finalités et base légale.</strong> Connaître la fréquentation du site, savoir quels canaux nous amènent des visiteurs, mesurer l'intérêt de nos informations et de nos offres, anticiper la demande et améliorer la rapidité du site. Cette mesure repose sur notre intérêt légitime ; limitée à des statistiques, elle ne nécessite pas votre consentement préalable.</p><p><strong>Conservation.</strong> Les données de visite sont supprimées automatiquement au bout de 13 mois. Seuls des totaux par jour, qui ne concernent plus aucune visite en particulier, sont gardés 25 mois pour comparer d'une année sur l'autre.</p><p><strong>Vous y opposer.</strong> Si votre navigateur envoie le signal « Ne pas suivre » (Do Not Track) ou « Global Privacy Control », vos visites ne sont pas comptées. Vous pouvez aussi utiliser le bouton ci-dessous : votre choix est gardé dans ce navigateur.</p>",
+        "en": "<p>To understand how our website is used and improve it, we measure its traffic with a tool we host ourselves. No data is passed to any third-party analytics or advertising service.</p><p><strong>No cookies, no lasting identifier.</strong> This measurement places no cookie on your device. Your IP address is not stored: at the time of the visit, it is used to work out the country and region of origin and to compute a technical fingerprint valid for a single day, which lets us count the day’s distinct visitors. This fingerprint cannot be linked from one day to the next: we cannot recognise you from one visit to another.</p><p><strong>Data collected.</strong> Pages viewed and time spent, the site you came from (its domain name only) and any campaign, device type, language, country and region, stay dates and number of guests searched in the booking module, clicks (booking, telephone, e-mail, quote, offers and banners, map, videos, links to other sites), the topic of questions asked in the chat and page loading speed. No text you type is recorded. This data is only consulted as overall statistics.</p><p><strong>Purposes and legal basis.</strong> To know how much the site is visited, which channels bring us visitors, how useful our information and offers are, to anticipate demand and to make the site faster. This measurement is based on our legitimate interest; as it is limited to statistics, it does not require your prior consent.</p><p><strong>Retention.</strong> Visit data is deleted automatically after 13 months. Only daily totals, which no longer relate to any particular visit, are kept for 25 months to compare from one year to the next.</p><p><strong>Objecting.</strong> If your browser sends the “Do Not Track” or “Global Privacy Control” signal, your visits are not counted. You can also use the button below: your choice is kept in this browser.</p>",
+        "es": "<p>Para entender cómo se utiliza nuestro sitio y mejorarlo, medimos su frecuentación con una herramienta que alojamos nosotros mismos. No se transmite ningún dato a servicios de estadísticas o de publicidad de terceros.</p><p><strong>Sin cookies ni identificador duradero.</strong> Esta medición no instala ninguna cookie en su dispositivo. Su dirección IP no se conserva: en el momento de la visita, sirve para deducir el país y la región de origen y para calcular una huella técnica válida un solo día, que permite contar los visitantes distintos del día. Esta huella no puede relacionarse de un día a otro: no podemos reconocerle de una visita a otra.</p><p><strong>Datos recogidos.</strong> Páginas consultadas y tiempo de lectura, sitio del que procede (solo su nombre de dominio) y campaña, en su caso, tipo de dispositivo, idioma, país y región, fechas de estancia y número de viajeros buscados en el módulo de reserva, clics (reserva, teléfono, correo electrónico, presupuesto, ofertas y banners, mapa, vídeos, enlaces a otros sitios), tema de las preguntas del chat y velocidad de carga de las páginas. No se registra ningún texto que usted escriba. Estos datos solo se consultan como estadísticas globales.</p><p><strong>Finalidades y base jurídica.</strong> Conocer la frecuentación del sitio, saber qué canales nos traen visitantes, medir el interés de nuestra información y nuestras ofertas, anticipar la demanda y mejorar la rapidez del sitio. Esta medición se basa en nuestro interés legítimo; al limitarse a estadísticas, no requiere su consentimiento previo.</p><p><strong>Conservación.</strong> Los datos de visita se eliminan automáticamente al cabo de 13 meses. Solo se guardan durante 25 meses totales diarios, que ya no se refieren a ninguna visita concreta, para comparar de un año a otro.</p><p><strong>Oponerse.</strong> Si su navegador envía la señal «No rastrear» (Do Not Track) o «Global Privacy Control», sus visitas no se cuentan. También puede usar el botón siguiente: su elección se guarda en este navegador.</p>",
+        "it": "<p>Per capire come viene utilizzato il nostro sito e migliorarlo, ne misuriamo la frequentazione con uno strumento ospitato da noi. Nessun dato viene trasmesso a servizi di statistica o di pubblicità di terzi.</p><p><strong>Senza cookie né identificativo duraturo.</strong> Questa misurazione non deposita alcun cookie sul suo dispositivo. Il suo indirizzo IP non viene conservato: al momento della visita serve a dedurre il paese e la regione di provenienza e a calcolare un'impronta tecnica valida un solo giorno, che consente di contare i visitatori distinti della giornata. Questa impronta non può essere collegata da un giorno all'altro: non possiamo riconoscerla da una visita all'altra.</p><p><strong>Dati raccolti.</strong> Pagine consultate e tempo trascorso, sito di provenienza (solo il nome di dominio) ed eventuale campagna, tipo di dispositivo, lingua, paese e regione, date di soggiorno e numero di ospiti cercati nel modulo di prenotazione, clic (prenotazione, telefono, e-mail, preventivo, offerte e banner, mappa, video, link verso altri siti), argomento delle domande poste alla chat e velocità di caricamento delle pagine. Nessun testo digitato viene registrato. Questi dati sono consultati solo sotto forma di statistiche globali.</p><p><strong>Finalità e base giuridica.</strong> Conoscere la frequentazione del sito, sapere quali canali ci portano visitatori, misurare l'interesse delle nostre informazioni e offerte, anticipare la domanda e rendere il sito più veloce. Questa misurazione si basa sul nostro legittimo interesse; essendo limitata a statistiche, non richiede il suo consenso preventivo.</p><p><strong>Conservazione.</strong> I dati di visita vengono cancellati automaticamente dopo 13 mesi. Solo i totali giornalieri, che non riguardano più alcuna visita in particolare, sono conservati per 25 mesi per confrontare un anno con l'altro.</p><p><strong>Opporsi.</strong> Se il suo browser invia il segnale «Do Not Track» o «Global Privacy Control», le sue visite non vengono conteggiate. Può anche usare il pulsante qui sotto: la sua scelta resta memorizzata in questo browser.</p>",
+        "de": "<p>Um zu verstehen, wie unsere Website genutzt wird, und sie zu verbessern, messen wir ihre Besucherzahlen mit einem Werkzeug, das wir selbst hosten. Es werden keine Daten an Statistik- oder Werbedienste Dritter übermittelt.</p><p><strong>Ohne Cookies und ohne dauerhafte Kennung.</strong> Diese Messung setzt keine Cookies auf Ihrem Gerät. Ihre IP-Adresse wird nicht gespeichert: Beim Besuch dient sie dazu, Herkunftsland und -region zu bestimmen und einen technischen Fingerabdruck zu berechnen, der nur einen Tag gültig ist und es erlaubt, die verschiedenen Besucher des Tages zu zählen. Dieser Fingerabdruck lässt sich nicht von einem Tag zum nächsten verknüpfen: Wir können Sie von einem Besuch zum anderen nicht wiedererkennen.</p><p><strong>Erhobene Daten.</strong> Aufgerufene Seiten und Verweildauer, die Website, von der Sie kommen (nur ihr Domainname), und gegebenenfalls die Kampagne, Gerätetyp, Sprache, Land und Region, im Buchungsmodul gesuchte Reisedaten und Gästezahl, Klicks (Buchung, Telefon, E-Mail, Angebotsanfrage, Angebote und Banner, Karte, Videos, Links zu anderen Websites), Thema der im Chat gestellten Fragen und Ladegeschwindigkeit der Seiten. Kein von Ihnen eingegebener Text wird gespeichert. Diese Daten werden nur als Gesamtstatistiken ausgewertet.</p><p><strong>Zwecke und Rechtsgrundlage.</strong> Die Besucherzahlen der Website kennen, wissen, welche Kanäle uns Besucher bringen, das Interesse an unseren Informationen und Angeboten messen, die Nachfrage vorhersehen und die Website schneller machen. Diese Messung beruht auf unserem berechtigten Interesse; da sie auf Statistiken beschränkt ist, ist Ihre vorherige Einwilligung nicht erforderlich.</p><p><strong>Speicherdauer.</strong> Besuchsdaten werden nach 13 Monaten automatisch gelöscht. Nur Tagessummen, die sich auf keinen bestimmten Besuch mehr beziehen, werden 25 Monate aufbewahrt, um Jahre miteinander zu vergleichen.</p><p><strong>Widerspruch.</strong> Wenn Ihr Browser das Signal „Do Not Track“ oder „Global Privacy Control“ sendet, werden Ihre Besuche nicht gezählt. Sie können auch die Schaltfläche unten verwenden: Ihre Wahl wird in diesem Browser gespeichert.</p>",
+        "pt": "<p>Para perceber como o nosso site é utilizado e melhorá-lo, medimos a sua frequência com uma ferramenta alojada por nós. Nenhum dado é transmitido a serviços de estatística ou de publicidade de terceiros.</p><p><strong>Sem cookies nem identificador duradouro.</strong> Esta medição não instala nenhum cookie no seu dispositivo. O seu endereço IP não é conservado: no momento da visita, serve para deduzir o país e a região de origem e para calcular uma impressão técnica válida por um único dia, que permite contar os visitantes distintos do dia. Esta impressão não pode ser associada de um dia para o outro: não o podemos reconhecer de uma visita para outra.</p><p><strong>Dados recolhidos.</strong> Páginas consultadas e tempo de leitura, site de onde chega (apenas o nome de domínio) e eventual campanha, tipo de dispositivo, idioma, país e região, datas de estadia e número de hóspedes pesquisados no módulo de reserva, cliques (reserva, telefone, e-mail, orçamento, ofertas e faixas, mapa, vídeos, ligações para outros sites), tema das perguntas feitas no chat e velocidade de carregamento das páginas. Nenhum texto que escreva é registado. Estes dados só são consultados sob a forma de estatísticas globais.</p><p><strong>Finalidades e fundamento jurídico.</strong> Conhecer a frequência do site, saber que canais nos trazem visitantes, medir o interesse das nossas informações e ofertas, antecipar a procura e tornar o site mais rápido. Esta medição baseia-se no nosso interesse legítimo; limitada a estatísticas, não exige o seu consentimento prévio.</p><p><strong>Conservação.</strong> Os dados de visita são eliminados automaticamente ao fim de 13 meses. Apenas totais diários, que já não dizem respeito a nenhuma visita em particular, são guardados durante 25 meses para comparar de um ano para o outro.</p><p><strong>Opor-se.</strong> Se o seu navegador enviar o sinal «Do Not Track» ou «Global Privacy Control», as suas visitas não são contadas. Pode também usar o botão abaixo: a sua escolha fica guardada neste navegador.</p>",
+        "sv": "<p>För att förstå hur vår webbplats används och förbättra den mäter vi besöken med ett verktyg som vi själva driftar. Inga uppgifter lämnas till statistik- eller reklamtjänster från tredje part.</p><p><strong>Utan cookies och utan varaktig identifierare.</strong> Mätningen placerar inga cookies på din enhet. Din IP-adress sparas inte: vid besöket används den för att härleda land och region och för att beräkna ett tekniskt fingeravtryck som gäller en enda dag, så att dagens unika besökare kan räknas. Fingeravtrycket kan inte kopplas från en dag till nästa: vi kan inte känna igen dig från ett besök till ett annat.</p><p><strong>Insamlade uppgifter.</strong> Visade sidor och tid på sidan, webbplatsen du kom från (endast domännamnet) och eventuell kampanj, enhetstyp, språk, land och region, datum och antal gäster som sökts i bokningsmodulen, klick (bokning, telefon, e-post, offert, erbjudanden och banderoller, karta, videor, länkar till andra webbplatser), ämnet för frågor i chatten och sidornas laddningshastighet. Ingen text som du skriver sparas. Uppgifterna används bara i form av samlad statistik.</p><p><strong>Ändamål och rättslig grund.</strong> Att känna till antalet besök, veta vilka kanaler som ger oss besökare, mäta intresset för vår information och våra erbjudanden, förutse efterfrågan och göra webbplatsen snabbare. Mätningen grundar sig på vårt berättigade intresse; eftersom den är begränsad till statistik kräver den inte ditt förhandssamtycke.</p><p><strong>Lagring.</strong> Besöksuppgifter raderas automatiskt efter 13 månader. Endast dagliga summor, som inte längre gäller något enskilt besök, sparas i 25 månader för att kunna jämföra år för år.</p><p><strong>Invända.</strong> Om din webbläsare skickar signalen ”Do Not Track” eller ”Global Privacy Control” räknas inte dina besök. Du kan också använda knappen nedan: ditt val sparas i den här webbläsaren.</p>",
+        "no": "<p>For å forstå hvordan nettstedet vårt brukes og forbedre det, måler vi besøkene med et verktøy vi drifter selv. Ingen opplysninger overføres til statistikk- eller reklametjenester fra tredjeparter.</p><p><strong>Uten informasjonskapsler og uten varig identifikator.</strong> Målingen lagrer ingen informasjonskapsler på enheten din. IP-adressen din lagres ikke: ved besøket brukes den til å utlede land og region og til å beregne et teknisk fingeravtrykk som gjelder én dag, slik at dagens unike besøkende kan telles. Fingeravtrykket kan ikke kobles fra én dag til den neste: vi kan ikke gjenkjenne deg fra ett besøk til et annet.</p><p><strong>Opplysninger som samles inn.</strong> Viste sider og tid brukt, nettstedet du kom fra (bare domenenavnet) og eventuell kampanje, enhetstype, språk, land og region, datoer og antall gjester søkt i bestillingsmodulen, klikk (bestilling, telefon, e-post, tilbud, kampanjer og bannere, kart, videoer, lenker til andre nettsteder), temaet for spørsmål i chatten og sidenes lastehastighet. Ingen tekst du skriver, lagres. Opplysningene brukes bare som samlet statistikk.</p><p><strong>Formål og rettslig grunnlag.</strong> Å kjenne besøkstallene, vite hvilke kanaler som gir oss besøkende, måle interessen for informasjonen og tilbudene våre, forutse etterspørselen og gjøre nettstedet raskere. Målingen bygger på vår berettigede interesse; siden den er begrenset til statistikk, krever den ikke ditt forhåndssamtykke.</p><p><strong>Lagring.</strong> Besøksopplysninger slettes automatisk etter 13 måneder. Bare daglige summer, som ikke lenger gjelder noe enkeltbesøk, oppbevares i 25 måneder for å sammenligne fra år til år.</p><p><strong>Reservere deg.</strong> Hvis nettleseren din sender signalet «Do Not Track» eller «Global Privacy Control», telles ikke besøkene dine. Du kan også bruke knappen nedenfor: valget ditt lagres i denne nettleseren.</p>",
+        "el": "<p>Για να κατανοήσουμε πώς χρησιμοποιείται ο ιστότοπός μας και να τον βελτιώσουμε, μετράμε την επισκεψιμότητά του με ένα εργαλείο που φιλοξενούμε εμείς οι ίδιοι. Κανένα δεδομένο δεν διαβιβάζεται σε τρίτες υπηρεσίες στατιστικών ή διαφήμισης.</p><p><strong>Χωρίς cookies και χωρίς μόνιμο αναγνωριστικό.</strong> Η μέτρηση αυτή δεν τοποθετεί κανένα cookie στη συσκευή σας. Η διεύθυνση IP σας δεν αποθηκεύεται: κατά την επίσκεψη χρησιμοποιείται για τον προσδιορισμό της χώρας και της περιφέρειας προέλευσης και για τον υπολογισμό ενός τεχνικού αποτυπώματος που ισχύει μόνο μία ημέρα, ώστε να μετρώνται οι διαφορετικοί επισκέπτες της ημέρας. Το αποτύπωμα αυτό δεν μπορεί να συνδεθεί από τη μία ημέρα στην άλλη: δεν μπορούμε να σας αναγνωρίσουμε από τη μία επίσκεψη στην άλλη.</p><p><strong>Δεδομένα που συλλέγονται.</strong> Σελίδες που προβλήθηκαν και χρόνος παραμονής, ιστότοπος από τον οποίο έρχεστε (μόνο το όνομα τομέα) και τυχόν καμπάνια, τύπος συσκευής, γλώσσα, χώρα και περιφέρεια, ημερομηνίες διαμονής και αριθμός επισκεπτών που αναζητήθηκαν στη φόρμα κράτησης, κλικ (κράτηση, τηλέφωνο, email, προσφορά, προσφορές και πανό, χάρτης, βίντεο, σύνδεσμοι προς άλλους ιστότοπους), θέμα των ερωτήσεων στη συνομιλία και ταχύτητα φόρτωσης των σελίδων. Κανένα κείμενο που πληκτρολογείτε δεν καταγράφεται. Τα δεδομένα αυτά εξετάζονται μόνο ως συνολικά στατιστικά.</p><p><strong>Σκοποί και νομική βάση.</strong> Να γνωρίζουμε την επισκεψιμότητα του ιστότοπου, ποια κανάλια μάς φέρνουν επισκέπτες, να μετράμε το ενδιαφέρον για τις πληροφορίες και τις προσφορές μας, να προβλέπουμε τη ζήτηση και να κάνουμε τον ιστότοπο ταχύτερο. Η μέτρηση βασίζεται στο έννομο συμφέρον μας· καθώς περιορίζεται σε στατιστικά, δεν απαιτεί την προηγούμενη συγκατάθεσή σας.</p><p><strong>Διατήρηση.</strong> Τα δεδομένα επισκέψεων διαγράφονται αυτόματα μετά από 13 μήνες. Μόνο ημερήσια σύνολα, που δεν αφορούν πλέον καμία συγκεκριμένη επίσκεψη, διατηρούνται για 25 μήνες για σύγκριση από έτος σε έτος.</p><p><strong>Αντίρρηση.</strong> Αν το πρόγραμμα περιήγησής σας στέλνει το σήμα «Do Not Track» ή «Global Privacy Control», οι επισκέψεις σας δεν μετρώνται. Μπορείτε επίσης να χρησιμοποιήσετε το παρακάτω κουμπί: η επιλογή σας αποθηκεύεται σε αυτό το πρόγραμμα περιήγησης.</p>",
+        "ru": "<p>Чтобы понимать, как используется наш сайт, и улучшать его, мы считаем посещения с помощью инструмента, размещённого на наших собственных серверах. Никакие данные не передаются сторонним службам статистики или рекламы.</p><p><strong>Без cookie и без постоянного идентификатора.</strong> Этот подсчёт не сохраняет cookie на вашем устройстве. Ваш IP-адрес не хранится: во время посещения он используется, чтобы определить страну и регион, и чтобы вычислить технический отпечаток, действующий только один день, который позволяет подсчитать уникальных посетителей за день. Этот отпечаток нельзя связать между разными днями: мы не можем узнать вас при следующем посещении.</p><p><strong>Собираемые данные.</strong> Просмотренные страницы и время на них, сайт, с которого вы пришли (только доменное имя), и рекламная кампания, если есть, тип устройства, язык, страна и регион, даты пребывания и число гостей, указанные в форме бронирования, клики (бронирование, телефон, e-mail, запрос предложения, предложения и баннеры, карта, видео, ссылки на другие сайты), тема вопросов в чате и скорость загрузки страниц. Вводимый вами текст не сохраняется. Эти данные просматриваются только в виде общей статистики.</p><p><strong>Цели и правовое основание.</strong> Знать посещаемость сайта и каналы, которые приводят посетителей, оценивать интерес к нашей информации и предложениям, прогнозировать спрос и ускорять работу сайта. Подсчёт основан на нашем законном интересе; поскольку он ограничен статистикой, ваше предварительное согласие не требуется.</p><p><strong>Хранение.</strong> Данные о посещениях автоматически удаляются через 13 месяцев. Только суточные итоги, которые уже не относятся ни к одному конкретному посещению, хранятся 25 месяцев для сравнения по годам.</p><p><strong>Отказ.</strong> Если ваш браузер отправляет сигнал «Do Not Track» или «Global Privacy Control», ваши посещения не учитываются. Вы также можете воспользоваться кнопкой ниже: ваш выбор сохранится в этом браузере.</p>",
+        "ja": "<p>当サイトの利用状況を把握して改善するため、当ホテルが自ら運用するツールでアクセス数を計測しています。第三者の解析サービスや広告サービスにデータが送られることはありません。</p><p><strong>Cookieも永続的な識別子も使いません。</strong>この計測でお客様の端末にCookieを保存することはありません。IPアドレスは保存されません。閲覧時に国と地域を推定し、1日だけ有効な技術的フィンガープリントを算出するためにのみ使われ、これによりその日の個別訪問者数を数えます。このフィンガープリントは日をまたいで結び付けることができないため、訪問ごとにお客様を識別することはできません。</p><p><strong>収集するデータ。</strong>閲覧ページと滞在時間、参照元サイト（ドメイン名のみ）とキャンペーン（ある場合）、端末の種類、言語、国と地域、予約フォームで検索された日程と人数、クリック（予約、電話、メール、お見積もり、プランやバナー、地図、動画、他サイトへのリンク）、チャットでのご質問のテーマ、ページの表示速度。お客様が入力した文章は記録しません。これらのデータは全体の統計としてのみ閲覧します。</p><p><strong>目的と法的根拠。</strong>サイトの訪問状況や訪問者を呼び込むチャネルの把握、情報やプランへの関心の測定、需要の予測、サイトの高速化。この計測は当ホテルの正当な利益に基づき、統計に限定されているため、事前の同意は必要ありません。</p><p><strong>保存期間。</strong>訪問データは13か月後に自動的に削除されます。特定の訪問とは結び付かない日ごとの合計のみ、前年との比較のために25か月保存します。</p><p><strong>拒否する方法。</strong>ブラウザが「Do Not Track」または「Global Privacy Control」の信号を送信している場合、訪問は計測されません。下のボタンでも拒否できます。この選択はこのブラウザに保存されます。</p>",
+        "zh": "<p>为了解网站的使用情况并加以改进，我们使用自行托管的工具统计访问量。任何数据都不会传送给第三方统计或广告服务。</p><p><strong>不使用Cookie，也没有长期标识符。</strong>此项统计不会在您的设备上存放任何Cookie。您的IP地址不会被保存：访问时，它仅用于推断您所在的国家和地区，并计算一个只在当天有效的技术指纹，以统计当天的独立访客数。该指纹无法跨日关联，因此我们无法在不同访问之间识别您。</p><p><strong>收集的数据。</strong>浏览的页面和停留时间、来源网站（仅域名）及相关推广活动、设备类型、语言、国家和地区、在预订模块中搜索的入住日期和人数、点击（预订、电话、电子邮件、报价、优惠和横幅、地图、视频、指向其他网站的链接）、在线咨询问题的主题以及页面加载速度。您输入的任何文字都不会被记录。这些数据仅以整体统计的形式查看。</p><p><strong>目的与法律依据。</strong>了解网站访问量、哪些渠道带来访客、衡量信息和优惠的关注度、预测需求并提升网站速度。此项统计基于我们的正当利益；由于仅限于统计用途，无需事先征得您的同意。</p><p><strong>保存期限。</strong>访问数据在13个月后自动删除。只有与任何具体访问都无关的每日汇总数据会保存25个月，用于逐年比较。</p><p><strong>拒绝统计。</strong>如果您的浏览器发送“请勿追踪”（Do Not Track）或“全球隐私控制”（Global Privacy Control）信号，您的访问将不被统计。您也可以使用下方按钮：您的选择会保存在此浏览器中。</p>",
+        "ko": "<p>웹사이트 이용 현황을 파악하고 개선하기 위해, 저희가 직접 운영하는 도구로 방문자 수를 측정합니다. 어떤 정보도 제3자 통계 또는 광고 서비스로 전송되지 않습니다.</p><p><strong>쿠키도, 지속적인 식별자도 사용하지 않습니다.</strong> 이 측정은 고객님의 기기에 쿠키를 저장하지 않습니다. IP 주소는 보관되지 않으며, 방문 시 국가와 지역을 추정하고 하루 동안만 유효한 기술적 지문을 계산하는 데에만 사용되어 그날의 순 방문자 수를 셉니다. 이 지문은 날짜를 넘어 연결할 수 없으므로, 저희는 방문할 때마다 고객님을 식별할 수 없습니다.</p><p><strong>수집하는 정보.</strong> 조회한 페이지와 체류 시간, 유입 사이트(도메인 이름만)와 캠페인(있는 경우), 기기 유형, 언어, 국가 및 지역, 예약 모듈에서 검색한 숙박 날짜와 인원, 클릭(예약, 전화, 이메일, 견적, 상품 및 배너, 지도, 동영상, 다른 사이트 링크), 채팅 질문의 주제, 페이지 로딩 속도. 입력하신 텍스트는 기록하지 않습니다. 이 정보는 전체 통계 형태로만 확인합니다.</p><p><strong>목적 및 법적 근거.</strong> 웹사이트 방문 현황과 방문자를 유입시키는 채널 파악, 정보와 상품에 대한 관심도 측정, 수요 예측, 웹사이트 속도 개선. 이 측정은 저희의 정당한 이익에 근거하며, 통계에 한정되므로 사전 동의가 필요하지 않습니다.</p><p><strong>보관.</strong> 방문 데이터는 13개월 후 자동으로 삭제됩니다. 특정 방문과 더 이상 관련이 없는 일별 합계만 연도별 비교를 위해 25개월간 보관합니다.</p><p><strong>거부 방법.</strong> 브라우저가 \"Do Not Track\" 또는 \"Global Privacy Control\" 신호를 보내면 방문이 집계되지 않습니다. 아래 버튼을 사용하실 수도 있으며, 선택은 이 브라우저에 저장됩니다.</p>"
+      }
+    },
+    "confidentialite.audience-etat-refus": {
+      "section": "Mesure d’audience",
+      "label": "Message affiché quand les visites ne sont pas comptées",
+      "type": "text",
+      "translatable": 1,
+      "required": 1,
+      "values": {
+        "fr": "Vos visites ne sont pas comptées sur cet appareil.",
+        "en": "Your visits are not counted on this device.",
+        "es": "Sus visitas no se cuentan en este dispositivo.",
+        "it": "Le sue visite non vengono conteggiate su questo dispositivo.",
+        "de": "Ihre Besuche werden auf diesem Gerät nicht gezählt.",
+        "pt": "As suas visitas não são contadas neste dispositivo.",
+        "sv": "Dina besök räknas inte på den här enheten.",
+        "no": "Besøkene dine telles ikke på denne enheten.",
+        "el": "Οι επισκέψεις σας δεν μετρώνται σε αυτή τη συσκευή.",
+        "ru": "Ваши посещения не учитываются на этом устройстве.",
+        "ja": "この端末からの訪問は計測されていません。",
+        "zh": "此设备上的访问未被统计。",
+        "ko": "이 기기에서의 방문은 집계되지 않습니다."
+      }
+    },
+    "confidentialite.audience-bouton-refus": {
+      "section": "Mesure d’audience",
+      "label": "Bouton : refuser la mesure d’audience",
+      "type": "text",
+      "translatable": 1,
+      "required": 1,
+      "values": {
+        "fr": "Ne plus compter mes visites",
+        "en": "Stop counting my visits",
+        "es": "Dejar de contar mis visitas",
+        "it": "Non conteggiare più le mie visite",
+        "de": "Meine Besuche nicht mehr zählen",
+        "pt": "Deixar de contar as minhas visitas",
+        "sv": "Sluta räkna mina besök",
+        "no": "Slutt å telle besøkene mine",
+        "el": "Να μη μετρώνται οι επισκέψεις μου",
+        "ru": "Не учитывать мои посещения",
+        "ja": "訪問を計測しない",
+        "zh": "不再统计我的访问",
+        "ko": "내 방문 집계 중단"
+      }
+    },
+    "confidentialite.audience-bouton-accord": {
+      "section": "Mesure d’audience",
+      "label": "Bouton : accepter de nouveau la mesure d’audience",
+      "type": "text",
+      "translatable": 1,
+      "required": 1,
+      "values": {
+        "fr": "Compter de nouveau mes visites",
+        "en": "Count my visits again",
+        "es": "Volver a contar mis visitas",
+        "it": "Conteggiare di nuovo le mie visite",
+        "de": "Meine Besuche wieder zählen",
+        "pt": "Voltar a contar as minhas visitas",
+        "sv": "Räkna mina besök igen",
+        "no": "Tell besøkene mine igjen",
+        "el": "Να μετρώνται ξανά οι επισκέψεις μου",
+        "ru": "Снова учитывать мои посещения",
+        "ja": "訪問の計測を再開する",
+        "zh": "重新统计我的访问",
+        "ko": "내 방문 다시 집계"
+      }
+    },
+    "confidentialite.stockage-titre": {
+      "section": "Cookies et stockage",
+      "label": "Titre de la rubrique",
+      "type": "text",
+      "translatable": 1,
+      "required": 1,
+      "values": {
+        "fr": "Cookies et stockage dans votre navigateur",
+        "en": "Cookies and storage in your browser",
+        "es": "Cookies y almacenamiento en su navegador",
+        "it": "Cookie e memorizzazione nel browser",
+        "de": "Cookies und Speicherung in Ihrem Browser",
+        "pt": "Cookies e armazenamento no seu navegador",
+        "sv": "Cookies och lagring i din webbläsare",
+        "no": "Informasjonskapsler og lagring i nettleseren",
+        "el": "Cookies και αποθήκευση στο πρόγραμμα περιήγησης",
+        "ru": "Cookie и хранение данных в браузере",
+        "ja": "Cookieとブラウザへの保存",
+        "zh": "Cookie与浏览器存储",
+        "ko": "쿠키 및 브라우저 저장소"
+      }
+    },
+    "confidentialite.stockage": {
+      "section": "Cookies et stockage",
+      "label": "Texte de la rubrique",
+      "type": "richtext",
+      "translatable": 1,
+      "required": 1,
+      "values": {
+        "fr": "<p>Notre site ne dépose aucun cookie. Pour fonctionner, il garde dans votre navigateur quelques informations techniques, sans rapport avec votre identité :</p><ul><li>les dates et le nombre de voyageurs saisis dans le module de réservation, le temps de votre visite ;</li><li>le fait que vous avez fermé un bandeau d'information ou déjà vu une fenêtre de promotion, pour ne pas vous les montrer de nouveau ;</li><li>le dernier bandeau ou la dernière offre cliqués pendant votre visite, pour la mesure d'audience ;</li><li>votre refus de la mesure d'audience, si vous l'avez exprimé ;</li><li>une copie des pages, des images et des vidéos déjà vues, pour un affichage plus rapide et hors connexion.</li></ul><p>Vous pouvez effacer ces informations à tout moment depuis les réglages de votre navigateur (données des sites).</p>",
+        "en": "<p>Our website places no cookies. To work, it keeps a few technical details in your browser, unrelated to your identity:</p><ul><li>the dates and number of guests entered in the booking module, for the duration of your visit;</li><li>the fact that you have closed an information banner or already seen a promotional window, so as not to show them to you again;</li><li>the last banner or offer clicked during your visit, for audience measurement;</li><li>your refusal of audience measurement, if you have expressed it;</li><li>a copy of the pages, images and videos already viewed, for faster and offline display.</li></ul><p>You can erase this information at any time from your browser settings (site data).</p>",
+        "es": "<p>Nuestro sitio no instala ninguna cookie. Para funcionar, guarda en su navegador algunos datos técnicos, sin relación con su identidad:</p><ul><li>las fechas y el número de viajeros introducidos en el módulo de reserva, durante su visita;</li><li>el hecho de que ha cerrado un banner informativo o ya ha visto una ventana promocional, para no volver a mostrárselos;</li><li>el último banner u oferta en que ha hecho clic durante su visita, para la medición de audiencia;</li><li>su rechazo a la medición de audiencia, si lo ha expresado;</li><li>una copia de las páginas, imágenes y vídeos ya vistos, para una visualización más rápida y sin conexión.</li></ul><p>Puede borrar estos datos en cualquier momento desde la configuración de su navegador (datos de sitios).</p>",
+        "it": "<p>Il nostro sito non deposita alcun cookie. Per funzionare, conserva nel suo browser alcune informazioni tecniche, senza legame con la sua identità:</p><ul><li>le date e il numero di ospiti inseriti nel modulo di prenotazione, per la durata della visita;</li><li>il fatto che ha chiuso un banner informativo o ha già visto una finestra promozionale, per non mostrarli di nuovo;</li><li>l'ultimo banner o l'ultima offerta cliccati durante la visita, per la misurazione del pubblico;</li><li>il suo rifiuto della misurazione del pubblico, se lo ha espresso;</li><li>una copia delle pagine, delle immagini e dei video già visti, per una visualizzazione più rapida e offline.</li></ul><p>Può cancellare queste informazioni in qualsiasi momento dalle impostazioni del browser (dati dei siti).</p>",
+        "de": "<p>Unsere Website setzt keine Cookies. Damit sie funktioniert, speichert sie einige technische Angaben in Ihrem Browser, die nichts mit Ihrer Identität zu tun haben:</p><ul><li>die im Buchungsmodul eingegebenen Daten und die Gästezahl, für die Dauer Ihres Besuchs;</li><li>dass Sie ein Informationsbanner geschlossen oder ein Werbefenster bereits gesehen haben, damit sie Ihnen nicht erneut angezeigt werden;</li><li>das letzte während Ihres Besuchs angeklickte Banner oder Angebot, für die Reichweitenmessung;</li><li>Ihren Widerspruch gegen die Reichweitenmessung, falls Sie ihn erklärt haben;</li><li>eine Kopie der bereits angesehenen Seiten, Bilder und Videos, für eine schnellere Anzeige und die Nutzung ohne Verbindung.</li></ul><p>Sie können diese Angaben jederzeit in den Einstellungen Ihres Browsers löschen (Websitedaten).</p>",
+        "pt": "<p>O nosso site não instala nenhum cookie. Para funcionar, guarda no seu navegador algumas informações técnicas, sem relação com a sua identidade:</p><ul><li>as datas e o número de hóspedes introduzidos no módulo de reserva, durante a sua visita;</li><li>o facto de ter fechado uma faixa informativa ou já ter visto uma janela promocional, para não lhas voltar a mostrar;</li><li>a última faixa ou oferta clicada durante a sua visita, para a medição de audiência;</li><li>a sua recusa da medição de audiência, se a tiver manifestado;</li><li>uma cópia das páginas, imagens e vídeos já vistos, para uma apresentação mais rápida e sem ligação.</li></ul><p>Pode apagar estas informações a qualquer momento nas definições do seu navegador (dados dos sites).</p>",
+        "sv": "<p>Vår webbplats placerar inga cookies. För att fungera sparar den några tekniska uppgifter i din webbläsare, utan koppling till din identitet:</p><ul><li>datum och antal gäster som angetts i bokningsmodulen, under ditt besök;</li><li>att du har stängt en informationsbanderoll eller redan sett ett kampanjfönster, så att de inte visas igen;</li><li>den senaste banderollen eller det senaste erbjudandet du klickat på under besöket, för besöksmätningen;</li><li>din invändning mot besöksmätningen, om du har gjort en sådan;</li><li>en kopia av sidor, bilder och videor som redan visats, för snabbare visning och visning utan uppkoppling.</li></ul><p>Du kan när som helst radera uppgifterna i webbläsarens inställningar (webbplatsdata).</p>",
+        "no": "<p>Nettstedet vårt bruker ingen informasjonskapsler. For å fungere lagrer det noen tekniske opplysninger i nettleseren din, uten tilknytning til identiteten din:</p><ul><li>datoene og antall gjester som er lagt inn i bestillingsmodulen, så lenge besøket varer;</li><li>at du har lukket et informasjonsbanner eller allerede har sett et kampanjevindu, slik at de ikke vises igjen;</li><li>det siste banneret eller tilbudet du klikket på under besøket, for besøksmålingen;</li><li>at du har reservert deg mot besøksmålingen, hvis du har gjort det;</li><li>en kopi av sider, bilder og videoer du allerede har sett, for raskere visning og visning uten nett.</li></ul><p>Du kan når som helst slette disse opplysningene i nettleserens innstillinger (nettstedsdata).</p>",
+        "el": "<p>Ο ιστότοπός μας δεν τοποθετεί κανένα cookie. Για να λειτουργεί, διατηρεί στο πρόγραμμα περιήγησής σας ορισμένες τεχνικές πληροφορίες, που δεν σχετίζονται με την ταυτότητά σας:</p><ul><li>τις ημερομηνίες και τον αριθμό επισκεπτών που εισαγάγατε στη φόρμα κράτησης, για όσο διαρκεί η επίσκεψή σας·</li><li>το ότι κλείσατε ένα ενημερωτικό πανό ή είδατε ήδη ένα παράθυρο προώθησης, ώστε να μην εμφανιστούν ξανά·</li><li>το τελευταίο πανό ή την τελευταία προσφορά που πατήσατε κατά την επίσκεψή σας, για τη μέτρηση επισκεψιμότητας·</li><li>την άρνησή σας στη μέτρηση επισκεψιμότητας, αν την έχετε δηλώσει·</li><li>ένα αντίγραφο των σελίδων, των εικόνων και των βίντεο που έχετε ήδη δει, για ταχύτερη προβολή και χωρίς σύνδεση.</li></ul><p>Μπορείτε να διαγράψετε αυτές τις πληροφορίες ανά πάσα στιγμή από τις ρυθμίσεις του προγράμματος περιήγησης (δεδομένα ιστότοπων).</p>",
+        "ru": "<p>Наш сайт не использует cookie. Для работы он сохраняет в вашем браузере несколько технических сведений, не связанных с вашей личностью:</p><ul><li>даты и число гостей, введённые в форме бронирования, на время посещения;</li><li>то, что вы закрыли информационный баннер или уже видели рекламное окно, чтобы не показывать их снова;</li><li>последний баннер или предложение, на которые вы нажали во время посещения, для подсчёта посещений;</li><li>ваш отказ от подсчёта посещений, если вы его выразили;</li><li>копию уже просмотренных страниц, изображений и видео для более быстрой загрузки и работы без сети.</li></ul><p>Вы можете в любой момент удалить эти сведения в настройках браузера (данные сайтов).</p>",
+        "ja": "<p>当サイトはCookieを使用しません。動作のために、お客様の身元とは関係のない技術的な情報をいくつかブラウザに保存します。</p><ul><li>予約フォームに入力された日程と人数（閲覧中のみ）</li><li>お知らせバナーを閉じたこと、またはプロモーション画面をすでに見たこと（再表示しないため）</li><li>閲覧中に最後にクリックしたバナーやプラン（アクセス解析のため）</li><li>アクセス解析を拒否された場合、その選択</li><li>表示を速くし、オフラインでも見られるようにするための、閲覧済みのページ、画像、動画のコピー</li></ul><p>これらの情報は、ブラウザの設定（サイトデータ）からいつでも削除できます。</p>",
+        "zh": "<p>我们的网站不使用任何Cookie。为正常运行，网站会在您的浏览器中保存少量与您身份无关的技术信息：</p><ul><li>您在预订模块中填写的日期和人数，仅在访问期间保存；</li><li>您已关闭某条信息横幅或已看过某个促销窗口，以免再次显示；</li><li>您在访问期间最后点击的横幅或优惠，用于访问统计；</li><li>您拒绝访问统计的选择（如您已作出）；</li><li>已浏览页面、图片和视频的副本，以便更快显示并支持离线浏览。</li></ul><p>您可以随时在浏览器设置（网站数据）中清除这些信息。</p>",
+        "ko": "<p>저희 웹사이트는 쿠키를 사용하지 않습니다. 작동을 위해 고객님의 신원과 무관한 몇 가지 기술 정보를 브라우저에 저장합니다.</p><ul><li>예약 모듈에 입력한 날짜와 인원(방문하는 동안)</li><li>안내 배너를 닫았거나 프로모션 창을 이미 본 사실(다시 표시하지 않기 위해)</li><li>방문 중 마지막으로 클릭한 배너 또는 상품(방문 통계용)</li><li>방문 통계를 거부하신 경우 그 선택</li><li>더 빠른 표시와 오프라인 열람을 위한, 이미 본 페이지·이미지·동영상의 사본</li></ul><p>이 정보는 브라우저 설정(사이트 데이터)에서 언제든지 삭제할 수 있습니다.</p>"
+      }
+    },
+    "confidentialite.tiers-titre": {
+      "section": "Services d’autres sociétés",
+      "label": "Titre de la rubrique",
+      "type": "text",
+      "translatable": 1,
+      "required": 1,
+      "values": {
+        "fr": "Services d'autres sociétés",
+        "en": "Services from other companies",
+        "es": "Servicios de otras empresas",
+        "it": "Servizi di altre società",
+        "de": "Dienste anderer Unternehmen",
+        "pt": "Serviços de outras empresas",
+        "sv": "Tjänster från andra företag",
+        "no": "Tjenester fra andre selskaper",
+        "el": "Υπηρεσίες άλλων εταιρειών",
+        "ru": "Сервисы других компаний",
+        "ja": "他社のサービス",
+        "zh": "其他公司的服务",
+        "ko": "다른 회사의 서비스"
+      }
+    },
+    "confidentialite.tiers": {
+      "section": "Services d’autres sociétés",
+      "label": "Texte de la rubrique",
+      "type": "richtext",
+      "translatable": 1,
+      "required": 1,
+      "values": {
+        "fr": "<ul><li><strong>Carte Google Maps :</strong> la carte interactive ne se charge que si vous cliquez pour l'afficher. Google peut alors déposer des cookies et recueillir des données selon ses propres règles.</li><li><strong>Liens vers d'autres sites</strong> (moteur de réservation, Instagram, partenaires) : ces sites ont leur propre politique de confidentialité, que nous vous invitons à consulter.</li></ul><p>Politique de confidentialité de Google : <a href=\"https://policies.google.com/privacy\" rel=\"noopener\">policies.google.com/privacy</a>.</p>",
+        "en": "<ul><li><strong>Google Maps:</strong> the interactive map only loads if you click to display it. Google may then place cookies and collect data under its own rules.</li><li><strong>Links to other sites</strong> (booking engine, Instagram, partners): these sites have their own privacy policies, which we invite you to read.</li></ul><p>Google’s privacy policy: <a href=\"https://policies.google.com/privacy\" rel=\"noopener\">policies.google.com/privacy</a>.</p>",
+        "es": "<ul><li><strong>Mapa de Google Maps:</strong> el mapa interactivo solo se carga si hace clic para mostrarlo. Google puede entonces instalar cookies y recoger datos según sus propias normas.</li><li><strong>Enlaces a otros sitios</strong> (motor de reservas, Instagram, socios): estos sitios tienen su propia política de privacidad, que le invitamos a consultar.</li></ul><p>Política de privacidad de Google: <a href=\"https://policies.google.com/privacy\" rel=\"noopener\">policies.google.com/privacy</a>.</p>",
+        "it": "<ul><li><strong>Mappa Google Maps:</strong> la mappa interattiva si carica solo se fa clic per visualizzarla. Google può allora depositare cookie e raccogliere dati secondo le proprie regole.</li><li><strong>Link verso altri siti</strong> (motore di prenotazione, Instagram, partner): questi siti hanno una propria informativa sulla privacy, che la invitiamo a consultare.</li></ul><p>Informativa sulla privacy di Google: <a href=\"https://policies.google.com/privacy\" rel=\"noopener\">policies.google.com/privacy</a>.</p>",
+        "de": "<ul><li><strong>Google-Maps-Karte:</strong> Die interaktive Karte wird nur geladen, wenn Sie sie per Klick anzeigen. Google kann dann Cookies setzen und Daten nach eigenen Regeln erheben.</li><li><strong>Links zu anderen Websites</strong> (Buchungsmaschine, Instagram, Partner): Diese Websites haben eigene Datenschutzerklärungen, die Sie bitte lesen.</li></ul><p>Datenschutzerklärung von Google: <a href=\"https://policies.google.com/privacy\" rel=\"noopener\">policies.google.com/privacy</a>.</p>",
+        "pt": "<ul><li><strong>Mapa Google Maps:</strong> o mapa interativo só é carregado se clicar para o mostrar. A Google pode então instalar cookies e recolher dados segundo as suas próprias regras.</li><li><strong>Ligações para outros sites</strong> (motor de reservas, Instagram, parceiros): estes sites têm a sua própria política de privacidade, que o convidamos a consultar.</li></ul><p>Política de privacidade da Google: <a href=\"https://policies.google.com/privacy\" rel=\"noopener\">policies.google.com/privacy</a>.</p>",
+        "sv": "<ul><li><strong>Google Maps-karta:</strong> den interaktiva kartan laddas bara om du klickar för att visa den. Google kan då placera cookies och samla in uppgifter enligt sina egna regler.</li><li><strong>Länkar till andra webbplatser</strong> (bokningsmotor, Instagram, partner): dessa webbplatser har egna integritetspolicyer, som vi uppmanar dig att läsa.</li></ul><p>Googles integritetspolicy: <a href=\"https://policies.google.com/privacy\" rel=\"noopener\">policies.google.com/privacy</a>.</p>",
+        "no": "<ul><li><strong>Google Maps-kart:</strong> det interaktive kartet lastes bare hvis du klikker for å vise det. Google kan da lagre informasjonskapsler og samle inn opplysninger etter egne regler.</li><li><strong>Lenker til andre nettsteder</strong> (bookingmotor, Instagram, partnere): disse nettstedene har egne personvernerklæringer, som vi oppfordrer deg til å lese.</li></ul><p>Googles personvernerklæring: <a href=\"https://policies.google.com/privacy\" rel=\"noopener\">policies.google.com/privacy</a>.</p>",
+        "el": "<ul><li><strong>Χάρτης Google Maps:</strong> ο διαδραστικός χάρτης φορτώνεται μόνο αν πατήσετε για να εμφανιστεί. Η Google μπορεί τότε να τοποθετήσει cookies και να συλλέξει δεδομένα σύμφωνα με τους δικούς της κανόνες.</li><li><strong>Σύνδεσμοι προς άλλους ιστότοπους</strong> (μηχανή κρατήσεων, Instagram, συνεργάτες): οι ιστότοποι αυτοί έχουν τη δική τους πολιτική απορρήτου, την οποία σας προσκαλούμε να διαβάσετε.</li></ul><p>Πολιτική απορρήτου της Google: <a href=\"https://policies.google.com/privacy\" rel=\"noopener\">policies.google.com/privacy</a>.</p>",
+        "ru": "<ul><li><strong>Карта Google Maps:</strong> интерактивная карта загружается, только если вы нажмёте, чтобы её открыть. Тогда Google может сохранять cookie и собирать данные по своим правилам.</li><li><strong>Ссылки на другие сайты</strong> (система бронирования, Instagram, партнёры): у этих сайтов своя политика конфиденциальности, с которой рекомендуем ознакомиться.</li></ul><p>Политика конфиденциальности Google: <a href=\"https://policies.google.com/privacy\" rel=\"noopener\">policies.google.com/privacy</a>.</p>",
+        "ja": "<ul><li><strong>Googleマップ：</strong>インタラクティブ地図は、クリックして表示したときにのみ読み込まれます。その際、GoogleがCookieを保存し、独自の規約に従ってデータを収集することがあります。</li><li><strong>他サイトへのリンク</strong>（予約エンジン、Instagram、提携先）：これらのサイトには独自のプライバシーポリシーがありますので、ご確認ください。</li></ul><p>Googleのプライバシーポリシー：<a href=\"https://policies.google.com/privacy\" rel=\"noopener\">policies.google.com/privacy</a></p>",
+        "zh": "<ul><li><strong>Google地图：</strong>互动地图只有在您点击显示时才会加载。届时Google可能会存放Cookie并按照其自身规则收集数据。</li><li><strong>指向其他网站的链接</strong>（预订引擎、Instagram、合作伙伴）：这些网站有各自的隐私政策，建议您查阅。</li></ul><p>Google隐私政策：<a href=\"https://policies.google.com/privacy\" rel=\"noopener\">policies.google.com/privacy</a>。</p>",
+        "ko": "<ul><li><strong>Google 지도:</strong> 인터랙티브 지도는 클릭하여 표시할 때에만 불러옵니다. 이때 Google이 자체 규정에 따라 쿠키를 저장하고 정보를 수집할 수 있습니다.</li><li><strong>다른 사이트로의 링크</strong>(예약 엔진, Instagram, 제휴사): 이 사이트들에는 각자의 개인정보 처리방침이 있으니 확인해 주십시오.</li></ul><p>Google 개인정보처리방침: <a href=\"https://policies.google.com/privacy\" rel=\"noopener\">policies.google.com/privacy</a></p>"
+      }
+    },
+    "confidentialite.destinataires-titre": {
+      "section": "Destinataires",
+      "label": "Titre de la rubrique",
+      "type": "text",
+      "translatable": 1,
+      "required": 1,
+      "values": {
+        "fr": "Destinataires des données",
+        "en": "Recipients of the data",
+        "es": "Destinatarios de los datos",
+        "it": "Destinatari dei dati",
+        "de": "Empfänger der Daten",
+        "pt": "Destinatários dos dados",
+        "sv": "Mottagare av uppgifterna",
+        "no": "Mottakere av opplysningene",
+        "el": "Αποδέκτες των δεδομένων",
+        "ru": "Получатели данных",
+        "ja": "データの受領者",
+        "zh": "数据接收方",
+        "ko": "정보의 수령인"
+      }
+    },
+    "confidentialite.destinataires": {
+      "section": "Destinataires",
+      "label": "Texte de la rubrique",
+      "type": "richtext",
+      "translatable": 1,
+      "required": 1,
+      "values": {
+        "fr": "<p>Vos données ne sont ni vendues ni cédées. Seules y ont accès les personnes de l'hôtel qui en ont besoin pour traiter votre demande ou votre séjour, et nos prestataires techniques (hébergement du site, messagerie électronique, moteur de réservation), dans la limite de leur mission.</p>",
+        "en": "<p>Your data is neither sold nor transferred. Only hotel staff who need it to handle your request or your stay have access to it, together with our technical providers (website hosting, e-mail, booking engine), within the limits of their assignment.</p>",
+        "es": "<p>Sus datos no se venden ni se ceden. Solo tienen acceso a ellos las personas del hotel que los necesitan para tramitar su solicitud o su estancia, y nuestros proveedores técnicos (alojamiento del sitio, correo electrónico, motor de reservas), dentro de los límites de su cometido.</p>",
+        "it": "<p>I suoi dati non sono né venduti né ceduti. Vi hanno accesso solo le persone dell'hotel che ne hanno bisogno per gestire la sua richiesta o il suo soggiorno e i nostri fornitori tecnici (hosting del sito, posta elettronica, motore di prenotazione), nei limiti del loro incarico.</p>",
+        "de": "<p>Ihre Daten werden weder verkauft noch weitergegeben. Zugriff haben nur die Mitarbeiter des Hotels, die sie zur Bearbeitung Ihrer Anfrage oder Ihres Aufenthalts benötigen, sowie unsere technischen Dienstleister (Hosting der Website, E-Mail, Buchungsmaschine) im Rahmen ihres Auftrags.</p>",
+        "pt": "<p>Os seus dados não são vendidos nem cedidos. Só têm acesso a eles as pessoas do hotel que deles precisam para tratar o seu pedido ou a sua estadia e os nossos prestadores técnicos (alojamento do site, correio eletrónico, motor de reservas), nos limites da sua missão.</p>",
+        "sv": "<p>Dina uppgifter varken säljs eller överlåts. Endast de personer på hotellet som behöver dem för att hantera din förfrågan eller vistelse har tillgång till dem, liksom våra tekniska leverantörer (webbhotell, e-post, bokningsmotor), inom ramen för sitt uppdrag.</p>",
+        "no": "<p>Opplysningene dine verken selges eller overdras. Bare de ansatte på hotellet som trenger dem for å behandle henvendelsen eller oppholdet ditt, har tilgang til dem, sammen med våre tekniske leverandører (nettstedsdrift, e-post, bookingmotor), innenfor rammene av oppdraget deres.</p>",
+        "el": "<p>Τα δεδομένα σας ούτε πωλούνται ούτε μεταβιβάζονται. Πρόσβαση σε αυτά έχουν μόνο τα άτομα του ξενοδοχείου που τα χρειάζονται για τη διεκπεραίωση του αιτήματος ή της διαμονής σας, καθώς και οι τεχνικοί μας πάροχοι (φιλοξενία του ιστότοπου, ηλεκτρονικό ταχυδρομείο, μηχανή κρατήσεων), εντός των ορίων της αποστολής τους.</p>",
+        "ru": "<p>Ваши данные не продаются и не передаются. Доступ к ним имеют только сотрудники отеля, которым они нужны для обработки вашего запроса или пребывания, а также наши технические подрядчики (хостинг сайта, электронная почта, система бронирования) в пределах их задач.</p>",
+        "ja": "<p>お客様のデータを販売・譲渡することはありません。データにアクセスできるのは、お問い合わせやご滞在の対応に必要なホテルのスタッフと、当ホテルの技術的な委託先（サイトのホスティング、メール、予約エンジン）のみで、それぞれの業務の範囲に限られます。</p>",
+        "zh": "<p>您的数据不会被出售或转让。只有为处理您的请求或住宿而需要这些数据的酒店人员，以及我们的技术服务商（网站托管、电子邮件、预订引擎）在其职责范围内可以访问。</p>",
+        "ko": "<p>고객님의 정보는 판매되거나 양도되지 않습니다. 요청이나 숙박을 처리하는 데 필요한 호텔 직원과, 저희 기술 서비스 제공업체(웹사이트 호스팅, 이메일, 예약 엔진)만이 각자의 업무 범위 내에서 정보에 접근할 수 있습니다.</p>"
+      }
+    },
+    "confidentialite.transferts-titre": {
+      "section": "Transferts hors UE",
+      "label": "Titre de la rubrique",
+      "type": "text",
+      "translatable": 1,
+      "required": 1,
+      "values": {
+        "fr": "Transferts hors de l'Union européenne",
+        "en": "Transfers outside the European Union",
+        "es": "Transferencias fuera de la Unión Europea",
+        "it": "Trasferimenti al di fuori dell'Unione europea",
+        "de": "Übermittlungen außerhalb der Europäischen Union",
+        "pt": "Transferências para fora da União Europeia",
+        "sv": "Överföringar utanför Europeiska unionen",
+        "no": "Overføringer utenfor EU/EØS",
+        "el": "Διαβιβάσεις εκτός Ευρωπαϊκής Ένωσης",
+        "ru": "Передача данных за пределы Европейского союза",
+        "ja": "欧州連合域外への移転",
+        "zh": "向欧盟以外地区的传输",
+        "ko": "유럽연합 외 지역으로의 이전"
+      }
+    },
+    "confidentialite.transferts": {
+      "section": "Transferts hors UE",
+      "label": "Texte de la rubrique",
+      "type": "richtext",
+      "translatable": 1,
+      "required": 1,
+      "values": {
+        "fr": "<p>La carte Google Maps, si vous choisissez de l'afficher, peut entraîner un transfert de données vers les États-Unis. Google LLC adhère au cadre de protection des données UE–États-Unis (Data Privacy Framework), reconnu par la Commission européenne comme offrant un niveau de protection adéquat. Si un autre transfert devait avoir lieu, il serait encadré par les garanties prévues par le RGPD, notamment les clauses contractuelles types de la Commission européenne.</p>",
+        "en": "<p>The Google Maps map, if you choose to display it, may involve a transfer of data to the United States. Google LLC participates in the EU–U.S. Data Privacy Framework, recognised by the European Commission as providing an adequate level of protection. Should any other transfer take place, it would be covered by the safeguards provided for by the GDPR, in particular the European Commission’s standard contractual clauses.</p>",
+        "es": "<p>El mapa de Google Maps, si decide mostrarlo, puede implicar una transferencia de datos a Estados Unidos. Google LLC está adherida al Marco de Privacidad de Datos UE-EE. UU. (Data Privacy Framework), reconocido por la Comisión Europea como garante de un nivel de protección adecuado. Si se produjera otra transferencia, estaría amparada por las garantías previstas en el RGPD, en particular las cláusulas contractuales tipo de la Comisión Europea.</p>",
+        "it": "<p>La mappa Google Maps, se sceglie di visualizzarla, può comportare un trasferimento di dati verso gli Stati Uniti. Google LLC aderisce al quadro UE-USA per la protezione dei dati (Data Privacy Framework), riconosciuto dalla Commissione europea come garante di un livello di protezione adeguato. Qualora avvenisse un altro trasferimento, sarebbe coperto dalle garanzie previste dal GDPR, in particolare dalle clausole contrattuali tipo della Commissione europea.</p>",
+        "de": "<p>Die Google-Maps-Karte kann, wenn Sie sie anzeigen, eine Übermittlung von Daten in die Vereinigten Staaten mit sich bringen. Google LLC nimmt am Datenschutzrahmen EU-USA (Data Privacy Framework) teil, den die Europäische Kommission als angemessenes Schutzniveau anerkannt hat. Sollte eine andere Übermittlung stattfinden, wäre sie durch die in der DSGVO vorgesehenen Garantien abgesichert, insbesondere durch die Standardvertragsklauseln der Europäischen Kommission.</p>",
+        "pt": "<p>O mapa Google Maps, se optar por mostrá-lo, pode implicar uma transferência de dados para os Estados Unidos. A Google LLC aderiu ao Quadro de Privacidade de Dados UE-EUA (Data Privacy Framework), reconhecido pela Comissão Europeia como garantindo um nível de proteção adequado. Caso ocorresse outra transferência, seria enquadrada pelas garantias previstas no RGPD, nomeadamente as cláusulas contratuais-tipo da Comissão Europeia.</p>",
+        "sv": "<p>Google Maps-kartan kan, om du väljer att visa den, innebära att uppgifter överförs till USA. Google LLC omfattas av ramverket för dataskydd mellan EU och USA (Data Privacy Framework), som Europeiska kommissionen har erkänt som en adekvat skyddsnivå. Om någon annan överföring skulle ske omfattas den av de skyddsåtgärder som föreskrivs i GDPR, särskilt Europeiska kommissionens standardavtalsklausuler.</p>",
+        "no": "<p>Google Maps-kartet kan, hvis du velger å vise det, innebære at opplysninger overføres til USA. Google LLC er tilsluttet rammeverket for personvern mellom EU og USA (Data Privacy Framework), som EU-kommisjonen har godkjent som et tilstrekkelig beskyttelsesnivå. Skulle en annen overføring finne sted, vil den være omfattet av garantiene i GDPR, særlig EU-kommisjonens standard personvernbestemmelser.</p>",
+        "el": "<p>Ο χάρτης Google Maps, αν επιλέξετε να τον εμφανίσετε, μπορεί να συνεπάγεται διαβίβαση δεδομένων στις Ηνωμένες Πολιτείες. Η Google LLC συμμετέχει στο Πλαίσιο Προστασίας Δεδομένων ΕΕ-ΗΠΑ (Data Privacy Framework), το οποίο η Ευρωπαϊκή Επιτροπή έχει αναγνωρίσει ότι παρέχει επαρκές επίπεδο προστασίας. Αν πραγματοποιούνταν άλλη διαβίβαση, θα καλυπτόταν από τις εγγυήσεις του ΓΚΠΔ, ιδίως από τις τυποποιημένες συμβατικές ρήτρες της Ευρωπαϊκής Επιτροπής.</p>",
+        "ru": "<p>Карта Google Maps, если вы решите её открыть, может предполагать передачу данных в США. Google LLC участвует в Рамочной программе ЕС–США по защите данных (Data Privacy Framework), которую Европейская комиссия признала обеспечивающей адекватный уровень защиты. Если бы потребовалась иная передача, она осуществлялась бы с гарантиями, предусмотренными GDPR, в частности на основе типовых договорных условий Европейской комиссии.</p>",
+        "ja": "<p>Googleマップを表示された場合、データが米国に移転されることがあります。Google LLCは、欧州委員会が十分な保護水準を有すると認めた「EU-米国データプライバシーフレームワーク」に参加しています。その他の移転が行われる場合は、GDPRに定める保護措置、特に欧州委員会の標準契約条項によって保護されます。</p>",
+        "zh": "<p>如果您选择显示Google地图，可能涉及将数据传输至美国。Google LLC已加入欧盟-美国数据隐私框架（Data Privacy Framework），该框架经欧盟委员会认定可提供充分的保护水平。如发生其他数据传输，将受到《通用数据保护条例》（GDPR）规定的保障措施约束，特别是欧盟委员会的标准合同条款。</p>",
+        "ko": "<p>Google 지도를 표시하시는 경우 정보가 미국으로 이전될 수 있습니다. Google LLC는 유럽연합 집행위원회가 적정한 보호 수준을 갖춘 것으로 인정한 EU-미국 데이터 프라이버시 프레임워크(Data Privacy Framework)에 참여하고 있습니다. 그 밖의 이전이 이루어지는 경우, GDPR이 정한 보호 조치, 특히 유럽연합 집행위원회의 표준계약조항이 적용됩니다.</p>"
+      }
+    },
+    "confidentialite.conservation-titre": {
+      "section": "Durées de conservation",
+      "label": "Titre de la rubrique",
+      "type": "text",
+      "translatable": 1,
+      "required": 1,
+      "values": {
+        "fr": "Durées de conservation",
+        "en": "Retention periods",
+        "es": "Plazos de conservación",
+        "it": "Tempi di conservazione",
+        "de": "Speicherdauer",
+        "pt": "Prazos de conservação",
+        "sv": "Lagringstider",
+        "no": "Lagringstid",
+        "el": "Χρόνοι διατήρησης",
+        "ru": "Сроки хранения",
+        "ja": "保存期間",
+        "zh": "保存期限",
+        "ko": "보관 기간"
+      }
+    },
+    "confidentialite.conservation": {
+      "section": "Durées de conservation",
+      "label": "Texte de la rubrique",
+      "type": "richtext",
+      "translatable": 1,
+      "required": 1,
+      "values": {
+        "fr": "<ul><li>Statistiques de visite : 13 mois, puis seuls des totaux par jour sont gardés 25 mois.</li><li>Messages et demandes envoyés par e-mail : le temps nécessaire pour vous répondre et assurer le suivi de votre demande.</li><li>Réservations : la durée nécessaire à leur exécution, puis celle imposée par nos obligations légales, notamment comptables.</li></ul>",
+        "en": "<ul><li>Visit statistics: 13 months, after which only daily totals are kept for 25 months.</li><li>Messages and requests sent by e-mail: as long as necessary to answer you and follow up your request.</li><li>Bookings: as long as necessary to carry them out, then as required by our legal obligations, in particular accounting.</li></ul>",
+        "es": "<ul><li>Estadísticas de visita: 13 meses; después solo se guardan totales diarios durante 25 meses.</li><li>Mensajes y solicitudes enviados por correo electrónico: el tiempo necesario para responderle y hacer el seguimiento de su solicitud.</li><li>Reservas: el tiempo necesario para su ejecución y, después, el que imponen nuestras obligaciones legales, en particular contables.</li></ul>",
+        "it": "<ul><li>Statistiche di visita: 13 mesi, poi solo i totali giornalieri sono conservati per 25 mesi.</li><li>Messaggi e richieste inviati per e-mail: il tempo necessario per risponderle e seguire la sua richiesta.</li><li>Prenotazioni: il tempo necessario alla loro esecuzione, poi quello imposto dai nostri obblighi di legge, in particolare contabili.</li></ul>",
+        "de": "<ul><li>Besuchsstatistiken: 13 Monate, danach werden nur Tagessummen 25 Monate aufbewahrt.</li><li>Per E-Mail gesendete Nachrichten und Anfragen: so lange, wie es für die Antwort und die Nachverfolgung Ihrer Anfrage erforderlich ist.</li><li>Buchungen: so lange, wie es für ihre Durchführung erforderlich ist, danach entsprechend unseren gesetzlichen, insbesondere buchhalterischen Pflichten.</li></ul>",
+        "pt": "<ul><li>Estatísticas de visita: 13 meses; depois, apenas totais diários são guardados durante 25 meses.</li><li>Mensagens e pedidos enviados por e-mail: o tempo necessário para lhe responder e acompanhar o seu pedido.</li><li>Reservas: o tempo necessário à sua execução e, depois, o imposto pelas nossas obrigações legais, nomeadamente contabilísticas.</li></ul>",
+        "sv": "<ul><li>Besöksstatistik: 13 månader, därefter sparas endast dagliga summor i 25 månader.</li><li>Meddelanden och förfrågningar som skickats via e-post: så länge som behövs för att svara dig och följa upp din förfrågan.</li><li>Bokningar: så länge som behövs för att genomföra dem, därefter enligt våra rättsliga skyldigheter, särskilt bokföringsskyldigheter.</li></ul>",
+        "no": "<ul><li>Besøksstatistikk: 13 måneder, deretter oppbevares bare daglige summer i 25 måneder.</li><li>Meldinger og henvendelser sendt på e-post: så lenge det er nødvendig for å svare deg og følge opp henvendelsen.</li><li>Bestillinger: så lenge det er nødvendig for å gjennomføre dem, deretter i samsvar med våre lovpålagte plikter, særlig regnskapsplikter.</li></ul>",
+        "el": "<ul><li>Στατιστικά επισκέψεων: 13 μήνες· στη συνέχεια διατηρούνται μόνο ημερήσια σύνολα για 25 μήνες.</li><li>Μηνύματα και αιτήματα που στάλθηκαν με email: για όσο χρόνο χρειάζεται για να σας απαντήσουμε και να παρακολουθήσουμε το αίτημά σας.</li><li>Κρατήσεις: για όσο χρόνο χρειάζεται για την εκτέλεσή τους και στη συνέχεια όσο επιβάλλουν οι νόμιμες, ιδίως λογιστικές, υποχρεώσεις μας.</li></ul>",
+        "ru": "<ul><li>Статистика посещений: 13 месяцев, затем 25 месяцев хранятся только суточные итоги.</li><li>Сообщения и запросы, отправленные по электронной почте: столько, сколько нужно, чтобы ответить вам и сопроводить ваш запрос.</li><li>Бронирования: столько, сколько нужно для их исполнения, затем в соответствии с нашими законными, в частности бухгалтерскими, обязательствами.</li></ul>",
+        "ja": "<ul><li>訪問統計：13か月。その後は日ごとの合計のみを25か月保存します。</li><li>メールで送られたメッセージやお問い合わせ：回答とその後の対応に必要な期間。</li><li>ご予約：履行に必要な期間、その後は法令上の義務（特に会計上の義務）で定められた期間。</li></ul>",
+        "zh": "<ul><li>访问统计：13个月，之后仅保存每日汇总数据25个月。</li><li>通过电子邮件发送的消息和请求：在答复您并跟进您的请求所需的期间内保存。</li><li>预订：在履行预订所需的期间内保存，之后按照我们的法定义务（尤其是会计义务）保存。</li></ul>",
+        "ko": "<ul><li>방문 통계: 13개월, 이후에는 일별 합계만 25개월간 보관합니다.</li><li>이메일로 보내신 메시지와 요청: 답변하고 요청을 처리하는 데 필요한 기간.</li><li>예약: 이행에 필요한 기간, 이후에는 법적 의무(특히 회계 의무)에 따른 기간.</li></ul>"
+      }
+    },
+    "confidentialite.droits-titre": {
+      "section": "Vos droits",
+      "label": "Titre de la rubrique",
+      "type": "text",
+      "translatable": 1,
+      "required": 1,
+      "values": {
+        "fr": "Vos droits",
+        "en": "Your rights",
+        "es": "Sus derechos",
+        "it": "I suoi diritti",
+        "de": "Ihre Rechte",
+        "pt": "Os seus direitos",
+        "sv": "Dina rättigheter",
+        "no": "Dine rettigheter",
+        "el": "Τα δικαιώματά σας",
+        "ru": "Ваши права",
+        "ja": "お客様の権利",
+        "zh": "您的权利",
+        "ko": "이용자의 권리"
+      }
+    },
+    "confidentialite.droits": {
+      "section": "Vos droits",
+      "label": "Texte de la rubrique",
+      "type": "richtext",
+      "translatable": 1,
+      "required": 1,
+      "values": {
+        "fr": "<p>Conformément au Règlement général sur la protection des données (RGPD) et à la loi Informatique et Libertés, vous disposez d'un droit d'accès, de rectification, d'effacement, de limitation et de portabilité de vos données, d'un droit d'opposition, et du droit de définir des directives sur leur sort après votre décès.</p><p>Pour les exercer, écrivez-nous par e-mail à <a href=\"mailto:aston@3ahotels.com\">aston@3ahotels.com</a> ou par courrier à Hôtel Aston La Scala, 12 avenue Félix Faure, 06000 Nice, France. Nous vous répondrons dans un délai d'un mois.</p><p>Si vous estimez, après nous avoir contactés, que vos droits ne sont pas respectés, vous pouvez adresser une réclamation à la CNIL (<a href=\"https://www.cnil.fr/\" rel=\"noopener\">www.cnil.fr</a>).</p>",
+        "en": "<p>Under the General Data Protection Regulation (GDPR) and the French Data Protection Act, you have the right to access, rectify, erase, restrict and port your data, the right to object, and the right to give instructions on what happens to it after your death.</p><p>To exercise these rights, write to us by e-mail at <a href=\"mailto:aston@3ahotels.com\">aston@3ahotels.com</a> or by post to Hôtel Aston La Scala, 12 avenue Félix Faure, 06000 Nice, France. We will reply within one month.</p><p>If, after contacting us, you feel that your rights have not been respected, you may lodge a complaint with the CNIL, the French data protection authority (<a href=\"https://www.cnil.fr/\" rel=\"noopener\">www.cnil.fr</a>).</p>",
+        "es": "<p>De conformidad con el Reglamento General de Protección de Datos (RGPD) y la ley francesa de protección de datos (Informatique et Libertés), usted tiene derecho de acceso, rectificación, supresión, limitación y portabilidad de sus datos, derecho de oposición y derecho a establecer directrices sobre su destino tras su fallecimiento.</p><p>Para ejercerlos, escríbanos por correo electrónico a <a href=\"mailto:aston@3ahotels.com\">aston@3ahotels.com</a> o por correo postal a Hôtel Aston La Scala, 12 avenue Félix Faure, 06000 Niza, Francia. Le responderemos en el plazo de un mes.</p><p>Si, tras haber contactado con nosotros, considera que no se respetan sus derechos, puede presentar una reclamación ante la CNIL, la autoridad francesa de protección de datos (<a href=\"https://www.cnil.fr/\" rel=\"noopener\">www.cnil.fr</a>).</p>",
+        "it": "<p>In conformità con il Regolamento generale sulla protezione dei dati (GDPR) e la legge francese sulla protezione dei dati (Informatique et Libertés), lei dispone del diritto di accesso, rettifica, cancellazione, limitazione e portabilità dei suoi dati, del diritto di opposizione e del diritto di definire disposizioni sulla loro sorte dopo il suo decesso.</p><p>Per esercitarli, ci scriva per e-mail a <a href=\"mailto:aston@3ahotels.com\">aston@3ahotels.com</a> o per posta a Hôtel Aston La Scala, 12 avenue Félix Faure, 06000 Nizza, Francia. Le risponderemo entro un mese.</p><p>Se, dopo averci contattato, ritiene che i suoi diritti non siano rispettati, può presentare un reclamo alla CNIL, l'autorità francese per la protezione dei dati (<a href=\"https://www.cnil.fr/\" rel=\"noopener\">www.cnil.fr</a>).</p>",
+        "de": "<p>Gemäß der Datenschutz-Grundverordnung (DSGVO) und dem französischen Datenschutzgesetz (Informatique et Libertés) haben Sie das Recht auf Auskunft, Berichtigung, Löschung, Einschränkung der Verarbeitung und Übertragbarkeit Ihrer Daten, das Widerspruchsrecht sowie das Recht, Verfügungen über ihren Verbleib nach Ihrem Tod festzulegen.</p><p>Um diese Rechte auszuüben, schreiben Sie uns per E-Mail an <a href=\"mailto:aston@3ahotels.com\">aston@3ahotels.com</a> oder per Post an Hôtel Aston La Scala, 12 avenue Félix Faure, 06000 Nizza, Frankreich. Wir antworten Ihnen innerhalb eines Monats.</p><p>Wenn Sie nach Kontaktaufnahme mit uns der Ansicht sind, dass Ihre Rechte nicht gewahrt werden, können Sie eine Beschwerde bei der CNIL, der französischen Datenschutzbehörde, einreichen (<a href=\"https://www.cnil.fr/\" rel=\"noopener\">www.cnil.fr</a>).</p>",
+        "pt": "<p>Nos termos do Regulamento Geral sobre a Proteção de Dados (RGPD) e da lei francesa de proteção de dados (Informatique et Libertés), dispõe do direito de acesso, retificação, apagamento, limitação e portabilidade dos seus dados, do direito de oposição e do direito de definir diretivas sobre o destino dos mesmos após a sua morte.</p><p>Para os exercer, escreva-nos por e-mail para <a href=\"mailto:aston@3ahotels.com\">aston@3ahotels.com</a> ou por correio para Hôtel Aston La Scala, 12 avenue Félix Faure, 06000 Nice, França. Responder-lhe-emos no prazo de um mês.</p><p>Se, depois de nos contactar, considerar que os seus direitos não são respeitados, pode apresentar uma reclamação junto da CNIL, a autoridade francesa de proteção de dados (<a href=\"https://www.cnil.fr/\" rel=\"noopener\">www.cnil.fr</a>).</p>",
+        "sv": "<p>Enligt dataskyddsförordningen (GDPR) och den franska dataskyddslagen (Informatique et Libertés) har du rätt till tillgång, rättelse, radering, begränsning och dataportabilitet, rätt att invända samt rätt att lämna anvisningar om vad som ska hända med dina uppgifter efter din död.</p><p>För att utöva dessa rättigheter kan du skriva till oss via e-post på <a href=\"mailto:aston@3ahotels.com\">aston@3ahotels.com</a> eller per post till Hôtel Aston La Scala, 12 avenue Félix Faure, 06000 Nice, Frankrike. Vi svarar inom en månad.</p><p>Om du efter att ha kontaktat oss anser att dina rättigheter inte respekteras kan du lämna in ett klagomål till CNIL, den franska dataskyddsmyndigheten (<a href=\"https://www.cnil.fr/\" rel=\"noopener\">www.cnil.fr</a>).</p>",
+        "no": "<p>I henhold til personvernforordningen (GDPR) og den franske personvernloven (Informatique et Libertés) har du rett til innsyn, retting, sletting, begrensning og dataportabilitet, rett til å protestere og rett til å gi instrukser om hva som skal skje med opplysningene dine etter din død.</p><p>For å utøve disse rettighetene kan du skrive til oss på e-post til <a href=\"mailto:aston@3ahotels.com\">aston@3ahotels.com</a> eller per post til Hôtel Aston La Scala, 12 avenue Félix Faure, 06000 Nice, Frankrike. Vi svarer innen én måned.</p><p>Hvis du etter å ha kontaktet oss mener at rettighetene dine ikke blir respektert, kan du klage til CNIL, det franske datatilsynet (<a href=\"https://www.cnil.fr/\" rel=\"noopener\">www.cnil.fr</a>).</p>",
+        "el": "<p>Σύμφωνα με τον Γενικό Κανονισμό για την Προστασία Δεδομένων (ΓΚΠΔ) και τον γαλλικό νόμο για την προστασία δεδομένων (Informatique et Libertés), έχετε δικαίωμα πρόσβασης, διόρθωσης, διαγραφής, περιορισμού και φορητότητας των δεδομένων σας, δικαίωμα εναντίωσης, καθώς και δικαίωμα να ορίσετε οδηγίες για την τύχη τους μετά τον θάνατό σας.</p><p>Για να τα ασκήσετε, γράψτε μας με email στο <a href=\"mailto:aston@3ahotels.com\">aston@3ahotels.com</a> ή ταχυδρομικώς στη διεύθυνση Hôtel Aston La Scala, 12 avenue Félix Faure, 06000 Nice, Γαλλία. Θα σας απαντήσουμε εντός ενός μηνός.</p><p>Αν, αφού επικοινωνήσετε μαζί μας, θεωρείτε ότι τα δικαιώματά σας δεν γίνονται σεβαστά, μπορείτε να υποβάλετε καταγγελία στη CNIL, τη γαλλική αρχή προστασίας δεδομένων (<a href=\"https://www.cnil.fr/\" rel=\"noopener\">www.cnil.fr</a>).</p>",
+        "ru": "<p>В соответствии с Общим регламентом по защите данных (GDPR) и французским законом о защите данных (Informatique et Libertés) вы имеете право на доступ к своим данным, их исправление, удаление, ограничение обработки и переносимость, право на возражение, а также право дать распоряжения о судьбе данных после вашей смерти.</p><p>Чтобы воспользоваться этими правами, напишите нам по адресу <a href=\"mailto:aston@3ahotels.com\">aston@3ahotels.com</a> или почтой: Hôtel Aston La Scala, 12 avenue Félix Faure, 06000 Nice, Франция. Мы ответим в течение месяца.</p><p>Если после обращения к нам вы считаете, что ваши права не соблюдены, вы можете подать жалобу в CNIL, французский орган по защите данных (<a href=\"https://www.cnil.fr/\" rel=\"noopener\">www.cnil.fr</a>).</p>",
+        "ja": "<p>EU一般データ保護規則（GDPR）およびフランスのデータ保護法（Informatique et Libertés）に基づき、お客様はご自身のデータへのアクセス、訂正、消去、処理の制限、データポータビリティの権利、異議を申し立てる権利、ならびに死後のデータの取り扱いについて指示を定める権利を有します。</p><p>これらの権利を行使するには、メール（<a href=\"mailto:aston@3ahotels.com\">aston@3ahotels.com</a>）または郵便（Hôtel Aston La Scala, 12 avenue Félix Faure, 06000 Nice, France）でご連絡ください。1か月以内にご回答します。</p><p>当ホテルにご連絡いただいた後も権利が尊重されていないとお考えの場合は、フランスのデータ保護機関CNIL（<a href=\"https://www.cnil.fr/\" rel=\"noopener\">www.cnil.fr</a>）に苦情を申し立てることができます。</p>",
+        "zh": "<p>根据《通用数据保护条例》（GDPR）和法国数据保护法（Informatique et Libertés），您享有访问、更正、删除、限制处理和携带您数据的权利、反对权，以及就身故后数据处理作出指示的权利。</p><p>如需行使上述权利，请发送电子邮件至 <a href=\"mailto:aston@3ahotels.com\">aston@3ahotels.com</a>，或邮寄至 Hôtel Aston La Scala, 12 avenue Félix Faure, 06000 Nice, France。我们将在一个月内答复。</p><p>如果您在联系我们后仍认为您的权利未得到尊重，可以向法国数据保护机构CNIL投诉（<a href=\"https://www.cnil.fr/\" rel=\"noopener\">www.cnil.fr</a>）。</p>",
+        "ko": "<p>EU 일반 개인정보 보호법(GDPR)과 프랑스 개인정보 보호법(Informatique et Libertés)에 따라 고객님은 본인 정보에 대한 열람, 정정, 삭제, 처리 제한 및 이동의 권리, 처리 반대권, 그리고 사망 후 정보 처리에 관한 지침을 정할 권리를 가집니다.</p><p>이 권리를 행사하시려면 이메일(<a href=\"mailto:aston@3ahotels.com\">aston@3ahotels.com</a>) 또는 우편(Hôtel Aston La Scala, 12 avenue Félix Faure, 06000 Nice, France)으로 연락해 주십시오. 1개월 이내에 답변드립니다.</p><p>저희에게 연락하신 후에도 권리가 존중되지 않는다고 판단되시면 프랑스 개인정보 보호 기관인 CNIL(<a href=\"https://www.cnil.fr/\" rel=\"noopener\">www.cnil.fr</a>)에 민원을 제기하실 수 있습니다.</p>"
+      }
+    }
+  }
+}
