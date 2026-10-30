@@ -1,7 +1,8 @@
 /**
  * Page Politique de confidentialité : créée après l'import avec ses textes dans toutes les langues livrées,
  * date de mise à jour à remplir (ligne masquée tant qu'elle est vide), liens de l'ancien site
- * (pied de page, formulaire de devis) redirigés vers la nouvelle page, bouton de refus de la mesure d'audience.
+ * (pied de page, formulaire de devis) redirigés vers la nouvelle page, bouton de refus de la mesure d'audience,
+ * polices servies par le site (plus de Google Fonts).
  */
 import { test, before, after } from 'node:test';
 import assert from 'node:assert/strict';
@@ -100,6 +101,11 @@ test('page dans chaque langue : date masquée tant qu’elle est vide, bouton de
   assert.match(fr('main').text(), /aston@3ahotels\.com/);
   assert.doesNotMatch(fr('main').text(), /Dernière mise à jour/);
   assert.equal(fr('main [data-no-stats] [data-no-stats-toggle]').length, 1);
+  // Polices hébergées sur le site : aucune requête vers Google, fichiers publiés à côté des pages
+  assert.doesNotMatch(fr.html(), /fonts\.(googleapis|gstatic)\.com/);
+  const preload = fr('link[rel="preload"][as="font"]').first().attr('href');
+  assert.equal(preload, '/preview/fonts/jost-var-latin.woff2');
+  assert.ok(fs.existsSync(path.join(config.previewDir, 'fonts', 'jost-var-latin.woff2')));
   assert.equal(fr('.site-footer__legal a').eq(1).attr('href'), '/preview/fr/politique-de-confidentialite/');
   assert.equal(page$('fr/devis')('main a[href*="confidentialite"]').attr('href'), '/preview/fr/politique-de-confidentialite/');
   const en = page$('en/privacy-policy');
