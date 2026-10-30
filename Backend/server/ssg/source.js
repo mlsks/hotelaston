@@ -62,6 +62,10 @@ export class Source {
     // Blocs des pages (table absente d'un snapshot antérieur à la migration 010)
     const hasBlocks = db.prepare("SELECT 1 FROM sqlite_master WHERE type = 'table' AND name = 'cms_page_blocks'").get();
     this.blocks = hasBlocks ? all('SELECT * FROM cms_page_blocks') : [];
+    // Avis Google et fiche de l'hôtel (tables absentes d'un snapshot antérieur à la migration 014)
+    const hasReviews = db.prepare("SELECT 1 FROM sqlite_master WHERE type = 'table' AND name = 'cms_google_reviews'").get();
+    this.googleReviews = hasReviews ? all('SELECT * FROM cms_google_reviews') : [];
+    this.googlePlace = hasReviews ? db.prepare('SELECT * FROM cms_google_place WHERE id = 1').get() || null : null;
   }
 
   /** Ordre, visibilité et copies des blocs d'une page. */

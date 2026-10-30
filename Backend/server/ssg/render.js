@@ -15,6 +15,7 @@ import { renderOfferCards } from './offer-cards.js';
 import { applyBlocks, syncCounters } from './page-blocks.js';
 import { applyHeroVeil } from './hero-veil.js';
 import { renderMeetingRooms } from './meeting-rooms.js';
+import { reviewsData } from './google-reviews.js';
 import { fillVars, sha } from '../lib/util.js';
 import { globalGraph, breadcrumbFromDom, faqFromDom, webPageNode, jsonForScript } from './jsonld.js';
 
@@ -183,7 +184,7 @@ export function renderPage(site, lang, target, head) {
     const kind = el.attribs['data-cms-json'];
     let data = null;
     if (kind === 'reviews') {
-      data = { ...source.settings.reviews_meta, items: source.collectionItems('reviews', lang, site.now).map((it) => it.data) };
+      data = reviewsData(source);
     } else if (kind === 'chat') {
       data = {
         greeting: text('global.chat-accueil').value,

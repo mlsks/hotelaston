@@ -17,6 +17,7 @@ import { ensureMeetingRooms } from '../ssg/meeting-rooms.js';
 import { ensureJsonLd } from '../ssg/jsonld-texts.js';
 import { ensureLegalTexts } from '../ssg/legal-texts.js';
 import { ensureLegalPage, ensurePrivacyPage } from '../ssg/legal-page.js';
+import { ensureGoogleReviews } from '../ssg/google-reviews.js';
 
 const MIGRATIONS_DIR = path.join(path.dirname(fileURLToPath(import.meta.url)), 'migrations');
 
@@ -54,6 +55,7 @@ export function getDb() {
     ensureLegalTexts(shared);
     ensureLegalPage(shared);
     ensurePrivacyPage(shared);
+    ensureGoogleReviews(shared);
   }
   return shared;
 }

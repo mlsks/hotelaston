@@ -22,6 +22,7 @@ const ROUTES = [
   { path: '/collections/bandeaux-photo', view: 'heroes', title: 'Bandeaux photo (HERO)', allow: content },
   { path: '/collections/:key', view: 'collection', title: 'Fiches' },
   { path: '/collections/:key/:id', view: 'item', title: 'Fiche' },
+  { path: '/avis-google', view: 'google-reviews', title: 'Avis Google', allow: unscoped },
   { path: '/medias', view: 'media', title: 'Médiathèque' },
   { path: '/bandeaux', view: 'banners', title: 'Bandeaux' },
   { path: '/bandeaux/:id', view: 'banner', title: 'Bandeau' },
@@ -60,6 +61,7 @@ const ICON = {
   link: '<path d="M10 14a4.5 4.5 0 0 0 6.4 0l3-3a4.5 4.5 0 0 0-6.4-6.4l-1.2 1.2"/><path d="M14 10a4.5 4.5 0 0 0-6.4 0l-3 3a4.5 4.5 0 0 0 6.4 6.4l1.2-1.2"/>',
   users: '<circle cx="9" cy="8" r="3.5"/><path d="M2.5 20c.8-3.5 3.3-5.5 6.5-5.5s5.7 2 6.5 5.5"/><path d="M16 4.5a3.5 3.5 0 0 1 0 7M18.5 14.8c1.6.8 2.6 2.6 3 5.2"/>',
   cog: '<circle cx="12" cy="12" r="3"/><path d="M12 2.5v3M12 18.5v3M4.2 6.2l2.1 2.1M17.7 15.7l2.1 2.1M2.5 12h3M18.5 12h3M4.2 17.8l2.1-2.1M17.7 8.3l2.1-2.1"/>',
+  star: '<path d="m12 3.5 2.6 5.3 5.9.9-4.3 4.1 1 5.8-5.2-2.7-5.2 2.7 1-5.8-4.3-4.1 5.9-.9z"/>',
   clock: '<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>',
 };
 export const icon = (name, cls = 'size-5') => `<svg class="${cls}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${ICON[name] || ''}</svg>`;
@@ -81,7 +83,8 @@ export function navigation() {
             { href: '#/menus', label: 'Menus et liens', icon: 'link' },
             { href: '#/cartes', label: 'Cartes du restaurant', icon: 'menu' },
             { href: '#/textes/ui', label: 'Textes de l’interface', icon: 'code' },
-            { href: '#/collections', label: 'Fiches et listes', icon: 'list' }]),
+            { href: '#/collections', label: 'Fiches et listes', icon: 'list' },
+            { href: '#/avis-google', label: 'Avis Google', icon: 'star' }]),
         ...(scoped && ses.user.scopes.includes('live-music') ? [{ href: '#/collections/gigs', label: 'Programme des concerts', icon: 'music' },
           { href: '#/collections/artists', label: 'Artistes', icon: 'users' }] : []),
         { href: '#/medias', label: 'Médiathèque', icon: 'image' },

@@ -23,6 +23,7 @@ import translationRoutes from './routes/translations.js';
 import buildRoutes from './routes/builds.js';
 import userRoutes from './routes/users.js';
 import analyticsRoutes from './routes/analytics.js';
+import googleReviewRoutes from './routes/google-reviews.js';
 import { createIngest } from './analytics/ingest.js';
 import { loadGeoip } from './analytics/geoip.js';
 import { currentBuild } from './ssg/release.js';
@@ -114,6 +115,7 @@ export async function buildApp({ logger = { level: 'info' }, ingestFlushMs = 200
     translationRoutes(api, ctx);
     buildRoutes(api, ctx);
     userRoutes(api, ctx);
+    googleReviewRoutes(api, ctx);
   }, { prefix: '/api' });
 
   /* Back-office : en-têtes de sécurité et bibliothèques servies depuis node_modules (versions figées) */

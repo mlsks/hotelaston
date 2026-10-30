@@ -10,6 +10,7 @@ import { runBuild } from './ssg/build.js';
 import { currentBuild } from './ssg/release.js';
 import { collectGarbage } from './media/gc.js';
 import { nightly } from './analytics/aggregate.js';
+import { gbpConfigured, syncAndPublish } from './reviews/gbp-sync.js';
 
 const app = await buildApp();
 const db = getDb();
@@ -25,6 +26,17 @@ cron.schedule(config.cron, async () => {
   collectGarbage(db, { log: (m) => app.log.info(m) });
   nightly(db, { log: (m) => app.log.info(m) }); // agrégats statistiques et purge (13 / 25 mois)
 }, { timezone: config.timezone });
+
+/* Avis Google : synchronisation par l'API puis publication des avis seuls (si GBP_SYNC_CRON et les identifiants sont renseignés) */
+if (config.gbp.cron && gbpConfigured()) {
+  cron.schedule(config.gbp.cron, async () => {
+    try {
+      await syncAndPublish(db, { log: (m) => app.log.info(m) });
+    } catch (err) {
+      app.log.error(`Avis Google : ${err.message}`);
+    }
+  }, { timezone: config.timezone });
+}
 
 try {
   await app.listen({ host: config.host, port: config.port });

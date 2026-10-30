@@ -15,6 +15,8 @@
  *   node server/cli.js media:gc                 supprime définitivement les médias supprimés inutilisés
  *   node server/cli.js stats:aggregate          agrégats quotidiens et purge des statistiques (fait chaque nuit)
  *   node server/cli.js geoip:update [--city]    télécharge la base de géolocalisation DB-IP Lite du mois
+ *   node server/cli.js reviews:import <fichier.json> [--exemples]   ajoute des avis Google (liste ou réponse de l'API)
+ *   node server/cli.js reviews:sync [--publish] synchronise les avis par l'API Google Business Profile (GBP_* dans .env)
  */
 import { getDb } from './db/connection.js';
 
@@ -57,6 +59,22 @@ async function main() {
       const { restoreRelease } = await import('./ssg/release.js');
       const build = await restoreRelease({ buildId: positional[0] ? Number(positional[0]) : null, withContent: flags.has('--with-content') });
       console.log(`Version #${build.id} remise en ligne.`);
+      break;
+    }
+    case 'reviews:import': {
+      // node server/cli.js reviews:import server/db/seeds/avis-google-exemples.json --exemples
+      const fs = await import('node:fs');
+      const { parseImport, upsertReviews, setPlace } = await import('./reviews/store.js');
+      if (!positional[0]) throw new Error('Usage : reviews:import <fichier.json> [--exemples]');
+      const { reviews, place } = parseImport(fs.readFileSync(positional[0], 'utf8'));
+      const res = upsertReviews(db, reviews, { origin: flags.has('--exemples') ? 'sample' : 'import' });
+      if (place) setPlace(db, place);
+      console.log(`Avis Google : ${res.added} ajoutés, ${res.updated} mis à jour, ${res.unchanged} inchangés. Publier pour les mettre en ligne.`);
+      break;
+    }
+    case 'reviews:sync': {
+      const { syncGoogleReviews, syncAndPublish } = await import('./reviews/gbp-sync.js');
+      await (flags.has('--publish') ? syncAndPublish : syncGoogleReviews)(db, { log: console.log });
       break;
     }
     case 'user:add': {

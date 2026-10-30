@@ -43,11 +43,9 @@
 
       <section class="card grid gap-5 p-5 md:grid-cols-2">
         <h2 class="section-title md:col-span-2">Avis clients</h2>
-        <label class="block"><span class="label">Avis affichés</span>
-          <select class="input" x-model="form.reviews_source"><option value="demo">Exemples (marqués « Exemple » sur le site)</option><option value="real">Avis réels de clients</option></select></label>
-        <label class="block"><span class="label">Note Google</span><input class="input w-32" type="number" step="0.1" min="0" max="5" x-model="form.google_rating"></label>
-        <label class="block"><span class="label">Lien vers la fiche Google</span><input class="input" type="url" x-model="form.google_url"></label>
-        <label class="block"><span class="label">Note minimale pour l’afficher sur l’accueil</span><input class="input w-32" type="number" step="0.1" min="0" max="5" x-model="form.home_threshold"></label>
+        <p class="text-sm text-slate-600 md:col-span-2">Les avis, la note globale et le lien de la fiche Google se gèrent dans <a href="#/avis-google" class="text-azure-700 underline">Avis Google</a>.</p>
+        <label class="block"><span class="label">Note minimale pour l’afficher sur l’accueil</span><input class="input w-32" type="number" step="0.1" min="0" max="5" x-model="form.home_threshold">
+          <span class="hint block">En dessous, l’accueil montre les avis sans la note globale (la page Avis clients l’affiche toujours).</span></label>
       </section>
 
       <details class="card p-5">

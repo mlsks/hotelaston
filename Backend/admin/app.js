@@ -13,6 +13,7 @@ import './views/texts.js';
 import './views/links.js';
 import './views/menus.js';
 import './views/collections.js';
+import './views/google-reviews.js';
 import './views/media.js';
 import './views/banners.js';
 import './views/popups.js';
