@@ -115,6 +115,7 @@ test('admin : liste, ajout, import, masquage, fiche ; le site ne montre que 4 et
   assert.equal(data.items[0].author, 'Claire M.');
   assert.deepEqual(data.google, { rating: 3.8, count: null, url: data.google.url });
   assert.equal(data.minRating, 4);
+  assert.equal(data.ratingThreshold, 4.2); // note moyenne masquée en dessous
 
   let res = await call('GET', '/api/google-reviews');
   assert.equal(res.statusCode, 200, res.body);

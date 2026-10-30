@@ -258,7 +258,7 @@ Le même réglage se trouve aussi dans l'onglet **Réglages** de la page.
 
 **Ce que le site affiche.** Seulement les avis **visibles** et **notés 4 ou 5 étoiles**, du plus récent au plus ancien. Chaque avis montre le nom et la photo de l'auteur (son initiale s'il n'a pas de photo), sa note, son texte, la réponse de l'hôtel, le logo Google et un lien « Lire sur Google Maps ». Sous les avis, la mention « Sélection d'avis Google récents notés 4 ou 5 étoiles » et un lien vers tous les avis sur Google Maps. Ces règles viennent de Google et du droit de la consommation (art. L111-7-2) : un site qui ne montre qu'une partie des avis doit dire comment il les choisit. Elles ne se désactivent pas.
 
-**Fiche Google de l'hôtel.** La **note globale** et le **nombre d'avis** sont ceux de la fiche, sur tous les avis : les recopier depuis Google Maps, jamais calculés sur les seuls avis affichés. Vide, la note n'est pas affichée. L'accueil ne l'affiche qu'au-dessus de la note minimale fixée dans les [Réglages](#reglages) ; la page Avis clients l'affiche toujours.
+**Fiche Google de l'hôtel.** La **note globale** et le **nombre d'avis** sont ceux de la fiche, sur tous les avis : les recopier depuis Google Maps, jamais calculés sur les seuls avis affichés. Vide, la note n'est pas affichée. Elle n'est affichée (chiffre et étoiles), sur toutes les pages, qu'à partir du seuil fixé dans les [Réglages](#reglages) : 4,2 par défaut. En dessous, seuls les avis apparaissent.
 
 **La liste.** Elle s'ouvre sur **4 et 5 étoiles** ; les onglets **Toutes les notes**, **1 à 3 étoiles** et **Masqués** montrent le reste. Pour chaque avis :
 
@@ -505,7 +505,7 @@ Paramètres communs à tout le site, appliqués à la prochaine publication :
 
 - **Site** : nom du site, langue proposée aux visiteurs dont la langue n'est pas proposée (x-default), image de partage par défaut ;
 - **Moteur de réservation (D-Edge)** : adresse du moteur (`{locale}` y devient `fr-FR`, `en-GB`…), noms des paramètres qui transmettent les dates, les voyageurs, la chambre et l'offre (laisser un nom vide pour ne pas envoyer l'information), codes chambre et codes tarif de D-Edge (une ligne par chambre ou offre : `privilege = code D-Edge`). Ces noms et codes sont fournis par D-Edge ; s'ils sont faux, le moteur s'ouvre sans les choix du visiteur ;
-- **Avis clients** : note minimale de la fiche Google pour afficher la note sur l'accueil (les avis eux-mêmes : [Les avis Google](#les-avis-google)) ;
+- **Avis clients** : note moyenne de la fiche Google à partir de laquelle elle est affichée (4,2 par défaut) (les avis eux-mêmes : [Les avis Google](#les-avis-google)) ;
 - **Données structurées (JSON-LD)** : le modèle unique, pour toutes les langues, des informations lues par Google et les assistants IA (voir [Données structurées (JSON-LD)](#donnees-structurees-json-ld)). Réservé aux personnes à l'aise avec le format ;
 - **Maintenance** : **Effacer la corbeille maintenant**.
 

@@ -17,6 +17,9 @@ const LEDE_KEY = 'avis.005-p';
 const OLD_LEDE = "Nous publions les avis récents tels qu'ils nous parviennent, avec nos réponses, y compris quand ils pointent ce que nous devons améliorer.";
 export const LEDE = 'Une sélection de nos avis Google récents notés 4 ou 5 étoiles, avec nos réponses. Tous les avis, y compris ceux qui pointent ce que nous devons améliorer, se lisent sur notre fiche Google.';
 
+/** Seuil par défaut de la note moyenne affichée (Réglages → Avis clients). */
+export const RATING_THRESHOLD = 4.2;
+
 /** Avis transmis au navigateur, au plus (la page Avis en montre 20). */
 const MAX_ITEMS = 40;
 
@@ -81,7 +84,8 @@ export function reviewsData(source) {
       sample: r.origin === 'sample',
     }));
   return {
-    homeRatingThreshold: source.settings.reviews_meta?.homeRatingThreshold ?? 4,
+    // Note moyenne affichée seulement à partir de ce seuil (en dessous : ni chiffre ni étoiles de la fiche)
+    ratingThreshold: source.settings.reviews_meta?.ratingThreshold ?? RATING_THRESHOLD,
     minRating: MIN_RATING,
     google: { rating: place.rating ?? null, count: place.review_count ?? null, url: place.maps_url || null },
     items,

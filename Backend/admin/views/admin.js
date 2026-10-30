@@ -107,7 +107,7 @@ Alpine.data('settingsView', () => ({
       booking_params: Object.fromEntries(Object.entries(BOOKING_PARAMS).map(([k, v]) => [k, s.booking_engine?.params ? s.booking_engine.params[k] || '' : v])),
       booking_rooms: codesToText(s.booking_engine?.rooms || BOOKING_ROOMS),
       booking_offers: codesToText(s.booking_engine?.offers || BOOKING_OFFERS),
-      home_threshold: s.reviews_meta?.homeRatingThreshold ?? 4,
+      rating_threshold: s.reviews_meta?.ratingThreshold ?? 4.2,
     };
     this.jsonld = JSON.stringify(s.jsonld_graph || { '@context': 'https://schema.org', '@graph': [] }, null, 2);
   },
@@ -140,7 +140,7 @@ Alpine.data('settingsView', () => ({
           rooms: textToCodes(f.booking_rooms),
           offers: textToCodes(f.booking_offers),
         },
-        reviews_meta: { ...this.settings.reviews_meta, homeRatingThreshold: Number(f.home_threshold) },
+        reviews_meta: { ...this.settings.reviews_meta, ratingThreshold: Number(f.rating_threshold) },
         jsonld_graph: JSON.parse(this.jsonld),
       });
       this.$store.ui.dirty = false;

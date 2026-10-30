@@ -923,7 +923,7 @@
 
     const parts = [];
     const rating = google.rating;
-    if (rating && (mode === 'full' || (mode === 'compact' && rating >= (data.homeRatingThreshold ?? 0)))) {
+    if (rating && mode !== 'none' && rating >= (data.ratingThreshold ?? 0)) {
       const source = google.url
         ? h('a', { class: 'rating__source', href: google.url, target: '_blank', rel: 'noopener' }, ui('ui.reviews.google', 'Note moyenne Google'))
         : h('span', { class: 'rating__source' }, ui('ui.reviews.google', 'Note moyenne Google'));
