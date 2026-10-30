@@ -270,6 +270,8 @@ Le même réglage se trouve aussi dans l'onglet **Réglages** de la page.
 
 **Importer un JSON** : un fichier, ou son contenu collé. Sont acceptés une liste d'avis avec les champs de l'écran (`author_name`, `rating`, `comment`, `published_at`, `review_url`, `author_photo_url`, `reply_comment`, `is_visible`, `topics`, `room`), la réponse de l'API Google Business Profile (`reviews`, `averageRating`, `totalReviewCount` : la note et le nombre d'avis de la fiche sont repris) et les avis de l'API Places. Un avis déjà présent (même identifiant) est mis à jour. Cocher **Ce sont des exemples** pour des avis de démonstration.
 
+**Préparer le fichier depuis Google Maps** : ouvrir `tools/avis-google-extracteur.html` dans Chrome ou Edge (double-clic) et suivre ses quatre étapes. Il lit le code de la page des avis copié depuis Google Maps (rien n'est envoyé), garde les plus récents notés 4 ou 5 étoiles (8 par défaut) avec la note globale et le nombre d'avis de la fiche, et télécharge `reviews-seed.json`, à importer ici. Les dates « il y a 3 semaines » deviennent des dates approximatives.
+
 **Les exemples.** Les huit avis de la maquette sont des exemples : marqués « Exemple » sur le site et repérés en orange dans l'écran, à supprimer (**Supprimer les exemples**) dès que les vrais avis sont là. Leur fichier, `Backend/server/db/seeds/avis-google-exemples.json`, permet de les réimporter.
 
 **Synchronisation automatique.** Dès que l'hôtel aura donné l'accès à sa fiche, les avis et la note arriveront seuls par l'API Google Business Profile, chaque matin, et seront publiés sans le reste du site. La visibilité, les thèmes et la chambre choisis ici sont gardés. La mise en place (identifiants dans `Backend/.env`) est décrite dans `Backend/README.md`.

@@ -1,0 +1,386 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Extracteur d'avis Google</title>
+<!--
+  Outil autonome, hors ligne : il lit le code HTML d'une page Google Maps collé ou chargé ici,
+  sans rien envoyer ni appeler Google. Il garde les avis notés 4 ou 5 étoiles (une note Google
+  est entière : « 3,5 à 5 » = 4 et 5), jusqu'au nombre voulu, et produit reviews-seed.json au
+  format de l'import du back-office (Avis Google → Importer un JSON).
+-->
+<style>
+  :root {
+    --bg: #f7f5f0; --card: #fff; --ink: #1b2330; --muted: #5b6575; --line: #dcd6ca;
+    --accent: #1d4466; --accent-ink: #fff; --ok: #1d7a46; --warn: #9a5b00; --err: #b3261e; --code: #f1eee7;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #12161d; --card: #1b212b; --ink: #e8ecf2; --muted: #a2acba; --line: #2f3845;
+      --accent: #7fb2e5; --accent-ink: #0b1320; --ok: #5cc98a; --warn: #f0b35a; --err: #ff8a80; --code: #141920;
+    }
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--ink); font: 15px/1.5 system-ui, -apple-system, "Segoe UI", sans-serif; }
+  main { max-width: 980px; margin: 0 auto; padding: 24px 16px 48px; }
+  h1 { font-size: 1.6rem; margin: 0 0 4px; }
+  h2 { font-size: 1.05rem; margin: 0 0 10px; }
+  p { margin: 0 0 10px; }
+  .lede { color: var(--muted); margin-bottom: 20px; }
+  .card { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 18px; margin-bottom: 16px; }
+  ol { margin: 0; padding-left: 20px; }
+  li { margin-bottom: 6px; }
+  code, pre, textarea { font: 12.5px/1.45 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+  pre { background: var(--code); border: 1px solid var(--line); border-radius: 8px; padding: 10px 12px; overflow: auto; white-space: pre-wrap; word-break: break-all; margin: 8px 0 0; }
+  textarea { width: 100%; min-height: 160px; background: var(--code); color: var(--ink); border: 1px solid var(--line); border-radius: 8px; padding: 10px; resize: vertical; }
+  .row { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 14px; }
+  label.inline { display: inline-flex; align-items: center; gap: 6px; }
+  select, input[type=number] { background: var(--card); color: var(--ink); border: 1px solid var(--line); border-radius: 6px; padding: 5px 8px; font: inherit; }
+  input[type=number] { width: 4.5em; }
+  button { font: inherit; font-weight: 600; border-radius: 8px; padding: 8px 14px; border: 1px solid var(--accent); background: transparent; color: var(--accent); cursor: pointer; }
+  button.primary { background: var(--accent); color: var(--accent-ink); }
+  button:disabled { opacity: .45; cursor: not-allowed; }
+  .status { font-size: .92rem; color: var(--muted); }
+  .status.ok { color: var(--ok); } .status.warn { color: var(--warn); } .status.err { color: var(--err); }
+  .reviews { display: grid; gap: 10px; margin-top: 12px; }
+  .rev { border: 1px solid var(--line); border-radius: 10px; padding: 10px 12px; display: grid; grid-template-columns: 40px 1fr; gap: 4px 12px; }
+  .rev img, .rev .ini { width: 40px; height: 40px; border-radius: 50%; object-fit: cover; background: var(--code); display: grid; place-items: center; font-weight: 700; }
+  .rev .meta { font-size: .88rem; color: var(--muted); }
+  .rev .txt { grid-column: 2; margin: 0; }
+  .rev .flag { color: var(--warn); font-size: .85rem; }
+  .stars { color: #d39b1c; letter-spacing: 1px; }
+  #preview { max-height: 420px; }
+</style>
+</head>
+<body>
+<main>
+  <h1>Extracteur d'avis Google</h1>
+  <p class="lede">Hôtel Aston La Scala · garde les avis récents notés 4 ou 5 étoiles et prépare <code>reviews-seed.json</code> pour <strong>Avis Google → Importer un JSON</strong> du back-office. Tout se passe dans ce navigateur : rien n'est envoyé nulle part.</p>
+
+  <section class="card">
+    <h2>1. Récupérer la page des avis</h2>
+    <ol>
+      <li>Ouvrir la <a href="https://maps.app.goo.gl/miuLYvSR4CBYPEBw7" target="_blank" rel="noopener">fiche Google Maps de l'hôtel</a> dans Chrome ou Edge, onglet <strong>Avis</strong>, tri <strong>Plus récents</strong>.</li>
+      <li>Faire défiler la liste jusqu'à voir une vingtaine d'avis (les avis notés 1 à 3 sont écartés, il en faut plus que 8).</li>
+      <li>Ouvrir la console (<kbd>F12</kbd> → onglet <strong>Console</strong>), coller ce code puis <kbd>Entrée</kbd> : il déplie les textes « Plus » et copie le code HTML des avis.
+        <pre id="snippet"></pre>
+        <div class="row" style="margin-top:8px"><button type="button" id="copySnippet">Copier ce code</button><span class="status" id="snippetStatus"></span></div>
+      </li>
+      <li>Revenir ici et coller (<kbd>Ctrl</kbd>+<kbd>V</kbd>) dans la zone ci-dessous. On peut aussi charger une page enregistrée (Ctrl+S → « Page web, complète »).</li>
+    </ol>
+  </section>
+
+  <section class="card">
+    <h2>2. Code source de la page</h2>
+    <textarea id="source" spellcheck="false" placeholder="Coller ici le code HTML de la page Google Maps (avis affichés)…"></textarea>
+    <div class="row" style="margin-top:10px">
+      <label class="inline">ou un fichier <input type="file" id="file" accept=".html,.htm,.txt,text/html"></label>
+      <span class="status" id="liveStatus">En attente du code HTML.</span>
+    </div>
+  </section>
+
+  <section class="card">
+    <h2>3. Extraire</h2>
+    <div class="row">
+      <label class="inline">Avis à garder <input type="number" id="target" min="1" max="50" value="8"></label>
+      <label class="inline">Note minimale
+        <select id="minRating"><option value="4" selected>4 étoiles (3,5 à 5)</option><option value="5">5 étoiles</option><option value="3">3 étoiles</option></select></label>
+      <label class="inline"><input type="checkbox" id="withPlace" checked> Reprendre la note globale et le nombre d'avis</label>
+      <button type="button" class="primary" id="start" disabled>Démarrer l'extraction</button>
+    </div>
+    <p class="status" id="runStatus" style="margin-top:10px"></p>
+    <div class="reviews" id="cards"></div>
+  </section>
+
+  <section class="card">
+    <h2>4. Résultat JSON</h2>
+    <pre id="preview">—</pre>
+    <div class="row" style="margin-top:10px">
+      <button type="button" id="copy" disabled>Copier le JSON</button>
+      <button type="button" class="primary" id="download" disabled>Télécharger reviews-seed.json</button>
+      <span class="status" id="outStatus"></span>
+    </div>
+    <p class="status" style="margin-top:10px">Dans le back-office : <strong>Avis Google → Importer un JSON</strong>, choisir le fichier, sans cocher « Ce sont des exemples ». Les dates sont déduites de « il y a 3 semaines » : approximatives, à corriger si besoin dans <strong>Modifier</strong>. Un même avis réimporté est mis à jour, pas dupliqué.</p>
+  </section>
+</main>
+
+<script>
+(() => {
+  'use strict';
+  const $ = (id) => document.getElementById(id);
+
+  /* Code à coller dans la console de Google Maps : déplie « Plus », puis copie le HTML du panneau. */
+  const SNIPPET = `document.querySelectorAll('button.w8nwRe, button[aria-label="Voir plus"], button[aria-label="See more"], button[jsaction*="review.expandReview"]').forEach((b) => b.click());
+setTimeout(() => { copy((document.querySelector('div[role="main"]') || document.body).outerHTML); console.log('Code des avis copié : collez-le dans l’extracteur.'); }, 800);`;
+  $('snippet').textContent = SNIPPET;
+
+  /* ---------- Dates relatives (« il y a 3 semaines », « 2 months ago ») ---------- */
+  const UNITS = [
+    [/(heure|hour)/i, 'h'], [/(jour|day)/i, 'd'], [/(semaine|week)/i, 'w'], [/(mois|month)/i, 'm'], [/(an|année|year)/i, 'y'],
+  ];
+  const WORDS = { un: 1, une: 1, a: 1, an: 1, one: 1, deux: 2, two: 2, trois: 3, three: 3, quatre: 4, four: 4, cinq: 5, five: 5, six: 6 };
+  const RELATIVE = /(il y a\s+([\wéû]+)\s+([\wéû]+)|(\d+|an?|one|two|three|four|five|six)\s+(hours?|days?|weeks?|months?|years?)\s+ago|hier|yesterday|aujourd'hui|today)/i;
+
+  function relativeToDate(text, now = new Date()) {
+    const s = String(text || '').toLowerCase();
+    const m = s.match(RELATIVE);
+    if (!m) {
+      const iso = s.match(/\b(20\d{2})-(\d{2})-(\d{2})\b/);
+      return iso ? { date: iso[0], approx: false } : null;
+    }
+    const d = new Date(now);
+    if (/hier|yesterday/.test(m[0])) { d.setDate(d.getDate() - 1); return { date: ymd(d), approx: false }; }
+    if (/aujourd|today/.test(m[0])) return { date: ymd(d), approx: false };
+    const qtyRaw = m[2] || m[4];
+    const unitRaw = m[3] || m[5];
+    const qty = /^\d+$/.test(qtyRaw) ? Number(qtyRaw) : (WORDS[qtyRaw] || 1);
+    const unit = (UNITS.find(([re]) => re.test(unitRaw)) || [])[1];
+    if (!unit) return null;
+    if (unit === 'h') d.setHours(d.getHours() - qty);
+    if (unit === 'd') d.setDate(d.getDate() - qty);
+    if (unit === 'w') d.setDate(d.getDate() - 7 * qty);
+    if (unit === 'm') d.setMonth(d.getMonth() - qty);
+    if (unit === 'y') d.setFullYear(d.getFullYear() - qty);
+    return { date: ymd(d), approx: unit !== 'h' && unit !== 'd' };
+  }
+  const ymd = (d) => `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+
+  /* ---------- Lecture du HTML collé ---------- */
+  const clean = (s) => String(s || '').replace(/\s+/g, ' ').replace(/\s*(…\s*)?(Plus|More|Voir plus|See more)\s*$/i, '').trim();
+  const OWNER = /^(Réponse du propriétaire|Response from the owner)/i;
+
+  /** Note d'un avis : « 5 étoiles », « 4,0 sur 5 », « Rated 5.0 out of 5 », ou le texte « 5/5 » (avis d'hôtel). */
+  function ratingOf(el) {
+    for (const n of el.querySelectorAll('[role="img"][aria-label], [aria-label*="étoile"], [aria-label*="star"]')) {
+      const m = n.getAttribute('aria-label').match(/(\d+(?:[.,]\d+)?)\s*(?:étoiles?|stars?|sur\s*5|out of\s*5|\/\s*5)/i)
+        || n.getAttribute('aria-label').match(/(?:rated|note)\s*:?\s*(\d+(?:[.,]\d+)?)/i);
+      if (m) return Number(m[1].replace(',', '.'));
+    }
+    for (const n of el.querySelectorAll('span, div')) {
+      if (n.children.length) continue;
+      const m = n.textContent.trim().match(/^([1-5])(?:[.,]0)?\s*\/\s*5$/);
+      if (m) return Number(m[1]);
+    }
+    return null;
+  }
+
+  /** Bloc de la réponse du propriétaire (exclu du texte de l'avis). */
+  function ownerBlock(el) {
+    for (const n of el.querySelectorAll('div, span')) {
+      if (n.children.length && OWNER.test(n.textContent.trim()) && n.textContent.length < 6000) {
+        // le plus petit bloc qui commence par « Réponse du propriétaire » et contient le texte
+        let box = n;
+        while (box.parentElement && box.parentElement !== el && OWNER.test(box.parentElement.textContent.trim())) box = box.parentElement;
+        return box;
+      }
+    }
+    return null;
+  }
+
+  function parseReview(el) {
+    const id = el.getAttribute('data-review-id');
+    const owner = ownerBlock(el);
+    const inOwner = (n) => owner && owner.contains(n);
+
+    let author = el.getAttribute('aria-label') || '';
+    if (!author) {
+      const n = el.querySelector('.d4r55, [class*="d4r55"]') || [...el.querySelectorAll('button[aria-label]')].find((b) => /photo|profil/i.test(b.getAttribute('aria-label')));
+      author = n ? (n.textContent.trim() || n.getAttribute('aria-label').replace(/^(Photo de|Photo of)\s*/i, '')) : '';
+    }
+
+    const img = [...el.querySelectorAll('img')].find((i) => /googleusercontent\.com/.test(i.getAttribute('src') || '') && !inOwner(i));
+    const photo = img ? img.getAttribute('src').replace(/^\/\//, 'https://').replace(/=w\d+-h\d+/, '=w96-h96') : null;
+
+    // Texte : .wiI7pd (hors réponse), sinon le plus long bloc de texte de l'avis
+    let textNode = [...el.querySelectorAll('.wiI7pd, .MyEned')].find((n) => !inOwner(n));
+    if (!textNode) {
+      // repli : le plus long texte de plus de 40 caractères (une note sans texte n'en a pas)
+      textNode = [...el.querySelectorAll('span, div')].filter((n) => !n.children.length && !inOwner(n) && n.textContent.trim().length > 40 && !RELATIVE.test(n.textContent))
+        .sort((a, b) => b.textContent.length - a.textContent.length)[0];
+    }
+    const comment = textNode ? clean(textNode.textContent) : '';
+    const truncated = Boolean([...el.querySelectorAll('button')].find((b) => /^(Plus|More|Voir plus|See more)$/i.test(b.textContent.trim()) && !inOwner(b))) || /…$/.test(comment);
+
+    let reply = null;
+    if (owner) {
+      const r = owner.querySelector('.wiI7pd') || [...owner.querySelectorAll('span, div')].filter((n) => !n.children.length && !OWNER.test(n.textContent.trim()))
+        .sort((a, b) => b.textContent.length - a.textContent.length)[0];
+      reply = r ? clean(r.textContent) : null;
+    }
+
+    // Date : .rsqaWe / .xRkPPb, sinon le premier texte « il y a … »
+    let when = null;
+    const dateNode = [...el.querySelectorAll('.rsqaWe, .xRkPPb')].find((n) => !inOwner(n) && RELATIVE.test(n.textContent))
+      || [...el.querySelectorAll('span, div')].find((n) => !n.children.length && !inOwner(n) && RELATIVE.test(n.textContent) && n.textContent.length < 60);
+    if (dateNode) when = relativeToDate(dateNode.textContent);
+
+    return {
+      review_id: id ? `maps-${id}` : null,
+      author_name: clean(author).slice(0, 120),
+      author_photo_url: photo,
+      rating: ratingOf(el),
+      comment,
+      published_at: when?.date || null,
+      review_url: null,
+      is_visible: true,
+      reply_comment: reply || null,
+      _approx: Boolean(when?.approx),
+      _truncated: truncated,
+    };
+  }
+
+  /** Conteneurs d'avis : les éléments [data-review-id] les plus extérieurs, un par avis, dans l'ordre de la page. */
+  function findReviews(doc) {
+    const seen = new Map();
+    for (const el of doc.querySelectorAll('[data-review-id]')) {
+      const id = el.getAttribute('data-review-id');
+      const prev = seen.get(id);
+      if (!prev || el.contains(prev)) seen.set(id, el);
+    }
+    return [...seen.values()].filter((el, i, all) => !all.some((o) => o !== el && o.contains(el)));
+  }
+
+  /** Note globale et nombre d'avis de la fiche, s'ils sont dans la page. */
+  function placeOf(doc) {
+    const text = (doc.body?.innerText || doc.body?.textContent || '');
+    let rating = null;
+    let count = null;
+    const r = doc.querySelector('.F7nice span[aria-hidden="true"], .fontDisplayLarge');
+    if (r && /^[1-5][.,]\d$/.test(r.textContent.trim())) rating = Number(r.textContent.trim().replace(',', '.'));
+    const c = [...doc.querySelectorAll('[aria-label]')].map((n) => n.getAttribute('aria-label')).find((l) => /^[\d\s  .,]+\s*(avis|reviews?)$/i.test(l.trim()));
+    if (c) count = Number(c.replace(/[^\d]/g, ''));
+    if (count === null) {
+      const m = text.match(/\(([\d\s  .,]{1,9})\)\s*(?:·|$)/) || text.match(/([\d\s  .,]{1,9})\s*avis/i);
+      if (m && Number(m[1].replace(/[^\d]/g, '')) > 0) count = Number(m[1].replace(/[^\d]/g, ''));
+    }
+    return { rating, count };
+  }
+
+  /* ---------- Interface ---------- */
+  let parsed = { reviews: [], place: {} };
+  let result = null;
+  let timer = null;
+
+  function scan() {
+    const html = $('source').value;
+    const live = $('liveStatus');
+    if (!html.trim()) {
+      parsed = { reviews: [], place: {} };
+      live.textContent = 'En attente du code HTML.';
+      live.className = 'status';
+      $('start').disabled = true;
+      return;
+    }
+    const doc = new DOMParser().parseFromString(html, 'text/html');
+    const reviews = findReviews(doc).map(parseReview);
+    const place = placeOf(doc);
+    parsed = { reviews, place };
+    const min = Number($('minRating').value);
+    const good = reviews.filter((r) => r.rating >= min).length;
+    if (!reviews.length) {
+      live.textContent = 'Aucun avis trouvé dans ce code. Le code source brut (Ctrl+U) ne contient pas les avis : utilisez le code de l’étape 1, après avoir affiché les avis.';
+      live.className = 'status err';
+    } else {
+      live.textContent = `${reviews.length} avis lus, dont ${good} notés ${min} étoiles ou plus` + (place.rating ? ` · note globale ${String(place.rating).replace('.', ',')}` : '') + (place.count ? ` · ${place.count} avis sur la fiche` : '') + '.';
+      live.className = good ? 'status ok' : 'status warn';
+    }
+    $('start').disabled = !reviews.length;
+  }
+
+  const schedule = () => { clearTimeout(timer); timer = setTimeout(scan, 250); };
+  $('source').addEventListener('input', schedule);
+  $('minRating').addEventListener('change', scan);
+  $('file').addEventListener('change', async (e) => {
+    const f = e.target.files?.[0];
+    if (!f) return;
+    $('source').value = await f.text();
+    scan();
+  });
+
+  function stars(n) { return '★'.repeat(n) + '☆'.repeat(5 - n); }
+
+  $('start').addEventListener('click', () => {
+    scan();
+    const target = Math.max(1, Math.min(50, Number($('target').value) || 8));
+    const min = Number($('minRating').value);
+    const kept = [];
+    const ids = new Set();
+    for (const r of parsed.reviews) {          // ordre de la page : trier « Plus récents » sur Google Maps
+      if (kept.length >= target) break;
+      if (!(r.rating >= min) || !r.published_at || !r.author_name) continue;
+      const key = r.review_id || `${r.author_name}|${r.comment}`;
+      if (ids.has(key)) continue;
+      ids.add(key);
+      kept.push(r);
+    }
+    const run = $('runStatus');
+    if (kept.length < target) {
+      run.textContent = `${kept.length} avis sur ${target} trouvés : faites défiler davantage d’avis sur Google Maps, puis recopiez le code.`;
+      run.className = 'status warn';
+    } else {
+      run.textContent = `${kept.length} avis gardés.`;
+      run.className = 'status ok';
+    }
+    const approx = kept.filter((r) => r._approx).length;
+    const cut = kept.filter((r) => r._truncated).length;
+    if (approx) run.textContent += ` ${approx} date(s) approximative(s).`;
+    if (cut) run.textContent += ` ${cut} texte(s) peut-être tronqué(s) (« Plus » non déplié).`;
+
+    $('cards').replaceChildren(...kept.map((r) => {
+      const card = document.createElement('article');
+      card.className = 'rev';
+      const pic = r.author_photo_url ? Object.assign(document.createElement('img'), { src: r.author_photo_url, alt: '', referrerPolicy: 'no-referrer' }) : Object.assign(document.createElement('span'), { className: 'ini', textContent: (r.author_name[0] || '?').toUpperCase() });
+      const head = document.createElement('div');
+      head.innerHTML = '<strong></strong> <span class="stars"></span> <span class="meta"></span>';
+      head.querySelector('strong').textContent = r.author_name;
+      head.querySelector('.stars').textContent = stars(r.rating);
+      head.querySelector('.meta').textContent = `${r.published_at}${r._approx ? ' (approx.)' : ''}`;
+      const txt = Object.assign(document.createElement('p'), { className: 'txt', textContent: r.comment || '(note sans texte)' });
+      card.append(pic, head, txt);
+      if (r._truncated) card.append(Object.assign(document.createElement('p'), { className: 'txt flag', textContent: 'Texte peut-être tronqué.' }));
+      return card;
+    }));
+
+    const place = $('withPlace').checked ? parsed.place : {};
+    result = {
+      _source: `Google Maps, Hôtel Aston La Scala, extrait le ${ymd(new Date())} (${kept.length} avis notés ${min} étoiles ou plus)`,
+      ...(place.rating ? { averageRating: place.rating } : {}),
+      ...(place.count ? { totalReviewCount: place.count } : {}),
+      reviews: kept.map(({ _approx, _truncated, ...r }) => r),
+    };
+    $('preview').textContent = JSON.stringify(result, null, 2);
+    $('copy').disabled = $('download').disabled = !kept.length;
+    $('outStatus').textContent = '';
+  });
+
+  async function toClipboard(text, statusEl) {
+    try {
+      await navigator.clipboard.writeText(text);
+      statusEl.textContent = 'Copié.';
+    } catch {
+      const t = Object.assign(document.createElement('textarea'), { value: text });
+      document.body.append(t);
+      t.select();
+      statusEl.textContent = document.execCommand('copy') ? 'Copié.' : 'Copie impossible : sélectionnez le texte à la main.';
+      t.remove();
+    }
+  }
+  $('copy').addEventListener('click', () => toClipboard(JSON.stringify(result, null, 2), $('outStatus')));
+  $('copySnippet').addEventListener('click', () => toClipboard(SNIPPET, $('snippetStatus')));
+  $('download').addEventListener('click', () => {
+    const blob = new Blob([JSON.stringify(result, null, 2) + '\n'], { type: 'application/json' });
+    const a = Object.assign(document.createElement('a'), { href: URL.createObjectURL(blob), download: 'reviews-seed.json' });
+    document.body.append(a);
+    a.click();
+    a.remove();
+    setTimeout(() => URL.revokeObjectURL(a.href), 1000);
+    $('outStatus').textContent = 'reviews-seed.json téléchargé.';
+  });
+
+  // Pour les tests automatiques
+  window.__extracteur = { relativeToDate, findReviews, parseReview, placeOf };
+})();
+</script>
+</body>
+</html>
