@@ -171,7 +171,7 @@ Paramètres des statistiques :
 ## Pas encore fait
 
 - **Base GeoIP** : pas encore téléchargée (`node server/cli.js geoip:update`, puis chaque mois). La licence CC BY 4.0 demande la mention « IP Geolocation by DB-IP » avec un lien vers db-ip.com : le tableau de bord l'affiche dès que la base est installée.
-- **Politique de confidentialité** : paragraphe sur la mesure d'audience prêt dans [`docs/confidentialite-mesure-audience.md`](../docs/confidentialite-mesure-audience.md), à faire valider par l'hôtel.
+- **Politique de confidentialité** : page `politique-de-confidentialite` (13 langues, `server/ssg/legal-page.js`, `seeds/politique-de-confidentialite-page.json`), qui reprend le paragraphe sur la mesure d'audience ([`docs/confidentialite-mesure-audience.md`](../docs/confidentialite-mesure-audience.md)) et propose le bouton de refus (`localStorage « aston.no-stats »`, lu par `track.js`). À faire valider par l'hôtel.
 - **Redirections des anciennes adresses** de hotel-aston.com : la table est prête, la liste des pages en ligne reste à relever.
 - **Liens externes (YouTube, Vimeo…)** : enregistrés dans la médiathèque, affichés pour l'instant comme un simple lien (lecteur chargé au clic à venir).
 - **Déploiement** : fichiers prêts dans [`deploy/`](../deploy/README.md) (Caddyfile, PM2, Dockerfile, sauvegardes) ; restent l'hébergeur et le stockage externe des sauvegardes.

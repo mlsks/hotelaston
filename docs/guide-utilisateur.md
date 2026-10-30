@@ -123,6 +123,14 @@ La page **Mentions légales** (lien en bas du pied de page, dans toutes les lang
 - **Société** (nom, SIRET, SIREN, RCS, APE, TVA) : c'est le même texte que dans le pied de page, modifiable dans **Textes communs → Pied de page · Mentions légales**. Le corriger là change la page et le pied de page.
 - Les libellés (« Société : », « Adresse : »…) et les paragraphes se traduisent comme le reste ; changer un paragraphe en français fait passer ses traductions « à revoir ».
 
+### Page Politique de confidentialité
+
+La page **Politique de confidentialité** (lien « Confidentialité » en bas du pied de page et lien sous le formulaire de devis, dans toutes les langues) décrit ce que fait réellement le nouveau site : responsable du traitement, formulaires de devis et de contact et chat, réservation sur D-Edge, mesure d'audience, cookies et stockage dans le navigateur, services d'autres sociétés (Google Fonts, Google Maps), destinataires, transferts hors UE, durées de conservation, droits des visiteurs. Elle se modifie dans **Pages → Politique de confidentialité → Textes**, une section par rubrique (un titre et un texte), livrée traduite dans les 13 langues.
+
+- **Date de mise à jour** : champ **Date de la dernière mise à jour** (section En-tête), au format 30/10/2026. Elle vaut pour toutes les langues : la saisir en français suffit. Tant qu'elle est vide, la ligne « Dernière mise à jour » n'apparaît pas et la publication le rappelle dans ses avertissements. La changer à chaque modification importante du texte.
+- **Bouton « Ne plus compter mes visites »** (rubrique Mesure d'audience) : il permet au visiteur de refuser la mesure d'audience sur son appareil ; un second clic la rétablit. Ses libellés et le message « Vos visites ne sont pas comptées » se modifient dans la même section. Le bouton n'apparaît pas si le navigateur demande déjà à ne pas être suivi.
+- **À revoir si le site change** : un formulaire qui enverrait ses données au serveur au lieu de préparer un e-mail, des polices hébergées sur le site au lieu de Google Fonts, une newsletter, un nouveau service externe (vidéo, avis, carte…) ou l'option « visiteurs récurrents » des statistiques. Le texte décrit le site tel qu'il est : il faut le corriger en français, puis faire relire les traductions, qui passent « à revoir ».
+
 ### Menus et liens
 
 **Menus et liens** regroupe toutes les listes de liens du site :
