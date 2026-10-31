@@ -1,0 +1,62 @@
+{
+  "global.chat-pastille-restaurant": {
+    "fr": "Restaurant",
+    "en": "Restaurant",
+    "es": "Restaurante",
+    "it": "Ristorante",
+    "de": "Restaurant",
+    "pt": "Restaurante",
+    "sv": "Restaurang",
+    "no": "Restaurant",
+    "el": "Εστιατόριο",
+    "ru": "Ресторан",
+    "ja": "レストラン",
+    "zh": "餐厅",
+    "ko": "레스토랑"
+  },
+  "global.chat-pastille-bars": {
+    "fr": "Bars",
+    "en": "Bars",
+    "es": "Bares",
+    "it": "Bar",
+    "de": "Bars",
+    "pt": "Bares",
+    "sv": "Barer",
+    "no": "Barer",
+    "el": "Μπαρ",
+    "ru": "Бары",
+    "ja": "バー",
+    "zh": "酒吧",
+    "ko": "바"
+  },
+  "global.chat-pastille-seminaire": {
+    "fr": "Séminaire",
+    "en": "Meetings & events",
+    "es": "Reuniones y eventos",
+    "it": "Meeting ed eventi",
+    "de": "Tagungen",
+    "pt": "Reuniões e eventos",
+    "sv": "Möten och konferens",
+    "no": "Møter og konferanse",
+    "el": "Συνέδρια",
+    "ru": "Семинары",
+    "ja": "会議・イベント",
+    "zh": "会议活动",
+    "ko": "회의·행사"
+  },
+  "global.chat-pastille-animaux": {
+    "fr": "Animaux",
+    "en": "Pets",
+    "es": "Mascotas",
+    "it": "Animali",
+    "de": "Haustiere",
+    "pt": "Animais",
+    "sv": "Husdjur",
+    "no": "Kjæledyr",
+    "el": "Κατοικίδια",
+    "ru": "Животные",
+    "ja": "ペット",
+    "zh": "宠物",
+    "ko": "반려동물"
+  }
+}
