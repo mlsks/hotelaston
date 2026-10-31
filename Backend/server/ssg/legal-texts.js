@@ -28,14 +28,24 @@ const LABELS = {
  * @returns nombre de textes créés
  */
 export function ensureLegalTexts(db, { seed = readSeed() } = {}) {
+  return ensureSeededTexts(db, { seed, section: SECTION, labels: LABELS, near: NEAR, type: 'richtext' });
+}
+
+/**
+ * Crée des textes communs livrés avec leurs traductions (seed : { clé: { langue: texte } }),
+ * placés après le texte « near » dans la section donnée. Même règles que ci-dessus.
+ */
+export function ensureSeededTexts(db, { seed, section, labels = {}, near, type = 'text' }) {
   const def = db.prepare('SELECT code FROM cms_languages WHERE is_default = 1').pluck().get();
   if (!def) return 0;
   const langs = db.prepare('SELECT code FROM cms_languages').pluck().all();
-  const position = db.prepare('SELECT position FROM cms_entries WHERE key = ?').pluck().get(NEAR) ?? 0;
+  const nearRow = db.prepare('SELECT position, section FROM cms_entries WHERE key = ?').get(near);
+  const position = nearRow?.position ?? 0;
+  section ??= nearRow?.section ?? 'Textes communs';
   const now = nowIso();
   const entryId = db.prepare('SELECT id FROM cms_entries WHERE key = ?').pluck();
   const insEntry = db.prepare(`INSERT INTO cms_entries (key, page_id, section, type, label, translatable, required, position, created_at, updated_at)
-    VALUES (?, NULL, ?, 'richtext', ?, 1, 1, ?, ?, ?)`);
+    VALUES (?, NULL, ?, ?, ?, 1, 1, ?, ?, ?)`);
   const valueOf = db.prepare('SELECT value FROM cms_entry_values WHERE entry_id = ? AND lang = ?').pluck();
   const insValue = db.prepare(`INSERT INTO cms_entry_values (entry_id, lang, value, status, source_hash, updated_at) VALUES (?, ?, ?, ?, ?, ?)
     ON CONFLICT (entry_id, lang) DO NOTHING`);
@@ -47,7 +57,7 @@ export function ensureLegalTexts(db, { seed = readSeed() } = {}) {
       if (!source) continue;
       let id = entryId.get(key);
       if (!id) {
-        id = insEntry.run(key, SECTION, LABELS[key] || key, position, now, now).lastInsertRowid;
+        id = insEntry.run(key, section, type, labels[key] || key, position, now, now).lastInsertRowid;
         insValue.run(id, def, source, 'ready', sha(source), now);
         added += 1;
       }

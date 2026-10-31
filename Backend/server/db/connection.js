@@ -17,6 +17,7 @@ import { ensureMeetingRooms } from '../ssg/meeting-rooms.js';
 import { ensurePosts, ensureBlogMenu } from '../ssg/posts.js';
 import { ensureJsonLd } from '../ssg/jsonld-texts.js';
 import { ensureLegalTexts } from '../ssg/legal-texts.js';
+import { ensureChatChips } from '../ssg/chat-chips.js';
 import { ensureLegalPage, ensurePrivacyPage } from '../ssg/legal-page.js';
 import { ensureGoogleReviews } from '../ssg/google-reviews.js';
 
@@ -58,6 +59,7 @@ export function getDb() {
     ensureBlockEntries(shared);
     ensureJsonLd(shared);
     ensureLegalTexts(shared);
+    ensureChatChips(shared);
     ensureLegalPage(shared);
     ensurePrivacyPage(shared);
     ensureGoogleReviews(shared);

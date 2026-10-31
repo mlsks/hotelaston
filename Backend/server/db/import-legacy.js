@@ -25,6 +25,7 @@ import { ensureMeetingRooms } from '../ssg/meeting-rooms.js';
 import { ensurePosts, ensureBlogMenu } from '../ssg/posts.js';
 import { ensureJsonLd } from '../ssg/jsonld-texts.js';
 import { ensureLegalTexts } from '../ssg/legal-texts.js';
+import { ensureChatChips } from '../ssg/chat-chips.js';
 import { ensureLegalPage, ensurePrivacyPage } from '../ssg/legal-page.js';
 import { ensureGoogleReviews } from '../ssg/google-reviews.js';
 
@@ -391,6 +392,7 @@ export function importLegacy(db, { force = false, forceAssets = false, writeTemp
   ensureBlockEntries(db); // textes ajoutés avec les blocs des pages (liens, chiffres)
   ensureJsonLd(db); // données structurées : modèle unique, textes traduisibles jsonld.*
   ensureLegalTexts(db); // mentions légales du bas du pied de page (global.mentions-*)
+  ensureChatChips(db); // pastilles du chat ajoutées après la maquette (global.chat-pastille-*)
   ensureLegalPage(db); // page Mentions légales (textes dans toutes les langues, hébergeur à remplir)
   ensurePrivacyPage(db); // page Politique de confidentialité (textes dans toutes les langues, liens de l'ancien site redirigés)
   ensureGoogleReviews(db); // avis de démonstration → table des avis Google (exemples)
