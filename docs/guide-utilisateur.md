@@ -184,7 +184,7 @@ Ces textes ne retiennent pas une page : tant qu'un d'eux n'est pas traduit dans 
 | Blog (articles) | Un article par fiche : titre, rubrique, date, photo ou vidéo, résumé, texte, réglages Google. Chaque article a sa propre page sous la page Blog. Voir [Le blog](#le-blog). |
 | Salles de séminaire | Une fiche par salle : nom, précisions, photo, surface et capacités. Voir [Les salles de séminaire](#les-salles-de-seminaire). |
 | Équipements | Les pictogrammes et libellés utilisés par les fiches chambre. |
-| Réponses du chat | Les mots déclencheurs (si la question du visiteur en contient un, le chat donne cette réponse) et la réponse. |
+| Réponses du chat | Les mots déclencheurs (si la question du visiteur en contient un, le chat donne cette réponse) et la réponse. Le chat ne propose pas de rappel téléphonique (retiré le 31/10/2026) : l'ancienne réponse « rappel » est désactivée, la réactiver ici la remet en service. |
 | Programme Live Music, Artistes | Voir [Live Music](#5-live-music-concerts-et-artistes). |
 | Bandeaux photo (HERO) | Le dégradé derrière le texte du grand bandeau en haut de l'Accueil, des Séminaires et du Moon Bar. Voir [Les bandeaux photo (HERO)](#les-bandeaux-photo-hero). |
 

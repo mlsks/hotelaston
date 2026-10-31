@@ -174,6 +174,23 @@ export function applyTextRenames(db, { renames = readJson(RENAMES, []) } = {}) {
   return changed;
 }
 
+/**
+ * Le chat ne propose plus de rappel téléphonique (31/10/2026) : la réponse « rappel » est désactivée
+ * une seule fois sur les bases existantes ; la réactiver dans l'admin la remet en service.
+ */
+export function retireChatCallback(db) {
+  const FLAG = 'chat.callback-retired';
+  if (db.prepare('SELECT 1 FROM cms_settings WHERE key = ?').get(FLAG)) return 0;
+  if (!db.prepare("SELECT 1 FROM cms_items WHERE collection = 'chat'").get()) return 0; // site pas encore importé
+  const now = nowIso();
+  let changed = 0;
+  db.transaction(() => {
+    changed = db.prepare("UPDATE cms_items SET is_active = 0, updated_at = ? WHERE collection = 'chat' AND key = 'rappel' AND is_active = 1").run(now).changes;
+    db.prepare('INSERT INTO cms_settings (key, value, updated_at) VALUES (?, ?, ?)').run(FLAG, 'true', now);
+  })();
+  return changed;
+}
+
 function readJson(file, fallback) {
   return fs.existsSync(file) ? JSON.parse(fs.readFileSync(file, 'utf8')) : fallback;
 }

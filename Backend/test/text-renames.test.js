@@ -51,3 +51,34 @@ test('un texte modifié dans l’admin n’est jamais écrasé', () => {
   assert.equal(applyTextRenames(db), 0);
   assert.equal(value('fr').value, 'Lire tous nos avis');
 });
+
+test('chat : la réponse par défaut ne propose plus de rappel, dans toutes les langues', () => {
+  const key = 'global.chat-sans-reponse';
+  const get = (lang) => db.prepare('SELECT v.* FROM cms_entry_values v JOIN cms_entries e ON e.id = v.entry_id WHERE e.key = ? AND v.lang = ?').get(key, lang);
+  const fresh = get('fr').value;
+  assert.doesNotMatch(fresh, /rappeler/);
+  const old = fresh.replace(/\.$/, ', ou je peux vous faire rappeler.');
+  db.prepare(`UPDATE cms_entry_values SET value = ? WHERE lang = 'fr' AND entry_id = (SELECT id FROM cms_entries WHERE key = ?)`).run(old, key);
+  assert.equal(applyTextRenames(db), 1);
+  assert.equal(get('fr').value, fresh);
+  assert.match(get('en').value, /^I don't have a precise answer.*tel:\+33492175300/);
+  assert.equal(get('en').status, 'ready');
+});
+
+test('chat : ni bouton ni réponse « Être rappelé » ; une ancienne base perd la réponse une seule fois', async () => {
+  const { retireChatCallback } = await import('../server/ssg/ui-strings.js');
+  const layout = fs.readFileSync(new URL('../templates-src/layout.html', import.meta.url), 'utf8');
+  assert.doesNotMatch(layout, /data-ask="rappel"/);
+  assert.equal(db.prepare("SELECT COUNT(*) FROM cms_items WHERE collection = 'chat' AND key = 'rappel'").pluck().get(), 0);
+  // Ancienne base : la réponse « rappel » existe encore
+  const now = new Date().toISOString();
+  db.prepare("DELETE FROM cms_settings WHERE key = 'chat.callback-retired'").run();
+  db.prepare("INSERT INTO cms_items (collection, key, data, is_active, position, created_at, updated_at) VALUES ('chat', 'rappel', '{}', 1, 99, ?, ?)").run(now, now);
+  assert.equal(retireChatCallback(db), 1);
+  const active = () => db.prepare("SELECT is_active FROM cms_items WHERE collection = 'chat' AND key = 'rappel'").pluck().get();
+  assert.equal(active(), 0);
+  // Réactivée dans l'admin : plus jamais désactivée
+  db.prepare("UPDATE cms_items SET is_active = 1 WHERE collection = 'chat' AND key = 'rappel'").run();
+  assert.equal(retireChatCallback(db), 0);
+  assert.equal(active(), 1);
+});
