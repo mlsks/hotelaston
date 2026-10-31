@@ -3,21 +3,18 @@
         <nav class="breadcrumb" aria-label="Fil d'Ariane" data-cms-attr="aria-label:blog.001-nav@aria-label"><a href="#/" data-cms-key="blog.002-a">Accueil</a><span aria-hidden="true">›</span><span aria-current="page" data-cms-key="blog.003-span">Journal</span></nav>
         <h1 data-cms-key="blog.004-h1">Le journal de l'Aston : vivre Nice</h1>
       </header>
-      <div class="container container--narrow">
-        <article class="post" id="blog-vieille-ville">
-          <p class="eyebrow" data-cms-key="blog.005-p">Quartier</p>
-          <h2 data-cms-key="blog.006-h2">La Vieille Ville à pied, en deux heures, depuis l'hôtel</h2>
-          <p data-cms-key="blog.007-p">Traversez la Promenade du Paillon et passez l'Opéra (300 m). Le cours Saleya et son marché aux fleurs (500 m) s'animent le matin du mardi au dimanche ; le lundi, place aux antiquaires. Remontez vers la place Rossetti et la cathédrale Sainte-Réparate, son dôme de tuiles vernissées, puis gagnez la colline du Château (900 m) pour la vue sur la baie des Anges, à l'heure du coup de canon.</p>
-        </article>
-        <article class="post" id="blog-canon">
-          <p class="eyebrow" data-cms-key="blog.008-p">Histoire</p>
-          <h2 data-cms-key="blog.009-h2">Le coup de canon de midi est né sur notre terrasse</h2>
-          <p data-cms-html="blog.010-p">En 1861, Sir Thomas Coventry, hôte fidèle de l'hôtel Chauvain, obtient du maire de faire tirer un canon à midi pile. Ses instruments, installés sur la terrasse de l'hôtel, fixaient l'heure exacte. Plus de 160 ans plus tard, Nice entend toujours la détonation chaque jour à midi. <a href="#/notre-histoire">Lire notre histoire</a>.</p>
-        </article>
-        <article class="post" id="blog-carnaval">
-          <p class="eyebrow" data-cms-key="blog.011-p">Événement</p>
-          <h2 data-cms-key="blog.012-h2">Le Carnaval de Nice depuis la place Masséna</h2>
-          <p data-cms-html="blog.013-p">Chaque février, corsos et batailles de fleurs investissent la place Masséna et la Promenade des Anglais. L'hôtel est à 100 m de l'entrée des festivités : vous rejoignez les tribunes en deux minutes et rentrez vous reposer entre deux défilés. <a href="#/offres?famille=sejour">Voir l'offre Carnaval</a>.</p>
-        </article>
+      <div class="container">
+        <!-- Articles : fiches « Blog (articles) », dans leur ordre (server/ssg/posts.js) -->
+        <div class="post-grid" data-cms-posts="">
+          <article class="post-card">
+            <a class="post-card__media" data-f="mediaLink"><img data-f="media" data-cms-sizes="(min-width: 1100px) 33vw, (min-width: 700px) 50vw, 100vw" alt=""></a>
+            <div class="post-card__body">
+              <p class="eyebrow" data-f="category"></p>
+              <h2 class="post-card__title"><a data-f="link"></a></h2>
+              <p class="post-card__meta"><time data-f="date"></time></p>
+              <p class="post-card__summary" data-f="summary"></p>
+            </div>
+          </article>
+        </div>
       </div>
     </section>

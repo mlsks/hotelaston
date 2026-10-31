@@ -6,7 +6,7 @@ import { guard, assertCan, assertInScope, isScoped, rulesOf, folderInScope } fro
 import { notFound, badRequest, sanitizeRich, toUtcIso } from '../lib/http.js';
 import { nowIso, sha, isPlainObject } from '../lib/util.js';
 import { audit } from '../lib/audit.js';
-import { splitTranslatable, mergeTranslation } from '../ssg/collections.js';
+import { splitTranslatable, mergeTranslation, COLLECTIONS } from '../ssg/collections.js';
 import { scanLinkLists, LINKS } from '../ssg/link-lists.js';
 import { VENUES } from '../ssg/menus.js';
 import { FAMILIES, ACTIONS } from '../ssg/offer-cards.js';
@@ -14,7 +14,7 @@ import { CAPACITIES } from '../ssg/meeting-rooms.js';
 import { ID, ID_LANG, STATUS, DATE, assertLang, translationState, pick, updateRow, bool } from './helpers.js';
 
 /** Champs en texte riche, nettoyés à l'enregistrement. */
-const HTML_FIELDS = { services: ['body'], chat: ['answer'] };
+const HTML_FIELDS = { services: ['body'], chat: ['answer'], posts: ['body'] };
 const KEY = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
 
 function cleanHtml(collection, data) {
@@ -65,6 +65,11 @@ const VALIDATE = {
       if (!/^(\d{1,5}|—|-)?$/.test(String(item[f] ?? '').trim())) throw badRequest('Salle : capacités en nombre de personnes, « — » si impossible, vide pour « Sur demande ».');
     }
     if (item.media && !db.prepare("SELECT 1 FROM cms_media WHERE id = ? AND kind = 'image' AND deleted_at IS NULL").get(item.media)) throw badRequest('Salle : photo introuvable dans la médiathèque.');
+  },
+  posts(item, db) {
+    if (!String(item.title ?? '').trim()) throw badRequest('Article : titre obligatoire.');
+    if (item.date && (!/^\d{4}-\d{2}-\d{2}$/.test(item.date) || Number.isNaN(Date.parse(item.date)))) throw badRequest('Article : date au format AAAA-MM-JJ.');
+    if (item.media != null && item.media !== '' && !db.prepare("SELECT 1 FROM cms_media WHERE id = ? AND kind IN ('image', 'video') AND deleted_at IS NULL").get(item.media)) throw badRequest('Article : photo ou vidéo introuvable dans la médiathèque.');
   },
   links(item, db) {
     const list = scanLinkLists().find((l) => l.key === item.list);
@@ -143,7 +148,10 @@ export default function collectionRoutes(app, { db, defaultLang }) {
     VALIDATE[c.key]?.(req.body.data, db);
     const { base, translated } = splitTranslatable(cleanHtml(c.key, req.body.data), c.schema.translatable);
     const now = nowIso();
-    const position = req.body.position ?? db.prepare('SELECT COALESCE(MAX(position), -1) + 1 FROM cms_items WHERE collection = ?').pluck().get(c.key);
+    // Blog : un nouvel article passe en tête de liste ; ailleurs, en fin de liste
+    const position = req.body.position ?? (COLLECTIONS[c.key]?.newFirst
+      ? db.prepare('SELECT COALESCE(MIN(position), 1) - 1 FROM cms_items WHERE collection = ?').pluck().get(c.key)
+      : db.prepare('SELECT COALESCE(MAX(position), -1) + 1 FROM cms_items WHERE collection = ?').pluck().get(c.key));
     const id = db.transaction(() => {
       const newId = db.prepare(`INSERT INTO cms_items (collection, key, data, is_active, start_at, end_at, position, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`)
         .run(c.key, req.body.key, JSON.stringify(base), bool(req.body.is_active ?? true), toUtcIso(req.body.start_at), toUtcIso(req.body.end_at), position, now, now).lastInsertRowid;

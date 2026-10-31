@@ -5,8 +5,8 @@
  */
 
 const HEADINGS = {
-  fr: { facts: 'Informations pratiques', places: 'Restaurant et bars', pages: "Pages de l'hôtel", rooms: 'Chambres et suites', services: 'Services', langs: 'Autres langues', more: 'Optional', sitemap: 'Plan du site (toutes les pages, toutes les langues)', address: 'Adresse', phone: 'Téléphone', email: 'E-mail', checkin: 'Arrivée à partir de', checkout: 'Départ avant', stars: 'Classement', starsValue: (n) => `${n} étoiles`, geo: 'Coordonnées GPS', map: 'Plan', amenities: 'Équipements', hours: 'horaires', daily: 'tous les jours' },
-  en: { facts: 'Key facts', places: 'Restaurant and bars', pages: 'Hotel pages', rooms: 'Rooms and suites', services: 'Services', langs: 'Other languages', more: 'Optional', sitemap: 'Sitemap (every page, every language)', address: 'Address', phone: 'Phone', email: 'Email', checkin: 'Check-in from', checkout: 'Check-out by', stars: 'Rating', starsValue: (n) => `${n} stars`, geo: 'GPS coordinates', map: 'Map', amenities: 'Amenities', hours: 'hours', daily: 'daily' },
+  fr: { facts: 'Informations pratiques', places: 'Restaurant et bars', pages: "Pages de l'hôtel", rooms: 'Chambres et suites', services: 'Services', posts: 'Blog', langs: 'Autres langues', more: 'Optional', sitemap: 'Plan du site (toutes les pages, toutes les langues)', address: 'Adresse', phone: 'Téléphone', email: 'E-mail', checkin: 'Arrivée à partir de', checkout: 'Départ avant', stars: 'Classement', starsValue: (n) => `${n} étoiles`, geo: 'Coordonnées GPS', map: 'Plan', amenities: 'Équipements', hours: 'horaires', daily: 'tous les jours' },
+  en: { facts: 'Key facts', places: 'Restaurant and bars', pages: 'Hotel pages', rooms: 'Rooms and suites', services: 'Services', posts: 'Blog', langs: 'Other languages', more: 'Optional', sitemap: 'Sitemap (every page, every language)', address: 'Address', phone: 'Phone', email: 'Email', checkin: 'Check-in from', checkout: 'Check-out by', stars: 'Rating', starsValue: (n) => `${n} stars`, geo: 'GPS coordinates', map: 'Map', amenities: 'Amenities', hours: 'hours', daily: 'daily' },
 };
 
 const line = (s) => String(s ?? '').replace(/\s+/g, ' ').trim();
@@ -21,7 +21,7 @@ function hours(node, h) {
 
 /**
  * @param graph  graphe JSON-LD commun, déjà dans la langue du fichier
- * @param pages  [{ lang, path, title, description, kind: 'page' | 'rooms' | 'services', inSitemap }]
+ * @param pages  [{ lang, path, title, description, kind: 'page' | 'rooms' | 'services' | 'posts', inSitemap }]
  * @param homes  [{ lang, name, url }] accueil de chaque langue publiée
  */
 export function llmsTxt({ siteUrl, lang, graph, pages, homes }) {
@@ -54,7 +54,7 @@ export function llmsTxt({ siteUrl, lang, graph, pages, homes }) {
   }
 
   const own = pages.filter((p) => p.lang === lang && p.inSitemap);
-  for (const [kind, title] of [['page', h.pages], ['rooms', h.rooms], ['services', h.services]]) {
+  for (const [kind, title] of [['page', h.pages], ['rooms', h.rooms], ['services', h.services], ['posts', h.posts]]) {
     const list = own.filter((p) => p.kind === kind);
     if (!list.length) continue;
     out.push(`## ${title}`, '', ...list.map((p) => `- [${line(p.title)}](${siteUrl}${p.path})${p.description ? `: ${line(p.description)}` : ''}`), '');

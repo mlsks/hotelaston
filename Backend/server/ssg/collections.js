@@ -38,6 +38,16 @@ export const COLLECTIONS = {
   offers: { label: 'Offres', translatable: ['tag', 'title', 'alt', 'price', 'priceNote', 'includes[]', 'saving', 'conditions', 'button', 'teaserTitle', 'teaserText'] },
   // Salles de séminaire (voir meeting-rooms.js) : tableau des capacités de la page Séminaires, formulaire de devis
   meeting_rooms: { label: 'Salles de séminaire', translatable: ['name', 'detail'] },
+  // Articles du blog (voir posts.js) : une page par article sous la page Blog ; non traduit, l'article
+  // s'affiche en anglais s'il y est prêt, sinon en français (relay), et les nouveaux passent en tête (newFirst)
+  posts: {
+    label: 'Blog (articles)',
+    itemTemplate: 'items/article.html',
+    parentPage: 'blog',
+    relay: true,
+    newFirst: true,
+    translatable: ['category', 'title', 'summary', 'body', 'alt', 'seoTitle', 'metaDescription'],
+  },
   menus: { label: 'Cartes du restaurant et des bars', translatable: ['title', 'subtitle', 'backLabel', 'note', 'sections[].title', 'sections[].dishes[].name', 'sections[].dishes[].desc'] },
 };
 

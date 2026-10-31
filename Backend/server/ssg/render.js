@@ -15,6 +15,7 @@ import { renderOfferCards } from './offer-cards.js';
 import { applyBlocks, syncCounters } from './page-blocks.js';
 import { applyHeroVeil } from './hero-veil.js';
 import { renderMeetingRooms } from './meeting-rooms.js';
+import { renderPostList } from './posts.js';
 import { reviewsData } from './google-reviews.js';
 import { fillVars, sha } from '../lib/util.js';
 import { globalGraph, breadcrumbFromDom, faqFromDom, webPageNode, jsonForScript } from './jsonld.js';
@@ -113,13 +114,15 @@ export function renderPage(site, lang, target, head) {
   renderOfferCards($, { source, lang, now: site.now, cdn: source.settings.cdn_base || '' });
   // Salles de séminaire : tableau de la page Séminaires et liste du formulaire de devis
   renderMeetingRooms($, { source, lang, now: site.now, cdn: source.settings.cdn_base || '' });
+  // Articles de la page Blog : depuis les fiches « posts »
+  renderPostList($, { source, lang, now: site.now });
   injectTexts($, (key) => text(key), mark);
   // Lignes facultatives (data-cms-optional) : retirées tant que leurs textes facultatifs sont vides
   hideEmptyOptional($, source, site.warn);
   syncCounters($);
   injectMedia($, source, lang, (key) => missing.add(key));
 
-  /* 3. Fiche (chambre, service), bandeaux, popup */
+  /* 3. Fiche (chambre, service, article), bandeaux, popup */
   const itemMeta = target.type === 'item' ? target.fill($, view, (key, vars) => text(key, vars).value) : null;
   const uiText = (key) => text(key).value;
   const pageId = target.type === 'page' ? target.page.id : target.parentId;
