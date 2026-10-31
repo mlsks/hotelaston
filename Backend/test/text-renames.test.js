@@ -51,3 +51,16 @@ test('un texte modifié dans l’admin n’est jamais écrasé', () => {
   assert.equal(applyTextRenames(db), 0);
   assert.equal(value('fr').value, 'Lire tous nos avis');
 });
+
+test('chat : la réponse par défaut ne propose plus de rappel, dans toutes les langues', () => {
+  const key = 'global.chat-sans-reponse';
+  const get = (lang) => db.prepare('SELECT v.* FROM cms_entry_values v JOIN cms_entries e ON e.id = v.entry_id WHERE e.key = ? AND v.lang = ?').get(key, lang);
+  const fresh = get('fr').value;
+  assert.doesNotMatch(fresh, /rappeler/);
+  const old = fresh.replace(/\.$/, ', ou je peux vous faire rappeler.');
+  db.prepare(`UPDATE cms_entry_values SET value = ? WHERE lang = 'fr' AND entry_id = (SELECT id FROM cms_entries WHERE key = ?)`).run(old, key);
+  assert.equal(applyTextRenames(db), 1);
+  assert.equal(get('fr').value, fresh);
+  assert.match(get('en').value, /^I don't have a precise answer.*tel:\+33492175300/);
+  assert.equal(get('en').status, 'ready');
+});

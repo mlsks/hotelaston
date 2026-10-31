@@ -18,5 +18,25 @@
       "zh": "全部评价",
       "ko": "모든 리뷰"
     }
+  },
+  {
+    "key": "global.chat-sans-reponse",
+    "date": "2026-10-31",
+    "from": "Je n'ai pas de réponse précise à cette question. La réception répond au <a href=\"tel:+33492175300\">04 92 17 53 00</a>, ou je peux vous faire rappeler.",
+    "to": {
+      "fr": "Je n'ai pas de réponse précise à cette question. La réception répond au <a href=\"tel:+33492175300\">04 92 17 53 00</a>.",
+      "en": "I don't have a precise answer to that question. Reception can help you on <a href=\"tel:+33492175300\">+33 4 92 17 53 00</a>.",
+      "es": "No tengo una respuesta precisa a esta pregunta. La recepción le atiende en el <a href=\"tel:+33492175300\">+33 4 92 17 53 00</a>.",
+      "it": "Non ho una risposta precisa a questa domanda. La reception risponde al numero <a href=\"tel:+33492175300\">+33 4 92 17 53 00</a>.",
+      "de": "Auf diese Frage habe ich keine genaue Antwort. Die Rezeption erreichen Sie unter <a href=\"tel:+33492175300\">+33 4 92 17 53 00</a>.",
+      "pt": "Não tenho uma resposta precisa para esta pergunta. A receção atende pelo <a href=\"tel:+33492175300\">+33 4 92 17 53 00</a>.",
+      "sv": "Jag har inget exakt svar på den frågan. Receptionen nås på <a href=\"tel:+33492175300\">+33 4 92 17 53 00</a>.",
+      "no": "Jeg har ikke et presist svar på dette spørsmålet. Resepsjonen svarer på <a href=\"tel:+33492175300\">+33 4 92 17 53 00</a>.",
+      "el": "Δεν έχω ακριβή απάντηση σε αυτή την ερώτηση. Η ρεσεψιόν απαντά στο <a href=\"tel:+33492175300\">+33 4 92 17 53 00</a>.",
+      "ru": "У меня нет точного ответа на этот вопрос. Стойка регистрации отвечает по телефону <a href=\"tel:+33492175300\">+33 4 92 17 53 00</a>.",
+      "ja": "このご質問には正確にお答えできません。フロント（<a href=\"tel:+33492175300\">+33 4 92 17 53 00</a>）までお問い合わせください。",
+      "zh": "这个问题我无法给出准确的答复。请致电前台：<a href=\"tel:+33492175300\">+33 4 92 17 53 00</a>。",
+      "ko": "이 질문에는 정확히 답변드리기 어렵습니다. 프런트 데스크(<a href=\"tel:+33492175300\">+33 4 92 17 53 00</a>)로 문의해 주세요."
+    }
   }
 ]
