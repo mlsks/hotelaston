@@ -1,0 +1,22 @@
+[
+  {
+    "key": "accueil.133-a",
+    "date": "2026-10-31",
+    "from": "Tous les avis et nos réponses",
+    "to": {
+      "fr": "Tous les avis",
+      "en": "All reviews",
+      "es": "Todas las opiniones",
+      "it": "Tutte le recensioni",
+      "de": "Alle Bewertungen",
+      "pt": "Todas as avaliações",
+      "sv": "Alla recensioner",
+      "no": "Alle anmeldelser",
+      "el": "Όλες οι κριτικές",
+      "ru": "Все отзывы",
+      "ja": "すべてのクチコミ",
+      "zh": "全部评价",
+      "ko": "모든 리뷰"
+    }
+  }
+]
