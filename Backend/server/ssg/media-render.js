@@ -80,9 +80,9 @@ export function injectMedia($, source, lang, onMissing) {
     const row = own?.media_id ? own : rows[source.defaultLang];
     const info = source.mediaFor(row?.media_id, lang);
     // Photo facultative (data-cms-media-optional) : sans image choisie, elle s'efface et son remplaçant
-    // voisin (data-cms-media-fallback, un pictogramme) reste ; avec une image, c'est le remplaçant qui part.
+    // voisin (data-cms-media-fallback : pictogramme, image d'origine du gabarit) reste ; avec une image, c'est le remplaçant qui part.
     const optional = 'data-cms-media-optional' in el.attribs;
-    const fallback = $(el).siblings('[data-cms-media-fallback]');
+    const fallback = $(el).nextAll('[data-cms-media-fallback]').first(); // le remplaçant qui suit la photo
     if (!info) {
       if (!optional) return void onMissing(key);
       fallback.removeAttr('data-cms-media-fallback');

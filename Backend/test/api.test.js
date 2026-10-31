@@ -220,6 +220,14 @@ test('photo facultative (data-cms-media-optional) : pictogramme tant qu’aucune
   res = await call('editor', 'PUT', `/api/entries/${entryId('test.tile')}/fr`, { media_id: null });
   assert.equal(res.statusCode, 200, res.body);
   assert.equal(render()('.service-tile__icon').length, 1);
+  // Deux paires côte à côte (logos de l'en-tête) : chaque photo ne retire que le remplaçant qui la suit
+  await call('editor', 'PUT', `/api/entries/${entryId('test.tile')}/fr`, { media_id: media });
+  const $$ = cheerio.load('<a><img data-cms-media="test.tile" data-cms-media-optional class="a" alt=""><img src="a.png" class="a" data-cms-media-fallback><img data-cms-media="test.none" data-cms-media-optional class="b" alt=""><img src="b.png" class="b" data-cms-media-fallback></a>', null, false);
+  injectMedia($$, new Source(db, { mode: 'production' }), 'fr', () => assert.fail('photo facultative comptée manquante'));
+  assert.equal($$('img[src="a.png"]').length, 0);
+  assert.match($$('img.a').attr('src'), /^\/media\//);
+  assert.equal($$('img[src="b.png"]').length, 1);
+  assert.equal($$('img.b').length, 1);
 });
 
 test('bandeaux : programmés, placés, traduits, avec double sécurité des dates', async () => {

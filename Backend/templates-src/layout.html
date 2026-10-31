@@ -134,8 +134,10 @@
 
       <!-- Logo de l'hôtel : blanc sur le Hero, or quand l'en-tête devient clair -->
       <a class="header-logo" href="#/" aria-hidden="true" tabindex="-1">
-        <img class="header-logo__light" src="img/logo-aston-blanc.png" alt="" width="222" height="180">
-        <img class="header-logo__dark" src="img/logo-aston-or.png" alt="" width="216" height="180">
+        <img class="header-logo__light" data-cms-media="global.logo-entete-blanc" data-cms-media-optional data-cms-sizes="240px" data-cms-decorative data-cms-portrait="off" alt="" loading="eager">
+        <img class="header-logo__light" src="img/logo-aston-blanc.png" alt="" width="222" height="180" data-cms-media-fallback>
+        <img class="header-logo__dark" data-cms-media="global.logo-entete-or" data-cms-media-optional data-cms-sizes="240px" data-cms-decorative data-cms-portrait="off" alt="" loading="eager">
+        <img class="header-logo__dark" src="img/logo-aston-or.png" alt="" width="216" height="180" data-cms-media-fallback>
       </a>
 
       <nav class="main-nav" aria-label="Navigation principale" data-cms-attr="aria-label:global.005-nav@aria-label">

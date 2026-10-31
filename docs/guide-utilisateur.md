@@ -351,6 +351,17 @@ Pour changer la photo d'une page : onglet **Textes** de la page, **Changer l'ima
 
 Sur l'accueil, les vignettes **Conciergerie** et **Bagagerie gratuite** (section « Tout ce qu'un 4 étoiles doit faciliter ») montrent un pictogramme tant qu'aucune photo n'est choisie : **Pages** → **Accueil** → onglet **Textes**, ligne **Photo** juste sous le titre de la vignette, **Changer l'image**. **Retirer l'image** remet le pictogramme. La photo de la page Conciergerie elle-même se change dans **Fiches et listes** → **Services** → **Conciergerie**, champ **Photos**.
 
+D'autres images d'origine se remplacent de la même façon ; tant qu'aucune n'est choisie, l'image d'origine reste, et **Retirer l'image** la fait revenir :
+
+| Image | Où la changer (taper le mot dans **Rechercher un texte…**) |
+|---|---|
+| Grand bandeau en haut de l'accueil (la piscine) | **Pages** → **Accueil** → **Textes**, rechercher **bandeau** |
+| Fond de la section « Restaurant & bars » de l'accueil | **Pages** → **Accueil** → **Textes**, rechercher **fond** |
+| Logo blanc de l'en-tête (sur le bandeau de l'accueil, grand écran) | **Textes communs**, rechercher **logo** |
+| Logo or de l'en-tête (sur fond clair, grand écran) | **Textes communs**, rechercher **logo** |
+
+Pour ces images, la description lue par Google et les lecteurs d'écran est celle de la **Médiathèque** : la remplir en ouvrant la photo. Les logos de l'en-tête doivent avoir un fond transparent (PNG). Chaque ligne **Photo** de l'onglet **Textes** indique maintenant où elle s'affiche.
+
 ### Bandeaux
 
 Des messages placés en haut des pages, sous le module de réservation, entre deux sections ou avant le pied de page. Ils s'affichent et disparaissent seuls aux dates choisies.
