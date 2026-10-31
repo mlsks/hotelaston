@@ -220,6 +220,37 @@ test('photo facultative (data-cms-media-optional) : pictogramme tant qu’aucune
   res = await call('editor', 'PUT', `/api/entries/${entryId('test.tile')}/fr`, { media_id: null });
   assert.equal(res.statusCode, 200, res.body);
   assert.equal(render()('.service-tile__icon').length, 1);
+  // Deux paires côte à côte (logos de l'en-tête) : chaque photo ne retire que le remplaçant qui la suit
+  await call('editor', 'PUT', `/api/entries/${entryId('test.tile')}/fr`, { media_id: media });
+  const $$ = cheerio.load('<a><img data-cms-media="test.tile" data-cms-media-optional class="a" alt=""><img src="a.png" class="a" data-cms-media-fallback><img data-cms-media="test.none" data-cms-media-optional class="b" alt=""><img src="b.png" class="b" data-cms-media-fallback></a>', null, false);
+  injectMedia($$, new Source(db, { mode: 'production' }), 'fr', () => assert.fail('photo facultative comptée manquante'));
+  assert.equal($$('img[src="a.png"]').length, 0);
+  assert.match($$('img.a').attr('src'), /^\/media\//);
+  assert.equal($$('img[src="b.png"]').length, 1);
+  assert.equal($$('img.b').length, 1);
+});
+
+test('vidéo de fond du gabarit (<video data-cms-media>) : source et image d’attente remplacées, chargement différé gardé', async () => {
+  db.prepare(`INSERT INTO cms_entries (key, section, type, label, translatable, required, position, created_at, updated_at) VALUES ('test.video-bandeau', 'Test', 'media', 'Vidéo', 0, 0, 0, '', '')`).run();
+  const html = '<video loop muted poster="ancien.webp" data-lazy-video data-cms-media="test.video-bandeau" data-cms-media-optional><source data-src="ancien.mp4" type="video/mp4"><source data-src="ancien.webm" type="video/webm"></video>';
+  const render = () => {
+    const $ = cheerio.load(html, null, false);
+    injectMedia($, new Source(db, { mode: 'production' }), 'fr', () => assert.fail('vidéo facultative comptée manquante'));
+    return $;
+  };
+  let $ = render();
+  assert.equal($('source').length, 2);
+  assert.equal($('video').attr('poster'), 'ancien.webp');
+  assert.equal($('[data-cms-media]').length, 0);
+  const video = db.prepare("SELECT id FROM cms_media WHERE kind = 'video' AND status = 'ready'").pluck().get();
+  if (!video) return; // sans ffmpeg, pas de vidéo dans la médiathèque de test
+  const res = await call('editor', 'PUT', `/api/entries/${entryId('test.video-bandeau')}/fr`, { media_id: video });
+  assert.equal(res.statusCode, 200, res.body);
+  $ = render();
+  assert.equal($('source').length, 1);
+  assert.match($('source').attr('data-src'), /^\/media\//);
+  assert.match($('video').attr('poster'), /^\/media\/.*poster/);
+  assert.equal($('video').attr('data-lazy-video'), '');
 });
 
 test('bandeaux : programmés, placés, traduits, avec double sécurité des dates', async () => {

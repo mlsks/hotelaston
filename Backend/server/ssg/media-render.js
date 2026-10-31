@@ -80,15 +80,29 @@ export function injectMedia($, source, lang, onMissing) {
     const row = own?.media_id ? own : rows[source.defaultLang];
     const info = source.mediaFor(row?.media_id, lang);
     // Photo facultative (data-cms-media-optional) : sans image choisie, elle s'efface et son remplaçant
-    // voisin (data-cms-media-fallback, un pictogramme) reste ; avec une image, c'est le remplaçant qui part.
+    // voisin (data-cms-media-fallback : pictogramme, image d'origine du gabarit) reste ; avec une image, c'est le remplaçant qui part.
     const optional = 'data-cms-media-optional' in el.attribs;
-    const fallback = $(el).siblings('[data-cms-media-fallback]');
+    const fallback = $(el).nextAll('[data-cms-media-fallback]').first(); // le remplaçant qui suit la photo
     if (!info) {
       if (!optional) return void onMissing(key);
+      if (el.name === 'video') return void $(el).removeAttr('data-cms-media data-cms-media-optional'); // vidéo d'origine
       fallback.removeAttr('data-cms-media-fallback');
       return void $(el).remove();
     }
     fallback.remove();
+    // Vidéo de fond du gabarit (<video data-cms-media>) : la balise reste, avec son chargement différé
+    // (data-lazy-video) ; seules sa source et son image d'attente changent.
+    if (el.name === 'video') {
+      const file = info.media.kind === 'video' && info.variants.find((v) => v.purpose === 'original');
+      if (!file) return void (optional ? $(el).removeAttr('data-cms-media data-cms-media-optional') : onMissing(key));
+      const poster = info.variants.find((v) => v.purpose === 'poster');
+      $(el).children('source').remove();
+      $(el).append(`<source data-src="${esc(url(file))}" type="${esc(info.media.mime || `video/${file.format}`)}">`);
+      if (poster) el.attribs.poster = url(poster);
+      else delete el.attribs.poster;
+      $(el).removeAttr('data-cms-media data-cms-media-optional');
+      return;
+    }
     const alt = 'data-cms-decorative' in el.attribs ? '' : el.attribs.alt || info.alt;
     const html = mediaHtml({ ...info, alt }, {
       sizes: el.attribs['data-cms-sizes'] || el.attribs.sizes || '100vw',

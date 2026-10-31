@@ -46,9 +46,9 @@
               <template x-if="e.type === 'media'">
                 <div class="flex items-center gap-3">
                   <img :src="mediaThumb(e)" alt="" class="h-20 w-28 shrink-0 rounded-md bg-slate-200 object-cover" x-show="mediaThumb(e)">
-                  <span x-show="!mediaThumb(e)" class="text-sm text-slate-500">Aucune image choisie</span>
-                  <button type="button" class="btn btn-secondary btn-sm" @click="pickMedia(e)" :disabled="!canEdit">Changer l’image</button>
-                  <button type="button" class="btn btn-secondary btn-sm" x-show="!e.required && mediaThumb(e)" @click="pickMedia(e, { remove: true })" :disabled="!canEdit">Retirer l’image</button>
+                  <span x-show="!mediaThumb(e)" class="text-sm text-slate-500" x-text="/\.video-/.test(e.key) ? 'Vidéo d’origine (aucune choisie)' : 'Aucune image choisie'"></span>
+                  <button type="button" class="btn btn-secondary btn-sm" @click="pickMedia(e)" :disabled="!canEdit" x-text="/\.video-/.test(e.key) ? 'Changer la vidéo' : 'Changer l’image'"></button>
+                  <button type="button" class="btn btn-secondary btn-sm" x-show="!e.required && mediaThumb(e)" @click="pickMedia(e, { remove: true })" :disabled="!canEdit" x-text="/\.video-/.test(e.key) ? 'Retirer la vidéo' : 'Retirer l’image'"></button>
                 </div>
               </template>
               <template x-if="!['richtext', 'media'].includes(e.type)">

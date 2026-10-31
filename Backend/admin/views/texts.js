@@ -101,7 +101,8 @@ Alpine.data('entriesEditor', (source, opts = {}) => ({
   mediaThumb(e) { return e.values[this.lang]?.thumb || e.values[this.def]?.thumb || ''; },
   /** Choisit l'image dans la médiathèque ; { remove: true } la retire (photo facultative : le pictogramme revient). */
   async pickMedia(e, { remove = false } = {}) {
-    const m = remove ? { id: null } : await this.$store.picker.show({ kinds: ['image'] });
+    const kinds = /\.video-/.test(e.key) ? ['video'] : ['image']; // « moon-bar.video-bandeau » : une vidéo
+    const m = remove ? { id: null } : await this.$store.picker.show({ kinds });
     if (!m || !this.canEdit) return;
     e.saveState = 'saving';
     try {
