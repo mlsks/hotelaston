@@ -199,6 +199,29 @@ test('image de la médiathèque injectée dans un gabarit (data-cms-media)', asy
   assert.equal($('[data-cms-media]').length, 0);
 });
 
+test('photo facultative (data-cms-media-optional) : pictogramme tant qu’aucune image, retirable', async () => {
+  const media = db.prepare("SELECT id FROM cms_media WHERE original_name = 'piscine.png'").pluck().get();
+  db.prepare(`INSERT INTO cms_entries (key, section, type, label, translatable, required, position, created_at, updated_at) VALUES ('test.tile', 'Test', 'media', 'Image', 0, 0, 0, '', '')`).run();
+  const html = '<a class="service-tile"><img data-cms-media="test.tile" data-cms-media-optional alt=""><span class="service-tile__icon" data-cms-media-fallback>icône</span></a>';
+  const render = () => {
+    const $ = cheerio.load(html, null, false);
+    injectMedia($, new Source(db, { mode: 'production' }), 'fr', () => assert.fail('photo facultative comptée manquante'));
+    return $;
+  };
+  let $ = render();
+  assert.equal($('img').length, 0);
+  assert.equal($('.service-tile__icon').text(), 'icône');
+  assert.equal($('[data-cms-media-fallback]').length, 0);
+  let res = await call('editor', 'PUT', `/api/entries/${entryId('test.tile')}/fr`, { media_id: media });
+  assert.equal(res.statusCode, 200, res.body);
+  $ = render();
+  assert.equal($('img').length, 1);
+  assert.equal($('.service-tile__icon').length, 0);
+  res = await call('editor', 'PUT', `/api/entries/${entryId('test.tile')}/fr`, { media_id: null });
+  assert.equal(res.statusCode, 200, res.body);
+  assert.equal(render()('.service-tile__icon').length, 1);
+});
+
 test('bandeaux : programmés, placés, traduits, avec double sécurité des dates', async () => {
   const hour = 3600e3;
   const iso = (ms) => new Date(Date.now() + ms).toISOString();

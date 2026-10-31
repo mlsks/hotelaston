@@ -99,8 +99,9 @@ Alpine.data('entriesEditor', (source, opts = {}) => ({
   },
   /** Image d'un emplacement photo (langue de travail, sinon langue d'origine). */
   mediaThumb(e) { return e.values[this.lang]?.thumb || e.values[this.def]?.thumb || ''; },
-  async pickMedia(e) {
-    const m = await this.$store.picker.show({ kinds: ['image'] });
+  /** Choisit l'image dans la médiathèque ; { remove: true } la retire (photo facultative : le pictogramme revient). */
+  async pickMedia(e, { remove = false } = {}) {
+    const m = remove ? { id: null } : await this.$store.picker.show({ kinds: ['image'] });
     if (!m || !this.canEdit) return;
     e.saveState = 'saving';
     try {

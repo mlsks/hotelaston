@@ -68,7 +68,8 @@ export function mediaHtml(info, opts) {
  * Remplace un <img data-cms-media="clé"> par l'image de la médiathèque choisie pour cette clé.
  * Le gabarit garde ses classes et son chargement (loading, fetchpriority). Le texte alternatif
  * écrit dans le gabarit (souvent traduit par data-cms-attr) l'emporte sur celui de la médiathèque ;
- * data-cms-decorative force un alt vide, data-cms-portrait="off" retire le recadrage pour téléphone.
+ * data-cms-decorative force un alt vide, data-cms-portrait="off" retire le recadrage pour téléphone,
+ * data-cms-media-optional rend la photo facultative (voir data-cms-media-fallback ci-dessous).
  */
 export function injectMedia($, source, lang, onMissing) {
   $('[data-cms-media]').each((i, el) => {
@@ -78,10 +79,16 @@ export function injectMedia($, source, lang, onMissing) {
     const own = source.usable(rows[lang], lang) ? rows[lang] : null;
     const row = own?.media_id ? own : rows[source.defaultLang];
     const info = source.mediaFor(row?.media_id, lang);
+    // Photo facultative (data-cms-media-optional) : sans image choisie, elle s'efface et son remplaçant
+    // voisin (data-cms-media-fallback, un pictogramme) reste ; avec une image, c'est le remplaçant qui part.
+    const optional = 'data-cms-media-optional' in el.attribs;
+    const fallback = $(el).siblings('[data-cms-media-fallback]');
     if (!info) {
-      onMissing(key);
-      return;
+      if (!optional) return void onMissing(key);
+      fallback.removeAttr('data-cms-media-fallback');
+      return void $(el).remove();
     }
+    fallback.remove();
     const alt = 'data-cms-decorative' in el.attribs ? '' : el.attribs.alt || info.alt;
     const html = mediaHtml({ ...info, alt }, {
       sizes: el.attribs['data-cms-sizes'] || el.attribs.sizes || '100vw',

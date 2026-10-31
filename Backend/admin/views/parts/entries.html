@@ -48,6 +48,7 @@
                   <img :src="mediaThumb(e)" alt="" class="h-20 w-28 shrink-0 rounded-md bg-slate-200 object-cover" x-show="mediaThumb(e)">
                   <span x-show="!mediaThumb(e)" class="text-sm text-slate-500">Aucune image choisie</span>
                   <button type="button" class="btn btn-secondary btn-sm" @click="pickMedia(e)" :disabled="!canEdit">Changer l’image</button>
+                  <button type="button" class="btn btn-secondary btn-sm" x-show="!e.required && mediaThumb(e)" @click="pickMedia(e, { remove: true })" :disabled="!canEdit">Retirer l’image</button>
                 </div>
               </template>
               <template x-if="!['richtext', 'media'].includes(e.type)">
