@@ -64,3 +64,21 @@ test('chat : la réponse par défaut ne propose plus de rappel, dans toutes les 
   assert.match(get('en').value, /^I don't have a precise answer.*tel:\+33492175300/);
   assert.equal(get('en').status, 'ready');
 });
+
+test('chat : ni bouton ni réponse « Être rappelé » ; une ancienne base perd la réponse une seule fois', async () => {
+  const { retireChatCallback } = await import('../server/ssg/ui-strings.js');
+  const layout = fs.readFileSync(new URL('../templates-src/layout.html', import.meta.url), 'utf8');
+  assert.doesNotMatch(layout, /data-ask="rappel"/);
+  assert.equal(db.prepare("SELECT COUNT(*) FROM cms_items WHERE collection = 'chat' AND key = 'rappel'").pluck().get(), 0);
+  // Ancienne base : la réponse « rappel » existe encore
+  const now = new Date().toISOString();
+  db.prepare("DELETE FROM cms_settings WHERE key = 'chat.callback-retired'").run();
+  db.prepare("INSERT INTO cms_items (collection, key, data, is_active, position, created_at, updated_at) VALUES ('chat', 'rappel', '{}', 1, 99, ?, ?)").run(now, now);
+  assert.equal(retireChatCallback(db), 1);
+  const active = () => db.prepare("SELECT is_active FROM cms_items WHERE collection = 'chat' AND key = 'rappel'").pluck().get();
+  assert.equal(active(), 0);
+  // Réactivée dans l'admin : plus jamais désactivée
+  db.prepare("UPDATE cms_items SET is_active = 1 WHERE collection = 'chat' AND key = 'rappel'").run();
+  assert.equal(retireChatCallback(db), 0);
+  assert.equal(active(), 1);
+});

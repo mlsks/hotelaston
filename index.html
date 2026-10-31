@@ -2162,7 +2162,8 @@
         <button type="button" data-ask="aeroport">Depuis l'aéroport</button>
         <button type="button" data-ask="petit-dejeuner">Petit-déjeuner</button>
         <button type="button" data-ask="piscine">Piscine</button>
-        <button type="button" data-ask="rappel">Être rappelé</button>
+        <!-- Rappel retiré du chat le 31/10/2026 : bouton gardé masqué pour ne pas décaler la numérotation des textes importés -->
+        <button type="button" data-ask="rappel" hidden>Être rappelé</button>
       </div>
       <form class="chat__form" data-chat-form>
         <label class="sr-only" for="chat-input">Votre question</label>
@@ -2478,7 +2479,7 @@
   }
   </script>
 
-  <!-- Base de connaissances du chat : réponses immédiates, coordonnées demandées seulement pour un devis ou un rappel -->
+  <!-- Base de connaissances du chat : réponses immédiates, coordonnées demandées seulement pour un devis -->
   <script type="application/json" id="data-chat">
   {
     "greeting": "Bonjour ! Posez votre question : parking, horaires, accès, piscine… Je réponds tout de suite, sans inscription.",
@@ -2497,8 +2498,7 @@
       { "id": "wifi", "keywords": ["wifi", "wi-fi", "internet"], "answer": "Le Wi-Fi est gratuit dans tout l'hôtel." },
       { "id": "famille", "keywords": ["enfant", "famille", "bébé", "bebe", "communicante", "4 personnes"], "answer": "Nos <a href=\"#/chambres/suites\">suites familiales</a> accueillent 2 adultes + 2 enfants, et des chambres communicantes sont possibles sur demande." },
       { "id": "residence", "keywords": ["appartement", "residence", "long sejour", "kitchenette", "studio"], "answer": "Pour un long séjour ou avec une cuisine, la Résidence Aston La Scala, voisine de l'hôtel, propose 17 appartements de 35 à 58 m², jusqu'à 4 personnes : <a href=\"#/appartements\">découvrir nos appartements</a>." },
-      { "id": "devis", "keywords": ["devis", "séminaire", "seminaire", "réunion", "reunion", "groupe", "salle", "événement", "evenement", "mariage"], "answer": "Volontiers ! Pour vous envoyer une proposition, j'ai besoin de quelques informations.", "capture": "devis" },
-      { "id": "rappel", "keywords": ["rappel", "rappeler", "appeler", "humain", "conseiller"], "answer": "Bien sûr. Laissez votre numéro et le moment qui vous arrange : la réception vous rappelle.", "capture": "rappel" }
+      { "id": "devis", "keywords": ["devis", "séminaire", "seminaire", "réunion", "reunion", "groupe", "salle", "événement", "evenement", "mariage"], "answer": "Volontiers ! Pour vous envoyer une proposition, j'ai besoin de quelques informations.", "capture": "devis" }
     ]
   }
   </script>

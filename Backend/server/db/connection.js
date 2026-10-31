@@ -6,7 +6,7 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import Database from 'better-sqlite3';
 import { config, fromVarPath, toVarPath } from '../config.js';
-import { ensureUiStrings, applyTextRenames } from '../ssg/ui-strings.js';
+import { ensureUiStrings, applyTextRenames, retireChatCallback } from '../ssg/ui-strings.js';
 import { migrateGigArtists } from './gig-artists.js';
 import { ensureLinkLists } from '../ssg/link-lists.js';
 import { ensureMenus } from '../ssg/menus.js';
@@ -47,6 +47,7 @@ export function getDb() {
     migrateGigArtists(shared);
     ensureUiStrings(shared);
     applyTextRenames(shared);
+    retireChatCallback(shared);
     ensureLinkLists(shared);
     ensureMenus(shared);
     ensureRoomCards(shared);
