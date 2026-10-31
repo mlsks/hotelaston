@@ -80,9 +80,11 @@ export function generateSite({ source, mode, now, previousState = new Map(), onl
     .replace('{locale}', source.lang(lang).locale);
 
   /* Cibles : pages + fiches des collections qui ont un gabarit */
-  // Textes d'interface du JavaScript : requis sur toutes les pages, comme ceux du layout
+  // Les textes d'interface du JavaScript (ui.*) ne retiennent pas une page : non traduits, ils passent
+  // en anglais s'il est prêt, sinon en français (source.uiStrings). Un texte ajouté au code ne retire
+  // donc plus toutes les langues du site, et le sélecteur de langue avec elles.
   const linkLists = new Set(settings.link_lists || []);
-  const layoutKeys = new Set([...keysOf(layoutHtml, linkLists), ...[...source.entries.keys()].filter((k) => k.startsWith('ui.'))]);
+  const layoutKeys = keysOf(layoutHtml, linkLists);
   const houseKeys = keysOf(houseRulesHtml);
   const targets = [];
   for (const page of source.pages) {

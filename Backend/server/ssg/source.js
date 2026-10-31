@@ -73,10 +73,10 @@ export class Source {
     return this.blocks.filter((b) => b.page_id === pageId);
   }
 
-  /** Textes d'interface du JavaScript (ui.*) dans une langue, repli sur la langue par défaut. */
+  /** Textes d'interface du JavaScript (ui.*) dans une langue, sinon en anglais s'il est prêt, sinon dans la langue par défaut. */
   uiStrings(lang) {
     const out = {};
-    for (const key of this.entries.keys()) if (key.startsWith('ui.')) out[key] = this.text(key, lang).value;
+    for (const key of this.entries.keys()) if (key.startsWith('ui.')) out[key] = this.relayText(key, lang);
     return out;
   }
 
