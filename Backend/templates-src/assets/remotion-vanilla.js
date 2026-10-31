@@ -948,9 +948,7 @@
         stars(it.rating),
         it.text ? h('blockquote', {}, `« ${it.text} »`) : null,
         withReplies && it.reply ? h('p', { class: 'review-card__reply' }, h('strong', {}, ui('ui.reviews.reply', "Réponse de l'hôtel")), it.reply) : null,
-        h('footer', {},
-          it.topics.length ? h('span', {}, it.topics.map(topicLabel).join(' · ')) : null,
-          it.url ? h('a', { class: 'review-card__source', href: it.url, target: '_blank', rel: 'noopener' }, ui('ui.reviews.source', 'Lire sur Google Maps')) : null));
+        it.topics.length ? h('footer', {}, h('span', {}, it.topics.map(topicLabel).join(' · '))) : null);
       list.append(card);
     });
     if (!items.length) list.append(h('p', { class: 'muted' }, ui('ui.reviews.empty', 'Aucun avis récent sur ce thème pour le moment.')));

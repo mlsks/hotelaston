@@ -957,7 +957,6 @@ picture { display: contents; }
 .review-card__who { display: grid; min-width: 0; font-size: var(--fs-sm); line-height: 1.3; }
 .review-card__who strong { color: var(--ink); font-weight: 600; overflow-wrap: anywhere; }
 .review-card__who time { font-size: var(--fs-xs); color: var(--ink-3); }
-.review-card__source { margin-left: auto; color: var(--azure-700); }
 .review-invite {
   display: flex;
   flex-wrap: wrap;

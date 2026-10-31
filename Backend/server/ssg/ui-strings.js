@@ -41,7 +41,6 @@ export const UI_STRINGS = {
   'ui.reviews.selection': ["Sélection d'avis Google récents notés 4 ou 5 étoiles.", 'Mention obligatoire sous les avis (critères de sélection)'],
   'ui.reviews.count': ['{n} avis sur Google', 'Nombre total d’avis de la fiche Google ({n} = nombre)'],
   'ui.reviews.all': ['Voir tous les avis sur Google Maps', 'Lien vers la fiche Google, sous les avis'],
-  'ui.reviews.source': ['Lire sur Google Maps', 'Lien de chaque avis vers Google Maps'],
   'ui.reviews.demo-note': ['Avis de démonstration : à remplacer par le flux vérifié de la fiche Google Business Profile.', 'Note sous les avis de démonstration'],
   'ui.topic.sejour': ['Séjour', 'Thème d’avis'],
   'ui.topic.chambres': ['Chambres', 'Thème d’avis'],

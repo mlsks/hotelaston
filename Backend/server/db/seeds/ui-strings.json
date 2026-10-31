@@ -43,20 +43,5 @@
     "ja": "Googleマップですべてのクチコミを見る",
     "zh": "在 Google 地图上查看全部评价",
     "ko": "Google 지도에서 모든 리뷰 보기"
-  },
-  "ui.reviews.source": {
-    "fr": "Lire sur Google Maps",
-    "en": "Read on Google Maps",
-    "es": "Leer en Google Maps",
-    "it": "Leggi su Google Maps",
-    "de": "Auf Google Maps lesen",
-    "pt": "Ler no Google Maps",
-    "sv": "Läs på Google Maps",
-    "no": "Les på Google Maps",
-    "el": "Διαβάστε στο Google Maps",
-    "ru": "Читать на Google Картах",
-    "ja": "Googleマップで読む",
-    "zh": "在 Google 地图上阅读",
-    "ko": "Google 지도에서 읽기"
   }
 }
