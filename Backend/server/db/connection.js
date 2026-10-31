@@ -20,6 +20,7 @@ import { ensureLegalTexts } from '../ssg/legal-texts.js';
 import { ensureChatChips } from '../ssg/chat-chips.js';
 import { ensureLegalPage, ensurePrivacyPage } from '../ssg/legal-page.js';
 import { ensureGoogleReviews } from '../ssg/google-reviews.js';
+import { ensureLanguagePacks } from '../ssg/language-packs.js';
 
 const MIGRATIONS_DIR = path.join(path.dirname(fileURLToPath(import.meta.url)), 'migrations');
 
@@ -63,6 +64,7 @@ export function getDb() {
     ensureLegalPage(shared);
     ensurePrivacyPage(shared);
     ensureGoogleReviews(shared);
+    ensureLanguagePacks(shared); // en dernier : traduit aussi les textes ajoutés ci-dessus
   }
   return shared;
 }

@@ -116,7 +116,7 @@ Les **mentions légales** du bas du pied de page (codes GDS, nom de la société
 
 ### Page Mentions légales
 
-La page **Mentions légales** (lien en bas du pied de page, dans toutes les langues) reprend celle de l'ancien site : éditeur, hébergeur, propriété intellectuelle, disponibilité du site, médiateur de la consommation, Bloctel, litiges, droit de rétractation. Elle se modifie comme les autres dans **Pages → Mentions légales → Textes**, une section par rubrique. Ses textes sont livrés traduits dans les 13 langues.
+La page **Mentions légales** (lien en bas du pied de page, dans toutes les langues) reprend celle de l'ancien site : éditeur, hébergeur, propriété intellectuelle, disponibilité du site, médiateur de la consommation, Bloctel, litiges, droit de rétractation. Elle se modifie comme les autres dans **Pages → Mentions légales → Textes**, une section par rubrique. Ses textes sont livrés traduits dans les 17 langues.
 
 - **Hébergeur** : quatre champs à remplir une fois l'hébergeur choisi : **raison sociale**, **adresse postale**, **téléphone** et **site internet** (adresse complète, `https://…`). Ils valent pour toutes les langues : les saisir en français suffit. Tant qu'ils sont vides, la rubrique Hébergeur n'apparaît pas sur le site et la publication le rappelle dans ses avertissements ; un champ laissé vide masque seulement sa ligne. La loi demande le nom, l'adresse et le téléphone de l'hébergeur : à remplir avant la mise en ligne.
 - **Directeur de la publication** : même principe (nom à saisir en français, ligne masquée tant qu'il est vide).
@@ -125,7 +125,7 @@ La page **Mentions légales** (lien en bas du pied de page, dans toutes les lang
 
 ### Page Politique de confidentialité
 
-La page **Politique de confidentialité** (lien « Confidentialité » en bas du pied de page et lien sous le formulaire de devis, dans toutes les langues) décrit ce que fait réellement le nouveau site : responsable du traitement, formulaires de devis et de contact et chat, réservation sur D-Edge, mesure d'audience, cookies et stockage dans le navigateur, services d'autres sociétés (Google Maps, liens externes), destinataires, transferts hors UE, durées de conservation, droits des visiteurs. Elle se modifie dans **Pages → Politique de confidentialité → Textes**, une section par rubrique (un titre et un texte), livrée traduite dans les 13 langues.
+La page **Politique de confidentialité** (lien « Confidentialité » en bas du pied de page et lien sous le formulaire de devis, dans toutes les langues) décrit ce que fait réellement le nouveau site : responsable du traitement, formulaires de devis et de contact et chat, réservation sur D-Edge, mesure d'audience, cookies et stockage dans le navigateur, services d'autres sociétés (Google Maps, liens externes), destinataires, transferts hors UE, durées de conservation, droits des visiteurs. Elle se modifie dans **Pages → Politique de confidentialité → Textes**, une section par rubrique (un titre et un texte), livrée traduite dans les 17 langues.
 
 - **Date de mise à jour** : champ **Date de la dernière mise à jour** (section En-tête), au format 30/10/2026. Elle vaut pour toutes les langues : la saisir en français suffit. Tant qu'elle est vide, la ligne « Dernière mise à jour » n'apparaît pas et la publication le rappelle dans ses avertissements. La changer à chaque modification importante du texte.
 - **Bouton « Ne plus compter mes visites »** (rubrique Mesure d'audience) : il permet au visiteur de refuser la mesure d'audience sur son appareil ; un second clic la rétablit. Ses libellés et le message « Vos visites ne sont pas comptées » se modifient dans la même section. Le bouton n'apparaît pas si le navigateur demande déjà à ne pas être suivi.
@@ -459,6 +459,18 @@ Seul le statut change, le texte reste le même, et chaque modification figure au
 3. **Publier.**
 
 Même en ligne, une langue n'apparaît que sur les pages entièrement prêtes. Les autres pages restent en français seulement.
+
+### Finnois, polonais, thaï et indonésien
+
+Ces quatre langues sont **livrées toutes traduites** (31/10/2026) : textes communs, pages, référencement (title, description, adresse), fiches (chambres, services, offres, salles, blog, réponses du chat), cartes du restaurant et des bars, données structurées, mentions légales, politique de confidentialité, textes des photos et bandeau. Au premier démarrage du serveur après la mise à jour, elles apparaissent dans **Langues du site**, à l'état **Inactive**, avec leurs traductions déjà **prêtes**. Pour les mettre en ligne :
+
+1. Dans le menu de gauche, rubrique **Langues**, cliquer sur **Langues du site**.
+2. Sur la ligne **Suomi** (finnois), cliquer sur **Inactive** pour la passer **En ligne**. Faire de même pour **Polski** (polonais), **ไทย** (thaï) et **Bahasa Indonesia** (indonésien).
+3. **Prévisualiser** pour vérifier, puis **Publier**.
+
+Leurs adresses sont traduites (`/fi/huoneet/`, `/pl/pokoje/`, `/id/kamar/`) ; en thaï, elles sont en anglais (`/th/rooms/`), comme pour le grec, le russe, le japonais, le chinois et le coréen. Les noms des chambres (Confort, Privilège…), des appartements, des bars et des lieux de Nice restent en français, comme dans les autres langues.
+
+Les traductions sont faites à partir du texte français : un texte français modifié dans l'admin avant la mise à jour n'est pas reconnu et reste **à traduire** (il s'affiche en anglais en attendant). L'écran **Traductions** liste ces textes, s'il y en a ; le terminal du serveur en donne le nombre au démarrage. Les fiches artistes et les concerts du Live Music, saisis dans l'admin, sont aussi à traduire. Une traduction déjà présente n'est jamais remplacée, et une traduction supprimée ne revient pas au redémarrage.
 
 ### Le sélecteur de langue du site
 
