@@ -3,6 +3,7 @@
  * Construite par une fonction pour être testée sans ouvrir de port (app.inject).
  * En production, Caddy sert lui-même public-dist et media/ ; Node reçoit /api, /admin et /preview.
  */
+import crypto from 'node:crypto';
 import fs from 'node:fs';
 import path from 'node:path';
 import Fastify from 'fastify';
@@ -74,6 +75,28 @@ export async function buildApp({ logger = { level: 'info' }, ingestFlushMs = 200
     if (status >= 500) req.log.error(err);
     reply.code(status).send({ error: status >= 500 ? 'Erreur interne du serveur.' : err.validation ? validationMessage(err.validation[0]) : err.message });
   });
+
+  /* Démo : site fermé par un mot de passe (DEMO_PASSWORD), jamais indexé (NOINDEX) */
+  if (config.demoPassword) {
+    const expected = Buffer.from(config.demoPassword);
+    app.addHook('onRequest', async (req, reply) => {
+      if (req.url === '/api/health') return undefined; // contrôle de santé de l'hébergeur
+      const [scheme, encoded] = String(req.headers.authorization || '').split(' ');
+      const given = scheme === 'Basic' && encoded ? Buffer.from(Buffer.from(encoded, 'base64').toString().split(':').slice(1).join(':')) : Buffer.alloc(0);
+      if (given.length === expected.length && crypto.timingSafeEqual(given, expected)) return undefined;
+      return reply.code(401).header('WWW-Authenticate', 'Basic realm="Demo", charset="UTF-8"').type('text/plain; charset=utf-8').send('Démo privée : mot de passe requis.');
+    });
+  }
+  if (config.noindex) {
+    app.addHook('onRequest', async (req, reply) => {
+      if (req.url.split('?')[0] === '/robots.txt') return reply.type('text/plain; charset=utf-8').header('X-Robots-Tag', 'noindex, nofollow').send('User-agent: *\nDisallow: /\n');
+      return undefined;
+    });
+    app.addHook('onSend', async (req, reply, payload) => {
+      reply.header('X-Robots-Tag', 'noindex, nofollow');
+      return payload;
+    });
+  }
 
   /* Redirections de confort */
   app.addHook('onRequest', async (req, reply) => {

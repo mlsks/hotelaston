@@ -77,3 +77,28 @@ Dans le `Caddyfile`, remplacer `/srv/hotelaston/Backend` par `/srv/hotelaston-da
 - Adresse e-mail pour les alertes Let's Encrypt (en tête du `Caddyfile`).
 - Stockage externe pour `sync-media.sh` (S3, Backblaze B2, OVH…) et sa configuration rclone.
 - Hébergeur du serveur.
+
+## Démo sur Render
+
+Pour montrer le site sans serveur à soi. Une seule instance : SQLite et le cron de minuit l'exigent.
+
+**Disque persistant obligatoire.** Sur le plan gratuit de Render, le disque est effacé à chaque déploiement, redémarrage et mise en veille (15 min sans visite) : la base repartirait vide, sans les photos, les traductions ni les modifications faites dans l'admin, et sans compte pour se connecter (pas de console sur le plan gratuit). Il faut donc le plan **Starter** avec un **disque** (1 Go suffit).
+
+Réglages du service (*New → Web Service*, dépôt `mlsks/hotelaston`) :
+
+| Champ | Valeur |
+|---|---|
+| Language | Node |
+| Branch | `main` |
+| Root Directory | `Backend` |
+| Build Command | `npm ci --omit=dev` |
+| Start Command | `node server/index.js` |
+| Instance Type | Starter |
+| Health Check Path (Advanced) | `/api/health` |
+| Disk (Advanced) | Mount Path `/var/data`, 1 Go |
+
+Variables d'environnement : `NODE_VERSION=22`, `ASTON_VAR_DIR=/var/data`, `DEMO_PASSWORD=<mot de passe de la démo>` (ou `NOINDEX=1` pour une démo ouverte mais jamais indexée). `PORT` et `HOST` : rien à faire, Render fournit le port et le serveur écoute alors sur `0.0.0.0`. Laisser `SITE_URL` à l'adresse du vrai site.
+
+Mettre le contenu du PC sur le disque (le serveur du PC arrêté) : envoyer `Backend/storage/` et `Backend/media/` dans `/var/data/` par SSH (`scp -r`, adresse SSH dans l'onglet *Connect* du service), redémarrer le service, se connecter à `/admin/` avec son compte habituel et cliquer **Publier**. Sans copie : `npm run import`, `node server/cli.js media:import-site` puis `node server/cli.js user:add …` dans le *Shell* du service, puis **Publier** (le contenu est alors celui de la maquette, sans les traductions ni les réglages du PC).
+
+Limites : pas de ffmpeg dans l'environnement Node de Render (téléverser une vidéo échoue, celles déjà présentes s'affichent) ; les visites de la démo s'ajoutent aux statistiques de la base copiée.
