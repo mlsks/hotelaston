@@ -359,8 +359,9 @@ D'autres images d'origine se remplacent de la même façon ; tant qu'aucune n'es
 | Fond de la section « Restaurant & bars » de l'accueil | **Pages** → **Accueil** → **Textes**, rechercher **fond** |
 | Logo blanc de l'en-tête (sur le bandeau de l'accueil, grand écran) | **Textes communs**, rechercher **logo** |
 | Logo or de l'en-tête (sur fond clair, grand écran) | **Textes communs**, rechercher **logo** |
+| Vidéo du bandeau de la page Moon Bar | **Pages** → **Le Moon Bar** → **Textes**, rechercher **vidéo**, puis **Changer la vidéo** |
 
-Pour ces images, la description lue par Google et les lecteurs d'écran est celle de la **Médiathèque** : la remplir en ouvrant la photo. Les logos de l'en-tête doivent avoir un fond transparent (PNG). Chaque ligne **Photo** de l'onglet **Textes** indique maintenant où elle s'affiche.
+Pour ces images, la description lue par Google et les lecteurs d'écran est celle de la **Médiathèque** : la remplir en ouvrant la photo. Les logos de l'en-tête doivent avoir un fond transparent (PNG). La vidéo du Moon Bar tourne en boucle, sans le son : une vidéo courte (10 à 20 secondes) et légère (MP4, quelques Mo) se charge vite ; son image d'attente est tirée de la vidéo par la médiathèque. Chaque ligne **Photo** de l'onglet **Textes** indique maintenant où elle s'affiche.
 
 ### Bandeaux
 

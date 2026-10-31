@@ -296,6 +296,7 @@ const ADDED_ENTRIES = [
   // Images d'origine du gabarit (fichiers fixes) : remplaçables, l'image d'origine reste tant qu'aucune n'est choisie
   { key: 'accueil.photo-bandeau', near: 'accueil.001-img@alt', type: 'media', value: null, required: 0, label: 'Photo : grand bandeau en haut de l’accueil (sinon la piscine d’origine)' },
   { key: 'accueil.photo-fond-restaurant', near: 'accueil.160-p', type: 'media', value: null, required: 0, label: 'Photo : fond de la section Restaurant & bars (sinon l’image d’origine)' },
+  { key: 'moon-bar.video-bandeau', near: 'moon-bar.005-h1', type: 'media', value: null, required: 0, label: 'Vidéo : bandeau en haut de la page Moon Bar (sinon la vidéo d’origine)' },
   { key: 'global.logo-entete-blanc', near: 'global.003-span', type: 'media', value: null, required: 0, label: 'Logo blanc de l’en-tête, sur le bandeau de l’accueil (sinon le logo d’origine)' },
   { key: 'global.logo-entete-or', near: 'global.003-span', type: 'media', value: null, required: 0, label: 'Logo or de l’en-tête, sur fond clair (sinon le logo d’origine)' },
 ];
