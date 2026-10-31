@@ -32,13 +32,17 @@ export const config = {
   publicDist: path.join(VAR, 'public-dist'),
   lockFile: path.join(VAR, 'storage', 'build.lock'),
 
-  host: env('HOST', '127.0.0.1'),
+  // Render (variable RENDER posée par la plateforme) exige d'écouter sur toutes les interfaces
+  host: env('HOST', process.env.RENDER ? '0.0.0.0' : '127.0.0.1'),
   port: Number(env('PORT', 3000)),
   siteUrl: env('SITE_URL', 'https://www.hotel-aston.com').replace(/\/+$/, ''),
   timezone: env('SITE_TZ', 'Europe/Paris'),
   cron: env('CRON_REBUILD', '0 0 * * *'),
   indexNowKey: env('INDEXNOW_KEY', ''),
   serveLegacy: env('SERVE_LEGACY', '0') === '1',
+  // Démo (Render…) : NOINDEX=1 interdit l'indexation de tout le site ; DEMO_PASSWORD ferme le site par un mot de passe (utilisateur au choix)
+  noindex: env('NOINDEX', '0') === '1' || env('DEMO_PASSWORD', '') !== '',
+  demoPassword: env('DEMO_PASSWORD', ''),
   keepReleases: 3,
 
   sessionHours: Number(env('SESSION_HOURS', 12)),
