@@ -84,7 +84,7 @@
     <button class="theme" type="button" id="theme" aria-label="Changer de thème">Thème</button>
     <p class="eyebrow">Hôtel Aston La Scala</p>
     <h1>Guide utilisateur du back-office</h1>
-    <p class="date">Mis à jour le 30 octobre 2026</p>
+    <p class="date">Mis à jour le 31 octobre 2026</p>
     <nav class="toc" aria-label="Sommaire">
       <a href="#l-essentiel-en-une-minute">L'essentiel en une minute</a>
       <a href="#1-demarrer-le-back-office">1. Démarrer le back-office</a>
@@ -256,6 +256,7 @@ npm start</code></pre></li>
 <tr><td>Chambres</td><td>Une fiche par catégorie : nom, titre, description, points clés, équipements, variantes, photos, thème des avis affichés, et ce qui s'affiche sur la page Chambres et dans le carrousel de l'accueil. Chaque fiche a sa propre page. Voir <a href="#les-chambres">Les chambres</a>.</td></tr>
 <tr><td>Services</td><td>Une fiche par service : chapeau, texte, informations pratiques, questions fréquentes, photos. Chaque fiche a sa propre page.</td></tr>
 <tr><td>Offres</td><td>Une fiche par offre : famille, photo, prix, ce qui est compris, économie, conditions, bouton, présence sur l'accueil. Voir <a href="#les-offres">Les offres</a>.</td></tr>
+<tr><td>Blog (articles)</td><td>Un article par fiche : titre, rubrique, date, photo ou vidéo, résumé, texte, réglages Google. Chaque article a sa propre page sous la page Blog. Voir <a href="#le-blog">Le blog</a>.</td></tr>
 <tr><td>Salles de séminaire</td><td>Une fiche par salle : nom, précisions, photo, surface et capacités. Voir <a href="#les-salles-de-seminaire">Les salles de séminaire</a>.</td></tr>
 <tr><td>Équipements</td><td>Les pictogrammes et libellés utilisés par les fiches chambre.</td></tr>
 <tr><td>Réponses du chat</td><td>Les mots déclencheurs (si la question du visiteur en contient un, le chat donne cette réponse) et la réponse.</td></tr>
@@ -299,6 +300,20 @@ npm start</code></pre></li>
 <p>Pour une offre saisonnière, régler <strong>Afficher seulement entre deux dates</strong> (à droite) : elle apparaît et disparaît seule, à la régénération de chaque nuit. <strong>Masquer</strong> ou <strong>Supprimer</strong> la retire aussi de partout.</p>
 <p>Pour mettre une offre en avant, le bouton <strong>Promouvoir en popup</strong> (à droite, sous <strong>Enregistrer</strong>) crée un popup qui la reprend : voir <a href="#popup-d-une-offre">Popup d'une offre</a>. Une fois le popup créé, le bouton devient <strong>Voir son popup</strong>.</p>
 <p>Une offre réservable apparaît aussi dans le choix <strong>Le moteur de réservation</strong> des bandeaux et du popup. Son identifiant (sous la case <strong>Visible sur le site</strong>) est envoyé à D-Edge. Si D-Edge lui donne un autre code, l'ajouter dans les <a href="#reglages">Réglages</a> (codes tarif). Pour les trois offres d'origine, le nom affiché dans la fenêtre de réservation se règle dans <strong>Textes de l'interface</strong> (<code>ui.offer.…</code>) ; pour les autres, c'est le titre de la fiche.</p>
+<h3 id="le-blog">Le blog</h3>
+<p>La page <strong>Blog</strong> (« Le journal de l'Aston ») liste les articles de <strong>Fiches et listes</strong> → <strong>Blog (articles)</strong>, dans l'ordre de la liste (flèches ↑ ↓). Chaque article a sa propre page, à l'adresse <code>/fr/blog/identifiant-de-l-article/</code>. Le lien <strong>Blog</strong> du menu (en-tête, après Accès, et menu mobile) mène à la page Blog ; il se modifie dans <a href="#menus-et-liens">Menus et liens</a> comme les autres.</p>
+<p><strong>Ajouter un article</strong> crée une fiche, placée en tête de la liste. Dans une fiche :</p>
+<ul>
+<li><strong>Titre de l'article</strong> (le titre de sa page et de sa carte) et <strong>Rubrique</strong> (le petit titre doré au-dessus : Quartier, Histoire, Événement…) ;</li>
+<li><strong>Date de publication</strong> : facultative, affichée sous le titre (« 31 octobre 2026 ») ;</li>
+<li><strong>Photo ou vidéo</strong>, choisie dans la médiathèque, et sa <strong>description</strong> (vide : celle de la médiathèque). Une photo s'affiche en haut de l'article et sur sa carte. Une vidéo se lance quand le visiteur clique dessus, avec le son et les commandes de lecture ; sur la carte de la page Blog, son image d'attente porte un bouton ▶ ;</li>
+<li><strong>Résumé</strong> : le texte de la carte sur la page Blog. Vide : le début du texte de l'article ;</li>
+<li><strong>Texte de l'article</strong> : texte mis en forme (intertitres, gras, listes, liens). Un lien vers une page du site s'écrit <code>#/nom-de-la-page</code> (par exemple <code>#/notre-histoire</code>) : son adresse suit la langue du visiteur ;</li>
+<li><strong>Title</strong> et <strong>Description pour Google</strong> : vides, ce sont le titre et le résumé.</li>
+</ul>
+<p>L'identifiant (créé à partir du titre) donne l'adresse de la page ; dans une autre langue, l'<strong>Adresse de la fiche</strong> peut être traduite. <strong>Masquer</strong> un article le retire de la page Blog et supprime sa page ; <strong>Supprimer</strong> fait de même et redirige son ancienne adresse vers la page Blog.</p>
+<p>Un article <strong>non traduit</strong> s'affiche quand même dans toutes les langues du site : en <strong>anglais</strong> si sa traduction anglaise est prête, sinon en <strong>français</strong>. Sa page indique alors aux moteurs de recherche que la version d'origine est la version anglaise (ou française) : Google ne la compte pas deux fois. Pour traduire un article, ouvrir la fiche dans la langue voulue, comme toute fiche (voir <a href="#traduire-dans-l-admin">Traduire dans l'admin</a>).</p>
+<p>Les trois articles de la maquette (la Vieille Ville à pied, le coup de canon de midi, le Carnaval) sont repris tels quels, avec leurs traductions ; ils n'ont ni date ni photo.</p>
 <h3 id="les-salles-de-seminaire">Les salles de séminaire</h3>
 <p>Le tableau « Nos salles et leurs configurations » de la page <strong>Séminaires</strong> et la liste <strong>Offre ou salle</strong> du formulaire de devis sont construits à partir des fiches <strong>Salles de séminaire</strong>, dans l'ordre de la liste (flèches ↑ ↓). Dans une fiche :</p>
 <ul>
@@ -416,7 +431,7 @@ npm start</code></pre></li>
 <li>L'écran d'un popup liste ses chevauchements et celui qui s'affiche ; le bouton <strong>Choisir lequel afficher</strong> permet de changer d'avis. Le choix passe par la <strong>Priorité</strong> : changer la priorité à la main change aussi le gagnant.</li>
 </ul>
 <h3 id="bandeaux-popup-liens-et-cartes-dans-les-autres-langues">Bandeaux, popup, liens et cartes dans les autres langues</h3>
-<p>Un bandeau, un popup, un lien des menus, une carte du restaurant ou une fiche <strong>n'est jamais masqué</strong> faute de traduction. Dans une langue où son texte n'est pas prêt, il s'affiche :</p>
+<p>Un bandeau, un popup, un lien des menus, une carte du restaurant, un article du blog ou une fiche <strong>n'est jamais masqué</strong> faute de traduction. Dans une langue où son texte n'est pas prêt, il s'affiche :</p>
 <ol>
 <li>en <strong>anglais</strong>, si sa version anglaise est prête ;</li>
 <li>sinon en <strong>français</strong>.</li>

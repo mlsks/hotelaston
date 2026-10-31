@@ -14,6 +14,7 @@ import { ensureRoomCards } from '../ssg/room-cards.js';
 import { ensureOffers } from '../ssg/offer-cards.js';
 import { ensureBlockEntries } from '../ssg/page-blocks.js';
 import { ensureMeetingRooms } from '../ssg/meeting-rooms.js';
+import { ensurePosts, ensureBlogMenu } from '../ssg/posts.js';
 import { ensureJsonLd } from '../ssg/jsonld-texts.js';
 import { ensureLegalTexts } from '../ssg/legal-texts.js';
 import { ensureLegalPage, ensurePrivacyPage } from '../ssg/legal-page.js';
@@ -50,6 +51,8 @@ export function getDb() {
     ensureRoomCards(shared);
     ensureOffers(shared);
     ensureMeetingRooms(shared);
+    ensurePosts(shared);
+    ensureBlogMenu(shared);
     ensureBlockEntries(shared);
     ensureJsonLd(shared);
     ensureLegalTexts(shared);

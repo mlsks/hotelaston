@@ -68,13 +68,13 @@
                   <a x-show="refItem(f)" :href="`#/collections/${f.source}/${refItem(f)?.id}`" class="text-sm font-medium text-azure-700 hover:underline">Ouvrir la fiche de l’artiste (photo, site, présentation) →</a>
                 </div>
               </template>
-              <!-- Photo seule de la médiathèque -->
+              <!-- Photo (ou vidéo si f.kinds le permet) de la médiathèque -->
               <template x-if="f.type === 'image'">
                 <div class="flex items-center gap-4">
                   <img x-show="form[f.key]" :src="imageThumb(f)" alt="" class="size-24 rounded-full bg-slate-200 object-cover">
                   <div x-show="!form[f.key]" class="grid size-24 place-items-center rounded-full bg-slate-100 text-xs text-slate-500">Aucune</div>
                   <div class="flex flex-col items-start gap-1" x-show="!readOnly(f)">
-                    <button type="button" class="btn btn-secondary btn-sm" @click="pickImage(f)" x-text="form[f.key] ? 'Changer la photo' : 'Choisir dans la médiathèque'"></button>
+                    <button type="button" class="btn btn-secondary btn-sm" @click="pickImage(f)" x-text="form[f.key] ? (f.kinds?.includes('video') ? 'Changer' : 'Changer la photo') : 'Choisir dans la médiathèque'"></button>
                     <button type="button" x-show="form[f.key]" class="text-xs font-medium text-rose-700 hover:underline" @click="clearImage(f)">Retirer</button>
                   </div>
                 </div>

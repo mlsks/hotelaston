@@ -1,6 +1,6 @@
 # Guide utilisateur du back-office
 
-Hôtel Aston La Scala · Mis à jour le 30 octobre 2026
+Hôtel Aston La Scala · Mis à jour le 31 octobre 2026
 
 Ce guide explique comment faire vivre le site de l'hôtel depuis le back-office : modifier un texte, changer une photo, annoncer un concert, traduire, publier, revenir en arrière. Il s'adresse aux personnes qui utilisent l'admin au quotidien, sans connaissance technique.
 
@@ -181,6 +181,7 @@ Ces textes ne retiennent pas une page : tant qu'un d'eux n'est pas traduit dans 
 | Chambres | Une fiche par catégorie : nom, titre, description, points clés, équipements, variantes, photos, thème des avis affichés, et ce qui s'affiche sur la page Chambres et dans le carrousel de l'accueil. Chaque fiche a sa propre page. Voir [Les chambres](#les-chambres). |
 | Services | Une fiche par service : chapeau, texte, informations pratiques, questions fréquentes, photos. Chaque fiche a sa propre page. |
 | Offres | Une fiche par offre : famille, photo, prix, ce qui est compris, économie, conditions, bouton, présence sur l'accueil. Voir [Les offres](#les-offres). |
+| Blog (articles) | Un article par fiche : titre, rubrique, date, photo ou vidéo, résumé, texte, réglages Google. Chaque article a sa propre page sous la page Blog. Voir [Le blog](#le-blog). |
 | Salles de séminaire | Une fiche par salle : nom, précisions, photo, surface et capacités. Voir [Les salles de séminaire](#les-salles-de-seminaire). |
 | Équipements | Les pictogrammes et libellés utilisés par les fiches chambre. |
 | Réponses du chat | Les mots déclencheurs (si la question du visiteur en contient un, le chat donne cette réponse) et la réponse. |
@@ -229,6 +230,25 @@ Pour une offre saisonnière, régler **Afficher seulement entre deux dates** (à
 Pour mettre une offre en avant, le bouton **Promouvoir en popup** (à droite, sous **Enregistrer**) crée un popup qui la reprend : voir [Popup d'une offre](#popup-d-une-offre). Une fois le popup créé, le bouton devient **Voir son popup**.
 
 Une offre réservable apparaît aussi dans le choix **Le moteur de réservation** des bandeaux et du popup. Son identifiant (sous la case **Visible sur le site**) est envoyé à D-Edge. Si D-Edge lui donne un autre code, l'ajouter dans les [Réglages](#reglages) (codes tarif). Pour les trois offres d'origine, le nom affiché dans la fenêtre de réservation se règle dans **Textes de l'interface** (`ui.offer.…`) ; pour les autres, c'est le titre de la fiche.
+
+### Le blog
+
+La page **Blog** (« Le journal de l'Aston ») liste les articles de **Fiches et listes** → **Blog (articles)**, dans l'ordre de la liste (flèches ↑ ↓). Chaque article a sa propre page, à l'adresse `/fr/blog/identifiant-de-l-article/`. Le lien **Blog** du menu (en-tête, après Accès, et menu mobile) mène à la page Blog ; il se modifie dans [Menus et liens](#menus-et-liens) comme les autres.
+
+**Ajouter un article** crée une fiche, placée en tête de la liste. Dans une fiche :
+
+- **Titre de l'article** (le titre de sa page et de sa carte) et **Rubrique** (le petit titre doré au-dessus : Quartier, Histoire, Événement…) ;
+- **Date de publication** : facultative, affichée sous le titre (« 31 octobre 2026 ») ;
+- **Photo ou vidéo**, choisie dans la médiathèque, et sa **description** (vide : celle de la médiathèque). Une photo s'affiche en haut de l'article et sur sa carte. Une vidéo se lance quand le visiteur clique dessus, avec le son et les commandes de lecture ; sur la carte de la page Blog, son image d'attente porte un bouton ▶ ;
+- **Résumé** : le texte de la carte sur la page Blog. Vide : le début du texte de l'article ;
+- **Texte de l'article** : texte mis en forme (intertitres, gras, listes, liens). Un lien vers une page du site s'écrit `#/nom-de-la-page` (par exemple `#/notre-histoire`) : son adresse suit la langue du visiteur ;
+- **Title** et **Description pour Google** : vides, ce sont le titre et le résumé.
+
+L'identifiant (créé à partir du titre) donne l'adresse de la page ; dans une autre langue, l'**Adresse de la fiche** peut être traduite. **Masquer** un article le retire de la page Blog et supprime sa page ; **Supprimer** fait de même et redirige son ancienne adresse vers la page Blog.
+
+Un article **non traduit** s'affiche quand même dans toutes les langues du site : en **anglais** si sa traduction anglaise est prête, sinon en **français**. Sa page indique alors aux moteurs de recherche que la version d'origine est la version anglaise (ou française) : Google ne la compte pas deux fois. Pour traduire un article, ouvrir la fiche dans la langue voulue, comme toute fiche (voir [Traduire dans l'admin](#traduire-dans-l-admin)).
+
+Les trois articles de la maquette (la Vieille Ville à pied, le coup de canon de midi, le Carnaval) sont repris tels quels, avec leurs traductions ; ils n'ont ni date ni photo.
 
 ### Les salles de séminaire
 
@@ -377,7 +397,7 @@ Une seule fenêtre s'ouvre par page. Deux popups **actifs** qui se chevauchent (
 
 ### Bandeaux, popup, liens et cartes dans les autres langues
 
-Un bandeau, un popup, un lien des menus, une carte du restaurant ou une fiche **n'est jamais masqué** faute de traduction. Dans une langue où son texte n'est pas prêt, il s'affiche :
+Un bandeau, un popup, un lien des menus, une carte du restaurant, un article du blog ou une fiche **n'est jamais masqué** faute de traduction. Dans une langue où son texte n'est pas prêt, il s'affiche :
 
 1. en **anglais**, si sa version anglaise est prête ;
 2. sinon en **français**.

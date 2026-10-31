@@ -1522,6 +1522,7 @@
     seminaires: 'seminaires', devis: 'seminaires', 'salle-seminaire-nice': 'seminaires', 'seminaire-residentiel-nice': 'seminaires', 'comite-entreprise-nice': 'seminaires',
     offres: 'offres',
     'acces-contact': 'acces-contact',
+    blog: 'blog',
   };
   let currentPath = null;
   let lastRealHash = '#/';

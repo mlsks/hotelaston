@@ -61,7 +61,7 @@ test('les listes des gabarits sont reprises dans la base, sans laisser de textes
   assert.equal(lists.find((l) => l.key === 'menu-principal').nested, false);
 
   const main = links('menu-principal');
-  assert.equal(main.length, 5);
+  assert.equal(main.length, 6); // Chambres … Accès, Blog
   assert.deepEqual(JSON.parse(main[0].data), { list: 'menu-principal', parent: null, kind: 'page', page: 'chambres' });
   assert.equal(db.prepare("SELECT 1 FROM cms_entries WHERE key = 'global.006-a'").get(), undefined);
   assert.equal(db.prepare("SELECT 1 FROM cms_entries WHERE key = 'restaurant-horloge.021-a'").get(), undefined);
@@ -96,7 +96,8 @@ test('le site est construit depuis la base : menus, sous-menu, cartes de L’Hor
   const $ = page('accueil');
   const nav = $('.main-nav a').map((i, a) => [[$(a).text(), a.attribs.href, a.attribs['data-nav']]]).get();
   assert.deepEqual(nav[0], ['Chambres', `/preview${pagePath('chambres')}`, 'chambres']);
-  assert.equal(nav.length, 5);
+  assert.equal(nav.length, 6);
+  assert.deepEqual(nav[5], ['Blog', `/preview${pagePath('blog')}`, 'blog']);
   assert.equal($('.mobile-menu__list > li > ul > li').length, 3);
   assert.equal($('[data-cms-links], [data-cms-key]').length, 0);
 

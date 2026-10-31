@@ -312,7 +312,7 @@ Alpine.data('itemView', () => ({
     return this.thumbs[id];
   },
   async pickImage(f) {
-    const m = await this.$store.picker.show({ kinds: ['image'] });
+    const m = await this.$store.picker.show({ kinds: f.kinds || ['image'] });
     if (!m) return;
     this.form[f.key] = m.id;
     this.thumbs[m.id] = m.thumb || '';
@@ -371,7 +371,7 @@ Alpine.data('itemView', () => ({
     return this.cdnBase ? `${this.cdnBase}${ref.src}` : '';
   },
   async pickPhoto(row) {
-    const m = await this.$store.picker.show({ kinds: ['image'] });
+    const m = await this.$store.picker.show({ kinds: f.kinds || ['image'] });
     if (!m) return;
     row.media = m.id;
     delete row.src;

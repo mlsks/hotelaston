@@ -12,6 +12,8 @@ import { sha, nowIso } from '../lib/util.js';
 import { Source } from './source.js';
 import { renderPage } from './render.js';
 import { fillRoom, fillService } from './items.js';
+import { fillPost } from './posts.js';
+import { COLLECTIONS } from './collections.js';
 import { prepareAssets, webManifest, serviceWorker } from './assets.js';
 import { sitemapXml, robotsTxt, redirectsCaddy } from './sitemap.js';
 import { llmsTxt } from './llms.js';
@@ -21,7 +23,9 @@ import { activateRelease, pruneReleases, writeTree, currentBuild, moveDir } from
 import { withBuildLock } from './lock.js';
 import { notifyIndexNow } from './indexnow.js';
 
-const ITEM_FILL = { rooms: { view: 'chambre', fill: fillRoom }, services: { view: 'service', fill: fillService } };
+const ITEM_FILL = { rooms: { view: 'chambre', fill: fillRoom }, services: { view: 'service', fill: fillService }, posts: { view: 'article', fill: fillPost } };
+/** Textes propres au gabarit d'une fiche, hors data-cms-* (titre de galerie, de FAQ). */
+const ITEM_KEYS = { rooms: ['item-chambre.galerie'], services: ['item-service.faq-titre'] };
 
 /** Clés data-cms-* utilisées par un morceau de HTML. */
 function keysOf(html, lists = new Set()) {
@@ -98,7 +102,7 @@ export function generateSite({ source, mode, now, previousState = new Map(), onl
     const parent = source.pagesById.get(def.parent_page);
     const html = templates.get(def.item_template);
     const keys = new Set([...layoutKeys, ...keysOf(html, linkLists), ...(html.includes('data-house-rules') ? houseKeys : [])]);
-    keys.add(collection === 'rooms' ? 'item-chambre.galerie' : 'item-service.faq-titre');
+    for (const k of ITEM_KEYS[collection] || []) keys.add(k);
     for (const item of source.collectionItems(collection, defaultLang, now)) {
       targets.push({ type: 'item', collection, itemKey: item.key, parent, keys, route: `${parent.key}/${item.key}`, view: ITEM_FILL[collection].view, template: def.item_template });
     }
@@ -106,12 +110,13 @@ export function generateSite({ source, mode, now, previousState = new Map(), onl
 
   /* Adresse de chaque cible dans chaque langue, et publication possible ou non */
   const published = new Map(); // lang → Map(route → path)
-  const info = new Map(); // `${lang}|${route}` → { path, missing }
+  const info = new Map(); // `${lang}|${route}` → { path, missing, relayLang }
   for (const lang of langs) {
     const routes = new Map();
     for (const t of targets) {
       let urlPath;
       let missing = false;
+      let relayLang = null;
       if (t.type === 'page') {
         const meta = source.pageMeta(t.page, lang);
         if (!meta) continue;
@@ -122,10 +127,13 @@ export function generateSite({ source, mode, now, previousState = new Map(), onl
         const parentMeta = source.pageMeta(t.parent, lang);
         if (!item || !parentMeta) continue;
         urlPath = `${parentMeta.path}${item.slug}/`;
-        missing = item.missing || parentMeta.missing;
+        // Article de blog non traduit : publié quand même, en anglais s'il y est prêt, sinon en français
+        const relay = COLLECTIONS[t.collection]?.relay && item.lang !== lang;
+        if (relay) relayLang = item.lang;
+        missing = (item.missing && !relay) || parentMeta.missing;
       }
       if (!missing) missing = [...t.keys].some((k) => source.text(k, lang).missing);
-      info.set(`${lang}|${t.route}`, { path: urlPath, missing });
+      info.set(`${lang}|${t.route}`, { path: urlPath, missing, relayLang });
       if (mode === 'preview' || !missing || lang === defaultLang) routes.set(t.route, basePath + urlPath);
     }
     published.set(lang, routes);
@@ -169,8 +177,10 @@ export function generateSite({ source, mode, now, previousState = new Map(), onl
     const langsAll = langs.filter((l) => published.get(l).has(t.route) && (mode === 'preview' || !info.get(`${l}|${t.route}`)?.missing || l === defaultLang));
     const langsOk = langsAll.filter((l) => !only || only.lang === l);
     const translated = (l) => mode === 'preview' || !info.get(`${l}|${t.route}`).missing;
+    // Versions en langue de repli : ni hreflang ni sitemap, leur adresse canonique est la version d'origine
+    const relayed = (l) => Boolean(info.get(`${l}|${t.route}`)?.relayLang);
     const alternates = langsOk
-      .filter(translated)
+      .filter((l) => translated(l) && !relayed(l))
       .map((l) => ({ lang: l, href: config.siteUrl + info.get(`${l}|${t.route}`).path }));
     const xDefault = (alternates.find((a) => a.lang === xDefaultLang) || alternates.find((a) => a.lang === defaultLang))?.href;
     // Sélecteur de langue, adresses du site servi (préfixe /preview compris) : la page dans chaque langue où elle est
@@ -186,7 +196,7 @@ export function generateSite({ source, mode, now, previousState = new Map(), onl
       .map((l) => ({ lang: l, name: source.lang(l).native_name, href: langsAll.includes(l) && translated(l) ? basePath + info.get(`${l}|${t.route}`).path : nearest(l) }))
       .filter((s) => s.href);
     for (const lang of langsOk) {
-      const { path: urlPath, missing } = info.get(`${lang}|${t.route}`);
+      const { path: urlPath, missing, relayLang } = info.get(`${lang}|${t.route}`);
       if (mode === 'production' && missing && lang !== defaultLang) continue;
       const meta = t.type === 'page' ? source.pageMeta(t.page, lang) : null;
       const target = t.type === 'page' ? { type: 'page', page: t.page } : {
@@ -200,14 +210,17 @@ export function generateSite({ source, mode, now, previousState = new Map(), onl
             const amenities = new Map(source.collectionItems('amenities', lang, now).map((a) => [a.key, a.data]));
             return fillRoom($, view, { room: item, rooms: all, amenities, cdn, media, siteUrl: config.siteUrl, t: text, routeKey: t.parent.key });
           }
+          if (t.collection === 'posts') return fillPost($, view, { post: item, source, lang, siteUrl: config.siteUrl });
           return fillService($, view, { service: item, cdn, media, t: text });
         },
       };
+      const origin = relayLang && info.get(`${relayLang}|${t.route}`);
+      const canonicalPath = origin && !origin.relayLang && published.get(relayLang)?.has(t.route) ? origin.path : urlPath;
       const head = {
         path: urlPath,
         title: meta?.title,
         description: meta?.meta_description,
-        canonical: config.siteUrl + urlPath,
+        canonical: config.siteUrl + canonicalPath,
         alternates,
         xDefault,
         switcher,
@@ -223,7 +236,7 @@ export function generateSite({ source, mode, now, previousState = new Map(), onl
       }
       if (out.parentLinks.size) warnings.add(`${urlPath} : lien(s) vers une fiche masquée ou supprimée, menant à sa page parente : ${[...out.parentLinks].join(', ')}`);
       if (lang === defaultLang && out.missing.size) errors.push(`${urlPath} : ${out.missing.size} texte(s) vide(s) dans la langue par défaut`);
-      if (!missing) {
+      if (!missing && !relayLang) {
         // Contrôles SEO sur les seules pages réellement rédigées dans cette langue
         if (out.title?.length > 60) warnings.add(`${urlPath} : title de ${out.title.length} caractères (60 conseillés)`);
         if (out.description?.length > 160) warnings.add(`${urlPath} : description de ${out.description.length} caractères (160 conseillés)`);
@@ -242,7 +255,7 @@ export function generateSite({ source, mode, now, previousState = new Map(), onl
       const lastmod = prev && prev.content_hash === out.contentHash ? prev.lastmod : now.toISOString();
       pages.push({
         lang, path: urlPath, contentHash: out.contentHash, lastmod, changed: !prev || prev.content_hash !== out.contentHash,
-        inSitemap: !isNotFound && !head.noindex && (t.type === 'item' || Boolean(t.page.in_sitemap)),
+        inSitemap: !isNotFound && !head.noindex && !relayLang && (t.type === 'item' || Boolean(t.page.in_sitemap)),
         alternates, xDefault, images: out.images, missingCount: out.missing.size,
         title: out.title, description: out.description, kind: t.type === 'page' ? 'page' : t.collection,
       });
