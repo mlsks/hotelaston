@@ -13,6 +13,8 @@ import { sha, nowIso } from '../lib/util.js';
 const SEED = path.join(path.dirname(fileURLToPath(import.meta.url)), '..', 'db', 'seeds', 'ui-strings.json');
 // Code d'une langue du site → langue des traductions livrées
 const SEED_ALIASES = { nb: 'no' };
+// Textes du site changés à la demande après l'import (clé, ancien français, nouveau texte par langue)
+const RENAMES = path.join(path.dirname(fileURLToPath(import.meta.url)), '..', 'db', 'seeds', 'text-renames.json');
 
 const SECTION = 'Interface (JavaScript)';
 
@@ -138,6 +140,42 @@ export function ensureUiStrings(db, { seed = readSeed() } = {}) {
     }
   })();
   return added;
+}
+
+/**
+ * Applique les changements de texte livrés (seeds/text-renames.json) : seulement si le français
+ * de la base est encore l'ancien texte, pour ne jamais écraser une saisie faite dans l'admin.
+ * Le français et les traductions livrées sont alors remplacés et marqués « prêts ».
+ */
+export function applyTextRenames(db, { renames = readJson(RENAMES, []) } = {}) {
+  const lang = db.prepare('SELECT code FROM cms_languages WHERE is_default = 1').pluck().get();
+  if (!lang) return 0;
+  const langs = db.prepare('SELECT code FROM cms_languages').pluck().all();
+  const current = db.prepare(`SELECT e.id, v.value FROM cms_entries e
+    JOIN cms_entry_values v ON v.entry_id = e.id AND v.lang = ? WHERE e.key = ?`);
+  const upsert = db.prepare(`INSERT INTO cms_entry_values (entry_id, lang, value, status, source_hash, updated_at) VALUES (?, ?, ?, 'ready', ?, ?)
+    ON CONFLICT (entry_id, lang) DO UPDATE SET value = excluded.value, status = 'ready', source_hash = excluded.source_hash, updated_at = excluded.updated_at`);
+  const touch = db.prepare('UPDATE cms_entries SET updated_at = ? WHERE id = ?');
+  const now = nowIso();
+  let changed = 0;
+  db.transaction(() => {
+    for (const { key, from, to } of renames) {
+      const row = current.get(lang, key);
+      const source = to?.[lang];
+      if (!row || !source || row.value !== from) continue;
+      for (const code of langs) {
+        const value = to[code] ?? to[SEED_ALIASES[code]];
+        if (value) upsert.run(row.id, code, value, sha(source), now);
+      }
+      touch.run(now, row.id);
+      changed += 1;
+    }
+  })();
+  return changed;
+}
+
+function readJson(file, fallback) {
+  return fs.existsSync(file) ? JSON.parse(fs.readFileSync(file, 'utf8')) : fallback;
 }
 
 function readSeed() {
