@@ -1615,8 +1615,7 @@ div.legal__facts { margin-bottom: 1em; }
 .chat__capture { display: grid; gap: 8px; padding: 12px; background: var(--paper); border: 1px solid var(--gold); border-radius: 12px; }
 .chat__capture input, .chat__capture select { min-height: 42px; padding: 8px 10px; border: 1px solid var(--line-strong); border-radius: var(--radius-sm); font-size: 0.95rem; }
 .chat__capture .btn { min-height: 42px; }
-.chat__chips { display: flex; gap: 6px; overflow-x: auto; padding: 10px 12px 0; scrollbar-width: none; }
-.chat__chips::-webkit-scrollbar { display: none; }
+.chat__chips { display: flex; flex-wrap: wrap; gap: 6px; padding: 10px 12px 0; } /* toutes les pastilles visibles, sur deux lignes si besoin */
 .chat__chips button { flex: none; min-height: 36px; padding: 6px 12px; border: 1px solid var(--line-strong); border-radius: 99px; background: var(--paper); font-size: var(--fs-xs); color: var(--azure-800); }
 .chat__form { display: flex; gap: 8px; padding: 10px 12px 12px; }
 .chat__form input { flex: 1; min-height: 44px; padding: 8px 12px; border: 1px solid var(--line-strong); border-radius: 99px; font-size: 1rem; }
