@@ -1,0 +1,62 @@
+{
+  "ui.reviews.selection": {
+    "fr": "Sélection d'avis Google récents notés 4 ou 5 étoiles.",
+    "en": "A selection of recent Google reviews rated 4 or 5 stars.",
+    "es": "Selección de reseñas recientes de Google con 4 o 5 estrellas.",
+    "it": "Una selezione di recensioni Google recenti con 4 o 5 stelle.",
+    "de": "Eine Auswahl aktueller Google-Bewertungen mit 4 oder 5 Sternen.",
+    "pt": "Seleção de avaliações recentes do Google com 4 ou 5 estrelas.",
+    "sv": "Ett urval av nya Google-recensioner med 4 eller 5 stjärnor.",
+    "no": "Et utvalg nylige Google-anmeldelser med 4 eller 5 stjerner.",
+    "el": "Επιλογή πρόσφατων κριτικών Google με 4 ή 5 αστέρια.",
+    "ru": "Подборка недавних отзывов Google с оценкой 4 или 5 звёзд.",
+    "ja": "星4つまたは5つの最近のGoogleクチコミから選んで掲載しています。",
+    "zh": "精选近期获得4星或5星的Google评价。",
+    "ko": "별점 4점 또는 5점을 받은 최근 Google 리뷰 중 일부입니다."
+  },
+  "ui.reviews.count": {
+    "fr": "{n} avis sur Google",
+    "en": "{n} reviews on Google",
+    "es": "{n} reseñas en Google",
+    "it": "{n} recensioni su Google",
+    "de": "{n} Bewertungen auf Google",
+    "pt": "{n} avaliações no Google",
+    "sv": "{n} recensioner på Google",
+    "no": "{n} anmeldelser på Google",
+    "el": "{n} κριτικές στο Google",
+    "ru": "Отзывов в Google: {n}",
+    "ja": "Googleのクチコミ {n} 件",
+    "zh": "Google 上的 {n} 条评价",
+    "ko": "Google 리뷰 {n}개"
+  },
+  "ui.reviews.all": {
+    "fr": "Voir tous les avis sur Google Maps",
+    "en": "See all reviews on Google Maps",
+    "es": "Ver todas las reseñas en Google Maps",
+    "it": "Vedi tutte le recensioni su Google Maps",
+    "de": "Alle Bewertungen auf Google Maps ansehen",
+    "pt": "Ver todas as avaliações no Google Maps",
+    "sv": "Se alla recensioner på Google Maps",
+    "no": "Se alle anmeldelser på Google Maps",
+    "el": "Δείτε όλες τις κριτικές στο Google Maps",
+    "ru": "Все отзывы на Google Картах",
+    "ja": "Googleマップですべてのクチコミを見る",
+    "zh": "在 Google 地图上查看全部评价",
+    "ko": "Google 지도에서 모든 리뷰 보기"
+  },
+  "ui.reviews.source": {
+    "fr": "Lire sur Google Maps",
+    "en": "Read on Google Maps",
+    "es": "Leer en Google Maps",
+    "it": "Leggi su Google Maps",
+    "de": "Auf Google Maps lesen",
+    "pt": "Ler no Google Maps",
+    "sv": "Läs på Google Maps",
+    "no": "Les på Google Maps",
+    "el": "Διαβάστε στο Google Maps",
+    "ru": "Читать на Google Картах",
+    "ja": "Googleマップで読む",
+    "zh": "在 Google 地图上阅读",
+    "ko": "Google 지도에서 읽기"
+  }
+}

@@ -170,6 +170,8 @@ Dans une autre langue, la carte se traduit au même endroit : le français est e
 
 Les textes affichés par le JavaScript du site : module de réservation, avis, formulaires, chat, bandeaux, popup. Les éléments entre accolades, comme `{count}`, sont remplacés par une valeur au moment de l'affichage : **il faut les garder tels quels**, y compris dans les traductions.
 
+Ces textes ne retiennent pas une page : tant qu'un d'eux n'est pas traduit dans une langue, il s'affiche en anglais si l'anglais est prêt, sinon en français, et la page reste publiée dans cette langue.
+
 ## 4. Fiches et listes
 
 **Fiches et listes** regroupe les contenus répétés du site, chacun avec un formulaire adapté :

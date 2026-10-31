@@ -159,6 +159,9 @@ test('admin : liste, ajout, import, masquage, fiche ; le site ne montre que 4 et
   // Mention des critères de sélection : texte d'interface traduisible
   const entry = db.prepare("SELECT v.value FROM cms_entries e JOIN cms_entry_values v ON v.entry_id = e.id WHERE e.key = 'ui.reviews.selection' AND v.lang = 'fr'").pluck().get();
   assert.equal(entry, "Sélection d'avis Google récents notés 4 ou 5 étoiles.");
+  // Traductions livrées (seeds/ui-strings.json), prêtes : les langues restent publiées
+  const en = db.prepare("SELECT v.value, v.status FROM cms_entries e JOIN cms_entry_values v ON v.entry_id = e.id WHERE e.key = 'ui.reviews.all' AND v.lang = 'en'").get();
+  assert.deepEqual({ ...en }, { value: 'See all reviews on Google Maps', status: 'ready' });
 
   assert.equal((await call('DELETE', `/api/google-reviews/${encodeURIComponent(lea.review_id)}`)).statusCode, 204);
   assert.ok(!row(lea.review_id));

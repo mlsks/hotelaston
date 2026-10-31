@@ -4,7 +4,15 @@
  * « ui.* » ; le build les passe au navigateur dans #site-config.i18n.
  * Le français ci-dessous reste aussi écrit dans le code comme valeur de repli.
  */
+import fs from 'node:fs';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
 import { sha, nowIso } from '../lib/util.js';
+
+// Traductions livrées des textes ajoutés après l'import (une clé, puis une valeur par langue)
+const SEED = path.join(path.dirname(fileURLToPath(import.meta.url)), '..', 'db', 'seeds', 'ui-strings.json');
+// Code d'une langue du site → langue des traductions livrées
+const SEED_ALIASES = { nb: 'no' };
 
 const SECTION = 'Interface (JavaScript)';
 
@@ -83,8 +91,13 @@ export const PAGE_STRINGS = {
   },
 };
 
-/** Ajoute les entrées absentes (ui.* et textes de pages), sans toucher à celles qui existent. */
-export function ensureUiStrings(db) {
+/**
+ * Ajoute les entrées absentes (ui.* et textes de pages), sans toucher à celles qui existent,
+ * puis complète les traductions livrées qui manquent (seeds/ui-strings.json). Une traduction
+ * livrée n'est « prête » que si le français de la base est celui qu'elle traduit ; sinon elle
+ * arrive en brouillon, à relire. Une valeur déjà saisie n'est jamais remplacée.
+ */
+export function ensureUiStrings(db, { seed = readSeed() } = {}) {
   const lang = db.prepare('SELECT code FROM cms_languages WHERE is_default = 1').pluck().get();
   if (!lang) return 0;
   const exists = db.prepare('SELECT 1 FROM cms_entries WHERE key = ?');
@@ -108,6 +121,26 @@ export function ensureUiStrings(db) {
       if (!id) continue; // page pas encore importée
       Object.entries(strings).forEach(([key, [value, label]], i) => add(key, value, label, id, 'Programme', 9000 + i));
     }
+    const langs = db.prepare('SELECT code FROM cms_languages').pluck().all();
+    const entryId = db.prepare('SELECT id FROM cms_entries WHERE key = ?').pluck();
+    const valueOf = db.prepare('SELECT value FROM cms_entry_values WHERE entry_id = ? AND lang = ?').pluck();
+    const insTranslation = db.prepare(`INSERT INTO cms_entry_values (entry_id, lang, value, status, source_hash, updated_at) VALUES (?, ?, ?, ?, ?, ?)
+      ON CONFLICT (entry_id, lang) DO NOTHING`);
+    for (const [key, byLang] of Object.entries(seed)) {
+      const id = entryId.get(key);
+      const source = byLang[lang];
+      if (!id || !source) continue;
+      const same = valueOf.get(id, lang) === source;
+      for (const code of langs) {
+        if (code === lang) continue;
+        const value = byLang[code] ?? byLang[SEED_ALIASES[code]];
+        if (value) insTranslation.run(id, code, value, same ? 'ready' : 'draft', sha(source), now);
+      }
+    }
   })();
   return added;
+}
+
+function readSeed() {
+  return fs.existsSync(SEED) ? JSON.parse(fs.readFileSync(SEED, 'utf8')) : {};
 }

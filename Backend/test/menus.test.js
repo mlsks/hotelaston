@@ -158,6 +158,22 @@ test('anglais prêt : publié malgré les listes de liens ; sélecteur vers la p
   assert.equal(fs.existsSync(path.join(config.publicDist, 'en/carte-dessert/index.html')), false);
 });
 
+test('texte d’interface ajouté au code, pas encore traduit : l’anglais reste publié, le globe reste dans l’en-tête', async () => {
+  // Comme les textes des avis Google ajoutés après coup : une entrée ui.* en français seulement
+  const now = nowIso();
+  const id = db.prepare(`INSERT INTO cms_entries (key, page_id, section, type, label, translatable, required, position, created_at, updated_at)
+    VALUES ('ui.test.nouveau', NULL, 'Interface (JavaScript)', 'text', 'Test', 1, 1, 99999, ?, ?)`).run(now, now).lastInsertRowid;
+  db.prepare(`INSERT INTO cms_entry_values (entry_id, lang, value, status, updated_at) VALUES (?, 'fr', 'Nouveau texte', 'ready', ?)`).run(id, now);
+  const res = (await call('POST', '/api/builds/publish', {})).json();
+  assert.equal(res.status, 'success', res.error);
+  assert.deepEqual(res.langs, ['fr', 'en']);
+  const $ = cheerio.load(fs.readFileSync(path.join(config.publicDist, 'en', 'index.html'), 'utf8'));
+  assert.deepEqual($('.site-header .lang-menu a[hreflang]').map((i, a) => a.attribs.hreflang).get(), ['fr', 'en']);
+  assert.equal(JSON.parse($('#site-config').text()).i18n['ui.test.nouveau'], 'Nouveau texte'); // repli en français
+  db.prepare('DELETE FROM cms_entry_values WHERE entry_id = ?').run(id);
+  db.prepare('DELETE FROM cms_entries WHERE id = ?').run(id);
+});
+
 test('langue sans traduction : liens et cartes en anglais s’il est prêt, sinon en français', async () => {
   db.prepare("UPDATE cms_languages SET is_active = 1 WHERE code = 'de'").run();
   const link = db.prepare(`SELECT id FROM cms_items WHERE collection = 'links' AND json_extract(data, '$.page') = 'carte-vin-restaurant-horloge'`).pluck().get();
