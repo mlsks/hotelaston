@@ -349,6 +349,8 @@ L'éditeur Live Music voit un menu réduit : sa page, le programme, les artistes
 
 Pour changer la photo d'une page : onglet **Textes** de la page, **Changer l'image**. Pour une fiche : champ **Photo** de la fiche.
 
+Sur l'accueil, les vignettes **Conciergerie** et **Bagagerie gratuite** (section « Tout ce qu'un 4 étoiles doit faciliter ») montrent un pictogramme tant qu'aucune photo n'est choisie : **Pages** → **Accueil** → onglet **Textes**, ligne **Photo** juste sous le titre de la vignette, **Changer l'image**. **Retirer l'image** remet le pictogramme. La photo de la page Conciergerie elle-même se change dans **Fiches et listes** → **Services** → **Conciergerie**, champ **Photos**.
+
 ### Bandeaux
 
 Des messages placés en haut des pages, sous le module de réservation, entre deux sections ou avant le pied de page. Ils s'affichent et disparaissent seuls aux dates choisies.

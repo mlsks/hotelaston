@@ -283,13 +283,16 @@ export function deleteBlock(db, page, zone, block) {
   return { keys };
 }
 
-/** Textes ajoutés aux gabarits avec les blocs : liens des lieux, chiffres clés (non traduisibles). */
+/** Textes ajoutés aux gabarits avec les blocs : liens des lieux, chiffres clés, photos facultatives (non traduisibles). */
 const ADDED_ENTRIES = [
   { key: 'restaurant-bar.lien-restaurant-horloge', near: 'restaurant-bar.007-strong', type: 'url', value: '#/restaurant-horloge', label: 'Lien : Restaurant L’Horloge' },
   { key: 'restaurant-bar.lien-moon-bar', near: 'restaurant-bar.011-strong', type: 'url', value: '#/moon-bar', label: 'Lien : Le Moon Bar' },
   { key: 'restaurant-bar.lien-aston-club', near: 'restaurant-bar.015-strong', type: 'url', value: '#/aston-club', label: 'Lien : L’Aston Club' },
   { key: 'seminaires.chiffre-1', near: 'seminaires.008-span', type: 'text', value: '7', label: 'Chiffre : espaces modulables' },
   { key: 'seminaires.chiffre-3', near: 'seminaires.011-span', type: 'text', value: '250', label: 'Chiffre : personnes en assemblée' },
+  // Vignettes de l'accueil sans photo d'origine : photo facultative, le pictogramme reste tant qu'aucune n'est choisie
+  { key: 'accueil.photo-conciergerie', near: 'accueil.147-strong', type: 'media', value: null, required: 0, label: 'Photo : vignette Conciergerie (sinon pictogramme)' },
+  { key: 'accueil.photo-bagagerie', near: 'accueil.153-strong', type: 'media', value: null, required: 0, label: 'Photo : vignette Bagagerie gratuite (sinon pictogramme)' },
 ];
 
 /** Crée les textes ajoutés aux gabarits avec les blocs (une fois par clé, à côté de leur voisin). */
@@ -299,7 +302,7 @@ export function ensureBlockEntries(db) {
   const has = db.prepare('SELECT 1 FROM cms_entries WHERE key = ?');
   const near = db.prepare('SELECT page_id, section, position FROM cms_entries WHERE key = ?');
   const ins = db.prepare(`INSERT INTO cms_entries (key, page_id, section, type, label, translatable, required, position, created_at, updated_at)
-    VALUES (?, ?, ?, ?, ?, 0, 1, ?, ?, ?)`);
+    VALUES (?, ?, ?, ?, ?, 0, ?, ?, ?, ?)`);
   const insValue = db.prepare(`INSERT INTO cms_entry_values (entry_id, lang, value, status, source_hash, updated_at) VALUES (?, ?, ?, 'ready', '', ?)`);
   const now = nowIso();
   let done = 0;
@@ -307,8 +310,8 @@ export function ensureBlockEntries(db) {
     for (const e of ADDED_ENTRIES) {
       const n = near.get(e.near);
       if (!n || has.get(e.key)) continue; // site pas encore importé, ou déjà fait
-      const id = ins.run(e.key, n.page_id, n.section, e.type, e.label, n.position, now, now).lastInsertRowid;
-      insValue.run(id, def, e.value, now);
+      const id = ins.run(e.key, n.page_id, n.section, e.type, e.label, e.required ?? 1, n.position, now, now).lastInsertRowid;
+      if (e.value !== null) insValue.run(id, def, e.value, now);
       done += 1;
     }
   })();
