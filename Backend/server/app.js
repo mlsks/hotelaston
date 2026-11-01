@@ -89,7 +89,8 @@ export async function buildApp({ logger = { level: 'info' }, ingestFlushMs = 200
   }
   if (config.noindex) {
     app.addHook('onRequest', async (req, reply) => {
-      if (req.url.split('?')[0] === '/robots.txt') return reply.type('text/plain; charset=utf-8').header('X-Robots-Tag', 'noindex, nofollow').send('User-agent: *\nDisallow: /\n');
+      // Exploration permise, sans sitemap : un robot bloqué par robots.txt ne verrait jamais le noindex des pages
+      if (req.url.split('?')[0] === '/robots.txt') return reply.type('text/plain; charset=utf-8').header('X-Robots-Tag', 'noindex, nofollow').send('# Démo : aucune page à indexer (X-Robots-Tag et meta robots noindex)\nUser-agent: *\nAllow: /\n');
       return undefined;
     });
     app.addHook('onSend', async (req, reply, payload) => {

@@ -97,7 +97,7 @@ Réglages du service (*New → Web Service*, dépôt `mlsks/hotelaston`) :
 | Health Check Path (Advanced) | `/api/health` |
 | Disk (Advanced) | Mount Path `/var/data`, 1 Go |
 
-Variables d'environnement : `NODE_VERSION=22`, `ASTON_VAR_DIR=/var/data`, `DEMO_PASSWORD=<mot de passe de la démo>` (ou `NOINDEX=1` pour une démo ouverte mais jamais indexée). `PORT` et `HOST` : rien à faire, Render fournit le port et le serveur écoute alors sur `0.0.0.0`. Laisser `SITE_URL` à l'adresse du vrai site.
+Variables d'environnement : `NODE_VERSION=22`, `ASTON_VAR_DIR=/var/data`, `DEMO_PASSWORD=<mot de passe de la démo>` (ou `NOINDEX=1` pour une démo ouverte mais jamais indexée). Après avoir ajouté ou changé cette variable : redémarrer le service puis **Publier**, pour que les pages portent `<meta name="robots" content="noindex">`. `PORT` et `HOST` : rien à faire, Render fournit le port et le serveur écoute alors sur `0.0.0.0`. Laisser `SITE_URL` à l'adresse du vrai site.
 
 Mettre le contenu du PC sur le disque (le serveur du PC arrêté) : envoyer `Backend/storage/` et `Backend/media/` dans `/var/data/` par SSH (`scp -r`, adresse SSH dans l'onglet *Connect* du service), redémarrer le service, se connecter à `/admin/` avec son compte habituel et cliquer **Publier**. Sans copie : `npm run import`, `node server/cli.js media:import-site` puis `node server/cli.js user:add …` dans le *Shell* du service, puis **Publier** (le contenu est alors celui de la maquette, sans les traductions ni les réglages du PC).
 

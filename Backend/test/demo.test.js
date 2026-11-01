@@ -29,7 +29,7 @@ const probe = `
 import { buildApp } from './server/app.js';
 const app = await buildApp({ logger: false, ingestFlushMs: 0 });
 const auth = (p) => ({ authorization: 'Basic ' + Buffer.from('demo:' + p).toString('base64') });
-const r = async (url, headers = {}) => { const res = await app.inject({ url, headers }); return { status: res.statusCode, robots: res.headers['x-robots-tag'] || null, body: res.body.slice(0, 60) }; };
+const r = async (url, headers = {}) => { const res = await app.inject({ url, headers }); return { status: res.statusCode, robots: res.headers['x-robots-tag'] || null, body: res.body.slice(0, 200) }; };
 const out = { admin: await r('/admin/'), robots: await r('/robots.txt'), health: await r('/api/health'), good: await r('/admin/', auth('s3cret')), bad: await r('/admin/', auth('faux')) };
 await app.close();
 console.log(JSON.stringify(out));
@@ -41,12 +41,13 @@ test('par défaut : ni mot de passe ni noindex', () => {
   assert.equal(out.admin.robots, null);
 });
 
-test('NOINDEX=1 : en-tête X-Robots-Tag partout et robots.txt qui interdit tout', () => {
+test('NOINDEX=1 : en-tête X-Robots-Tag partout, robots.txt sans sitemap qui laisse voir le noindex', () => {
   const out = run({ NOINDEX: '1' }, probe);
   assert.equal(out.admin.status, 200);
   assert.equal(out.admin.robots, 'noindex, nofollow');
   assert.equal(out.robots.status, 200);
-  assert.match(out.robots.body, /Disallow: \/\n/);
+  assert.match(out.robots.body, /Allow: \//);
+  assert.doesNotMatch(out.robots.body, /Disallow|Sitemap/);
 });
 
 test('DEMO_PASSWORD : site fermé, sauf le contrôle de santé', () => {
@@ -63,4 +64,24 @@ test('Render : écoute sur 0.0.0.0 sans HOST, HOST reste prioritaire', () => {
   assert.equal(run({}, cfg).host, '127.0.0.1');
   assert.equal(run({ RENDER: 'true' }, cfg).host, '0.0.0.0');
   assert.equal(run({ RENDER: 'true', HOST: '127.0.0.1' }, cfg).host, '127.0.0.1');
+});
+
+test('NOINDEX=1 : les pages publiées portent meta robots noindex', () => {
+  const script = `
+import fs from 'node:fs';
+import path from 'node:path';
+import { config } from './server/config.js';
+import { getDb, closeDb } from './server/db/connection.js';
+import { importLegacy } from './server/db/import-legacy.js';
+import { seedSitePhotos } from './test/helpers/site-photos.js';
+import { runBuild } from './server/ssg/build.js';
+const db = getDb();
+importLegacy(db, { writeTemplates: false, log: () => {} });
+await seedSitePhotos(db);
+const build = await runBuild({ kind: 'production', log: () => {} });
+const html = build.status === 'success' ? fs.readFileSync(path.join(config.publicDist, 'fr', 'index.html'), 'utf8') : '';
+closeDb();
+console.log(JSON.stringify({ status: build.status, robots: /<meta name="robots" content="([^"]*)"/.exec(html)?.[1] ?? null }));
+`;
+  assert.deepEqual(run({ NOINDEX: '1' }, script), { status: 'success', robots: 'noindex' });
 });
