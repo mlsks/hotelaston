@@ -18,6 +18,7 @@ import { renderMeetingRooms } from './meeting-rooms.js';
 import { renderPostList } from './posts.js';
 import { reviewsData } from './google-reviews.js';
 import { fillVars, sha } from '../lib/util.js';
+import { config } from '../config.js';
 import { globalGraph, breadcrumbFromDom, faqFromDom, webPageNode, jsonForScript } from './jsonld.js';
 
 /** Attributs qui peuvent pointer vers un fichier du site. */
@@ -207,7 +208,8 @@ export function renderPage(site, lang, target, head) {
   $('html').attr('lang', lang);
   const viewport = $('head meta[name="viewport"]').first();
   const tags = [$('<title>').text(title), $('<meta name="description">').attr('content', description)];
-  if (head.noindex || site.mode === 'preview') tags.push($('<meta name="robots" content="noindex">'));
+  // NOINDEX=1 ou DEMO_PASSWORD (démo hébergée) : aucune page indexable, visible aussi dans le code source
+  if (head.noindex || site.mode === 'preview' || config.noindex) tags.push($('<meta name="robots" content="noindex">'));
   // Extraits longs et grandes images autorisés : Google (AI Overviews compris) et Bing peuvent citer la page en entier
   else tags.push($('<meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">'));
   tags.push($('<link rel="canonical">').attr('href', head.canonical));
