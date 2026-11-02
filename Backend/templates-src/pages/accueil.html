@@ -24,7 +24,14 @@
           <h1 class="display" id="hero-title" data-cms-key="accueil.003-h1">Hôtel Aston La Scala, hôtel 4 étoiles au cœur de Nice</h1>
           <p class="hero__lede" data-anim="rise" data-delay="8" data-cms-key="accueil.004-p">Rooftop et piscine au dernier étage, vue sur la Vieille Ville et la Méditerranée.</p>
 
-          <form class="booking booking--hero" data-booking-form="" data-anim="rise" data-delay="12" action="https://www.secure-hotel-booking.com/smart/redirect/2ARI-19552/fr/" method="get" target="_blank" novalidate="">
+          <form class="booking booking--hero" data-booking-form="" data-anim="rise" data-delay="12" action="https://www.secure-hotel-booking.com/smart/redirect/2ARI-19552/fr/" method="get" target="_blank" novalidate="" data-booking-collapsible="" id="hero-booking">
+            <!-- Mobile et tablette : le module se replie en une ligne (dates · voyageurs) dès qu'on défile ;
+                 ce bouton le replie ou le redéplie. Texte rempli par remotion-vanilla.js (initBookingCollapse). -->
+            <button class="booking__toggle" type="button" data-booking-toggle="" aria-expanded="true" aria-controls="hero-booking" hidden="">
+              <svg class="icon booking__toggle-icon" aria-hidden="true"><use href="#i-calendar"></use></svg>
+              <span class="booking__toggle-text"><span class="booking__toggle-dates" data-booking-summary-dates=""></span><span class="booking__toggle-guests" data-booking-summary-guests=""></span></span>
+              <svg class="icon booking__toggle-chevron" aria-hidden="true"><use href="#i-next"></use></svg>
+            </button>
             <div class="booking__field">
               <label for="hero-checkin" data-cms-key="accueil.005-label">Arrivée</label>
               <input id="hero-checkin" name="checkin" type="date" required="" data-checkin="">
