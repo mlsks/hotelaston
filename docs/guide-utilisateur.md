@@ -4,7 +4,7 @@ Hôtel Aston La Scala · Mis à jour le 2 novembre 2026
 
 Ce guide explique comment faire vivre le site de l'hôtel depuis le back-office : modifier un texte, changer une photo, annoncer un concert, traduire, publier, revenir en arrière. Il s'adresse aux personnes qui utilisent l'admin au quotidien, sans connaissance technique.
 
-Le guide existe en deux versions qui disent la même chose : [guide-utilisateur.md](guide-utilisateur.md) (à modifier) et [guide-utilisateur.html](guide-utilisateur.html) (à lire ou imprimer). Pour les mettre à jour, voir [Tenir ce guide à jour](#tenir-ce-guide-a-jour).
+Le guide existe en deux versions qui disent la même chose : [guide-utilisateur.md](guide-utilisateur.md) (à modifier) et [guide-utilisateur.html](guide-utilisateur.html) (à lire ou imprimer). Il se lit aussi dans l'admin : menu de gauche, rubrique **AIDE** → **Manuel d'utilisation**. Pour les mettre à jour, voir [Tenir ce guide à jour](#tenir-ce-guide-a-jour).
 
 ## L'essentiel en une minute
 
@@ -16,7 +16,7 @@ Le guide existe en deux versions qui disent la même chose : [guide-utilisateur.
 
 ## Où trouver quoi
 
-Le menu de gauche est rangé sous des titres en petites capitales grises : **CONTENU**, **LANGUES**, **SITE**, **ADMINISTRATION**. Sur un petit écran, il s'ouvre avec le bouton ☰ en haut à gauche. Le tableau donne le chemin exact, clic par clic.
+Le menu de gauche est rangé sous des titres en petites capitales grises : **CONTENU**, **LANGUES**, **SITE**, **ADMINISTRATION**, **AIDE**. Sur un petit écran, il s'ouvre avec le bouton ☰ en haut à gauche. Le tableau donne le chemin exact, clic par clic.
 
 | Je veux… | Où cliquer |
 |---|---|
@@ -41,6 +41,8 @@ Le menu de gauche est rangé sous des titres en petites capitales grises : **CON
 | Régler le moteur de réservation D-Edge ou le seuil de la note Google | **ADMINISTRATION** → **Réglages**. Voir [Réglages](#reglages). |
 | Créer un compte | **ADMINISTRATION** → **Utilisateurs** → **Nouveau compte**. |
 | Ne plus compter mes visites dans les statistiques | Rond avec l'initiale, en haut à droite → **Mon compte**. |
+| Découvrir l'admin, ou le faire découvrir | **AIDE** → **Prise en main** → **Lancer la visite guidée**. Voir [L'aide dans l'admin](#l-aide-dans-l-admin). |
+| Lire ce guide sans quitter l'admin | **AIDE** → **Manuel d'utilisation**. |
 
 ## 1. Démarrer le back-office
 
@@ -111,7 +113,7 @@ Le menu de gauche ne montre que les écrans autorisés pour le compte connecté.
 
 ## 2. Se repérer dans l'admin
 
-Le menu de gauche est rangé en cinq groupes (sur un petit écran, il s'ouvre avec le bouton ☰ en haut à gauche) :
+Le menu de gauche est rangé en six groupes (sur un petit écran, il s'ouvre avec le bouton ☰ en haut à gauche) :
 
 | Groupe | Écrans |
 |---|---|
@@ -120,6 +122,19 @@ Le menu de gauche est rangé en cinq groupes (sur un petit écran, il s'ouvre av
 | Langues | **Traductions**, **Langues du site**. |
 | Site | **Publication et versions**, **Rapport SEO**, **Statistiques**, **Redirections**. |
 | Administration | **Utilisateurs**, **Réglages**, **Journal des modifications**. |
+| Aide | **Prise en main**, **Manuel d'utilisation** (pour tous les rôles). |
+
+### L'aide dans l'admin
+
+La rubrique **AIDE**, tout en bas du menu, est la même pour tous les comptes :
+
+- **Prise en main** :
+  - **Lancer la visite guidée** : une bulle montre tour à tour chaque entrée du menu (seulement celles du compte connecté), puis les boutons **Prévisualiser**, **Publier** et **Mon compte**, avec ce qu'on y fait. **Suivant** et **Précédent** (ou les flèches du clavier) pour avancer, **Quitter** (ou Échap) pour arrêter. Sur un petit écran, le menu s'ouvre tout seul pendant la visite.
+  - **Votre première modification** : cinq étapes (ouvrir une page, modifier un texte, prévisualiser, publier, savoir revenir en arrière), chacune avec une case **Fait**. Les cases cochées sont retenues dans ce navigateur seulement.
+  - **Cinq règles à retenir** et des liens vers les sections utiles de ce guide.
+- **Manuel d'utilisation** : ce guide, affiché dans l'admin. **Ouvrir dans un onglet (imprimer)** l'ouvre en pleine page. Il suit toujours la dernière version du guide présente sur le serveur : après un `git pull`, rien d'autre à faire.
+
+Sur l'**Accueil**, une carte « Nouveau dans le back-office ? » propose la visite guidée et la prise en main, jusqu'à ce qu'on clique sur **Masquer** (retenu dans ce navigateur). La rubrique **AIDE** reste toujours dans le menu.
 
 ### La langue de travail
 
@@ -653,4 +668,4 @@ Le fichier de référence est **`docs/guide-utilisateur.md`**. On ne modifie que
 node tools/md-to-html.mjs docs/guide-utilisateur.md
 ```
 
-La commande écrit `docs/guide-utilisateur.html` à côté. `--check` vérifie seulement que la version HTML est à jour (elle échoue sinon). Penser à changer la date en haut du guide, puis à commiter les deux fichiers ensemble.
+La commande écrit `docs/guide-utilisateur.html` à côté ; c'est cette version que montre l'admin (**AIDE** → **Manuel d'utilisation**). `--check` vérifie seulement que la version HTML est à jour (elle échoue sinon). Penser à changer la date en haut du guide, puis à commiter les deux fichiers ensemble.

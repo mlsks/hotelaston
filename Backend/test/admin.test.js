@@ -99,3 +99,31 @@ test('données pour l’interface : adresse du site, pictogrammes, état de la g
   const summary = (await call('GET', '/api/analytics/summary?period=week')).json();
   assert.equal(summary.geoip, false);
 });
+
+test('manuel d’utilisation (menu Aide) : réservé aux personnes connectées, affichable dans un cadre de l’admin', async () => {
+  const anon = await app.inject({ method: 'GET', url: '/admin/manuel' });
+  assert.equal(anon.statusCode, 302);
+  assert.equal(anon.headers.location, '/admin/');
+  const res = await app.inject({ method: 'GET', url: '/admin/manuel', headers: { cookie: session.cookie } });
+  assert.equal(res.statusCode, 200);
+  assert.match(res.headers['content-type'], /text\/html/);
+  assert.match(res.body, /<h1[^>]*>Guide utilisateur du back-office<\/h1>/);
+  const csp = res.headers['content-security-policy'];
+  assert.match(csp, /frame-ancestors 'self'/);
+  assert.equal(res.headers['x-frame-options'], 'SAMEORIGIN');
+  // Le script du guide (thème) est autorisé par son empreinte, aucun autre
+  const { createHash } = await import('node:crypto');
+  const scripts = [...res.body.matchAll(/<script>([\s\S]*?)<\/script>/g)].map((m) => `'sha256-${createHash('sha256').update(m[1]).digest('base64')}'`);
+  assert.ok(scripts.length >= 1);
+  for (const h of scripts) assert.ok(csp.includes(h), h);
+  assert.doesNotMatch(csp, /unsafe-inline'[^;]*script|script-src[^;]*unsafe-inline/);
+  // Liens vers d'autres fichiers du dépôt : GitHub, dans un nouvel onglet ; ancres internes inchangées
+  assert.match(res.body, /href="https:\/\/github\.com\/mlsks\/hotelaston\/blob\/main\/docs\/INSTALLATION-LOCALE\.md" target="_blank"/);
+  assert.match(res.body, /href="https:\/\/github\.com\/mlsks\/hotelaston\/blob\/main\/deploy\/README\.md" target="_blank"/);
+  assert.doesNotMatch(res.body, /href="(?!https?:|mailto:|tel:|#)/);
+  assert.match(res.body, /href="#ou-trouver-quoi"/);
+  // L'admin et ses écrans d'aide
+  const index = await app.inject({ method: 'GET', url: '/admin/' });
+  assert.match(index.headers['content-security-policy'], /frame-src 'self'/);
+  for (const view of ['manual', 'onboarding']) assert.equal((await app.inject({ method: 'GET', url: `/admin/views/${view}.html` })).statusCode, 200, view);
+});

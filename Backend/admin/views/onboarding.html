@@ -1,0 +1,58 @@
+<div x-data="onboardingView" class="max-w-4xl space-y-6">
+  <div>
+    <h1 class="page-title">Prise en main</h1>
+    <p class="mt-1 text-slate-600">Pour découvrir le back-office : une visite guidée des écrans, puis une première modification, de la page jusqu’au site en ligne.</p>
+  </div>
+
+  <section class="card flex flex-wrap items-center gap-4 p-5">
+    <div class="min-w-0 flex-1">
+      <h2 class="section-title">Visite guidée</h2>
+      <p class="mt-1 text-sm text-slate-600">Deux minutes : une bulle montre chaque entrée du menu et les boutons Prévisualiser et Publier, avec ce qu’on y fait. Flèches du clavier pour avancer, Échap pour quitter.</p>
+    </div>
+    <button type="button" class="btn btn-primary" @click="tour()">Lancer la visite guidée</button>
+  </section>
+
+  <section class="card p-5">
+    <div class="flex flex-wrap items-baseline justify-between gap-2">
+      <h2 class="section-title">Votre première modification</h2>
+      <p class="text-sm text-slate-500"><span x-text="count"></span> étape(s) sur <span x-text="steps.length"></span> faites</p>
+    </div>
+    <ol class="mt-4 space-y-3">
+      <template x-for="(s, i) in steps" :key="s.id">
+        <li class="flex gap-4 rounded-lg p-3 ring-1" :class="done[s.id] ? 'bg-emerald-50/60 ring-emerald-200' : 'ring-slate-200'">
+          <span class="grid size-8 shrink-0 place-items-center rounded-full text-sm font-semibold"
+            :class="done[s.id] ? 'bg-emerald-600 text-white' : 'bg-azure-100 text-azure-800'" x-text="done[s.id] ? '✓' : i + 1"></span>
+          <div class="min-w-0 flex-1">
+            <p class="font-medium text-slate-900" x-text="s.title"></p>
+            <p class="mt-0.5 text-sm text-slate-600" x-text="s.text"></p>
+            <div class="mt-2 flex flex-wrap items-center gap-3">
+              <a x-show="s.href" :href="s.href" class="text-sm font-medium text-azure-700 hover:underline" x-text="(s.link || 'Ouvrir') + ' →'"></a>
+              <label class="flex items-center gap-2 text-sm text-slate-600"><input type="checkbox" :checked="done[s.id]" @change="toggle(s.id)"> Fait</label>
+            </div>
+          </div>
+        </li>
+      </template>
+    </ol>
+  </section>
+
+  <section class="card p-5">
+    <h2 class="section-title">Cinq règles à retenir</h2>
+    <ul class="mt-3 list-disc space-y-2 pl-5 text-sm text-slate-700">
+      <li>Ce qui est enregistré n’est <strong>pas visible tout de suite</strong> sur le site : d’abord dans la prévisualisation, puis sur le site après <strong>Publier</strong>.</li>
+      <li>Les textes s’enregistrent <strong>dès qu’on quitte le champ</strong> (« Enregistré ✓ ») ; les fiches, bandeaux, popups et réglages ont un bouton <strong>Enregistrer</strong>.</li>
+      <li>Une page n’est publiée dans une langue que si <strong>tous ses textes y sont prêts</strong> : jamais de page à moitié traduite.</li>
+      <li>Les <strong>trois dernières versions</strong> publiées sont gardées : une erreur se répare avec <strong>Restaurer</strong>.</li>
+      <li>Le menu de gauche ne montre que les écrans permis par votre rôle ; sur un petit écran, il s’ouvre avec le bouton ☰.</li>
+    </ul>
+  </section>
+
+  <section class="card p-5">
+    <h2 class="section-title">Pour aller plus loin</h2>
+    <ul class="mt-3 space-y-1 text-sm">
+      <li><a href="#/aide/manuel?section=ou-trouver-quoi" class="font-medium text-azure-700 hover:underline">Où trouver quoi : le chemin de chaque tâche courante →</a></li>
+      <li><a href="#/aide/manuel?section=7-traduire-le-site" class="font-medium text-azure-700 hover:underline">Traduire le site →</a></li>
+      <li><a href="#/aide/manuel?section=13-en-cas-de-probleme" class="font-medium text-azure-700 hover:underline">En cas de problème →</a></li>
+      <li><a href="#/aide/manuel" class="font-medium text-azure-700 hover:underline">Le manuel d’utilisation complet →</a></li>
+    </ul>
+  </section>
+</div>

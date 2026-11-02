@@ -4,6 +4,19 @@
     <p class="mt-1 text-slate-600" x-text="$store.session.roleLabel()"></p>
   </div>
 
+  <!-- Bienvenue : jusqu'à ce qu'on la masque (Aide → Prise en main reste dans le menu) -->
+  <section x-data="welcomeCard" x-show="!hidden" class="card flex flex-wrap items-center gap-4 border-l-4 border-gold p-5">
+    <div class="min-w-0 flex-1">
+      <h2 class="section-title">Nouveau dans le back-office ?</h2>
+      <p class="mt-1 text-sm text-slate-600">Une visite guidée de deux minutes montre chaque écran ; la page Prise en main accompagne une première modification jusqu’au site en ligne.</p>
+    </div>
+    <div class="flex flex-wrap gap-2">
+      <button type="button" class="btn btn-primary btn-sm" @click="tour()">Lancer la visite guidée</button>
+      <a href="#/aide/prise-en-main" class="btn btn-secondary btn-sm">Prise en main</a>
+      <button type="button" class="btn btn-ghost btn-sm" @click="hide()">Masquer</button>
+    </div>
+  </section>
+
   <div class="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
     <!-- Site en ligne -->
     <section class="card p-5">

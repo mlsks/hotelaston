@@ -111,14 +111,14 @@
         <svg class="size-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
       </button>
       <p class="min-w-0 flex-1 truncate font-medium text-slate-800" x-text="$store.route.title"></p>
-      <button class="btn btn-secondary btn-sm" @click="$store.build.preview()" :disabled="$store.build.busy">
+      <button data-tour="preview" class="btn btn-secondary btn-sm" @click="$store.build.preview()" :disabled="$store.build.busy">
         <span x-text="$store.build.busy === 'preview' ? 'Génération…' : 'Prévisualiser'"></span>
       </button>
-      <button x-show="$store.session.canPublish" class="btn btn-primary btn-sm" @click="$store.build.publish()" :disabled="$store.build.busy">
+      <button data-tour="publish" x-show="$store.session.canPublish" class="btn btn-primary btn-sm" @click="$store.build.publish()" :disabled="$store.build.busy">
         <span x-text="$store.build.busy === 'publish' ? 'Publication…' : 'Publier'"></span>
       </button>
       <div class="relative" x-data="{ open: false }" @click.outside="open = false" @keydown.escape="open = false">
-        <button class="flex size-9 items-center justify-center rounded-full bg-azure-100 text-sm font-semibold text-azure-800" @click="open = !open"
+        <button data-tour="account" class="flex size-9 items-center justify-center rounded-full bg-azure-100 text-sm font-semibold text-azure-800" @click="open = !open"
           :aria-expanded="open" aria-label="Mon compte" x-text="($store.session.user?.name || '?').slice(0, 1).toUpperCase()"></button>
         <div x-show="open" x-transition.origin.top.right class="card absolute right-0 z-30 mt-2 w-64 p-2">
           <div class="px-3 py-2">
@@ -133,6 +133,25 @@
     </header>
 
     <main id="view" class="mx-auto max-w-7xl px-4 py-6 lg:px-8 lg:py-8"></main>
+  </div>
+
+  <!-- Visite guidée (Aide → Prise en main) -->
+  <div x-cloak x-show="$store.tour.open" class="fixed inset-0 z-[80]" role="dialog" aria-modal="true" aria-labelledby="tour-title">
+    <div class="absolute inset-0" :class="!$store.tour.box && 'bg-azure-950/55'" @click="$store.tour.close()"></div>
+    <div x-show="$store.tour.box" class="pointer-events-none fixed rounded-lg transition-all duration-200"
+      :style="$store.tour.box && `top:${$store.tour.box.top}px;left:${$store.tour.box.left}px;width:${$store.tour.box.width}px;height:${$store.tour.box.height}px;outline:2px solid #c9a45e;box-shadow:0 0 0 9999px rgba(11,31,52,.55)`"></div>
+    <div id="tour-bubble" class="card fixed w-[min(21rem,calc(100vw-1.5rem))] p-5 shadow-xl transition-all duration-200"
+      :style="`top:${$store.tour.pos.top}px;left:${$store.tour.pos.left}px`">
+      <p class="text-xs font-medium text-slate-500" x-text="`Étape ${$store.tour.index + 1} sur ${$store.tour.steps.length}`"></p>
+      <h2 id="tour-title" class="mt-1 font-serif text-xl font-semibold text-azure-950" x-text="$store.tour.step?.title"></h2>
+      <p class="mt-2 text-sm text-slate-700" x-text="$store.tour.step?.text"></p>
+      <div class="mt-4 flex items-center gap-2">
+        <button type="button" class="btn btn-ghost btn-sm -ml-2" @click="$store.tour.close()">Quitter</button>
+        <span class="flex-1"></span>
+        <button type="button" class="btn btn-secondary btn-sm" x-show="$store.tour.index > 0" @click="$store.tour.prev()">Précédent</button>
+        <button type="button" class="btn btn-primary btn-sm" @click="$store.tour.next()" x-text="$store.tour.index < $store.tour.steps.length - 1 ? 'Suivant' : 'Terminer'"></button>
+      </div>
+    </div>
   </div>
 
   <!-- Notifications -->
