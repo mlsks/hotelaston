@@ -1,5 +1,5 @@
 /**
- * Fiches et listes : chambres, services, équipements, avis, réponses du chat, programme Live Music, artistes,
+ * Fiches et listes : chambres, services, équipements, offres, blog, salles, réponses du chat, programme Live Music, artistes,
  * et les bandeaux photo (HERO) des pages.
  * Formulaire décrit par lib/collections.js ; en traduction, seuls les champs traduisibles sont modifiables.
  */
