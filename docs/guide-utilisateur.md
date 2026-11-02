@@ -1,6 +1,6 @@
 # Guide utilisateur du back-office
 
-Hôtel Aston La Scala · Mis à jour le 31 octobre 2026
+Hôtel Aston La Scala · Mis à jour le 2 novembre 2026
 
 Ce guide explique comment faire vivre le site de l'hôtel depuis le back-office : modifier un texte, changer une photo, annoncer un concert, traduire, publier, revenir en arrière. Il s'adresse aux personnes qui utilisent l'admin au quotidien, sans connaissance technique.
 
@@ -13,6 +13,34 @@ Le guide existe en deux versions qui disent la même chose : [guide-utilisateur.
 - Les textes s'enregistrent **dès qu'on quitte le champ** (la mention « Enregistré ✓ » apparaît). Les formulaires plus longs (fiches, bandeaux, popup, réglages) ont un bouton **Enregistrer**, et l'admin prévient avant de quitter un écran non enregistré.
 - **Une page n'est publiée dans une langue que si tous ses textes y sont prêts.** Sinon, seule la version française de cette page est en ligne : jamais de page à moitié traduite.
 - **On peut toujours revenir en arrière** : les trois dernières versions publiées sont conservées et se restaurent en un clic.
+
+## Où trouver quoi
+
+Le menu de gauche est rangé sous des titres en petites capitales grises : **CONTENU**, **LANGUES**, **SITE**, **ADMINISTRATION**. Sur un petit écran, il s'ouvre avec le bouton ☰ en haut à gauche. Le tableau donne le chemin exact, clic par clic.
+
+| Je veux… | Où cliquer |
+|---|---|
+| Changer un texte d'une page | **CONTENU** → **Pages** → cliquer sur la page → onglet **Textes** ; le champ **Rechercher un texte…** retrouve un mot. Voir [Pages](#pages). |
+| Changer une photo d'une page | Même chemin, puis **Changer l'image** à côté de la photo. Voir [Médiathèque](#mediatheque). |
+| Changer un texte présent sur toutes les pages (en-tête, pied de page, chat, mentions légales du bas) | **CONTENU** → **Textes communs**. Voir [Textes communs](#textes-communs). |
+| Changer un lien du menu ou du pied de page | **CONTENU** → **Menus et liens**. Voir [Menus et liens](#menus-et-liens). |
+| Changer un plat ou un prix d'une carte du restaurant ou des bars | **CONTENU** → **Cartes du restaurant** → cliquer sur la carte. Voir [Cartes du restaurant](#cartes-du-restaurant). |
+| Modifier une chambre, un service, une offre, un article du blog, une salle de séminaire, une réponse du chat | **CONTENU** → **Fiches et listes** → cliquer sur la carte de la liste (**Chambres**, **Services**, **Offres**, **Blog (articles)**, **Salles de séminaire**, **Réponses du chat**). Voir [Fiches et listes](#4-fiches-et-listes). |
+| Ajouter un concert | **CONTENU** → **Fiches et listes** → **Programme Live Music** → **Ajouter un concert**. Voir [Live Music](#5-live-music-concerts-et-artistes). |
+| Gérer les avis Google | **CONTENU** → **Avis Google**. Voir [Les avis Google](#les-avis-google). |
+| Envoyer une photo, une vidéo ou un PDF | **CONTENU** → **Médiathèque** → **Envoyer des fichiers**. |
+| Afficher un message en haut d'une page | **CONTENU** → **Bandeaux** → **Nouveau bandeau**. Voir [Bandeaux](#bandeaux). |
+| Ouvrir une fenêtre (popup) sur le site | **CONTENU** → **Popup** → **Nouveau popup**, ou depuis une offre : **Promouvoir en popup**. Voir [Popup](#popup). |
+| Régler le dégradé derrière le texte d'un grand bandeau photo | **CONTENU** → **Fiches et listes** → **Bandeaux photo (HERO)** (dernière carte). Voir [Les bandeaux photo (HERO)](#les-bandeaux-photo-hero). |
+| Changer le title et la description d'une page dans Google | **CONTENU** → **Pages** → cliquer sur la page → onglet **Référencement (SEO)**. Voir [Référencement](#9-referencement-seo). |
+| Traduire | L'onglet de la langue en haut de l'écran voulu, ou **LANGUES** → **Traductions** pour la liste de ce qui reste. Voir [Traduire le site](#7-traduire-le-site). |
+| Mettre une langue en ligne | **LANGUES** → **Langues du site** → cliquer sur **Inactive** dans la ligne de la langue, puis **Publier**. |
+| Mettre le site à jour | Bouton **Publier**, en haut à droite de chaque écran. |
+| Revenir à une version précédente | **SITE** → **Publication et versions** → **Restaurer**. Voir [Publication et versions](#publication-et-versions). |
+| Rediriger une ancienne adresse | **SITE** → **Redirections**. |
+| Régler le moteur de réservation D-Edge ou le seuil de la note Google | **ADMINISTRATION** → **Réglages**. Voir [Réglages](#reglages). |
+| Créer un compte | **ADMINISTRATION** → **Utilisateurs** → **Nouveau compte**. |
+| Ne plus compter mes visites dans les statistiques | Rond avec l'initiale, en haut à droite → **Mon compte**. |
 
 ## 1. Démarrer le back-office
 
@@ -38,6 +66,32 @@ L'installation complète (Node.js, premier lancement, problèmes courants) est d
 
 Sur le PC de développement, consulter `/fr/` ajoute des visites aux statistiques : ce n'est pas grave, mais ces chiffres ne veulent rien dire tant que le site n'est pas en ligne.
 
+### Après une mise à jour du code
+
+Quand une modification du back-office ou du site a été fusionnée sur GitHub, elle n'arrive sur le PC qu'en trois temps :
+
+1. Dans le terminal du serveur, **Ctrl + C** pour l'arrêter.
+2. Récupérer le code, puis relancer :
+
+   ```bash
+   git pull
+   cd Backend
+   npm start
+   ```
+
+   (Si `git pull` a changé `Backend/package.json`, lancer `npm install` dans `Backend` avant `npm start`.)
+3. Ouvrir l'admin et cliquer sur **Publier** : le site publié est régénéré avec le nouveau code. Certaines mises à jour ajoutent des textes ou des traductions au démarrage du serveur ; ils apparaissent alors dans l'admin.
+
+### Voir le site sur un téléphone (même Wi-Fi)
+
+Pour regarder le site du PC sur un téléphone ou une tablette branchés sur la même box : dans `Backend/.env`, mettre `HOST=0.0.0.0`, relancer le serveur, puis ouvrir sur le téléphone `http://` suivi de l'adresse du PC sur le réseau, puis `:3020/fr/` (par exemple http://192.168.1.5:3020/fr/ ; la commande `ipconfig` du PC donne cette adresse, ligne « Adresse IPv4 »). Le back-office devient alors joignable par tout appareil du réseau : à faire seulement chez soi, pas sur un Wi-Fi public.
+
+### Sur la démo en ligne (Render)
+
+La démo hébergée sur Render est une copie séparée : son contenu (textes, photos, comptes) est celui qui y a été copié depuis le PC, et ce qu'on modifie dans l'admin de la démo ne revient pas sur le PC (ni l'inverse). Elle est marquée « à ne pas indexer » (`NOINDEX=1`) : Google ne la référence pas.
+
+Après une mise à jour du code sur GitHub : dans Render, **Manual Deploy** sur le service, attendre la fin, puis ouvrir l'admin de la démo (`/admin/` au bout de son adresse) et cliquer sur **Publier**. Sur la démo, envoyer une vidéo dans la médiathèque échoue (pas de ffmpeg chez Render) ; les vidéos déjà présentes s'affichent. La mise en place est décrite dans [deploy/README.md](../deploy/README.md), section « Démo sur Render ».
+
 ### Se connecter
 
 Saisir son e-mail et son mot de passe. Les comptes sont créés par un administrateur (voir [Utilisateurs](#utilisateurs)) ; les identifiants de développement sont dans le fichier `Backend/.dev-credentials`, qui n'est pas versionné. Après 10 tentatives manquées, la connexion est bloquée un quart d'heure. La session dure 12 heures.
@@ -57,12 +111,12 @@ Le menu de gauche ne montre que les écrans autorisés pour le compte connecté.
 
 ## 2. Se repérer dans l'admin
 
-Le menu de gauche est rangé en cinq groupes :
+Le menu de gauche est rangé en cinq groupes (sur un petit écran, il s'ouvre avec le bouton ☰ en haut à gauche) :
 
 | Groupe | Écrans |
 |---|---|
 | (en haut) | **Accueil** : version en ligne, prévisualisation, statistiques de la semaine, avancement des traductions, rapport SEO. |
-| Contenu | **Pages**, **Textes communs**, **Menus et liens**, **Cartes du restaurant**, **Textes de l'interface**, **Fiches et listes**, **Médiathèque**, **Bandeaux**, **Popup**. |
+| Contenu | **Pages**, **Textes communs**, **Menus et liens**, **Cartes du restaurant**, **Textes de l'interface**, **Fiches et listes**, **Avis Google**, **Médiathèque**, **Bandeaux**, **Popup**. |
 | Langues | **Traductions**, **Langues du site**. |
 | Site | **Publication et versions**, **Rapport SEO**, **Statistiques**, **Redirections**. |
 | Administration | **Utilisateurs**, **Réglages**, **Journal des modifications**. |
@@ -174,7 +228,7 @@ Ces textes ne retiennent pas une page : tant qu'un d'eux n'est pas traduit dans 
 
 ## 4. Fiches et listes
 
-**Fiches et listes** regroupe les contenus répétés du site, chacun avec un formulaire adapté :
+**Fiches et listes** (menu de gauche, rubrique **CONTENU**) regroupe les contenus répétés du site, chacun avec un formulaire adapté. L'écran montre une carte par liste, avec son nombre d'éléments : cliquer sur la carte ouvre la liste, puis cliquer sur un élément ouvre sa fiche.
 
 | Liste | Contenu |
 |---|---|
@@ -183,10 +237,11 @@ Ces textes ne retiennent pas une page : tant qu'un d'eux n'est pas traduit dans 
 | Offres | Une fiche par offre : famille, photo, prix, ce qui est compris, économie, conditions, bouton, présence sur l'accueil. Voir [Les offres](#les-offres). |
 | Blog (articles) | Un article par fiche : titre, rubrique, date, photo ou vidéo, résumé, texte, réglages Google. Chaque article a sa propre page sous la page Blog. Voir [Le blog](#le-blog). |
 | Salles de séminaire | Une fiche par salle : nom, précisions, photo, surface et capacités. Voir [Les salles de séminaire](#les-salles-de-seminaire). |
-| Équipements | Les pictogrammes et libellés utilisés par les fiches chambre. |
-| Réponses du chat | Les mots déclencheurs (si la question du visiteur en contient un, le chat donne cette réponse) et la réponse. Le chat ne propose pas de rappel téléphonique (retiré le 31/10/2026) : l'ancienne réponse « rappel » est désactivée, la réactiver ici la remet en service. Les pastilles du chat (Parking, Arrivée / départ, Depuis l'aéroport, Petit-déjeuner, Piscine, Restaurant, Bars, Séminaire, Animaux) sont des raccourcis vers ces réponses : leur libellé se change dans **Textes communs**, section **Réception · Aston La Scala** ; en ajouter une demande une modification du gabarit. |
-| Programme Live Music, Artistes | Voir [Live Music](#5-live-music-concerts-et-artistes). |
-| Bandeaux photo (HERO) | Le dégradé derrière le texte du grand bandeau en haut de l'Accueil, des Séminaires et du Moon Bar. Voir [Les bandeaux photo (HERO)](#les-bandeaux-photo-hero). |
+| Équipements (pictogrammes) | Les pictogrammes et libellés utilisés par les fiches chambre, avec un **Libellé court** pour les cartes de l'accueil. |
+| Réponses du chat | Les mots déclencheurs (si la question du visiteur en contient un, le chat donne cette réponse) et la réponse. Le chat ne propose pas de rappel téléphonique (retiré le 31/10/2026) : l'ancienne réponse « rappel » est désactivée, la réactiver ici la remet en service. Les pastilles du chat sont des raccourcis vers ces réponses : Parking (`parking`), Arrivée / départ (`horaires`), Depuis l'aéroport (`aeroport`), Petit-déjeuner (`petit-dejeuner`), Piscine (`piscine`), Restaurant (`restaurant`), Bars (`moonbar`), Séminaire (`devis`), Animaux (`animaux`). Pour changer ce que répond une pastille, modifier la réponse dont l'identifiant est entre parenthèses ; son libellé se change dans **Textes communs**, section **Toutes les pages · Réception · Aston La Scala**. En ajouter une demande une modification du gabarit. |
+| Programme Live Music, Artistes (Live Music) | Voir [Live Music](#5-live-music-concerts-et-artistes). |
+| Menus et liens, Cartes du restaurant et des bars | Raccourcis vers les écrans du même nom : voir [Menus et liens](#menus-et-liens) et [Cartes du restaurant](#cartes-du-restaurant). |
+| Bandeaux photo (HERO) (dernière carte) | Le dégradé derrière le texte du grand bandeau en haut de l'Accueil, des Séminaires et du Moon Bar. Voir [Les bandeaux photo (HERO)](#les-bandeaux-photo-hero). |
 
 Dans une fiche :
 
@@ -218,11 +273,12 @@ La page **Offres** et les aperçus « Offres spéciales » de l'accueil sont con
 - **Étiquette**, **Titre**, **Photo** et sa **description** ;
 - **Prix** en grand (« À partir de 239 € ») et **Précision du prix** en petit (« la nuit pour 2 ») ;
 - **Ce qui est compris** (une ligne par élément), **Économie**, **Conditions** ;
-- **Prix et conditions à confirmer par l'hôtel** : à cocher tant que l'hôtel ne les a pas validés ;
-- **Bouton** :
-  - **Réserver** ouvre le moteur avec le code de l'offre, et les dates proposées si elles sont remplies ;
+- **Prix et conditions à confirmer par l'hôtel** : à cocher tant que l'hôtel ne les a pas validés (ces informations ne sont alors pas reprises dans les données lues par Google et les assistants IA) ;
+- **Bouton** et **Texte du bouton** (« Réserver cette offre » par défaut) :
+  - **Réserver** ouvre le moteur avec le code de l'offre, et les dates des champs **Arrivée proposée** et **Départ proposé** si elles sont remplies ;
   - **Demander un devis** ouvre le formulaire de devis, l'offre déjà choisie dans sa liste (une offre ajoutée y figure aussi) ;
-  - **Lien** mène à une page du site (`#/restaurant-horloge?a=reserver-horloge` pour réserver une table à L'Horloge) ou à une adresse complète ;
+  - **Lien** mène à l'**Adresse du lien** : une page du site (`#/restaurant-horloge?a=reserver-horloge` pour réserver une table à L'Horloge) ou une adresse complète ;
+  - **Pas de bouton** : la carte n'a pas de bouton ;
 - **Afficher sur l'accueil**, avec un **Titre** et une **Phrase** propres à l'accueil. Sans aucune offre cochée, la rubrique disparaît de l'accueil.
 
 Pour une offre saisonnière, régler **Afficher seulement entre deux dates** (à droite) : elle apparaît et disparaît seule, à la régénération de chaque nuit. **Masquer** ou **Supprimer** la retire aussi de partout.
@@ -280,7 +336,7 @@ Le même réglage se trouve aussi dans l'onglet **Réglages** de la page.
 
 **Ce que le site affiche.** Seulement les avis **visibles** et **notés 4 ou 5 étoiles**, du plus récent au plus ancien. Chaque avis montre le nom et la photo de l'auteur (son initiale s'il n'a pas de photo), sa note, son texte, la réponse de l'hôtel et le logo Google. Sous les avis, la mention « Sélection d'avis Google récents notés 4 ou 5 étoiles » et un lien vers tous les avis sur Google Maps. Ces règles viennent de Google et du droit de la consommation (art. L111-7-2) : un site qui ne montre qu'une partie des avis doit dire comment il les choisit. Elles ne se désactivent pas.
 
-**Fiche Google de l'hôtel.** La **note globale** et le **nombre d'avis** sont ceux de la fiche, sur tous les avis : les recopier depuis Google Maps, jamais calculés sur les seuls avis affichés. Vide, la note n'est pas affichée. Elle n'est affichée (chiffre et étoiles), sur toutes les pages, qu'à partir du seuil fixé dans les [Réglages](#reglages) : 4,2 par défaut. En dessous, seuls les avis apparaissent.
+**Fiche Google de l'hôtel** (en haut de l'écran : **Note globale**, **Nombre d'avis**, **Lien vers la fiche Google Maps**, puis **Enregistrer**). Le lien sert à « Voir tous les avis sur Google Maps » et à la note sur le site. La **note globale** et le **nombre d'avis** sont ceux de la fiche, sur tous les avis : les recopier depuis Google Maps, jamais calculés sur les seuls avis affichés. Vide, la note n'est pas affichée. Elle n'est affichée (chiffre et étoiles), sur toutes les pages, qu'à partir du seuil fixé dans les [Réglages](#reglages) : 4,2 par défaut. En dessous, seuls les avis apparaissent.
 
 **La liste.** Elle s'ouvre sur **4 et 5 étoiles** ; les onglets **Toutes les notes**, **1 à 3 étoiles** et **Masqués** montrent le reste. Pour chaque avis :
 
@@ -288,7 +344,7 @@ Le même réglage se trouve aussi dans l'onglet **Réglages** de la page.
 - **Modifier** : thèmes (les filtres de la page Avis clients ; sans thème, l'avis compte comme un avis sur le séjour) et chambre concernée (l'avis passe en tête sur sa fiche chambre). Le texte d'un avis venu de l'API Google ne se modifie pas ;
 - **Supprimer**.
 
-**Ajouter un avis** : recopier un avis de la fiche Google tel quel (auteur, note, date, texte, réponse). Le **lien de l'avis** s'obtient avec le bouton « Partager » de l'avis sur Google Maps ; vide, le lien mène à la fiche.
+**Ajouter un avis** : recopier un avis de la fiche Google tel quel (auteur, note, date, texte, réponse). Le **Lien de l'avis sur Google Maps** (bouton « Partager » de l'avis sur Google Maps) est facultatif : il sert seulement dans l'admin (lien **Voir sur Google Maps** sous l'avis) ; le site, lui, n'affiche plus de lien par avis, seulement le lien vers tous les avis de la fiche (31/10/2026).
 
 **Importer un JSON** : un fichier, ou son contenu collé. Sont acceptés une liste d'avis avec les champs de l'écran (`author_name`, `rating`, `comment`, `published_at`, `review_url`, `author_photo_url`, `reply_comment`, `is_visible`, `topics`, `room`), la réponse de l'API Google Business Profile (`reviews`, `averageRating`, `totalReviewCount` : la note et le nombre d'avis de la fiche sont repris) et les avis de l'API Places. Un avis déjà présent (même identifiant) est mis à jour. Cocher **Ce sont des exemples** pour des avis de démonstration.
 
@@ -306,7 +362,7 @@ Un seul bar est ouvert à la fois : le Moon Bar sur le toit quand le temps le pe
 
 ### Ajouter un concert
 
-**Fiches et listes** → **Programme Live Music** (ou **Programme des concerts** pour l'éditeur Live Music), puis le bouton d'ajout. On peut aussi passer par **Ajouter un concert** sur l'accueil.
+**Fiches et listes** → **Programme Live Music** (ou **Programme des concerts** dans le menu de l'éditeur Live Music), puis **Ajouter un concert**. Pour l'éditeur Live Music, l'**Accueil** de l'admin montre aussi les prochains concerts et un bouton **Ajouter un concert**.
 
 | Champ | À savoir |
 |---|---|
@@ -314,12 +370,13 @@ Un seul bar est ouvert à la fois : le Moon Bar sur le toit quand le temps le pe
 | Lieu | **Selon la météo** (Moon Bar sur le toit si le temps le permet, sinon L'Aston Club), **Moon Bar (rooftop)** ou **L'Aston Club (7e étage)**. |
 | Artiste ou groupe | Obligatoire. Se choisit dans la liste, ou se crée sur place avec **+ Nouvel artiste**. Le style, la présentation, la photo et le site viennent de la fiche artiste. |
 | Précisions sur la soirée | Facultatif. Vide : la présentation de l'artiste est affichée. |
+| Style de cette soirée | N'apparaît que sur d'anciens concerts qui en ont un : remplace le style de la fiche artiste ; le vider reprend celui de la fiche. |
 
 Les concerts à venir apparaissent sur la page Live Music avec la photo et le lien de l'artiste, et sont signalés à Google comme événements. Les concerts passés disparaissent seuls : le site est régénéré chaque nuit.
 
 ### Fiches artistes
 
-**Fiches et listes** → **Artistes** (ou le lien **Gérer les fiches artistes →** depuis le programme) :
+**Fiches et listes** → **Artistes (Live Music)** (ou le lien **Gérer les fiches artistes →** depuis le programme) :
 
 - **Nom de l'artiste ou du groupe** (obligatoire) ;
 - **Style** et **Présentation** (traduits) ;
@@ -351,7 +408,7 @@ Pour changer la photo d'une page : onglet **Textes** de la page, **Changer l'ima
 
 Sur l'accueil, les vignettes **Conciergerie** et **Bagagerie gratuite** (section « Tout ce qu'un 4 étoiles doit faciliter ») montrent un pictogramme tant qu'aucune photo n'est choisie : **Pages** → **Accueil** → onglet **Textes**, ligne **Photo** juste sous le titre de la vignette, **Changer l'image**. **Retirer l'image** remet le pictogramme. La photo de la page Conciergerie elle-même se change dans **Fiches et listes** → **Services** → **Conciergerie**, champ **Photos**.
 
-D'autres images d'origine se remplacent de la même façon ; tant qu'aucune n'est choisie, l'image d'origine reste, et **Retirer l'image** la fait revenir :
+D'autres images d'origine se remplacent de la même façon ; tant qu'aucune n'est choisie, l'image d'origine reste, et **Retirer l'image** (**Retirer la vidéo** pour la vidéo) la fait revenir :
 
 | Image | Où la changer (taper le mot dans **Rechercher un texte…**) |
 |---|---|
@@ -383,10 +440,12 @@ Une fenêtre au plus par page (la plus prioritaire). Sur mobile, elle ne s'ouvre
 
 **Popup** → **Nouveau popup**, puis :
 
-- **Contenu** par langue : titre, texte, bouton ; une image, une vidéo ou un son ;
+- **Contenu** par langue : titre, texte, **Bouton vers** (une page, une fiche, le moteur de réservation ou une adresse) et texte du bouton ; une image, une vidéo ou un son ;
+- **Réglages** : **Nom interne** (pour s'y retrouver dans la liste) ;
 - **S'ouvre sur ordinateur** : après un délai, après un défilement, ou quand le visiteur s'apprête à partir ;
 - **Sur mobile** : après un défilement, après un délai, ou jamais ;
 - **Fréquence** : une seule fois par visiteur, une fois par visite, ou au plus tous les N jours ;
+- **Du** / **Au** : dates d'affichage (heure de Paris ; sans date, le popup reste affiché tant qu'il est actif) ;
 - **Actif**, **Priorité**, **Le montrer à nouveau aux visiteurs qui l'avaient déjà fermé** ;
 - **Pages** : toutes, seulement sur…, ou partout sauf… ;
 - **Enregistrer**, puis publier.
@@ -494,10 +553,10 @@ Le bouton **Publier** fige le contenu enregistré, génère le site et le met en
 
 L'écran montre la version en ligne (numéro, date, nombre de pages, langues) et l'historique des générations (**Afficher les prévisualisations** pour les voir aussi). Les trois dernières versions publiées sont conservées.
 
-**Restaurer** une version remet en ligne le site tel qu'il était. On choisit :
+**Restaurer** (sur la ligne de la version) remet en ligne le site tel qu'il était ; la version actuelle reste disponible. La fenêtre de confirmation a une case **Restaurer aussi le contenu dans le back-office** :
 
-- **sans le contenu** : seul le site en ligne change ; les modifications en cours dans l'admin sont gardées et repartiront à la prochaine publication ;
-- **avec le contenu** : le contenu de l'admin revient lui aussi à cette version (une sauvegarde est faite automatiquement avant).
+- **décochée** (par défaut) : seul le site en ligne change ; les modifications en cours dans l'admin sont gardées et repartiront à la prochaine publication ;
+- **cochée** : le contenu de l'admin revient lui aussi à cette version (une sauvegarde de la base est faite automatiquement avant).
 
 ## 9. Référencement (SEO)
 
@@ -545,21 +604,22 @@ Sur les ordinateurs de l'hôtel (réception, bureaux), cocher dans **Mon compte*
 
 ### Utilisateurs
 
-**Nouveau compte** : e-mail, rôle, langues traduites (traducteur), et si besoin **Limiter à une partie du site** (par exemple Live Music). Un mot de passe est généré et **affiché une seule fois** : le transmettre à la personne, qui pourra le changer dans **Mon compte** (12 caractères au moins). **Modifier** permet de changer le rôle, les langues ou de désactiver le compte ; **Mot de passe** en génère un nouveau.
+**Nouveau compte** : nom, e-mail, rôle, langues traduites (traducteur), et si besoin **Limiter à une partie du site** (par exemple Live Music, pour un éditeur), puis **Créer le compte**. Un mot de passe est généré et **affiché une seule fois** : le transmettre à la personne, qui pourra le changer dans **Mon compte** (12 caractères au moins). **Modifier** permet de changer le nom, le rôle, les langues ou de décocher **Compte actif** (le compte reste dans la liste, marqué « désactivé ») ; **Mot de passe** en génère un nouveau ; **Supprimer** retire le compte (pas le sien).
 
 ### Réglages
 
 Paramètres communs à tout le site, appliqués à la prochaine publication :
 
-- **Site** : nom du site, langue proposée aux visiteurs dont la langue n'est pas proposée (x-default), image de partage par défaut ;
-- **Moteur de réservation (D-Edge)** : adresse du moteur (`{locale}` y devient `fr-FR`, `en-GB`…), noms des paramètres qui transmettent les dates, les voyageurs, la chambre et l'offre (laisser un nom vide pour ne pas envoyer l'information), codes chambre et codes tarif de D-Edge (une ligne par chambre ou offre : `privilege = code D-Edge`). Ces noms et codes sont fournis par D-Edge ; s'ils sont faux, le moteur s'ouvre sans les choix du visiteur ;
-- **Avis clients** : note moyenne de la fiche Google à partir de laquelle elle est affichée (4,2 par défaut) (les avis eux-mêmes : [Les avis Google](#les-avis-google)) ;
+- **Site** : nom du site, langue proposée aux visiteurs dont la langue n'est pas proposée (x-default), image de partage par défaut, adresse des photos encore hébergées par l'ancien site (à ne pas changer) ;
+- **Moteur de réservation (D-Edge)** : adresse du moteur (`{locale}` y devient `fr-FR`, `en-GB`…, `{lang}` devient `fr`, `en`…), début commun des adresses du moteur (pour reconnaître les liens vers le moteur dans les textes), noms des paramètres qui transmettent l'arrivée, le départ, le nombre de nuits, les adultes, les enfants, le total des voyageurs, la chambre et l'offre (laisser un nom vide pour ne pas envoyer l'information), codes chambre et codes tarif de D-Edge (une ligne par chambre ou offre : `privilege = code D-Edge`). Ces noms et codes sont fournis par D-Edge ; s'ils sont faux, le moteur s'ouvre sans les choix du visiteur ;
+- **Avis clients** : **Note moyenne affichée à partir de** (4,2 par défaut) ; en dessous, la note de la fiche Google n'apparaît sur aucune page, les avis restent affichés (les avis eux-mêmes : [Les avis Google](#les-avis-google)) ;
 - **Données structurées (JSON-LD)** : le modèle unique, pour toutes les langues, des informations lues par Google et les assistants IA (voir [Données structurées (JSON-LD)](#donnees-structurees-json-ld)). Réservé aux personnes à l'aise avec le format ;
+- **Enregistrer** en bas des réglages ;
 - **Maintenance** : **Effacer la corbeille maintenant**.
 
 ### Journal des modifications
 
-Qui a modifié quoi, et quand : les 500 dernières actions, filtrables par personne ou action.
+Qui a modifié quoi, et quand : les 500 dernières actions. Le champ **Filtrer (personne, action…)** en haut à droite réduit la liste.
 
 ## 12. Sauvegarder
 
