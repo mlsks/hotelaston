@@ -717,6 +717,68 @@ picture { display: contents; }
 }
 .booking--aside { grid-template-columns: 1fr 1fr; }
 
+/* Module du bandeau d'accueil repliable (mobile et tablette, voir initBookingCollapse) : grand à l'arrivée,
+   une seule ligne « dates · voyageurs » une fois replié. Le bouton n'existe qu'avec JavaScript. */
+.booking__toggle { display: none; }
+@media (max-width: 1023.98px) {
+  .booking--collapsible { position: relative; }
+  .booking--collapsible > .booking__toggle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    top: 4px;
+    right: 4px;
+    z-index: 1;
+    width: 34px;
+    height: 34px;
+    padding: 0;
+    border: 0;
+    border-radius: 50%;
+    background: transparent;
+    color: var(--azure-700);
+    cursor: pointer;
+  }
+  /* Zone de toucher plus large que le dessin, sans déborder sur les champs */
+  .booking--collapsible > .booking__toggle::after { content: ""; position: absolute; inset: -6px -4px -2px -10px; }
+  .booking__toggle .booking__toggle-icon, .booking__toggle .booking__toggle-text { display: none; }
+  .booking__toggle-chevron { width: 18px; height: 18px; transform: rotate(-90deg); transition: transform 0.3s var(--ease-out); }
+  /* Ouvert : le texte reste lisible par les lecteurs d'écran */
+  .booking--collapsible:not(.is-compact) .booking__toggle-text {
+    display: block; position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap;
+  }
+
+  .booking--collapsible.is-compact { padding: 8px; }
+  .booking--collapsible.is-compact > :not(.booking__toggle) { display: none; }
+  .booking--collapsible.is-compact > .booking__toggle {
+    position: static;
+    grid-column: 1 / -1;
+    justify-content: flex-start;
+    gap: 12px;
+    width: 100%;
+    height: auto;
+    min-height: 52px;
+    padding: 6px 12px;
+    border: 1px solid var(--line-strong);
+    border-radius: var(--radius-sm);
+    background: #fff;
+    color: var(--ink);
+    text-align: left;
+  }
+  .booking--collapsible.is-compact > .booking__toggle::after { content: none; }
+  .booking--collapsible.is-compact .booking__toggle-icon { display: block; flex: none; width: 20px; height: 20px; color: var(--azure-700); }
+  .booking--collapsible.is-compact .booking__toggle-text { display: grid; gap: 1px; flex: 1; min-width: 0; }
+  .booking__toggle-dates { font-size: 1rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .booking__toggle-guests {
+    font-size: 0.7rem; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: var(--azure-700);
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  }
+  .booking--collapsible.is-compact .booking__toggle-chevron { flex: none; color: var(--gold); transform: rotate(90deg); }
+  /* Ouverture à la demande : les champs apparaissent en fondu (coupé si « réduire les animations ») */
+  .booking--collapsible.is-opening > :not(.booking__toggle) { animation: booking-open 0.35s var(--ease-out) both; }
+}
+@keyframes booking-open { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+
 /* 7. COMPOSANTS ============================================================ */
 .btn {
   position: relative;

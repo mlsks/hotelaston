@@ -561,6 +561,7 @@
       if (stay.adults && $('[data-adults]', form)) $('[data-adults]', form).value = stay.adults;
       if (stay.children !== undefined && $('[data-children]', form)) $('[data-children]', form).value = stay.children;
       updateMins(form);
+      form.dispatchEvent(new Event('booking:sync'));
     });
   }
 
@@ -618,6 +619,79 @@
       const dlg = form.closest('dialog');
       if (dlg?.open) dlg.close();
     });
+
+    if (form.matches('[data-booking-collapsible]')) initBookingCollapse(form);
+  }
+
+  /**
+   * Module de réservation du bandeau d'accueil, sur mobile et tablette : grand à l'arrivée, il se replie
+   * en une ligne (dates · voyageurs) dès qu'on défile ; le bouton de cette ligne le redéplie, et un petit
+   * chevron en haut à droite le replie. Une fois que le visiteur a ouvert ou fermé le module lui-même,
+   * le défilement ne le replie plus. La hauteur du bandeau est figée au moment du repli : rien ne saute
+   * sous le doigt, la photo se découvre simplement. Sur grand écran, rien ne change.
+   */
+  function initBookingCollapse(form) {
+    const toggle = $('[data-booking-toggle]', form);
+    if (!toggle) return;
+    const mq = matchMedia('(max-width: 1023.98px)');
+    const hero = form.closest('.hero');
+    const datesEl = $('[data-booking-summary-dates]', form);
+    const guestsEl = $('[data-booking-summary-guests]', form);
+    const lang = document.documentElement.lang || 'fr';
+    let fmt;
+    try { fmt = new Intl.DateTimeFormat(lang, { day: 'numeric', month: 'short' }); } catch { fmt = new Intl.DateTimeFormat('fr', { day: 'numeric', month: 'short' }); }
+    const labelOf = (sel) => ($(sel, form)?.labels?.[0]?.textContent || '').trim();
+    let compact = false;
+    let userChose = false;
+    let lockedWidth = 0;
+
+    const updateSummary = () => {
+      const v = readForm(form);
+      const a = parseISO(v.checkin);
+      const b = parseISO(v.checkout);
+      datesEl.textContent = a && b ? `${fmt.format(a)} → ${fmt.format(b)}` : [labelOf('[data-checkin]'), labelOf('[data-checkout]')].join(' → ');
+      const guests = [`${v.adults} ${labelOf('[data-adults]')}`];
+      if (Number(v.children) > 0) guests.push(`${v.children} ${labelOf('[data-children]')}`);
+      guestsEl.textContent = guests.join(' · ');
+    };
+
+    const unlockHero = () => { if (hero) hero.style.minHeight = ''; lockedWidth = 0; };
+
+    const setCompact = (on, { user = false } = {}) => {
+      if (on === compact) return;
+      if (on && hero && !hero.style.minHeight) {
+        hero.style.minHeight = `${hero.offsetHeight}px`;
+        lockedWidth = window.innerWidth;
+      }
+      if (on) updateSummary();
+      compact = on;
+      form.classList.toggle('is-compact', on);
+      toggle.setAttribute('aria-expanded', String(!on));
+      if (!on && user) {
+        if (!prefersReducedMotion.matches) {
+          form.classList.add('is-opening');
+          setTimeout(() => form.classList.remove('is-opening'), 500);
+        }
+        // Le module grandit vers le haut : on le ramène entièrement à l'écran
+        requestAnimationFrame(() => form.scrollIntoView({ block: 'nearest', behavior: prefersReducedMotion.matches ? 'auto' : 'smooth' }));
+      }
+    };
+
+    const onScroll = () => {
+      if (compact || userChose || !mq.matches || !form.offsetParent) return;
+      if (window.scrollY > 40 && !form.contains(document.activeElement)) setCompact(true);
+    };
+
+    toggle.hidden = false;
+    form.classList.add('booking--collapsible');
+    updateSummary();
+    toggle.addEventListener('click', () => { userChose = true; setCompact(!compact, { user: true }); });
+    form.addEventListener('change', updateSummary);
+    form.addEventListener('booking:sync', updateSummary);
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', () => { if (lockedWidth && window.innerWidth !== lockedWidth) unlockHero(); });
+    mq.addEventListener?.('change', () => { if (!mq.matches) { setCompact(false); unlockHero(); } });
+    onScroll(); // page rouverte déjà défilée (retour arrière)
   }
 
   const dialog = $('[data-booking-dialog]');
