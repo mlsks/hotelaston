@@ -5,10 +5,10 @@
 import Alpine from '/admin/vendor/alpine.js';
 import { get, post, session as apiSession, ApiError, qs, upload } from './api.js';
 
-const readLocal = (key) => {
+export const readLocal = (key) => {
   try { return localStorage.getItem(key); } catch { return null; }
 };
-const writeLocal = (key, value) => {
+export const writeLocal = (key, value) => {
   try { if (value === null) localStorage.removeItem(key); else localStorage.setItem(key, value); } catch { /* stockage indisponible */ }
 };
 

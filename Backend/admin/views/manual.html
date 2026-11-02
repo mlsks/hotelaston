@@ -1,0 +1,13 @@
+<div x-data="manualView" class="space-y-4">
+  <div class="flex flex-wrap items-end justify-between gap-4">
+    <div>
+      <h1 class="page-title">Manuel d’utilisation</h1>
+      <p class="mt-1 max-w-3xl text-slate-600">Tout le back-office, écran par écran. Le tableau « Où trouver quoi », en tête, donne le chemin de chaque tâche courante.</p>
+    </div>
+    <div class="flex flex-wrap gap-2">
+      <a href="#/aide/prise-en-main" class="btn btn-ghost btn-sm">Prise en main</a>
+      <a href="/admin/manuel" target="_blank" rel="noopener" class="btn btn-secondary btn-sm">Ouvrir dans un onglet (imprimer) ↗</a>
+    </div>
+  </div>
+  <iframe :src="src" @load="loaded($el)" title="Manuel d’utilisation du back-office" class="block h-[calc(100vh-12rem)] min-h-[28rem] w-full rounded-xl bg-white ring-1 ring-slate-200"></iframe>
+</div>

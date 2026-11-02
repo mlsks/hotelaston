@@ -38,6 +38,8 @@ const ROUTES = [
   { path: '/reglages', view: 'settings', title: 'Réglages', allow: admin },
   { path: '/journal', view: 'audit', title: 'Journal des modifications', allow: admin },
   { path: '/compte', view: 'account', title: 'Mon compte' },
+  { path: '/aide/prise-en-main', view: 'onboarding', title: 'Prise en main' },
+  { path: '/aide/manuel', view: 'manual', title: 'Manuel d’utilisation' },
 ];
 
 /** Pictogrammes du menu (traits 24 × 24). */
@@ -63,6 +65,8 @@ const ICON = {
   cog: '<circle cx="12" cy="12" r="3"/><path d="M12 2.5v3M12 18.5v3M4.2 6.2l2.1 2.1M17.7 15.7l2.1 2.1M2.5 12h3M18.5 12h3M4.2 17.8l2.1-2.1M17.7 8.3l2.1-2.1"/>',
   star: '<path d="m12 3.5 2.6 5.3 5.9.9-4.3 4.1 1 5.8-5.2-2.7-5.2 2.7 1-5.8-4.3-4.1 5.9-.9z"/>',
   clock: '<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>',
+  compass: '<circle cx="12" cy="12" r="9"/><path d="m15.5 8.5-2 5-5 2 2-5z"/>',
+  book: '<path d="M4 4.5A1.5 1.5 0 0 1 5.5 3H20v16H5.5A1.5 1.5 0 0 0 4 20.5z"/><path d="M4 20.5A1.5 1.5 0 0 0 5.5 22H20"/><path d="M8 7h8M8 11h5"/>',
 };
 export const icon = (name, cls = 'size-5') => `<svg class="${cls}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${ICON[name] || ''}</svg>`;
 
@@ -116,6 +120,13 @@ export function navigation() {
         { href: '#/journal', label: 'Journal des modifications', icon: 'clock' },
       ],
     }] : []),
+    {
+      label: 'Aide',
+      items: [
+        { href: '#/aide/prise-en-main', label: 'Prise en main', icon: 'compass' },
+        { href: '#/aide/manuel', label: 'Manuel d’utilisation', icon: 'book' },
+      ],
+    },
   ];
   return sections.filter((sec) => sec.items.length);
 }

@@ -4,6 +4,7 @@
  */
 import Alpine from '/admin/vendor/alpine.js';
 import './lib/stores.js';
+import './lib/tour.js';
 import * as format from './lib/format.js';
 import { counterClass, snippet } from './lib/components.js';
 import { navigation, isActive, icon, startRouter, rerender } from './lib/router.js';
@@ -21,6 +22,7 @@ import './views/languages.js';
 import './views/builds.js';
 import './views/stats.js';
 import './views/admin.js';
+import './views/help.js';
 
 Alpine.magic('fmt', () => ({ ...format, counterClass, snippet }));
 Alpine.magic('icon', () => icon);
