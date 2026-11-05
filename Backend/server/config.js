@@ -44,6 +44,9 @@ export const config = {
   noindex: env('NOINDEX', '0') === '1' || env('DEMO_PASSWORD', '') !== '',
   demoPassword: env('DEMO_PASSWORD', ''),
   keepReleases: 3,
+  // Base de géolocalisation DB-IP Lite : téléchargée et mise à jour chaque mois toute seule (GEOIP_UPDATE=0 pour couper).
+  // GEOIP_EDITION=city : pays et région (environ 130 Mo) au lieu du pays seul, si aucune base n'est encore installée.
+  geoip: { autoUpdate: env('GEOIP_UPDATE', '1') !== '0', edition: env('GEOIP_EDITION', 'country') },
 
   sessionHours: Number(env('SESSION_HOURS', 12)),
   ffmpeg: env('FFMPEG_PATH', 'ffmpeg'),

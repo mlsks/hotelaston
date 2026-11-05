@@ -10,10 +10,12 @@ import { runBuild } from './ssg/build.js';
 import { currentBuild } from './ssg/release.js';
 import { collectGarbage } from './media/gc.js';
 import { nightly } from './analytics/aggregate.js';
+import { refreshGeoip } from './analytics/geoip.js';
 import { gbpConfigured, syncAndPublish } from './reviews/gbp-sync.js';
 
 const app = await buildApp();
 const db = getDb();
+const updateGeoip = () => (config.geoip.autoUpdate ? refreshGeoip({ edition: config.geoip.edition, log: (m) => app.log.info(m) }) : null);
 
 /* Régénération planifiée : active ou retire les éléments programmés, sans publier de brouillon */
 cron.schedule(config.cron, async () => {
@@ -25,6 +27,7 @@ cron.schedule(config.cron, async () => {
   }
   collectGarbage(db, { log: (m) => app.log.info(m) });
   nightly(db, { log: (m) => app.log.info(m) }); // agrégats statistiques et purge (13 / 25 mois)
+  await updateGeoip(); // base de géolocalisation du nouveau mois, dès que DB-IP l'a publiée
 }, { timezone: config.timezone });
 
 /* Avis Google : synchronisation par l'API puis publication des avis seuls (si GBP_SYNC_CRON et les identifiants sont renseignés) */
@@ -44,3 +47,6 @@ try {
   app.log.error(err);
   process.exit(1);
 }
+
+// Base de géolocalisation absente ou d'un mois passé : téléchargée en arrière-plan, sans retarder le démarrage
+updateGeoip();

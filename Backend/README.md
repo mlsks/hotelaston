@@ -67,7 +67,7 @@ La commande `user:add` affiche le mot de passe une seule fois. Se connecter ensu
 | `node scripts/i18n-export.mjs` | Exporte tous les textes traduisibles du français (textes, pages et référencement, fiches, textes alternatifs, bandeaux, popups) dans `storage/translations/source.fr.json`, pour une traduction hors ligne. |
 | `node scripts/i18n-import.mjs <fichier.json> [--dry]` | Réimporte une traduction de même forme (champ `lang`) par l'API, serveur lancé : tout arrive en **brouillon** et figure au Journal. Signale d'abord les balises, liens, variables `{…}` ou nombres qui diffèrent du français ; `--dry` s'arrête là. |
 | `node scripts/i18n-ready.mjs <langue> [--dry]` | Passe en « prêt » tous les brouillons d'une langue (même valeur, seul le statut change), par l'API : chaque écriture figure au Journal. Il reste à publier. |
-| `node server/cli.js geoip:update [--city]` | Télécharge la base de géolocalisation DB-IP Lite du mois dans `storage/geoip/` (pays ; pays et région avec `--city`, environ 130 Mo). À relancer chaque mois. |
+| `node server/cli.js geoip:update [--city]` | Télécharge tout de suite la base de géolocalisation DB-IP Lite du mois dans `storage/geoip/` (pays ; pays et région avec `--city`, environ 130 Mo). Inutile en temps normal : le serveur le fait seul (voir « Base GeoIP »). Après cette commande, redémarrer le serveur. |
 | `node server/cli.js reviews:import <fichier.json> [--exemples]` | Ajoute ou met à jour des avis Google (mêmes formats que **Importer un JSON** de l'admin). `server/db/seeds/avis-google-exemples.json --exemples` réimporte les huit avis de démonstration. |
 | `node server/cli.js reviews:sync [--publish]` | Synchronise les avis et la note de la fiche par l'API Google Business Profile (`GBP_*` dans `.env`, voir [Avis Google](#avis-google)) ; `--publish` publie ensuite les avis seuls. |
 | `npm start` | Serveur : API, prévisualisation protégée, site, réception des statistiques, cron de minuit (régénération, nettoyage des médias, agrégats des statistiques). |
@@ -171,7 +171,7 @@ Paramètres des statistiques :
    - **Confidentialité** : le serveur ne garde ni l'adresse IP ni le navigateur. Un visiteur est une empreinte (sel du jour + IP + navigateur), et le sel est effacé le surlendemain. On ne peut donc pas relier une même personne d'un jour à l'autre. Les robots sont écartés.
    - **Canaux** : direct, recherche naturelle, publicité, réseaux sociaux, e-mail, comparateurs (Booking, Expedia, Trivago…), **assistants IA** (ChatGPT, Perplexity, Gemini, Copilot, Claude…), sites référents.
    - **Chaque nuit** : agrégats par jour. Les événements sont purgés après 13 mois, les agrégats après 25 mois.
-   - **Pays et région** : ils demandent la base DB-IP (`geoip:update`). Sans elle, tout fonctionne, sauf le pays et la région.
+   - **Pays et région** : ils demandent la base DB-IP, téléchargée automatiquement par le serveur. Sans elle, tout fonctionne, sauf le pays et la région.
 
 ## Avis Google
 
@@ -190,7 +190,7 @@ Paramètres des statistiques :
 
 ## Pas encore fait
 
-- **Base GeoIP** : pas encore téléchargée (`node server/cli.js geoip:update`, puis chaque mois). La licence CC BY 4.0 demande la mention « IP Geolocation by DB-IP » avec un lien vers db-ip.com : le tableau de bord l'affiche dès que la base est installée.
+- **Base GeoIP** : automatique depuis le 05/11/2026 (`refreshGeoip`, `server/analytics/geoip.js`). Au démarrage, si la base manque ou date d'un mois passé, le serveur la télécharge en arrière-plan ; chaque nuit (tâche de minuit), il prend celle du nouveau mois dès que DB-IP l'a publiée, la vérifie puis la recharge en mémoire, sans redémarrage. En cas d'échec (mois pas encore publié, réseau), l'ancienne base reste et l'essai reprend la nuit suivante. L'édition déjà installée est gardée ; sinon `GEOIP_EDITION` (`country` par défaut, `city` pour la région). `GEOIP_UPDATE=0` coupe tout téléchargement. Un `.mmdb` posé à la main sous un autre nom n'est jamais remplacé. La licence CC BY 4.0 demande la mention « IP Geolocation by DB-IP » avec un lien vers db-ip.com : le tableau de bord l'affiche dès que la base est installée.
 - **Politique de confidentialité** : page `politique-de-confidentialite` (17 langues, `server/ssg/legal-page.js`, `seeds/politique-de-confidentialite-page.json`), qui reprend le paragraphe sur la mesure d'audience ([`docs/confidentialite-mesure-audience.md`](../docs/confidentialite-mesure-audience.md)) et propose le bouton de refus (`localStorage « aston.no-stats »`, lu par `track.js`). À faire valider par l'hôtel.
 - **Redirections des anciennes adresses** de hotel-aston.com : la table est prête, la liste des pages en ligne reste à relever.
 - **Liens externes (YouTube, Vimeo…)** : enregistrés dans la médiathèque, affichés pour l'instant comme un simple lien (lecteur chargé au clic à venir).
