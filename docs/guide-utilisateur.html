@@ -599,7 +599,7 @@ node scripts/i18n-ready.mjs it         # passe les brouillons de l'italien en «
 <li><strong>Période</strong> : semaine, mois ou année, comparée à la période précédente.</li>
 <li><strong>Filtres</strong> : canal, appareil, langue, pays.</li>
 <li><strong>Rapports</strong> : canaux d'arrivée (dont les assistants IA et les comparateurs), entonnoir jusqu'au moteur de réservation, calendrier des dates recherchées, efficacité des bandeaux et du popup, pages, contacts, chat, pages introuvables (404), vitesse ressentie (Core Web Vitals). Chaque rapport s'exporte en CSV.</li>
-<li>Le pays et la région ne s'affichent qu'une fois la base de géolocalisation installée (pas encore fait).</li>
+<li><strong>Pays</strong> : le serveur télécharge tout seul la base de géolocalisation gratuite DB-IP au premier démarrage, puis la nouvelle chaque mois, la nuit. Rien à faire : après la mise à jour du code et un redémarrage, le message « Pays non mesurés » disparaît en quelques secondes et les pays des visites suivantes s'affichent (les visites passées ne sont pas recalculées). Sur le PC, les visites viennent du PC lui-même ou du Wi-Fi de la maison : elles n'ont pas de pays, la carte y reste donc presque vide. Pour avoir aussi la région, ajouter <code>GEOIP_EDITION=city</code> dans <code>Backend\.env</code> avant le premier téléchargement (fichier d'environ 130 Mo).</li>
 </ul>
 <p>Sur les ordinateurs de l'hôtel (réception, bureaux), cocher dans <strong>Mon compte</strong> : <strong>Ne pas compter mes visites sur le site depuis ce navigateur</strong>, pour ne mesurer que les vrais visiteurs.</p>
 <h2 id="11-administration">11. Administration</h2>

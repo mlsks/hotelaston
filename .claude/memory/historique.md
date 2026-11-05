@@ -34,7 +34,7 @@ La conversation d'origine est restée sur le PC de développement ; voici ce qu'
 
 ## En attente d'une décision de l'utilisateur
 - Déploiement : choisir l'hébergeur, le stockage externe des sauvegardes et l'adresse des alertes Let's Encrypt.
-- Téléchargement de la base DB-IP (géolocalisation) : son accord est nécessaire.
+- Téléchargement de la base DB-IP (géolocalisation) : accord donné le 05/11/2026 ; le serveur la télécharge seul au démarrage puis chaque mois (GEOIP_UPDATE=0 pour couper).
 - Avis sur L'Horloge, Moon Bar, L'Aston Club : reportés à sa demande.
 - Informations à obtenir de l'hôtel : liste dans `BILAN.md`, section 2.1.
 

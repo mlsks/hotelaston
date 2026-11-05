@@ -611,7 +611,7 @@ Les statistiques mesurent les visites du site publié, sans cookie ni bandeau de
 - **Période** : semaine, mois ou année, comparée à la période précédente.
 - **Filtres** : canal, appareil, langue, pays.
 - **Rapports** : canaux d'arrivée (dont les assistants IA et les comparateurs), entonnoir jusqu'au moteur de réservation, calendrier des dates recherchées, efficacité des bandeaux et du popup, pages, contacts, chat, pages introuvables (404), vitesse ressentie (Core Web Vitals). Chaque rapport s'exporte en CSV.
-- Le pays et la région ne s'affichent qu'une fois la base de géolocalisation installée (pas encore fait).
+- **Pays** : le serveur télécharge tout seul la base de géolocalisation gratuite DB-IP au premier démarrage, puis la nouvelle chaque mois, la nuit. Rien à faire : après la mise à jour du code et un redémarrage, le message « Pays non mesurés » disparaît en quelques secondes et les pays des visites suivantes s'affichent (les visites passées ne sont pas recalculées). Sur le PC, les visites viennent du PC lui-même ou du Wi-Fi de la maison : elles n'ont pas de pays, la carte y reste donc presque vide. Pour avoir aussi la région, ajouter `GEOIP_EDITION=city` dans `Backend\.env` avant le premier téléchargement (fichier d'environ 130 Mo).
 
 Sur les ordinateurs de l'hôtel (réception, bureaux), cocher dans **Mon compte** : **Ne pas compter mes visites sur le site depuis ce navigateur**, pour ne mesurer que les vrais visiteurs.
 

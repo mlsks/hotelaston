@@ -17,13 +17,13 @@ Tenir les notes de `.claude/memory/` à jour quand une décision importante est 
 - Toute modification du code ou de la documentation est commitée et poussée sur GitHub (`mlsks/hotelaston`) dans la foulée : la copie locale ne doit jamais diverger du dépôt (règle du 27/10/2026).
 - Ne jamais publier le site de l'hôtel, ni un de ses écrans, en Artifact ou sur un service externe : il porte la marque d'un établissement réel.
 - Ne jamais recopier dans une réponse les mots de passe de `Backend/.dev-credentials`.
-- Ne rien télécharger d'externe sans l'accord de l'utilisateur (en particulier la base de géolocalisation DB-IP).
+- Ne rien télécharger d'externe sans l'accord de l'utilisateur. Exception accordée le 05/11/2026 : la base de géolocalisation DB-IP, que le serveur télécharge seul chaque mois.
 - Ne pas inventer d'informations sur l'hôtel : ce qui n'est pas confirmé reste marqué `.verify` dans la maquette ou figure dans `BILAN.md`.
 - Faits confirmés : un seul bar ouvert à la fois, le Moon Bar sur le toit quand le temps le permet, sinon L'Aston Club au 7e étage ; jamais « jazz » pour L'Aston Club.
 
 ## Lancer et vérifier
 - Back-office : `npm --prefix Backend start`, puis http://localhost:3020/admin/ (site publié sur `/fr/`, prévisualisation sur `/preview/fr/`, maquette d'origine sur `/legacy/` quand `SERVE_LEGACY=1` dans `Backend/.env`).
-- Tests : `npm --prefix Backend test` (127 tests, tous verts au 02/11/2026 ; 1 est sauté sans ffmpeg).
+- Tests : `npm --prefix Backend test` (130 tests, tous verts au 05/11/2026 ; 1 est sauté sans ffmpeg).
 - Maquette seule : `python tools/serve.py --port 8765`.
 - Configurations de lancement du navigateur intégré : `.claude/launch.json` (dossier `hotelaston` ouvert comme projet).
 - Ouvrir `/fr/` en local ajoute des visites aux statistiques de développement : les effacer après les tests (tables `an_events`, `an_visits`, `an_salts`, `an_daily`).
