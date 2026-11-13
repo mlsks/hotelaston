@@ -1,5 +1,5 @@
 /**
- * Langues livrées toutes traduites (seeds/langues : finnois, polonais, thaï, indonésien) :
+ * Langues livrées toutes traduites (seeds/langues : finnois, polonais, thaï, indonésien, arabe, hongrois) :
  * créées et traduites au démarrage à partir du français de la base, sans jamais remplacer une
  * traduction existante ; un français modifié depuis reste à traduire.
  */
@@ -21,7 +21,7 @@ const { runBuild } = await import('../server/ssg/build.js');
 const { config } = await import('../server/config.js');
 const { ensureLanguagePacks, readLanguagePacks } = await import('../server/ssg/language-packs.js');
 
-const CODES = ['fi', 'pl', 'th', 'id', 'ar'];
+const CODES = ['fi', 'pl', 'th', 'id', 'ar', 'hu'];
 const packs = readLanguagePacks();
 let db;
 const quiet = { log: () => {} };
@@ -45,7 +45,7 @@ after(() => {
   fs.rmSync(VAR, { recursive: true, force: true });
 });
 
-test('paquets : 5 langues, adresses valides et uniques, balises et liens identiques au français', () => {
+test('paquets : 6 langues, adresses valides et uniques, balises et liens identiques au français', () => {
   assert.deepEqual(packs.map((p) => p.language.code), CODES);
   const tags = (s) => [...String(s).matchAll(/<\/?([a-z0-9]+)([^>]*)>/gi)].map((m) => `${m[1].toLowerCase()}${(m[2].match(/href="[^"]*"/) || [''])[0]}`).sort().join(' ');
   for (const p of packs) {
@@ -56,10 +56,10 @@ test('paquets : 5 langues, adresses valides et uniques, balises et liens identiq
   }
 });
 
-test('base neuve : les 5 langues existent, désactivées, avec tout le site traduit et prêt', () => {
+test('base neuve : les 6 langues existent, désactivées, avec tout le site traduit et prêt', () => {
   const langs = db.prepare('SELECT code, native_name, locale, booking_lang, is_active FROM cms_languages ORDER BY position').all();
-  assert.deepEqual(langs.slice(-5).map((l) => [l.code, l.native_name, l.locale, l.is_active]),
-    [['fi', 'Suomi', 'fi-FI', 0], ['pl', 'Polski', 'pl-PL', 0], ['th', 'ไทย', 'th-TH', 0], ['id', 'Bahasa Indonesia', 'id-ID', 0], ['ar', 'العربية', 'ar-AE', 0]]);
+  assert.deepEqual(langs.slice(-6).map((l) => [l.code, l.native_name, l.locale, l.is_active]),
+    [['fi', 'Suomi', 'fi-FI', 0], ['pl', 'Polski', 'pl-PL', 0], ['th', 'ไทย', 'th-TH', 0], ['id', 'Bahasa Indonesia', 'id-ID', 0], ['ar', 'العربية', 'ar-AE', 0], ['hu', 'Magyar', 'hu-HU', 0]]);
   for (const code of CODES) {
     const missing = db.prepare(`SELECT e.key FROM cms_entries e JOIN cms_entry_values f ON f.entry_id = e.id AND f.lang = 'fr'
       WHERE e.translatable = 1 AND e.type IN ('text', 'richtext') AND f.value <> ''
@@ -75,6 +75,7 @@ test('base neuve : les 5 langues existent, désactivées, avec tout le site trad
   assert.equal(pageRow('chambres', 'th').path, '/th/rooms/');
   assert.equal(pageRow('chambres', 'pl').path, '/pl/pokoje/');
   assert.equal(pageRow('politique-de-confidentialite', 'fi').path, '/fi/tietosuojakaytanto/');
+  assert.equal(pageRow('chambres', 'hu').path, '/hu/szobak/');
   assert.match(entryValue('global.chat-pastille-animaux', 'id')?.value ?? '', /\p{L}/u);
 });
 

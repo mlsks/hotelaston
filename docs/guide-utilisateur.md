@@ -554,6 +554,10 @@ L'arabe s'écrit **de droite à gauche** : sur les pages arabes, tout le site se
 
 Dans l'admin, les champs de texte s'alignent à droite dès qu'on y écrit en arabe ; il n'y a rien à régler. Le moteur de réservation D-Edge reçoit la langue `ar-AE` : vérifier, en cliquant sur **Voir les disponibilités** depuis une page arabe, qu'il s'ouvre bien. S'il affiche une erreur, remplacer la locale par `en-GB` dans **Langues du site** (le moteur s'ouvrira en anglais).
 
+### Hongrois
+
+Le hongrois est livré tout traduit de la même façon (13/11/2026), à l'état **Inactive** dans **Langues du site**, sur la ligne **Magyar**. Pour le mettre en ligne : **Langues** → **Langues du site** → cliquer sur **Inactive** sur la ligne **Magyar** pour la passer **En ligne**, **Prévisualiser**, puis **Publier**. Ses adresses sont en hongrois sans accents (`/hu/szobak/` pour les chambres). Le moteur de réservation D-Edge reçoit la langue `hu-HU` : vérifier, en cliquant sur **Voir les disponibilités** depuis une page hongroise, qu'il s'ouvre bien ; sinon, remplacer la locale par `en-GB` dans **Langues du site**.
+
 ### Le sélecteur de langue du site
 
 Le sélecteur de langue du site propose **les langues publiées sur le site**. Il mène à la même page dans l'autre langue ; si cette page n'y est pas encore traduite, il mène à la page parente la plus proche qui l'est (par exemple, depuis la carte des desserts, au restaurant L'Horloge en anglais), à défaut à l'accueil. Il n'est masqué que si le site n'est publié que dans une seule langue.

@@ -31,6 +31,8 @@ Résidence Aston La Scala : bâtiment voisin distinct (2 rue Chauvain, ancien Pe
 
 **Arabe** (13/11/2026) : paquet `seeds/langues/ar.json` (même dictionnaire de 1 533 textes, adresses en anglais, locale `ar-AE` : calendrier grégorien et chiffres latins, contrairement à `ar-SA`). Droite à gauche : `server/ssg/rtl.js` (`dir="rtl"`, `<bdi>` autour des numéros groupés et des textes tout latins), propriétés logiques dans `styles.css` + partie 12 pour le reste, `RTL` dans `remotion-vanilla.js` (carrousels, menu, chat ; normalisation arabe des mots-clés du chat). Polices arabes du système, choix de Michel (pas de téléchargement). Champs de l'admin en `unicode-bidi: plaintext`.
 
+**Hongrois** (13/11/2026) : paquet `seeds/langues/hu.json` (même dictionnaire, ordre 6, locale `hu-HU`, adresses hongroises sans accents comme `/hu/szobak/`). Mots-clés du chat écrits en racines sans accents (parkol, erkez…), car le chat cherche des sous-chaînes après suppression des accents.
+
 **Pièges rencontrés :**
 - Windows : remplacer une jonction par unlink puis rename ; fermer un fichier SQLite avant de le supprimer (EBUSY) ; clés étrangères désactivées pendant la copie d'un snapshot.
 - `snapshot_path` et `release_path` sont relatifs à `config.varDir` depuis le 27/10/2026 (`toVarPath` / `fromVarPath`, réécriture des anciens chemins Windows au démarrage) : le dossier peut changer d'emplacement.
