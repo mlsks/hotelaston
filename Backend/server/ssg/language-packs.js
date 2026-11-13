@@ -1,5 +1,5 @@
 /**
- * Langues livrées toutes traduites (seeds/langues/<code>.json) : finnois, polonais, thaï, indonésien, arabe.
+ * Langues livrées toutes traduites (seeds/langues/<code>.json) : finnois, polonais, thaï, indonésien, arabe, hongrois.
  *
  * Un paquet contient la langue (nom, locale, langue du moteur de réservation), l'adresse traduite
  * des pages et des fiches, et un dictionnaire « texte français → traduction ». Au démarrage, chaque
