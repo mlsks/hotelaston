@@ -21,7 +21,7 @@ const { runBuild } = await import('../server/ssg/build.js');
 const { config } = await import('../server/config.js');
 const { ensureLanguagePacks, readLanguagePacks } = await import('../server/ssg/language-packs.js');
 
-const CODES = ['fi', 'pl', 'th', 'id'];
+const CODES = ['fi', 'pl', 'th', 'id', 'ar'];
 const packs = readLanguagePacks();
 let db;
 const quiet = { log: () => {} };
@@ -45,7 +45,7 @@ after(() => {
   fs.rmSync(VAR, { recursive: true, force: true });
 });
 
-test('paquets : 4 langues, adresses valides et uniques, balises et liens identiques au français', () => {
+test('paquets : 5 langues, adresses valides et uniques, balises et liens identiques au français', () => {
   assert.deepEqual(packs.map((p) => p.language.code), CODES);
   const tags = (s) => [...String(s).matchAll(/<\/?([a-z0-9]+)([^>]*)>/gi)].map((m) => `${m[1].toLowerCase()}${(m[2].match(/href="[^"]*"/) || [''])[0]}`).sort().join(' ');
   for (const p of packs) {
@@ -56,10 +56,10 @@ test('paquets : 4 langues, adresses valides et uniques, balises et liens identiq
   }
 });
 
-test('base neuve : les 4 langues existent, désactivées, avec tout le site traduit et prêt', () => {
+test('base neuve : les 5 langues existent, désactivées, avec tout le site traduit et prêt', () => {
   const langs = db.prepare('SELECT code, native_name, locale, booking_lang, is_active FROM cms_languages ORDER BY position').all();
-  assert.deepEqual(langs.slice(-4).map((l) => [l.code, l.native_name, l.locale, l.is_active]),
-    [['fi', 'Suomi', 'fi-FI', 0], ['pl', 'Polski', 'pl-PL', 0], ['th', 'ไทย', 'th-TH', 0], ['id', 'Bahasa Indonesia', 'id-ID', 0]]);
+  assert.deepEqual(langs.slice(-5).map((l) => [l.code, l.native_name, l.locale, l.is_active]),
+    [['fi', 'Suomi', 'fi-FI', 0], ['pl', 'Polski', 'pl-PL', 0], ['th', 'ไทย', 'th-TH', 0], ['id', 'Bahasa Indonesia', 'id-ID', 0], ['ar', 'العربية', 'ar-AE', 0]]);
   for (const code of CODES) {
     const missing = db.prepare(`SELECT e.key FROM cms_entries e JOIN cms_entry_values f ON f.entry_id = e.id AND f.lang = 'fr'
       WHERE e.translatable = 1 AND e.type IN ('text', 'richtext') AND f.value <> ''
@@ -97,6 +97,34 @@ test('activées : pages publiées en thaï et en polonais, sélecteur et hreflan
   const css = fs.readFileSync(new URL('../templates-src/assets/styles.css', import.meta.url), 'utf8');
   assert.match(css, /:lang\(th\) \{\s*--font-serif:[^}]*Thai/);
   db.prepare("UPDATE cms_languages SET is_active = 0 WHERE code IN ('th', 'pl')").run();
+});
+
+test('arabe activé : page de droite à gauche, textes arabes, numéros isolés, D-Edge et hreflang', async () => {
+  db.prepare("UPDATE cms_languages SET is_active = 1 WHERE code = 'ar'").run();
+  const build = await runBuild({ kind: 'preview', log: () => {} });
+  assert.equal(build.status, 'success', build.error);
+  const home = page$('ar');
+  assert.equal(home('html').attr('lang'), 'ar');
+  assert.equal(home('html').attr('dir'), 'rtl');
+  assert.match(home('title').text(), /[\u0600-\u06ff]/);
+  assert.match(home('h1').text(), /[\u0600-\u06ff]/);
+  // Téléphone du pied de page : les groupes de chiffres gardent leur ordre
+  assert.ok(home('footer bdi').map((i, el) => home(el).text()).get().includes('04 92 17 53 00'));
+  // Moteur de réservation dans la langue (locale du chemin D-Edge)
+  assert.ok(home('form[action*="secure-hotel-booking"]').attr('action')?.includes('/ar-AE/'), home('form[action*="secure-hotel-booking"]').attr('action'));
+  const rooms = page$('ar/rooms');
+  const hreflangs = rooms('link[rel="alternate"][hreflang]').map((i, l) => l.attribs.hreflang).get();
+  assert.ok(hreflangs.includes('ar') && hreflangs.includes('fr'), hreflangs.join());
+  assert.equal(rooms('meta[property="og:locale"]').attr('content'), 'ar_AE');
+  // Sur une page française : le lien vers l'arabe s'écrit de droite à gauche, la page reste de gauche à droite
+  const fr = page$('fr/chambres');
+  assert.equal(fr('html').attr('dir'), undefined);
+  assert.equal(fr('.mobile-menu .lang-switch a[lang="ar"]').attr('dir'), 'rtl');
+  assert.equal(fr('footer bdi').length, 0);
+  const css = fs.readFileSync(new URL('../templates-src/assets/styles.css', import.meta.url), 'utf8');
+  assert.match(css, /:lang\(ar\) \{\s*--font-serif:[^}]*Arabic/);
+  assert.match(css, /\[dir="rtl"\] \.mobile-menu/);
+  db.prepare("UPDATE cms_languages SET is_active = 0 WHERE code = 'ar'").run();
 });
 
 test('une traduction existante n’est jamais remplacée ; un paquet déjà passé ne repasse pas', () => {
