@@ -33,6 +33,8 @@ Résidence Aston La Scala : bâtiment voisin distinct (2 rue Chauvain, ancien Pe
 
 **Hongrois** (13/11/2026) : paquet `seeds/langues/hu.json` (même dictionnaire, ordre 6, locale `hu-HU`, adresses hongroises sans accents comme `/hu/szobak/`). Mots-clés du chat écrits en racines sans accents (parkol, erkez…), car le chat cherche des sous-chaînes après suppression des accents.
 
+**Turc** (13/11/2026) : paquet `seeds/langues/tr.json` (ordre 7, locale `tr-TR`, adresses `/tr/odalar/`…). Le « ı » sans point ne perd pas sa forme à la normalisation du chat : les mots-clés qui en contiennent existent en deux formes (`çıkış` et `cikis`) ou sont tronqués avant (`havaliman`, `toplant`).
+
 **Pièges rencontrés :**
 - Windows : remplacer une jonction par unlink puis rename ; fermer un fichier SQLite avant de le supprimer (EBUSY) ; clés étrangères désactivées pendant la copie d'un snapshot.
 - `snapshot_path` et `release_path` sont relatifs à `config.varDir` depuis le 27/10/2026 (`toVarPath` / `fromVarPath`, réécriture des anciens chemins Windows au démarrage) : le dossier peut changer d'emplacement.
