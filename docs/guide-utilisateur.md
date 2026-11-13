@@ -546,6 +546,14 @@ Leurs adresses sont traduites (`/fi/huoneet/`, `/pl/pokoje/`, `/id/kamar/`) ; en
 
 Les traductions sont faites à partir du texte français : un texte français modifié dans l'admin avant la mise à jour n'est pas reconnu et reste **à traduire** (il s'affiche en anglais en attendant). L'écran **Traductions** liste ces textes, s'il y en a ; le terminal du serveur en donne le nombre au démarrage. Les fiches artistes et les concerts du Live Music, saisis dans l'admin, sont aussi à traduire. Une traduction déjà présente n'est jamais remplacée, et une traduction supprimée ne revient pas au redémarrage.
 
+### Arabe
+
+L'arabe est livré tout traduit de la même façon (13/11/2026), à l'état **Inactive** dans **Langues du site**, sur la ligne **العربية**. Pour le mettre en ligne : **Langues** → **Langues du site** → cliquer sur **Inactive** sur la ligne **العربية** pour la passer **En ligne**, **Prévisualiser**, puis **Publier**. Ses adresses sont en anglais (`/ar/rooms/`), comme pour le thaï.
+
+L'arabe s'écrit **de droite à gauche** : sur les pages arabes, tout le site se retourne tout seul (menus, en-tête, logo à droite, blocs, carrousels, menu mobile qui s'ouvre depuis la gauche, chat en bas à gauche, bandeaux, popups, pied de page, module de réservation, flèches). Les noms en lettres latines (Moon Bar, L'Horloge, Confort…), les numéros de téléphone et les adresses gardent leur ordre de lecture. Le texte s'affiche avec la police arabe de chaque appareil (Geeza Pro sur iPhone et Mac, Segoe UI sur Windows, Noto sur Android) : rien n'est téléchargé.
+
+Dans l'admin, les champs de texte s'alignent à droite dès qu'on y écrit en arabe ; il n'y a rien à régler. Le moteur de réservation D-Edge reçoit la langue `ar-AE` : vérifier, en cliquant sur **Voir les disponibilités** depuis une page arabe, qu'il s'ouvre bien. S'il affiche une erreur, remplacer la locale par `en-GB` dans **Langues du site** (le moteur s'ouvrira en anglais).
+
 ### Le sélecteur de langue du site
 
 Le sélecteur de langue du site propose **les langues publiées sur le site**. Il mène à la même page dans l'autre langue ; si cette page n'y est pas encore traduite, il mène à la page parente la plus proche qui l'est (par exemple, depuis la carte des desserts, au restaurant L'Horloge en anglais), à défaut à l'accueil. Il n'est masqué que si le site n'est publié que dans une seule langue.

@@ -17,6 +17,7 @@ import { applyHeroVeil } from './hero-veil.js';
 import { renderMeetingRooms } from './meeting-rooms.js';
 import { renderPostList } from './posts.js';
 import { reviewsData } from './google-reviews.js';
+import { isRtl, isolateNumbers } from './rtl.js';
 import { fillVars, sha } from '../lib/util.js';
 import { config } from '../config.js';
 import { globalGraph, breadcrumbFromDom, faqFromDom, webPageNode, jsonForScript } from './jsonld.js';
@@ -176,6 +177,7 @@ export function renderPage(site, lang, target, head) {
     box.children('a').remove();
     for (const s of switcher) {
       const a = $('<a>').attr({ href: s.href, hreflang: s.lang, lang: s.lang }).text(s.name);
+      if (isRtl(s.lang) !== isRtl(lang)) a.attr('dir', isRtl(s.lang) ? 'rtl' : 'ltr');
       if (s.lang === lang) a.attr('aria-current', 'true');
       box.append('\n        ', a);
     }
@@ -206,6 +208,8 @@ export function renderPage(site, lang, target, head) {
   const description = itemMeta?.description ?? head.description;
   const langRow = source.lang(lang);
   $('html').attr('lang', lang);
+  // Arabe : page de droite à gauche, numéros de téléphone gardés dans l'ordre (rtl.js)
+  if (isRtl(lang)) { $('html').attr('dir', 'rtl'); isolateNumbers($); } else $('html').removeAttr('dir');
   const viewport = $('head meta[name="viewport"]').first();
   const tags = [$('<title>').text(title), $('<meta name="description">').attr('content', description)];
   // NOINDEX=1 ou DEMO_PASSWORD (démo hébergée) : aucune page indexable, visible aussi dans le code source

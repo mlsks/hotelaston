@@ -455,7 +455,29 @@
   };
   const addDays = (d, n) => { const x = new Date(d); x.setDate(x.getDate() + n); return x; };
   const today = () => { const d = new Date(); d.setHours(0, 0, 0, 0); return d; };
-  const normalize = (s) => s.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '');
+  // Accents latins retirés ; en arabe, voyelles brèves, hamza (أ إ آ → ا), allongement et ى/ة ramenés à la forme simple
+  const normalize = (s) => s.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f\u064b-\u065f\u0670\u0640]/g, '')
+    .replace(/\u0649/g, '\u064a').replace(/\u0629/g, '\u0647');
+  /* Droite à gauche (arabe) : <html dir="rtl"> posé par le générateur */
+  const RTL = document.documentElement.dir === 'rtl';
+  // Numéro en plusieurs groupes (« 04 92 17 53 00 ») dans une phrase en arabe : isolé pour garder l'ordre des groupes
+  const GROUPED_NUMBER = /\+?\d+(?:[ \u00a0.]\d{2,})+/g;
+  function isolateNumbers(root) {
+    if (!RTL) return;
+    const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT);
+    const nodes = [];
+    while (walker.nextNode()) if (!walker.currentNode.parentElement.closest('bdi') && /\d[ \u00a0.]\d{2}/.test(walker.currentNode.data)) nodes.push(walker.currentNode);
+    for (const node of nodes) {
+      const frag = document.createDocumentFragment();
+      let last = 0;
+      for (const m of node.data.matchAll(GROUPED_NUMBER)) {
+        frag.append(node.data.slice(last, m.index), Object.assign(document.createElement('bdi'), { textContent: m[0] }));
+        last = m.index + m[0].length;
+      }
+      frag.append(node.data.slice(last));
+      node.replaceWith(frag);
+    }
+  }
 
   /* =========================================================================
      4. RÉSERVATION — dates, voyageurs, chambre consultée, offre → moteur
@@ -750,8 +772,12 @@
   const sliderReady = new WeakSet();
   const SLIDE_SPRING = { damping: 22, stiffness: 140, mass: 0.8 };
 
+  // Position de défilement comptée depuis le début de la ligne : en arabe, scrollLeft va de 0 à -max
+  const scrollPos = (track) => (RTL ? -track.scrollLeft : track.scrollLeft);
+  const setScrollPos = (track, x) => { track.scrollLeft = RTL ? -x : x; };
+
   function animateScroll(track, to) {
-    const from = track.scrollLeft;
+    const from = scrollPos(track);
     const max = track.scrollWidth - track.clientWidth;
     const target = Math.max(0, Math.min(max, to));
     if (Math.abs(target - from) < 1) return;
@@ -761,13 +787,17 @@
       durationInFrames: springDuration(SLIDE_SPRING),
       render: (f) => {
         const p = spring({ frame: f, fps: FPS, config: SLIDE_SPRING });
-        track.scrollLeft = interpolate(p, [0, 1], [from, target]);
+        setScrollPos(track, interpolate(p, [0, 1], [from, target]));
       },
       onEnd: () => { track.style.scrollSnapType = ''; track._scrollSeq = null; },
     });
   }
 
   function slideOffsets(track) {
+    if (RTL) {
+      const end = track.getBoundingClientRect().right - (parseFloat(getComputedStyle(track).paddingRight) || 0);
+      return [...track.children].map((c) => end - c.getBoundingClientRect().right + scrollPos(track));
+    }
     const base = track.getBoundingClientRect().left - track.scrollLeft;
     const padLeft = parseFloat(getComputedStyle(track).paddingLeft) || 0;
     return [...track.children].map((c) => c.getBoundingClientRect().left - base - padLeft);
@@ -785,19 +815,19 @@
     const update = () => {
       const max = track.scrollWidth - track.clientWidth;
       root.classList.toggle('slider--static', max <= 2);
-      const ratio = max > 0 ? track.scrollLeft / max : 0;
+      const ratio = max > 0 ? scrollPos(track) / max : 0;
       const width = Math.max(12, Math.min(100, (track.clientWidth / track.scrollWidth) * 100));
       if (bar) {
         bar.style.width = `${width}%`;
-        bar.style.left = `${ratio * (100 - width)}%`;
+        bar.style.insetInlineStart = `${ratio * (100 - width)}%`;
       }
-      if (prev) prev.disabled = track.scrollLeft <= 2;
-      if (next) next.disabled = track.scrollLeft >= max - 2;
+      if (prev) prev.disabled = scrollPos(track) <= 2;
+      if (next) next.disabled = scrollPos(track) >= max - 2;
     };
 
     const step = (dir) => {
       const offsets = slideOffsets(track);
-      const x = track.scrollLeft;
+      const x = scrollPos(track);
       const target = dir > 0 ? offsets.find((o) => o > x + 4) : [...offsets].reverse().find((o) => o < x - 4);
       animateScroll(track, target ?? (dir > 0 ? track.scrollWidth : 0));
     };
@@ -805,8 +835,8 @@
     prev?.addEventListener('click', () => step(-1));
     next?.addEventListener('click', () => step(1));
     track.addEventListener('keydown', (e) => {
-      if (e.key === 'ArrowRight') { e.preventDefault(); step(1); }
-      if (e.key === 'ArrowLeft') { e.preventDefault(); step(-1); }
+      if (e.key === 'ArrowRight') { e.preventDefault(); step(RTL ? -1 : 1); }
+      if (e.key === 'ArrowLeft') { e.preventDefault(); step(RTL ? 1 : -1); }
     });
 
     let ticking = false;
@@ -839,7 +869,7 @@
       track.classList.remove('is-dragging');
       if (!moved) return;
       const offsets = slideOffsets(track);
-      const x = track.scrollLeft;
+      const x = scrollPos(track);
       const nearest = offsets.reduce((a, b) => (Math.abs(b - x) < Math.abs(a - x) ? b : a), offsets[0]);
       animateScroll(track, nearest);
       track.addEventListener('click', (ev) => { ev.preventDefault(); ev.stopPropagation(); }, { capture: true, once: true });
@@ -869,7 +899,7 @@
       render: (f) => {
         const p = spring({ frame: f, fps: FPS, config: MENU_SPRING });
         const x = open ? interpolate(p, [0, 1], [100, 0]) : interpolate(p, [0, 1], [0, 100]);
-        menu.style.transform = `translateX(${x}%)`;
+        menu.style.transform = `translateX(${RTL ? -x : x}%)`; // en arabe, le menu vient de la gauche
       },
       onEnd: () => {
         if (!open) { menu.hidden = true; backdrop.hidden = true; }
@@ -1469,7 +1499,7 @@
 
   function chatSay(html, role = 'bot') {
     const msg = h('div', { class: `chat__msg chat__msg--${role}` });
-    if (role === 'bot') msg.innerHTML = html; // réponses issues de la base interne data-chat
+    if (role === 'bot') { msg.innerHTML = html; isolateNumbers(msg); } // réponses issues de la base interne data-chat
     else msg.textContent = html;
     chatLog.append(msg);
     Clock.play({
