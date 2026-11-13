@@ -558,6 +558,10 @@ Dans l'admin, les champs de texte s'alignent à droite dès qu'on y écrit en ar
 
 Le hongrois est livré tout traduit de la même façon (13/11/2026), à l'état **Inactive** dans **Langues du site**, sur la ligne **Magyar**. Pour le mettre en ligne : **Langues** → **Langues du site** → cliquer sur **Inactive** sur la ligne **Magyar** pour la passer **En ligne**, **Prévisualiser**, puis **Publier**. Ses adresses sont en hongrois sans accents (`/hu/szobak/` pour les chambres). Le moteur de réservation D-Edge reçoit la langue `hu-HU` : vérifier, en cliquant sur **Voir les disponibilités** depuis une page hongroise, qu'il s'ouvre bien ; sinon, remplacer la locale par `en-GB` dans **Langues du site**.
 
+### Turc
+
+Le turc est livré tout traduit de la même façon (13/11/2026), à l'état **Inactive** dans **Langues du site**, sur la ligne **Türkçe**. Pour le mettre en ligne : **Langues** → **Langues du site** → cliquer sur **Inactive** sur la ligne **Türkçe** pour la passer **En ligne**, **Prévisualiser**, puis **Publier**. Ses adresses sont en turc sans accents (`/tr/odalar/` pour les chambres). Le moteur de réservation D-Edge reçoit la langue `tr-TR` : vérifier, en cliquant sur **Voir les disponibilités** depuis une page turque, qu'il s'ouvre bien ; sinon, remplacer la locale par `en-GB` dans **Langues du site**.
+
 ### Le sélecteur de langue du site
 
 Le sélecteur de langue du site propose **les langues publiées sur le site**. Il mène à la même page dans l'autre langue ; si cette page n'y est pas encore traduite, il mène à la page parente la plus proche qui l'est (par exemple, depuis la carte des desserts, au restaurant L'Horloge en anglais), à défaut à l'accueil. Il n'est masqué que si le site n'est publié que dans une seule langue.
