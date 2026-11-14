@@ -675,7 +675,7 @@ Les médias supprimés restent sur le disque tant qu'un des 3 snapshots conserv�
 | Cron 00:00 (Paris) | snapshot en cours | `releases/<id>/` si le résultat diffère | minuit |
 | Restaurer | aucune génération | lien symbolique | — |
 
-Un seul build à la fois (verrou en mémoire + file d'attente). Un deuxième clic sur « Publier » pendant un build est mis en file, pas lancé en parallèle.
+Un seul build à la fois (verrou en mémoire + file d'attente). Un deuxième clic sur « Publier » pendant un build est mis en file, pas lancé en parallèle. Le fichier `storage/build.lock` note le numéro et l'heure de démarrage du processus qui publie : un verrou laissé par une instance arrêtée est ignoré, même si son numéro a été repris par un autre processus ou un fil d'exécution après le redémarrage.
 
 ### 5.2 Étapes d'un build
 
@@ -942,6 +942,7 @@ Toutes les routes sauf `/api/track` exigent une session. Les écritures exigent 
   - variantes WebP (q78) et AVIF (q50, effort 2) en 640, 1024, 1600 et 2400 px de large (jamais au-delà de l'original) ;
   - recadrage portrait 9:16 centré sur le point focal, en 540, 780 et 900 px de large, WebP et AVIF ; le build écrit les sources portrait pour `(max-aspect-ratio: 4/5)` puis l'AVIF, le WebP restant dans `<img>` ;
   - rattrapage au démarrage (`completeVariants`) des variantes manquantes des photos plus anciennes ;
+  - chaque traitement d'image tourne dans un processus à part (`server/media/worker.js`, lancé par `inWorker`), qui se termine ensuite : l'encodage AVIF laisse plusieurs centaines de Mo à l'allocateur mémoire, qui ne les rend pas au système ; dans le serveur, cela s'ajoutait à une publication et dépassait les 512 Mo de la démo Render ;
   - miniature pour l'admin.
 - **Vidéos** (`ffprobe` / `ffmpeg`) :
   - lecture de la durée, des dimensions et du poids, avec alerte au-delà de 8 Mo pour une boucle de fond ;

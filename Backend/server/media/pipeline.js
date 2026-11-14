@@ -13,6 +13,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import crypto from 'node:crypto';
 import { spawn } from 'node:child_process';
+import { fileURLToPath } from 'node:url';
 import { Transform } from 'node:stream';
 import { pipeline } from 'node:stream/promises';
 import sharp from 'sharp';
@@ -30,6 +31,8 @@ const WEBP = { quality: 78 };
 const AVIF = { quality: 50, effort: 2 };
 const MB = 1024 * 1024;
 const VARIANT_DIR = 'v';
+// Chaque image n'est lue qu'une fois par opération : le cache de libvips ne ferait que garder de la mémoire
+sharp.cache(false);
 
 /* File de traitement : un média à la fois, sans bloquer les requêtes */
 let chain = Promise.resolve();
@@ -43,6 +46,32 @@ export function enqueue(id, fn) {
 }
 /** Attend la fin du traitement d'un média (tests, commandes). */
 export const waitFor = (id) => jobs.get(id) || Promise.resolve();
+
+/*
+ * Traitement des images dans un processus à part (media/worker.js), qui se termine ensuite.
+ * L'encodage AVIF laisse plusieurs centaines de Mo à l'allocateur mémoire, qui ne les rend pas au système :
+ * dans le serveur, cette mémoire s'ajoutait à celle d'une publication et dépassait les 512 Mo de la démo
+ * Render (instance arrêtée, 14/11/2026). Le processus qui se termine rend tout.
+ */
+const WORKER = fileURLToPath(new URL('./worker.js', import.meta.url));
+export function inWorker(task, id) {
+  return new Promise((resolve, reject) => {
+    const child = spawn(process.execPath, [WORKER, task, String(id)], { env: process.env, windowsHide: true });
+    const out = [];
+    const err = [];
+    child.stdout.on('data', (d) => out.push(d));
+    child.stderr.on('data', (d) => err.push(d));
+    child.on('error', reject);
+    child.on('close', (code) => {
+      if (code !== 0) return reject(new Error(Buffer.concat(err).toString().trim().split('\n').at(-1)?.slice(0, 300) || `traitement interrompu (code ${code})`));
+      try {
+        return resolve(JSON.parse(Buffer.concat(out).toString() || 'null'));
+      } catch {
+        return resolve(null);
+      }
+    });
+  });
+}
 
 function run(cmd, args) {
   return new Promise((resolve, reject) => {
@@ -98,7 +127,9 @@ export async function ingestUpload(db, { stream, filename, folder = '/', userId 
     fs.renameSync(tmp, path.join(config.uploadsDir, rel));
     const id = Number(db.prepare(`INSERT INTO cms_media (kind, folder, original_name, storage_key, mime, bytes, sha256, status, created_at, created_by)
       VALUES (?, ?, ?, ?, ?, ?, ?, 'processing', ?, ?)`).run(type.kind, folder, path.basename(String(filename || 'fichier')).slice(0, 200), rel, type.mime, size, digest, nowIso(), userId).lastInsertRowid);
-    enqueue(id, () => processMedia(db, id));
+    enqueue(id, () => inWorker('process', id).catch((err) => {
+      db.prepare("UPDATE cms_media SET status = 'error', error = ? WHERE id = ?").run(`Traitement impossible : ${err.message}`.slice(0, 500), id);
+    }));
     return { id, duplicate: false };
   } finally {
     fs.rmSync(tmp, { force: true });
@@ -224,14 +255,9 @@ export async function completeVariants(db, { log = () => {} } = {}) {
       continue;
     }
     await enqueue(`variants-${m.id}`, async () => {
-      const only = new Set(missing);
       try {
-        for (const purpose of new Set(missing.filter((k) => k.startsWith('w')).map((k) => k.split('/')[0]))) {
-          await widthVariants(db, m, src, Number(purpose.slice(1)), { only });
-        }
-        if (missing.some((k) => k.startsWith('portrait'))) await portrait(db, m, src, m.width, m.height, { only });
+        result.variants += await inWorker('complete', m.id);
         result.images += 1;
-        result.variants += missing.length;
       } catch (err) {
         result.skipped += 1;
         log(`Médiathèque : image n° ${m.id} non complétée (${err.message}).`);
@@ -240,6 +266,21 @@ export async function completeVariants(db, { log = () => {} } = {}) {
   }
   log(`Médiathèque : ${result.variants} variante(s) créée(s) pour ${result.images} image(s)${result.skipped ? `, ${result.skipped} sautée(s) (original absent ou illisible)` : ''}. Publiez pour en profiter sur le site.`);
   return result;
+}
+
+/** Crée les variantes manquantes d'une image (rattrapage) ; renvoie leur nombre. */
+export async function completeMedia(db, id) {
+  const m = db.prepare('SELECT * FROM cms_media WHERE id = ?').get(id);
+  const missing = m ? missingVariants(db, m) : [];
+  if (!missing.length) return 0;
+  const src = path.join(config.uploadsDir, m.storage_key);
+  fs.mkdirSync(path.join(config.mediaDir, VARIANT_DIR), { recursive: true });
+  const only = new Set(missing);
+  for (const purpose of new Set(missing.filter((k) => k.startsWith('w')).map((k) => k.split('/')[0]))) {
+    await widthVariants(db, m, src, Number(purpose.slice(1)), { only });
+  }
+  if (missing.some((k) => k.startsWith('portrait'))) await portrait(db, m, src, m.width, m.height, { only });
+  return missing.length;
 }
 
 export async function processMedia(db, id) {

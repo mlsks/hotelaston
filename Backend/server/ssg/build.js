@@ -338,6 +338,9 @@ function savePageState(db, pages) {
   db.transaction(() => pages.forEach((p) => upsert.run(p)))();
 }
 
+const DISK_FULL = "Disque plein : la publication n'a pas pu être écrite. Agrandissez le disque de l'hébergeur ou libérez de la place, puis publiez de nouveau.";
+const isDiskFull = (err) => err?.code === 'ENOSPC' || err?.code === 'SQLITE_FULL' || /SQLITE_FULL|ENOSPC|database or disk is full/i.test(String(err?.message));
+
 /**
  * Lance un build et l'enregistre dans sys_builds.
  * @param kind     'preview' | 'production'
@@ -414,12 +417,19 @@ export function runBuild({ kind = 'preview', trigger = 'manual', now = new Date(
         tmpDir = null;
       }
     } catch (err) {
-      finish({ status: 'failed', error: err.message });
+      // Disque plein : le snapshot et le dossier temporaire sont effacés avant d'écrire l'échec,
+      // sinon l'écriture en base échoue aussi et la place reste prise jusqu'au prochain démarrage
+      const message = isDiskFull(err) ? DISK_FULL : err.message;
       try {
         dropOwnSnapshot();
         if (tmpDir) fs.rmSync(tmpDir, { recursive: true, force: true });
       } catch (cleanupErr) {
         log(`Nettoyage incomplet après l'échec : ${cleanupErr.message}`);
+      }
+      try {
+        finish({ status: 'failed', error: message });
+      } catch (finishErr) {
+        throw Object.assign(new Error(message), { publicMessage: isDiskFull(finishErr) ? DISK_FULL : message, cause: finishErr });
       }
     } finally {
       srcDb?.close();

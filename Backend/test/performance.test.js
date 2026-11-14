@@ -145,3 +145,18 @@ test('serveur Node (démo Render) : fichiers à empreinte gardés un an, les aut
   assert.doesNotMatch((await app.inject({ method: 'GET', url: '/fr/' })).headers['cache-control'] || '', /immutable/);
   assert.doesNotMatch((await app.inject({ method: 'GET', url: '/favicon.ico' })).headers['cache-control'] || '', /immutable/);
 });
+
+test('verrou de publication laissé par une instance arrêtée : ignoré, même si son numéro est repris', async () => {
+  const { withBuildLock } = await import('../server/ssg/lock.js');
+  fs.mkdirSync(path.dirname(config.lockFile), { recursive: true });
+  // Ancien verrou (sans heure de démarrage) dont le numéro désigne un fil d'exécution du serveur actuel
+  const thread = fs.readdirSync('/proc/self/task').map(Number).find((t) => t !== process.pid);
+  if (thread) {
+    fs.writeFileSync(config.lockFile, JSON.stringify({ pid: thread, at: Date.now() }));
+    assert.equal(await withBuildLock(async () => 'ok'), 'ok');
+  }
+  // Même numéro que le serveur actuel, posé avant son démarrage
+  fs.writeFileSync(config.lockFile, JSON.stringify({ pid: process.pid, started: 1, at: Date.now() }));
+  assert.equal(await withBuildLock(async () => 'ok'), 'ok');
+  assert.equal(fs.existsSync(config.lockFile), false);
+});
