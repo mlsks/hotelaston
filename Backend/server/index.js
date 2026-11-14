@@ -9,6 +9,8 @@ import { buildApp } from './app.js';
 import { runBuild } from './ssg/build.js';
 import { currentBuild } from './ssg/release.js';
 import { collectGarbage } from './media/gc.js';
+import { completeVariants } from './media/pipeline.js';
+import { audit } from './lib/audit.js';
 import { nightly } from './analytics/aggregate.js';
 import { refreshGeoip } from './analytics/geoip.js';
 import { gbpConfigured, syncAndPublish } from './reviews/gbp-sync.js';
@@ -50,3 +52,9 @@ try {
 
 // Base de géolocalisation absente ou d'un mois passé : téléchargée en arrière-plan, sans retarder le démarrage
 updateGeoip();
+
+// Photos envoyées avant l'AVIF et les recadrages portrait en plusieurs tailles : variantes créées en arrière-plan,
+// une seule fois (rien à faire aux démarrages suivants). Noté dans le Journal ; une publication les met en ligne.
+completeVariants(db, { log: (m) => app.log.info(m) })
+  .then((r) => { if (r.variants) audit(db, {}, 'optimize', 'media', null, { after: r }); })
+  .catch((err) => app.log.error(`Médiathèque : ${err.message}`));

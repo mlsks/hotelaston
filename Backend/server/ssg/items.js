@@ -29,7 +29,7 @@ function photoHtml($, row, { cdn, media, sizes, loading }) {
 function photoUrl(row, { cdn, media, siteUrl }) {
   const info = row.media ? media(row.media) : null;
   if (!info) return row.src ? cdn + row.src : null;
-  const ws = info.variants.filter((v) => /^w\d+$/.test(v.purpose)).sort((a, b) => b.width - a.width);
+  const ws = info.variants.filter((v) => /^w\d+$/.test(v.purpose) && v.format === 'webp').sort((a, b) => b.width - a.width);
   return ws.length ? `${siteUrl}/media/${ws[0].path}` : null;
 }
 

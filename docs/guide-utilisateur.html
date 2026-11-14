@@ -241,7 +241,7 @@ npm start</code></pre>
 <li><strong>Dans le plan du site (sitemap.xml)</strong> ;</li>
 <li><strong>Page parente</strong> et <strong>Ordre</strong> (place dans le menu et le fil d'Ariane) ;</li>
 <li><strong>Priorité dans le plan du site</strong> (laisser « Automatique » en cas de doute) ;</li>
-<li><strong>Dégradé derrière le texte du bandeau photo</strong> (Accueil, Séminaires et Moon Bar) : un voile léger part de la gauche (du bas sur mobile) et une ombre douce détache le texte blanc, sans assombrir le reste de la photo ou de la vidéo. <strong>Opacité</strong> (50 % au départ) et <strong>Étendue vers la droite</strong> (70 %) se règlent au curseur ; <strong>Revenir au réglage d'origine</strong> remet ceux du site. Décoché, le bandeau de l'accueil et la vidéo du Moon Bar gardent leur voile d'origine. Enregistrer, puis vérifier dans la prévisualisation. Tous les bandeaux se règlent aussi sur un seul écran : voir <a href="#les-bandeaux-photo-hero">Les bandeaux photo (HERO)</a>.</li>
+<li><strong>Dégradé derrière le texte du bandeau photo</strong> (Accueil, Séminaires et Moon Bar) : un voile léger part de la gauche (du bas sur mobile) et une ombre douce détache le texte blanc, sans assombrir le reste de la photo. <strong>Opacité</strong> (50 % au départ) et <strong>Étendue vers la droite</strong> (70 %) se règlent au curseur ; <strong>Revenir au réglage d'origine</strong> remet ceux du site. Décoché, le bandeau de l'accueil et la photo du Moon Bar gardent leur voile d'origine. Enregistrer, puis vérifier dans la prévisualisation. Tous les bandeaux se règlent aussi sur un seul écran : voir <a href="#les-bandeaux-photo-hero">Les bandeaux photo (HERO)</a>.</li>
 </ul></li>
 </ul>
 <h3 id="blocs-d-une-page">Blocs d'une page</h3>
@@ -386,9 +386,9 @@ npm start</code></pre>
 <p>Le lien « Devis pour cette salle » ouvre le formulaire de devis avec la salle déjà choisie. <strong>Ajouter</strong>, <strong>Masquer</strong> ou <strong>Supprimer</strong> une salle met à jour le tableau et le formulaire à la prochaine publication. La liste « Les chiffres clés » de la page guide <em>Salle de séminaire à Nice</em> et les chiffres de la page Séminaires (« 7 espaces modulables ») ne changent pas seuls : les revoir dans <strong>Pages</strong>.</p>
 <p>Les avis clients ont leur propre écran : voir <a href="#les-avis-google">Les avis Google</a>.</p>
 <h3 id="les-bandeaux-photo-hero">Les bandeaux photo (HERO)</h3>
-<p><strong>Fiches et listes</strong> → <strong>Bandeaux photo (HERO)</strong> montre, sur un seul écran, chaque page qui a un grand bandeau réglable : Accueil, Séminaires et Moon Bar (vidéo). Pour chacune :</p>
+<p><strong>Fiches et listes</strong> → <strong>Bandeaux photo (HERO)</strong> montre, sur un seul écran, chaque page qui a un grand bandeau réglable : Accueil, Séminaires et Moon Bar. Pour chacune :</p>
 <ul>
-<li><strong>Dégradé derrière le texte</strong> : un voile léger part de la gauche (du bas sur mobile) et une ombre douce détache le texte blanc, sans assombrir le reste de la photo ou de la vidéo. Décoché, le bandeau garde son voile d'origine.</li>
+<li><strong>Dégradé derrière le texte</strong> : un voile léger part de la gauche (du bas sur mobile) et une ombre douce détache le texte blanc, sans assombrir le reste de la photo. Décoché, le bandeau garde son voile d'origine.</li>
 <li><strong>Opacité</strong> (50 % au départ) et <strong>Étendue vers la droite</strong> (70 %) se règlent au curseur.</li>
 <li><strong>Revenir au réglage d'origine</strong> remet ceux du site (activé sur Séminaires et Moon Bar, désactivé sur l'Accueil).</li>
 <li><strong>Enregistrer</strong>, puis <strong>Prévisualiser</strong> ouvre la page dans la prévisualisation.</li>
@@ -438,7 +438,7 @@ npm start</code></pre>
 <h2 id="6-mediatheque-bandeaux-et-popup">6. Médiathèque, bandeaux et popup</h2>
 <h3 id="mediatheque">Médiathèque</h3>
 <ul>
-<li><strong>Envoyer</strong> : glisser-déposer des fichiers sur l'écran (ou <strong>Envoyer des fichiers</strong>), en choisissant le dossier d'envoi. Les photos sont optimisées automatiquement : WebP en plusieurs tailles, recadrage portrait pour mobile, miniature. Un doublon est signalé.</li>
+<li><strong>Envoyer</strong> : glisser-déposer des fichiers sur l'écran (ou <strong>Envoyer des fichiers</strong>), en choisissant le dossier d'envoi. Les photos sont optimisées automatiquement : WebP et AVIF (plus léger, lu par les navigateurs récents) en plusieurs tailles, recadrage portrait pour mobile en trois tailles, miniature. Les photos envoyées avant le 14/11/2026 reçoivent ces nouvelles tailles toutes seules au démarrage du serveur : le <strong>Journal</strong> affiche alors « Photos allégées (AVIF, téléphones) », et il faut <strong>Publier</strong> pour que le site en profite. Un doublon est signalé.</li>
 <li><strong>Documents PDF</strong> (cartes du restaurant, plaquettes…) : jusqu'à 20 Mo, au-delà de 5 Mo un avertissement signale qu'il sera long à ouvrir sur un téléphone. Le fichier garde un nom lisible tiré de son nom d'origine. On s'en sert dans <a href="#menus-et-liens">Menus et liens</a>.</li>
 <li><strong>Liens externes</strong> : coller une adresse YouTube, Vimeo, Spotify… puis <strong>Ajouter</strong>.</li>
 <li><strong>Retrouver</strong> : dossiers, filtre par type (images, vidéos, sons, documents PDF, liens externes), recherche par nom ou texte alternatif.</li>
@@ -453,7 +453,7 @@ npm start</code></pre>
 </ul>
 <p>Pour changer la photo d'une page : onglet <strong>Textes</strong> de la page, <strong>Changer l'image</strong>. Pour une fiche : champ <strong>Photo</strong> de la fiche.</p>
 <p>Sur l'accueil, les vignettes <strong>Conciergerie</strong> et <strong>Bagagerie gratuite</strong> (section « Tout ce qu'un 4 étoiles doit faciliter ») montrent un pictogramme tant qu'aucune photo n'est choisie : <strong>Pages</strong> → <strong>Accueil</strong> → onglet <strong>Textes</strong>, ligne <strong>Photo</strong> juste sous le titre de la vignette, <strong>Changer l'image</strong>. <strong>Retirer l'image</strong> remet le pictogramme. La photo de la page Conciergerie elle-même se change dans <strong>Fiches et listes</strong> → <strong>Services</strong> → <strong>Conciergerie</strong>, champ <strong>Photos</strong>.</p>
-<p>D'autres images d'origine se remplacent de la même façon ; tant qu'aucune n'est choisie, l'image d'origine reste, et <strong>Retirer l'image</strong> (<strong>Retirer la vidéo</strong> pour la vidéo) la fait revenir :</p>
+<p>D'autres images d'origine se remplacent de la même façon ; tant qu'aucune n'est choisie, l'image d'origine reste, et <strong>Retirer l'image</strong> la fait revenir :</p>
 <div class="table"><table>
 <thead><tr><th>Image</th><th>Où la changer (taper le mot dans <strong>Rechercher un texte…</strong>)</th></tr></thead>
 <tbody>
@@ -461,9 +461,9 @@ npm start</code></pre>
 <tr><td>Fond de la section « Restaurant &amp; bars » de l'accueil</td><td><strong>Pages</strong> → <strong>Accueil</strong> → <strong>Textes</strong>, rechercher <strong>fond</strong></td></tr>
 <tr><td>Logo blanc de l'en-tête (sur le bandeau de l'accueil, grand écran)</td><td><strong>Textes communs</strong>, rechercher <strong>logo</strong></td></tr>
 <tr><td>Logo or de l'en-tête (sur fond clair, grand écran)</td><td><strong>Textes communs</strong>, rechercher <strong>logo</strong></td></tr>
-<tr><td>Vidéo du bandeau de la page Moon Bar</td><td><strong>Pages</strong> → <strong>Le Moon Bar</strong> → <strong>Textes</strong>, rechercher <strong>vidéo</strong>, puis <strong>Changer la vidéo</strong></td></tr>
+<tr><td>Photo du bandeau de la page Moon Bar (le rooftop au crépuscule)</td><td><strong>Pages</strong> → <strong>Le Moon Bar</strong> → <strong>Textes</strong>, rechercher <strong>bandeau</strong>, puis <strong>Changer l'image</strong></td></tr>
 </tbody></table></div>
-<p>Pour ces images, la description lue par Google et les lecteurs d'écran est celle de la <strong>Médiathèque</strong> : la remplir en ouvrant la photo. Les logos de l'en-tête doivent avoir un fond transparent (PNG). La vidéo du Moon Bar tourne en boucle, sans le son : une vidéo courte (10 à 20 secondes) et légère (MP4, quelques Mo) se charge vite ; son image d'attente est tirée de la vidéo par la médiathèque. Chaque ligne <strong>Photo</strong> de l'onglet <strong>Textes</strong> indique maintenant où elle s'affiche.</p>
+<p>Pour ces images, la description lue par Google et les lecteurs d'écran est celle de la <strong>Médiathèque</strong> : la remplir en ouvrant la photo. Les logos de l'en-tête doivent avoir un fond transparent (PNG). La photo du bandeau du Moon Bar avance d'un zoom très lent (coupé si le visiteur a demandé de réduire les animations) ; elle remplace l'ancienne vidéo, trop lourde sur téléphone. Chaque ligne <strong>Photo</strong> de l'onglet <strong>Textes</strong> indique maintenant où elle s'affiche.</p>
 <h3 id="bandeaux">Bandeaux</h3>
 <p>Des messages placés en haut des pages, sous le module de réservation, entre deux sections ou avant le pied de page. Ils s'affichent et disparaissent seuls aux dates choisies.</p>
 <p><strong>Bandeaux</strong> → <strong>Nouveau bandeau</strong>, puis :</p>

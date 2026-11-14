@@ -34,7 +34,7 @@ function timeLabel(time, locale) {
 
 /** Adresse absolue de la plus grande variante WebP d'une photo (données structurées). */
 function imageUrl(info, siteUrl) {
-  const ws = (info?.variants || []).filter((v) => /^w\d+$/.test(v.purpose)).sort((a, b) => b.width - a.width);
+  const ws = (info?.variants || []).filter((v) => /^w\d+$/.test(v.purpose) && v.format === 'webp').sort((a, b) => b.width - a.width);
   return ws.length ? `${siteUrl}/media/${ws[0].path}` : null;
 }
 

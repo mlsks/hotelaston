@@ -1,29 +1,47 @@
 /**
- * Rendu des médias de la médiathèque : images WebP en tailles adaptées (<picture> avec
+ * Rendu des médias de la médiathèque : images AVIF et WebP en tailles adaptées (<picture> avec
  * recadrage portrait pour les téléphones), vidéos avec image d'attente, sons, liens externes.
  */
 const url = (variant) => `/media/${variant.path}`;
-const widthVariants = (variants) => variants.filter((v) => /^w\d+$/.test(v.purpose) && v.format === 'webp').sort((a, b) => a.width - b.width);
+const byWidth = (a, b) => a.width - b.width;
+const widthVariants = (variants, format = 'webp') => variants.filter((v) => /^w\d+$/.test(v.purpose) && v.format === format).sort(byWidth);
+/** Recadrages portrait (« portrait » = 900 px, « portrait-w540 »…), du plus étroit au plus large. */
+const portraitVariants = (variants, format) => variants.filter((v) => /^portrait(-w\d+)?$/.test(v.purpose) && v.format === format).sort(byWidth);
+const srcsetOf = (list) => list.map((v) => `${url(v)} ${v.width}w`).join(', ');
+const PORTRAIT_MEDIA = '(max-aspect-ratio: 4/5)';
 
 /** Texte d'attribut / HTML échappé. */
 export const esc = (s) => String(s ?? '').replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
 
 const focalStyle = (media) => (media.focal_x === 0.5 && media.focal_y === 0.5 ? '' : ` style="object-position: ${Math.round(media.focal_x * 100)}% ${Math.round(media.focal_y * 100)}%"`);
 
-/** <picture> complet pour une image (variantes WebP + recadrage portrait pour les écrans verticaux, sauf si portrait: false). */
+/**
+ * <picture> complet pour une image : recadrage portrait pour les écrans verticaux (sauf si portrait: false),
+ * puis AVIF, puis WebP dans la balise <img>. Le navigateur prend la première source qu'il sait lire,
+ * dans la taille qui convient à l'écran ; une variante absente (image pas encore complétée) est simplement omise.
+ */
 export function pictureHtml(info, { sizes = '100vw', className = '', loading = 'lazy', fetchpriority = '', portrait: withPortrait = true } = {}) {
   const { media, variants, alt } = info;
   const ws = widthVariants(variants);
   if (!ws.length) return '';
-  const portrait = withPortrait && variants.find((v) => v.purpose === 'portrait');
   const fallback = ws.find((v) => v.width >= 1024) || ws[ws.length - 1];
-  const srcset = ws.map((v) => `${url(v)} ${v.width}w`).join(', ');
+  const srcset = srcsetOf(ws);
+  const sizesAttr = `sizes="${esc(sizes)}"`;
+  const sources = [];
+  if (withPortrait) {
+    for (const format of ['avif', 'webp']) {
+      const list = portraitVariants(variants, format);
+      if (list.length) sources.push(`<source media="${PORTRAIT_MEDIA}" srcset="${srcsetOf(list)}" ${sizesAttr} type="image/${format}">`);
+    }
+  }
+  const avif = widthVariants(variants, 'avif');
+  if (avif.length) sources.push(`<source srcset="${srcsetOf(avif)}" ${sizesAttr} type="image/avif">`);
   const ratio = media.height && media.width ? media.height / media.width : fallback.height / fallback.width;
   const attrs = [
     className && `class="${esc(className)}"`,
     `src="${url(fallback)}"`,
     `srcset="${srcset}"`,
-    `sizes="${esc(sizes)}"`,
+    sizesAttr,
     `width="${fallback.width}"`,
     `height="${Math.round(fallback.width * ratio)}"`,
     `alt="${esc(alt)}"`,
@@ -31,7 +49,7 @@ export function pictureHtml(info, { sizes = '100vw', className = '', loading = '
     fetchpriority && `fetchpriority="${fetchpriority}"`,
     'decoding="async"',
   ].filter(Boolean).join(' ');
-  return `<picture>${portrait ? `<source media="(max-aspect-ratio: 4/5)" srcset="${url(portrait)}" type="image/webp">` : ''}<img ${attrs}${focalStyle(media)}></picture>`;
+  return `<picture>${sources.join('')}<img ${attrs}${focalStyle(media)}></picture>`;
 }
 
 export function videoHtml(info, { className = '', lazy = true } = {}) {
