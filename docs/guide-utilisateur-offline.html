@@ -1,0 +1,482 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Guide hors ligne · Aston La Scala</title>
+<!--
+  Guide autonome : aucun fichier externe, il s'ouvre d'un double-clic, sans internet.
+  Mis à jour le 14/11/2026. Le guide de l'admin reste docs/guide-utilisateur.md.
+-->
+<style>
+  :root {
+    color-scheme: light;
+    --bg: #fbf8f2; --paper: #ffffff; --ink: #1b2330; --ink-2: #47515f; --ink-3: #6b7482;
+    --line: rgba(20, 56, 92, 0.14); --navy: #14385c; --navy-deep: #0b1f34; --gold: #c9a45e; --soft: #efe8db;
+    --ok: #2f6b45; --ok-bg: #e7f2ea; --warn: #8a5a12; --warn-bg: #fbf0dc; --bad: #8f2d2d; --bad-bg: #f8e5e5;
+    --term-bg: #0f1b2a; --term-ink: #e6edf5; --term-dim: #8da2b8;
+    --serif: "Cormorant Garamond", Georgia, "Times New Roman", serif;
+    --sans: "Segoe UI", system-ui, -apple-system, Roboto, sans-serif;
+    --mono: "Cascadia Mono", Consolas, ui-monospace, monospace;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      color-scheme: dark;
+      --bg: #0d1724; --paper: #142233; --ink: #e9edf2; --ink-2: #b9c3cf; --ink-3: #8d99a8;
+      --line: rgba(201, 164, 94, 0.2); --navy: #8fb4d9; --navy-deep: #e9edf2; --soft: #1c2c40;
+      --ok: #8fd1a6; --ok-bg: #16301f; --warn: #f0c57a; --warn-bg: #33270f; --bad: #f0a0a0; --bad-bg: #3a1a1a;
+    }
+  }
+  :root[data-theme="dark"] {
+    color-scheme: dark;
+    --bg: #0d1724; --paper: #142233; --ink: #e9edf2; --ink-2: #b9c3cf; --ink-3: #8d99a8;
+    --line: rgba(201, 164, 94, 0.2); --navy: #8fb4d9; --navy-deep: #e9edf2; --soft: #1c2c40;
+    --ok: #8fd1a6; --ok-bg: #16301f; --warn: #f0c57a; --warn-bg: #33270f; --bad: #f0a0a0; --bad-bg: #3a1a1a;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { margin: 0; background: var(--bg); color: var(--ink); font: 16px/1.65 var(--sans); -webkit-font-smoothing: antialiased; }
+  a { color: var(--navy); text-underline-offset: 3px; }
+  h1, h2, h3 { font-family: var(--serif); color: var(--navy-deep); line-height: 1.15; }
+  h2 { font-size: clamp(1.7rem, 1.4rem + 1.2vw, 2.2rem); margin: 2.8rem 0 0.8rem; padding-top: 1.4rem; border-top: 1px solid var(--line); scroll-margin-top: 12px; }
+  h3 { font-size: 1.35rem; margin: 1.8rem 0 0.5rem; scroll-margin-top: 12px; }
+  p, li { color: var(--ink); }
+  .muted { color: var(--ink-3); font-size: 0.92rem; }
+  code { font: 0.88em var(--mono); background: var(--soft); padding: 0.1em 0.38em; border-radius: 4px; overflow-wrap: anywhere; }
+  kbd { font: 0.82em var(--mono); background: var(--paper); border: 1px solid var(--line); border-bottom-width: 2px; padding: 0.05em 0.45em; border-radius: 4px; white-space: nowrap; }
+  b.ui { font-weight: 600; color: var(--navy-deep); background: var(--soft); padding: 0.05em 0.4em; border-radius: 4px; }
+
+  .hero { background: linear-gradient(135deg, #0b1f34, #14385c); color: #e9edf2; padding: 40px 16px 30px; }
+  .hero-inner, main { max-width: 900px; margin: 0 auto; }
+  .eyebrow { margin: 0 0 6px; font-size: 0.72rem; font-weight: 600; letter-spacing: 0.24em; text-transform: uppercase; color: var(--gold); }
+  .hero h1 { margin: 0; color: #fff; font-size: clamp(2.1rem, 1.6rem + 2.4vw, 3.2rem); }
+  .hero p { color: #c9d4e0; margin: 10px 0 0; max-width: 46em; }
+  .toc { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 20px; padding: 0; list-style: none; }
+  .toc a { color: #e9edf2; text-decoration: none; font-size: 0.85rem; padding: 5px 11px; border: 1px solid rgba(255,255,255,0.22); border-radius: 999px; display: inline-block; }
+  .toc a:hover { border-color: var(--gold); color: #fff; }
+  .theme { float: right; background: none; border: 1px solid rgba(255,255,255,0.25); color: #e9edf2; border-radius: 999px; padding: 5px 12px; font: inherit; font-size: 0.85rem; cursor: pointer; }
+
+  main { padding: 8px 16px 64px; }
+  .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; margin: 18px 0; }
+  .card { background: var(--paper); border: 1px solid var(--line); border-radius: 12px; padding: 14px 16px; }
+  .card h3 { margin: 0 0 6px; font-size: 1.2rem; }
+  .card ol { margin: 0; padding-left: 1.2em; }
+  .card a.more { font-size: 0.88rem; }
+
+  ol.steps { counter-reset: s; list-style: none; padding: 0; margin: 14px 0; }
+  ol.steps > li { counter-increment: s; position: relative; padding: 2px 0 14px 46px; }
+  ol.steps > li::before { content: counter(s); position: absolute; left: 0; top: 0; width: 30px; height: 30px; border-radius: 50%; background: var(--navy); color: var(--paper); font-weight: 700; display: grid; place-items: center; font-size: 0.9rem; }
+  ol.steps > li:not(:last-child)::after { content: ""; position: absolute; left: 14px; top: 34px; bottom: 4px; width: 2px; background: var(--line); }
+
+  .term { position: relative; background: var(--term-bg); color: var(--term-ink); border-radius: 10px; margin: 10px 0 14px; overflow: hidden; }
+  .term .bar { display: flex; justify-content: space-between; align-items: center; padding: 6px 10px 6px 14px; font: 0.75rem var(--sans); color: var(--term-dim); border-bottom: 1px solid rgba(255,255,255,0.08); }
+  .term pre { margin: 0; padding: 12px 14px; overflow-x: auto; font: 0.9rem/1.55 var(--mono); }
+  .term .c { color: var(--term-dim); }
+  .copy { background: rgba(255,255,255,0.08); color: var(--term-ink); border: 1px solid rgba(255,255,255,0.16); border-radius: 6px; font: 0.75rem var(--sans); padding: 3px 9px; cursor: pointer; }
+  .copy:hover { background: rgba(255,255,255,0.16); }
+
+  .note { border-left: 4px solid var(--navy); background: var(--paper); border-radius: 0 10px 10px 0; padding: 10px 14px; margin: 14px 0; }
+  .note.ok { border-color: var(--ok); background: var(--ok-bg); }
+  .note.warn { border-color: var(--warn); background: var(--warn-bg); }
+  .note.bad { border-color: var(--bad); background: var(--bad-bg); }
+  .note > :first-child { margin-top: 0; } .note > :last-child { margin-bottom: 0; }
+  .note strong:first-child { color: var(--navy-deep); }
+
+  .table-wrap { overflow-x: auto; margin: 12px 0; border: 1px solid var(--line); border-radius: 10px; background: var(--paper); }
+  table { border-collapse: collapse; width: 100%; font-size: 0.94rem; }
+  th, td { text-align: left; vertical-align: top; padding: 9px 12px; border-bottom: 1px solid var(--line); }
+  th { background: var(--soft); font-weight: 600; color: var(--navy-deep); }
+  tr:last-child td { border-bottom: 0; }
+
+  .flow { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; margin: 14px 0; }
+  .flow span { background: var(--paper); border: 1px solid var(--line); border-radius: 8px; padding: 6px 10px; font-size: 0.9rem; }
+  .flow i { font-style: normal; color: var(--ink-3); }
+
+  svg.diagram { width: 100%; height: auto; max-width: 820px; display: block; margin: 12px 0; }
+  svg.diagram text { font-family: var(--sans); fill: var(--ink); font-size: 13px; }
+  svg.diagram .lbl { fill: var(--ink-3); font-size: 12px; }
+  svg.diagram .main { stroke: var(--navy); }
+  svg.diagram .br { stroke: var(--gold); }
+  svg.diagram .dot-main { fill: var(--navy); }
+  svg.diagram .dot-br { fill: var(--gold); }
+
+  footer { max-width: 900px; margin: 0 auto; padding: 0 16px 40px; color: var(--ink-3); font-size: 0.85rem; }
+  @media print {
+    .hero { background: none; color: #000; padding: 0; } .hero h1, .hero p, .toc a { color: #000; }
+    .theme, .copy { display: none; } .term { background: #f3f3f3; color: #000; } .term .c { color: #555; }
+    h2 { break-before: page; } .term, .note, table { break-inside: avoid; }
+  }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="hero-inner">
+    <button class="theme" type="button" id="theme">Clair / sombre</button>
+    <p class="eyebrow">Hôtel Aston La Scala · guide hors ligne</p>
+    <h1>Faire tourner le site sur le PC, et travailler avec GitHub</h1>
+    <p>Pas à pas pour Windows : lancer le serveur, voir le site sur le portable, récupérer les mises à jour, relire et fusionner une pull request, pousser ses propres modifications, mettre à jour la démo Render. Cette page marche sans internet : un double-clic sur le fichier suffit.</p>
+    <ul class="toc">
+      <li><a href="#essentiel">L'essentiel</a></li>
+      <li><a href="#terminal">Ouvrir le terminal</a></li>
+      <li><a href="#lancer">Lancer le serveur</a></li>
+      <li><a href="#portable">Sur le portable</a></li>
+      <li><a href="#maj">Récupérer une mise à jour</a></li>
+      <li><a href="#github">Comprendre GitHub</a></li>
+      <li><a href="#fusionner">Fusionner une PR</a></li>
+      <li><a href="#render">Démo Render</a></li>
+      <li><a href="#pousser">Pousser ses modifs</a></li>
+      <li><a href="#ou">Où est quoi</a></li>
+      <li><a href="#problemes">Problèmes fréquents</a></li>
+      <li><a href="#memo">Aide-mémoire</a></li>
+    </ul>
+  </div>
+</header>
+
+<main>
+
+<h2 id="essentiel">L'essentiel</h2>
+
+<p>Le projet est sur le PC <b>foupax2</b>, dans le dossier <code>C:\Dev\Claude\Remotion\hotelaston</code>. Le code est aussi sur GitHub, dans le dépôt <code>mlsks/hotelaston</code>. Quatre situations reviennent tout le temps :</p>
+
+<div class="cards">
+  <div class="card">
+    <h3>Voir le site</h3>
+    <ol><li>Terminal dans <code>Backend</code></li><li><code>npm start</code></li><li>Ouvrir <a href="http://127.0.0.1:3020/admin/">127.0.0.1:3020/admin/</a></li></ol>
+    <a class="more" href="#lancer">Détails</a>
+  </div>
+  <div class="card">
+    <h3>Claude a fait une PR</h3>
+    <ol><li>La relire sur github.com</li><li><b class="ui">Merge pull request</b></li><li><code>git pull</code>, relancer, <b class="ui">Publier</b></li></ol>
+    <a class="more" href="#fusionner">Détails</a>
+  </div>
+  <div class="card">
+    <h3>Mettre la démo à jour</h3>
+    <ol><li>Render : <b class="ui">Manual Deploy</b></li><li>Attendre « Live »</li><li>Admin de la démo : <b class="ui">Publier</b></li></ol>
+    <a class="more" href="#render">Détails</a>
+  </div>
+  <div class="card">
+    <h3>J'ai modifié un fichier</h3>
+    <ol><li>Nouvelle branche</li><li><code>git add</code>, <code>git commit</code>, <code>git push</code></li><li>Ouvrir la PR, la fusionner</li></ol>
+    <a class="more" href="#pousser">Détails</a>
+  </div>
+</div>
+
+<div class="note warn">
+  <p><strong>À retenir.</strong> Les textes, traductions, photos et réglages modifiés dans l'admin sont dans la <b>base locale</b> du PC, pas sur GitHub. Ils ne passent donc jamais par <code>git</code> : il suffit de cliquer sur <b class="ui">Publier</b>. GitHub ne contient que le <b>code</b> et la documentation. Voir <a href="#ou">Où est quoi</a>.</p>
+</div>
+
+<h2 id="terminal">1. Ouvrir le terminal au bon endroit</h2>
+
+<p>Toutes les commandes de ce guide se tapent dans <b>PowerShell</b> (ou « Terminal », c'est la même chose sous Windows 11). Le plus simple pour l'ouvrir directement dans le bon dossier :</p>
+
+<ol class="steps">
+  <li>Ouvrir l'<b>Explorateur de fichiers</b> (<kbd>Windows</kbd> + <kbd>E</kbd>) et aller dans <code>C:\Dev\Claude\Remotion\hotelaston</code>.</li>
+  <li>Cliquer dans la <b>barre d'adresse</b> en haut (là où le chemin est écrit), effacer le chemin, taper <code>powershell</code> et appuyer sur <kbd>Entrée</kbd>.</li>
+  <li>Une fenêtre bleue ou noire s'ouvre. La ligne se termine par <code>PS C:\Dev\Claude\Remotion\hotelaston&gt;</code> : on est au bon endroit.</li>
+</ol>
+
+<p>Autre méthode : clic droit sur le bouton Démarrer, <b class="ui">Terminal</b>, puis taper :</p>
+<div class="term"><div class="bar">PowerShell<button class="copy" type="button">Copier</button></div><pre>cd C:\Dev\Claude\Remotion\hotelaston</pre></div>
+
+<div class="note">
+  <p><strong>Deux dossiers à connaître.</strong> Les commandes <code>git</code> se tapent à la racine, <code>C:\Dev\Claude\Remotion\hotelaston</code> (elles marchent aussi dans un sous-dossier). Les commandes <code>npm</code> se tapent dans <code>C:\Dev\Claude\Remotion\hotelaston\Backend</code>. On passe de l'un à l'autre avec <code>cd Backend</code> (descendre) et <code>cd ..</code> (remonter).</p>
+</div>
+
+<p class="muted">Coller dans PowerShell : clic droit dans la fenêtre, ou <kbd>Ctrl</kbd> + <kbd>V</kbd>. Rappeler une commande déjà tapée : flèche <kbd>↑</kbd>.</p>
+
+<h2 id="lancer">2. Lancer et arrêter le serveur</h2>
+
+<h3>Lancer</h3>
+<ol class="steps">
+  <li>Ouvrir PowerShell dans le projet (<a href="#terminal">étape 1</a>), puis :
+    <div class="term"><div class="bar">PowerShell<button class="copy" type="button">Copier</button></div><pre>cd Backend
+npm start</pre></div>
+  </li>
+  <li>Attendre quelques secondes : des lignes s'affichent, dont l'adresse du serveur (port <code>3020</code>). Le serveur tourne tant que la fenêtre reste ouverte. <b>Ne pas la fermer</b> ; on peut la réduire.</li>
+  <li>Ouvrir le navigateur sur <a href="http://127.0.0.1:3020/admin/">http://127.0.0.1:3020/admin/</a> et se connecter avec le compte <code>michel@localhost</code>. Le mot de passe est noté dans le fichier <code>Backend\.dev-credentials</code> (il n'est pas sur GitHub).</li>
+</ol>
+
+<div class="table-wrap"><table>
+  <tr><th>Adresse</th><th>Ce qu'on y trouve</th></tr>
+  <tr><td><a href="http://127.0.0.1:3020/admin/">http://127.0.0.1:3020/admin/</a></td><td>Le back-office (l'admin)</td></tr>
+  <tr><td><a href="http://127.0.0.1:3020/fr/">http://127.0.0.1:3020/fr/</a></td><td>Le site publié, tel que les visiteurs le verront</td></tr>
+  <tr><td><a href="http://127.0.0.1:3020/preview/fr/">http://127.0.0.1:3020/preview/fr/</a></td><td>La prévisualisation, brouillons compris (connexion requise)</td></tr>
+</table></div>
+
+<p class="muted"><code>localhost</code> et <code>127.0.0.1</code> désignent la même chose : ce PC. Consulter <code>/fr/</code> en local ajoute des visites aux statistiques de développement ; ces chiffres ne comptent pas.</p>
+
+<h3>Arrêter</h3>
+<p>Cliquer dans la fenêtre du serveur et appuyer sur <kbd>Ctrl</kbd> + <kbd>C</kbd>. Si Windows demande « Terminer le programme de commandes (O/N) ? », taper <kbd>O</kbd> puis <kbd>Entrée</kbd>. Fermer la fenêtre arrête aussi le serveur.</p>
+
+<h3>Relancer</h3>
+<p><kbd>Ctrl</kbd> + <kbd>C</kbd>, puis <kbd>↑</kbd> pour retrouver <code>npm start</code>, puis <kbd>Entrée</kbd>. Il faut relancer après un <code>git pull</code> ou après avoir modifié <code>Backend\.env</code>.</p>
+
+<h3>Le cycle d'une modification dans l'admin</h3>
+<div class="flow"><span>Modifier un texte</span><i>→</i><span>enregistré dans la base</span><i>→</i><span><b class="ui">Prévisualiser</b></span><i>→</i><span><b class="ui">Publier</b></span><i>→</i><span>visible sur <code>/fr/</code></span></div>
+<p>Les boutons <b class="ui">Prévisualiser</b> et <b class="ui">Publier</b> sont en haut de l'admin. En cas d'erreur, menu de gauche <b>SITE</b> → <b class="ui">Publication et versions</b> → <b class="ui">Restaurer</b> remet la version précédente. Le reste de l'admin est expliqué dans le manuel : menu <b>AIDE</b> → <b class="ui">Manuel d'utilisation</b>.</p>
+
+<h2 id="portable">3. Voir le site sur le téléphone (même Wi-Fi)</h2>
+
+<p>C'est déjà réglé sur foupax2 : le fichier <code>Backend\.env</code> contient la ligne <code>HOST=0.0.0.0</code>. Il suffit donc :</p>
+<ol class="steps">
+  <li>de lancer le serveur sur le PC (<a href="#lancer">étape 2</a>) ;</li>
+  <li>de brancher le téléphone sur le <b>même Wi-Fi</b> que le PC ;</li>
+  <li>d'ouvrir sur le téléphone <a href="http://192.168.1.5:3020/fr/">http://192.168.1.5:3020/fr/</a> (l'admin : <code>http://192.168.1.5:3020/admin/</code>).</li>
+</ol>
+
+<div class="note warn">
+  <p><strong>Si la page ne s'ouvre pas sur le téléphone :</strong></p>
+  <ul>
+    <li><b>L'adresse du PC a changé</b> (la box peut en attribuer une autre). Sur le PC, taper <code>ipconfig</code> dans PowerShell et lire la ligne <b>Adresse IPv4</b> de la carte Wi-Fi (par exemple <code>192.168.1.12</code>), puis ouvrir <code>http://192.168.1.12:3020/fr/</code>.</li>
+    <li><b>Le pare-feu Windows bloque</b>. Au premier lancement, Windows demande s'il faut autoriser « Node.js » : cocher <b>Réseaux privés</b> et valider. Si on a refusé : Démarrer → taper « Autoriser une application via le Pare-feu Windows » → <b class="ui">Modifier les paramètres</b> → cocher <b>Privé</b> en face de « Node.js JavaScript Runtime ».</li>
+    <li><b>Le Wi-Fi du PC est déclaré « Public »</b> : Paramètres → Réseau et Internet → Wi-Fi → le réseau → <b>Réseau privé</b>.</li>
+  </ul>
+</div>
+<p class="muted">Avec <code>HOST=0.0.0.0</code>, l'admin est joignable par tous les appareils du réseau : à garder pour la maison, pas pour un Wi-Fi public. Pour revenir en arrière, mettre <code>HOST=127.0.0.1</code> et relancer.</p>
+
+<h2 id="maj">4. Récupérer une mise à jour du code</h2>
+
+<p>Quand une pull request a été fusionnée sur GitHub (par exemple une modification faite par Claude), elle n'est pas encore sur le PC. Il faut la « tirer » :</p>
+
+<ol class="steps">
+  <li>Dans la fenêtre du serveur : <kbd>Ctrl</kbd> + <kbd>C</kbd> pour l'arrêter.</li>
+  <li>Remonter à la racine du projet et récupérer le code :
+    <div class="term"><div class="bar">PowerShell, dans Backend<button class="copy" type="button">Copier</button></div><pre>cd ..
+git switch main
+git pull</pre></div>
+    <p><code>git pull</code> affiche la liste des fichiers changés. « Already up to date » veut dire qu'il n'y avait rien de nouveau.</p>
+  </li>
+  <li><b>Seulement si</b> la liste contient <code>Backend/package.json</code> ou <code>Backend/package-lock.json</code> (nouvelles bibliothèques) :
+    <div class="term"><div class="bar">PowerShell<button class="copy" type="button">Copier</button></div><pre>cd Backend
+npm install
+cd ..</pre></div>
+  </li>
+  <li>Relancer le serveur :
+    <div class="term"><div class="bar">PowerShell<button class="copy" type="button">Copier</button></div><pre>cd Backend
+npm start</pre></div>
+  </li>
+  <li>Ouvrir l'admin et cliquer sur <b class="ui">Publier</b> : le site publié est régénéré avec le nouveau code. Certaines mises à jour ajoutent des textes ou des langues au démarrage ; ils apparaissent alors dans l'admin.</li>
+</ol>
+
+<div class="note ok"><p><strong>En résumé :</strong> arrêter, <code>git pull</code>, (<code>npm install</code> si besoin), <code>npm start</code>, <b class="ui">Publier</b>.</p></div>
+
+<h2 id="github">5. Comprendre GitHub en cinq mots</h2>
+
+<div class="table-wrap"><table>
+  <tr><th>Mot</th><th>Ce que c'est</th></tr>
+  <tr><td><b>Dépôt</b> (repository)</td><td>Le projet sur GitHub : <code>github.com/mlsks/hotelaston</code>. Le dossier du PC en est une copie.</td></tr>
+  <tr><td><b>main</b></td><td>La branche principale : la version de référence du code. C'est elle que Render déploie et que le PC récupère avec <code>git pull</code>.</td></tr>
+  <tr><td><b>Branche</b></td><td>Une copie de travail à côté de <code>main</code>, pour essayer une modification sans toucher à la version de référence. Claude travaille toujours sur une branche (nommée <code>claude/…</code>).</td></tr>
+  <tr><td><b>Commit</b></td><td>Un enregistrement des fichiers modifiés, avec un message qui dit ce qui a changé. Une branche est une suite de commits.</td></tr>
+  <tr><td><b>Pull request</b> (PR)</td><td>Une demande de verser une branche dans <code>main</code>. On y voit la description et chaque ligne modifiée ; on la <b>fusionne</b> (merge) quand elle est bonne, ou on la ferme.</td></tr>
+</table></div>
+
+<svg class="diagram" viewBox="0 0 820 170" role="img" aria-label="Une branche part de main, reçoit deux commits, puis revient dans main par la fusion de la pull request">
+  <line class="main" x1="30" y1="120" x2="790" y2="120" stroke-width="4"/>
+  <path class="br" d="M170 120 C 230 120, 230 50, 290 50 L 520 50 C 580 50, 580 120, 640 120" fill="none" stroke-width="4"/>
+  <circle class="dot-main" cx="90" cy="120" r="9"/><circle class="dot-main" cx="170" cy="120" r="9"/>
+  <circle class="dot-br" cx="330" cy="50" r="9"/><circle class="dot-br" cx="470" cy="50" r="9"/>
+  <circle class="dot-main" cx="640" cy="120" r="11"/><circle class="dot-main" cx="750" cy="120" r="9"/>
+  <text x="30" y="150">main</text>
+  <text x="300" y="28">branche : commit 1, commit 2</text>
+  <text x="575" y="152">fusion de la PR</text>
+  <text x="700" y="152" class="lbl">git pull sur le PC</text>
+  <text x="110" y="150" class="lbl">création de la branche</text>
+</svg>
+
+<p>La règle du projet : toute modification passe par une branche et une pull request, et n'arrive sur <code>main</code> que quand Michel la valide en la fusionnant.</p>
+
+<h2 id="fusionner">6. Relire et fusionner une pull request</h2>
+
+<p>Quand Claude a terminé un travail, il donne un lien du type <code>github.com/mlsks/hotelaston/pull/45</code>. On peut aussi les retrouver toutes sur <a href="https://github.com/mlsks/hotelaston/pulls">github.com/mlsks/hotelaston/pulls</a> (connexion à GitHub nécessaire).</p>
+
+<ol class="steps">
+  <li><b>Ouvrir la PR.</b> L'onglet <b class="ui">Conversation</b> montre le titre et la description : ce qui a été fait, et souvent ce qu'il faut faire après la fusion.</li>
+  <li><b>Regarder les changements</b> (facultatif). Onglet <b class="ui">Files changed</b> : chaque fichier modifié, lignes retirées en rouge (<code>-</code>), lignes ajoutées en vert (<code>+</code>).</li>
+  <li><b>Essayer avant de fusionner</b> (facultatif, utile pour un changement visible). Sur le PC, serveur arrêté :
+    <div class="term"><div class="bar">PowerShell, à la racine du projet<button class="copy" type="button">Copier</button></div><pre>git fetch
+git switch claude/nom-de-la-branche
+<span class="c"># relancer (cd Backend, npm start), Prévisualiser, regarder</span>
+git switch main</pre></div>
+    <p>Le nom exact de la branche est écrit en haut de la PR, après « wants to merge … from ». Revenir sur <code>main</code> ensuite.</p>
+  </li>
+  <li><b>Fusionner.</b> En bas de l'onglet <b class="ui">Conversation</b> : bouton vert <b class="ui">Merge pull request</b>, puis <b class="ui">Confirm merge</b>. La pastille passe au violet « Merged ».</li>
+  <li><b>Supprimer la branche</b> (facultatif) : bouton <b class="ui">Delete branch</b> qui apparaît après la fusion. Le travail reste dans <code>main</code>.</li>
+  <li><b>Récupérer la fusion sur le PC</b> : <a href="#maj">section 4</a> (arrêter, <code>git pull</code>, relancer, <b class="ui">Publier</b>), et si besoin <a href="#render">mettre à jour la démo Render</a>.</li>
+</ol>
+
+<div class="note">
+  <p><strong>Si la PR ne convient pas :</strong> ne pas fusionner, et le dire à Claude dans le fil du projet ; il pousse une correction sur la même branche et la PR se met à jour toute seule. Pour l'abandonner : bouton <b class="ui">Close pull request</b> en bas de la page (rien ne change sur <code>main</code>).</p>
+  <p>Si GitHub affiche « This branch has conflicts that must be resolved », ne pas résoudre soi-même : demander à Claude de mettre la branche à jour.</p>
+</div>
+
+<h2 id="render">7. Mettre à jour la démo Render</h2>
+
+<p>La démo en ligne sur Render se construit à partir de la branche <code>main</code> de GitHub. Elle a sa propre base : ce qu'on modifie dans l'admin du PC n'y arrive pas, et inversement. Après une fusion sur <code>main</code> :</p>
+
+<ol class="steps">
+  <li>Ouvrir <a href="https://dashboard.render.com">dashboard.render.com</a>, se connecter, cliquer sur le service du site.</li>
+  <li>En haut à droite : <b class="ui">Manual Deploy</b> → <b class="ui">Deploy latest commit</b>.</li>
+  <li>Attendre la fin (quelques minutes) : l'onglet <b class="ui">Events</b> affiche « Deploy live » ; l'onglet <b class="ui">Logs</b> montre le détail en cas d'échec.</li>
+  <li>Ouvrir l'admin de la démo (l'adresse de la démo suivie de <code>/admin/</code>), se connecter et cliquer sur <b class="ui">Publier</b>.</li>
+</ol>
+<p class="muted">Sur la démo, envoyer une vidéo échoue (pas de ffmpeg chez Render) ; les vidéos déjà présentes s'affichent. La démo est marquée « ne pas indexer » (<code>NOINDEX=1</code>) : Google ne la référence pas.</p>
+
+<h2 id="pousser">8. Faire et pousser ses propres modifications</h2>
+
+<p>Pour changer soi-même un fichier du code ou de la documentation (pas les textes du site, qui se changent dans l'admin), on suit le même chemin que Claude : branche, commit, push, pull request.</p>
+
+<h3>Une seule fois : se présenter à Git</h3>
+<p>Git signe chaque commit avec un nom et un e-mail. À faire une fois sur le PC (remplacer par ses propres valeurs ; l'e-mail est celui du compte GitHub) :</p>
+<div class="term"><div class="bar">PowerShell<button class="copy" type="button">Copier</button></div><pre>git config --global user.name "Michel"
+git config --global user.email "votre-adresse@exemple.com"</pre></div>
+<p>Au premier <code>git push</code>, une fenêtre GitHub s'ouvre pour se connecter (bouton <b class="ui">Sign in with your browser</b>, puis <b class="ui">Authorize</b>). Windows retient ensuite la connexion.</p>
+
+<h3>Les étapes</h3>
+<ol class="steps">
+  <li><b>Partir d'un main à jour</b>, à la racine du projet :
+    <div class="term"><div class="bar">PowerShell<button class="copy" type="button">Copier</button></div><pre>git switch main
+git pull</pre></div>
+  </li>
+  <li><b>Créer une branche</b> avec un nom court, sans espace ni accent :
+    <div class="term"><div class="bar">PowerShell<button class="copy" type="button">Copier</button></div><pre>git switch -c michel/correction-guide</pre></div>
+  </li>
+  <li><b>Modifier les fichiers</b> (Bloc-notes, VS Code…), enregistrer.</li>
+  <li><b>Vérifier ce qui a changé</b> :
+    <div class="term"><div class="bar">PowerShell<button class="copy" type="button">Copier</button></div><pre>git status
+git diff</pre></div>
+    <p><code>git status</code> liste les fichiers modifiés (en rouge). <code>git diff</code> montre les lignes ; taper <kbd>q</kbd> pour en sortir. Vérifier qu'aucun fichier inattendu n'apparaît (<code>.env</code>, base, photos : ils sont normalement ignorés).</p>
+  </li>
+  <li><b>Enregistrer un commit</b> :
+    <div class="term"><div class="bar">PowerShell<button class="copy" type="button">Copier</button></div><pre>git add -A
+git commit -m "Guide : précise l'étape du pare-feu"</pre></div>
+    <p>Le message dit en une phrase ce qui change. On peut faire plusieurs commits sur la même branche.</p>
+  </li>
+  <li><b>Pousser la branche sur GitHub</b> :
+    <div class="term"><div class="bar">PowerShell<button class="copy" type="button">Copier</button></div><pre>git push -u origin michel/correction-guide</pre></div>
+    <p>Les fois suivantes, sur la même branche, <code>git push</code> suffit.</p>
+  </li>
+  <li><b>Ouvrir la pull request.</b> Aller sur <a href="https://github.com/mlsks/hotelaston">github.com/mlsks/hotelaston</a> : un bandeau jaune propose <b class="ui">Compare &amp; pull request</b>. Cliquer, vérifier que la flèche va bien de <code>michel/correction-guide</code> vers <code>main</code>, écrire un titre et une description, puis <b class="ui">Create pull request</b>. (Sans bandeau : onglet <b class="ui">Pull requests</b> → <b class="ui">New pull request</b> → choisir la branche dans « compare ».)</li>
+  <li><b>Fusionner</b> comme en <a href="#fusionner">section 6</a>, puis revenir sur <code>main</code> sur le PC :
+    <div class="term"><div class="bar">PowerShell<button class="copy" type="button">Copier</button></div><pre>git switch main
+git pull</pre></div>
+  </li>
+</ol>
+
+<div class="note">
+  <p><strong>Cas particulier, le guide de l'admin.</strong> Ne modifier que <code>docs\guide-utilisateur.md</code>, puis régénérer sa version HTML avant le commit (un test vérifie qu'elle est à jour) :</p>
+  <div class="term"><div class="bar">PowerShell, à la racine du projet<button class="copy" type="button">Copier</button></div><pre>node tools/md-to-html.mjs docs/guide-utilisateur.md</pre></div>
+  <p>Après une modification du code, lancer aussi les tests : <code>npm test</code> dans <code>Backend</code> (tous doivent réussir ; un test est sauté sans ffmpeg).</p>
+</div>
+
+<h2 id="ou">9. Ce qui est sur GitHub, et ce qui ne l'est pas</h2>
+
+<div class="table-wrap"><table>
+  <tr><th>Élément</th><th>Où il vit</th><th>Comment il bouge</th></tr>
+  <tr><td>Code du back-office, gabarits, maquette, documentation</td><td>GitHub + dossier du PC</td><td><code>git pull</code>, <code>git push</code>, pull requests</td></tr>
+  <tr><td>Textes, traductions, fiches, réglages, comptes, versions publiées</td><td><code>Backend\storage\</code> (base SQLite) sur le PC</td><td>Admin → <b class="ui">Publier</b>. Jamais par git.</td></tr>
+  <tr><td>Photos, vidéos, sons de la médiathèque</td><td><code>Backend\media\</code> sur le PC</td><td>Admin → Médiathèque. Jamais par git.</td></tr>
+  <tr><td>Réglages locaux (port, <code>HOST</code>…)</td><td><code>Backend\.env</code> sur le PC</td><td>Bloc-notes, puis relancer le serveur</td></tr>
+  <tr><td>Mots de passe de développement</td><td><code>Backend\.dev-credentials</code> sur le PC</td><td>Ne jamais le copier ni l'envoyer</td></tr>
+</table></div>
+
+<div class="note warn"><p><strong>Sauvegarde.</strong> Comme la base et les photos ne sont pas sur GitHub, copier régulièrement <code>Backend\storage</code> et <code>Backend\media</code> sur un disque externe ou un cloud, serveur arrêté de préférence.</p></div>
+
+<h2 id="problemes">10. Problèmes fréquents</h2>
+
+<h3>Au lancement du serveur</h3>
+<div class="table-wrap"><table>
+  <tr><th>Message ou symptôme</th><th>Que faire</th></tr>
+  <tr><td><code>npm.ps1 cannot be loaded because running scripts is disabled</code></td><td>Une fois : <code>Set-ExecutionPolicy -Scope CurrentUser RemoteSigned</code>, répondre <kbd>O</kbd>. Ou taper <code>npm.cmd start</code> au lieu de <code>npm start</code>.</td></tr>
+  <tr><td><code>npm</code>, <code>node</code> ou <code>git</code> « n'est pas reconnu »</td><td>Fermer et rouvrir PowerShell. Si ça persiste, le logiciel n'est pas installé : voir <code>docs\INSTALLATION-LOCALE.md</code>.</td></tr>
+  <tr><td><code>Missing script: "start"</code> ou <code>ENOENT … package.json</code></td><td>On n'est pas dans le bon dossier : <code>cd C:\Dev\Claude\Remotion\hotelaston\Backend</code>.</td></tr>
+  <tr><td><code>EADDRINUSE … 3020</code></td><td>Un serveur tourne déjà (une autre fenêtre <code>npm start</code>, parfois réduite). L'arrêter ou l'utiliser. Sinon, redémarrer le PC.</td></tr>
+  <tr><td><code>Cannot find module …</code> après un <code>git pull</code></td><td>Nouvelles bibliothèques : <code>npm install</code> dans <code>Backend</code>, puis <code>npm start</code>.</td></tr>
+  <tr><td><code>EBUSY</code> ou <code>EPERM</code> à la publication</td><td>Un programme tient un fichier : fermer les autres serveurs, un explorateur SQLite, attendre l'antivirus, puis recommencer.</td></tr>
+  <tr><td>Le navigateur affiche « Impossible d'accéder au site »</td><td>Le serveur n'est pas lancé, ou la fenêtre affiche une erreur : la lire, relancer <code>npm start</code>.</td></tr>
+</table></div>
+
+<h3>Sur le site et l'admin</h3>
+<div class="table-wrap"><table>
+  <tr><th>Symptôme</th><th>Que faire</th></tr>
+  <tr><td>Ma modification n'apparaît pas sur <code>/fr/</code></td><td>Elle est enregistrée mais pas publiée : <b class="ui">Publier</b>. Puis recharger la page sans cache : <kbd>Ctrl</kbd> + <kbd>F5</kbd>.</td></tr>
+  <tr><td>Une mise à jour de Claude n'apparaît pas</td><td>La PR est-elle fusionnée (pastille violette) ? Puis <code>git pull</code>, relancer, <b class="ui">Publier</b>.</td></tr>
+  <tr><td><code>/fr/</code> est vide ou en 404</td><td>Rien n'est publié : <b class="ui">Publier</b> dans l'admin.</td></tr>
+  <tr><td>Une publication a cassé quelque chose</td><td><b>SITE</b> → <b class="ui">Publication et versions</b> → <b class="ui">Restaurer</b> la version précédente.</td></tr>
+  <tr><td>Le téléphone n'ouvre pas le site</td><td>Voir <a href="#portable">section 3</a> : adresse IPv4, pare-feu, réseau privé.</td></tr>
+</table></div>
+
+<h3>Avec Git et GitHub</h3>
+<div class="table-wrap"><table>
+  <tr><th>Message</th><th>Ce que ça veut dire, et que faire</th></tr>
+  <tr><td><code>fatal: not a git repository</code></td><td>On n'est pas dans le projet : <code>cd C:\Dev\Claude\Remotion\hotelaston</code>.</td></tr>
+  <tr><td><code>Your local changes to the following files would be overwritten by merge</code> (au <code>git pull</code>)</td><td>Un fichier du code a été modifié sur le PC. Pour mettre ces changements de côté puis récupérer la mise à jour : <code>git stash</code>, <code>git pull</code>. Pour les jeter définitivement à la place : <code>git restore nom-du-fichier</code>. En cas de doute, demander à Claude avant.</td></tr>
+  <tr><td>Une fenêtre étrange s'ouvre dans le terminal avec « Merge branch… » (éditeur Vim)</td><td>Git demande un message de fusion. Taper <kbd>:</kbd><kbd>w</kbd><kbd>q</kbd> puis <kbd>Entrée</kbd> pour accepter le message proposé.</td></tr>
+  <tr><td><code>CONFLICT (content): Merge conflict in …</code></td><td>La même ligne a changé des deux côtés. Pour annuler et revenir à l'état d'avant : <code>git merge --abort</code>. Puis demander à Claude.</td></tr>
+  <tr><td><code>! [rejected] … (fetch first)</code> au <code>git push</code></td><td>La branche a reçu d'autres commits sur GitHub. <code>git pull</code>, puis <code>git push</code> à nouveau.</td></tr>
+  <tr><td><code>Please tell me who you are</code></td><td>Faire l'étape « Se présenter à Git » de la <a href="#pousser">section 8</a>.</td></tr>
+  <tr><td><code>Permission denied</code> ou <code>Authentication failed</code></td><td>Reconnexion à GitHub : relancer <code>git push</code> et suivre la fenêtre de connexion. Si elle ne s'ouvre pas : Démarrer → « Gestionnaire d'identification » → Informations d'identification Windows → supprimer l'entrée <code>git:https://github.com</code>, puis réessayer.</td></tr>
+  <tr><td>Je ne sais plus sur quelle branche je suis</td><td><code>git status</code> : la première ligne dit « On branch … ». Revenir à la référence : <code>git switch main</code>.</td></tr>
+  <tr><td><code>git switch</code> refuse : « Your local changes … would be overwritten by checkout »</td><td>Des modifications ne sont pas commitées. Les enregistrer (<code>git add -A</code>, <code>git commit -m "…"</code>) ou les mettre de côté (<code>git stash</code>) avant de changer de branche.</td></tr>
+</table></div>
+
+<h2 id="memo">11. Aide-mémoire</h2>
+
+<div class="table-wrap"><table>
+  <tr><th>Je veux…</th><th>Commande</th><th>Où</th></tr>
+  <tr><td>Lancer le serveur</td><td><code>npm start</code></td><td><code>Backend</code></td></tr>
+  <tr><td>Arrêter le serveur</td><td><kbd>Ctrl</kbd> + <kbd>C</kbd></td><td>fenêtre du serveur</td></tr>
+  <tr><td>Récupérer les mises à jour</td><td><code>git switch main</code> puis <code>git pull</code></td><td>racine</td></tr>
+  <tr><td>Installer les nouvelles bibliothèques</td><td><code>npm install</code></td><td><code>Backend</code></td></tr>
+  <tr><td>Lancer les tests</td><td><code>npm test</code></td><td><code>Backend</code></td></tr>
+  <tr><td>Voir l'état (branche, fichiers modifiés)</td><td><code>git status</code></td><td>racine</td></tr>
+  <tr><td>Créer une branche</td><td><code>git switch -c michel/sujet</code></td><td>racine</td></tr>
+  <tr><td>Enregistrer ses modifications</td><td><code>git add -A</code> puis <code>git commit -m "message"</code></td><td>racine</td></tr>
+  <tr><td>Envoyer sa branche sur GitHub</td><td><code>git push -u origin michel/sujet</code></td><td>racine</td></tr>
+  <tr><td>Voir les derniers commits</td><td><code>git log --oneline -10</code> (<kbd>q</kbd> pour sortir)</td><td>racine</td></tr>
+  <tr><td>Trouver l'adresse du PC sur le Wi-Fi</td><td><code>ipconfig</code> (ligne Adresse IPv4)</td><td>partout</td></tr>
+  <tr><td>Régénérer le guide de l'admin</td><td><code>node tools/md-to-html.mjs docs/guide-utilisateur.md</code></td><td>racine</td></tr>
+</table></div>
+
+<p>Pour aller plus loin : <code>docs\INSTALLATION-LOCALE.md</code> (installer le projet sur un nouveau PC), le manuel de l'admin (<b>AIDE</b> → <b class="ui">Manuel d'utilisation</b>, ou <code>docs\guide-utilisateur.html</code>), et <code>deploy\README.md</code> (Render et futur hébergement).</p>
+
+</main>
+
+<footer>Guide hors ligne du projet Hôtel Aston La Scala · mis à jour le 14 novembre 2026 · fichier <code>docs/guide-utilisateur-offline.html</code></footer>
+
+<script>
+  // Copier une commande (sans les lignes de commentaire)
+  document.querySelectorAll('.term .copy').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var pre = btn.closest('.term').querySelector('pre');
+      var text = Array.prototype.filter.call(pre.childNodes, function (n) {
+        return !(n.nodeType === 1 && n.classList.contains('c'));
+      }).map(function (n) { return n.textContent; }).join('').replace(/\n{2,}/g, '\n').trim();
+      var done = function () { btn.textContent = 'Copié'; setTimeout(function () { btn.textContent = 'Copier'; }, 1500); };
+      if (navigator.clipboard && window.isSecureContext) {
+        navigator.clipboard.writeText(text).then(done, function () { fallback(text); done(); });
+      } else { fallback(text); done(); }
+    });
+  });
+  function fallback(text) {
+    var ta = document.createElement('textarea');
+    ta.value = text; ta.style.position = 'fixed'; ta.style.opacity = '0';
+    document.body.appendChild(ta); ta.select();
+    try { document.execCommand('copy'); } catch (e) {}
+    document.body.removeChild(ta);
+  }
+  // Thème clair / sombre, retenu dans ce navigateur si possible
+  (function () {
+    var root = document.documentElement, key = 'aston-guide-offline-theme';
+    try { var saved = localStorage.getItem(key); if (saved) root.dataset.theme = saved; } catch (e) {}
+    document.getElementById('theme').addEventListener('click', function () {
+      var dark = root.dataset.theme ? root.dataset.theme === 'dark' : matchMedia('(prefers-color-scheme: dark)').matches;
+      root.dataset.theme = dark ? 'light' : 'dark';
+      try { localStorage.setItem(key, root.dataset.theme); } catch (e) {}
+    });
+  })();
+</script>
+</body>
+</html>

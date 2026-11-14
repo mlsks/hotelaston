@@ -1,6 +1,6 @@
 # Guide utilisateur du back-office
 
-Hôtel Aston La Scala · Mis à jour le 2 novembre 2026
+Hôtel Aston La Scala · Mis à jour le 14 novembre 2026
 
 Ce guide explique comment faire vivre le site de l'hôtel depuis le back-office : modifier un texte, changer une photo, annoncer un concert, traduire, publier, revenir en arrière. Il s'adresse aux personnes qui utilisent l'admin au quotidien, sans connaissance technique.
 
@@ -48,7 +48,7 @@ Le menu de gauche est rangé sous des titres en petites capitales grises : **CON
 
 ### Sur le PC de développement
 
-L'installation complète (Node.js, premier lancement, problèmes courants) est décrite dans [INSTALLATION-LOCALE.md](INSTALLATION-LOCALE.md). Une fois installé :
+L'installation complète (Node.js, premier lancement, problèmes courants) est décrite dans [INSTALLATION-LOCALE.md](INSTALLATION-LOCALE.md). Le pas à pas Windows pour lancer le serveur, récupérer les mises à jour et travailler avec GitHub (pull requests, branches, push) est dans [guide-utilisateur-offline.html](guide-utilisateur-offline.html), qui s'ouvre sans internet. Une fois installé :
 
 1. Ouvrir un terminal dans le dossier du projet, puis :
 
