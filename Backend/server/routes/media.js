@@ -6,7 +6,7 @@ import { guard, assertCan, assertInScope, isScoped, rulesOf, folderInScope } fro
 import { HttpError, notFound, badRequest, assertHttpUrl } from '../lib/http.js';
 import { nowIso, sha } from '../lib/util.js';
 import { audit } from '../lib/audit.js';
-import { ingestUpload, enqueue, refreshPortrait, providerOf, warningsFor, waitFor } from '../media/pipeline.js';
+import { ingestUpload, enqueue, inWorker, providerOf, warningsFor, waitFor } from '../media/pipeline.js';
 import { ID, ID_LANG, STATUS, assertLang, translationState, pick, updateRow } from './helpers.js';
 
 const FOLDER = { type: 'string', pattern: '^/[\\w\\- /àâäéèêëîïôöùûüçÀ-ÿ]*$', maxLength: 120 };
@@ -138,7 +138,7 @@ export default function mediaRoutes(app, { db, defaultLang }) {
     if (fields.poster_id && getMedia(fields.poster_id).kind !== 'image') throw badRequest("Le poster doit être une image.");
     updateRow(db, 'cms_media', m.id, fields);
     if (('focal_x' in fields || 'focal_y' in fields) && m.kind === 'image') {
-      const job = enqueue(m.id, () => refreshPortrait(db, m.id));
+      const job = enqueue(m.id, () => inWorker('portrait', m.id));
       if (req.query.wait) await job;
     }
     audit(db, req, 'update', 'media', m.id, { before: m, after: fields });
