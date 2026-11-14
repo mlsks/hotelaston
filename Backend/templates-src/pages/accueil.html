@@ -5,9 +5,10 @@
         <div class="hero__media" data-parallax="0.18">
           <img class="hero__image" data-cms-media="accueil.photo-bandeau" data-cms-media-optional data-cms-sizes="100vw" loading="eager" fetchpriority="high">
           <picture data-cms-media-fallback>
-            <source media="(max-aspect-ratio: 4/5)" srcset="media/hero-piscine-portrait.webp" type="image/webp">
-            <source srcset="media/hero-piscine-1024.webp 1024w, media/hero-piscine-1600.webp 1600w, media/hero-piscine-2400.webp 2400w" sizes="100vw" type="image/webp">
-            <img class="hero__image" src="media/hero-piscine-1600.webp" width="1600" height="1195" alt="Piscine du rooftop de l'hôtel Aston La Scala, transats bleus face aux toits de Nice et à la mer" fetchpriority="high" decoding="async" data-cms-attr="alt:accueil.001-img@alt">
+            <source media="(max-aspect-ratio: 4/5)" srcset="img/bandeau/piscine-portrait-540.avif 540w, img/bandeau/piscine-portrait-780.avif 780w, img/bandeau/piscine-portrait-900.avif 900w" sizes="100vw" type="image/avif">
+            <source media="(max-aspect-ratio: 4/5)" srcset="img/bandeau/piscine-portrait-540.webp 540w, img/bandeau/piscine-portrait-780.webp 780w, img/bandeau/piscine-portrait-900.webp 900w" sizes="100vw" type="image/webp">
+            <source srcset="img/bandeau/piscine-640.avif 640w, img/bandeau/piscine-1024.avif 1024w, img/bandeau/piscine-1600.avif 1600w, img/bandeau/piscine-2400.avif 2400w" sizes="100vw" type="image/avif">
+            <img class="hero__image" src="img/bandeau/piscine-1600.webp" srcset="img/bandeau/piscine-640.webp 640w, img/bandeau/piscine-1024.webp 1024w, img/bandeau/piscine-1600.webp 1600w, img/bandeau/piscine-2400.webp 2400w" sizes="100vw" width="1600" height="1195" alt="Piscine du rooftop de l'hôtel Aston La Scala, transats bleus face aux toits de Nice et à la mer" fetchpriority="high" decoding="async" data-cms-attr="alt:accueil.001-img@alt">
           </picture>
           <!-- Vidéo du Hero : en attente de la prise de vue définitive. Pour la réactiver, placer
                ici la balise ci-dessous (remotion-vanilla.js gère connexion lente et mise en cache) :
@@ -230,7 +231,10 @@
       <section class="section section--night" aria-labelledby="home-venues-title">
         <div class="section-bg" aria-hidden="true">
           <img data-cms-media="accueil.photo-fond-restaurant" data-cms-media-optional data-cms-sizes="100vw" data-cms-decorative data-cms-portrait="off" alt="">
-          <img src="media/video_hero-poster.webp" alt="" width="1920" height="1080" loading="lazy" decoding="async" data-cms-media-fallback>
+          <picture data-cms-media-fallback>
+            <source srcset="img/bandeau/rooftop-soir-640.avif 640w, img/bandeau/rooftop-soir-1024.avif 1024w, img/bandeau/rooftop-soir-1600.avif 1600w, img/bandeau/rooftop-soir-1920.avif 1920w" sizes="100vw" type="image/avif">
+            <img src="img/bandeau/rooftop-soir-1600.webp" srcset="img/bandeau/rooftop-soir-640.webp 640w, img/bandeau/rooftop-soir-1024.webp 1024w, img/bandeau/rooftop-soir-1600.webp 1600w, img/bandeau/rooftop-soir-1920.webp 1920w" sizes="100vw" alt="" width="1600" height="900" loading="lazy" decoding="async">
+          </picture>
         </div>
         <div class="container">
           <header class="section-head section-head--light">

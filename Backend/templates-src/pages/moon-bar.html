@@ -1,9 +1,15 @@
 <section class="view" data-route="moon-bar" data-view="moon-bar" data-cta="table" data-table-target="reserver-moonbar">
       <section class="venue-video" aria-labelledby="moonbar-title" data-cms-hero="veil">
-        <video loop="" muted="" playsinline="" preload="none" poster="media/moonbar-live-poster.webp" data-lazy-video="" data-cms-media="moon-bar.video-bandeau" data-cms-media-optional aria-hidden="true" tabindex="-1">
-          <source data-src="media/moonbar-live.mp4" type="video/mp4">
-          <source data-src="media/moonbar-live.webm" type="video/webm">
-        </video>
+        <!-- Photo du bandeau (Pages → Le Moon Bar → Textes), sinon le rooftop au crépuscule ; zoom lent en CSS (breathe) -->
+        <div class="venue-video__media">
+          <img class="venue-video__image" data-cms-media="moon-bar.photo-bandeau" data-cms-media-optional data-cms-sizes="100vw" data-cms-decorative alt="" loading="eager" fetchpriority="high">
+          <picture data-cms-media-fallback>
+            <source media="(max-aspect-ratio: 4/5)" srcset="img/bandeau/rooftop-soir-portrait-540.avif 540w, img/bandeau/rooftop-soir-portrait-608.avif 608w" sizes="100vw" type="image/avif">
+            <source media="(max-aspect-ratio: 4/5)" srcset="img/bandeau/rooftop-soir-portrait-540.webp 540w, img/bandeau/rooftop-soir-portrait-608.webp 608w" sizes="100vw" type="image/webp">
+            <source srcset="img/bandeau/rooftop-soir-640.avif 640w, img/bandeau/rooftop-soir-1024.avif 1024w, img/bandeau/rooftop-soir-1600.avif 1600w, img/bandeau/rooftop-soir-1920.avif 1920w" sizes="100vw" type="image/avif">
+            <img class="venue-video__image" src="img/bandeau/rooftop-soir-1600.webp" srcset="img/bandeau/rooftop-soir-640.webp 640w, img/bandeau/rooftop-soir-1024.webp 1024w, img/bandeau/rooftop-soir-1600.webp 1600w, img/bandeau/rooftop-soir-1920.webp 1920w" sizes="100vw" width="1600" height="900" alt="" fetchpriority="high" decoding="async">
+          </picture>
+        </div>
         <div class="container venue-video__content">
           <nav class="breadcrumb breadcrumb--light" aria-label="Fil d'Ariane" data-cms-attr="aria-label:moon-bar.001-nav@aria-label"><a href="#/" data-cms-key="moon-bar.002-a">Accueil</a><span aria-hidden="true">›</span><a href="#/restaurant-bar" data-cms-key="moon-bar.003-a">Restaurant &amp; bar</a><span aria-hidden="true">›</span><span aria-current="page" data-cms-key="moon-bar.004-span">Le Moon Bar</span></nav>
           <h1 id="moonbar-title" data-cms-key="moon-bar.005-h1">Le Moon Bar, rooftop avec vue panoramique sur Nice</h1>

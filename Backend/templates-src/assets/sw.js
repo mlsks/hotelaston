@@ -21,17 +21,14 @@ const PRECACHE = [
   'index.html',
   'styles.css',
   'remotion-vanilla.js',
-  'media/hero-piscine-1600.webp',
-  'media/hero-piscine-portrait.webp',
-  'media/video_hero-poster.webp',
-  'img/logo-aston-blanc.png',
-  'img/logo-aston-or.png',
   'favicon.ico',
 ];
+// Pas de photo pré-chargée : un téléphone ne doit pas télécharger en arrière-plan la photo
+// pour grand écran ni les logos (masqués sur mobile). Les photos vues sont mises en cache au passage.
 
 const saveData = () => Boolean(self.navigator.connection && self.navigator.connection.saveData);
 const isMedia = (url) => /\.(mp4|webm)$/i.test(url.pathname);
-const isImage = (url) => /\.(webp|png|jpe?g|svg|ico)$/i.test(url.pathname);
+const isImage = (url) => /\.(avif|webp|png|jpe?g|svg|ico)$/i.test(url.pathname);
 
 self.addEventListener('install', (event) => {
   event.waitUntil(caches.open(STATIC_CACHE).then((c) => c.addAll(PRECACHE)).then(() => self.skipWaiting()));

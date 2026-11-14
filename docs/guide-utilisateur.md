@@ -162,7 +162,7 @@ Dans un texte enrichi (pages, fiches, popup), un texte copié depuis Word ou un 
   - **Dans le plan du site (sitemap.xml)** ;
   - **Page parente** et **Ordre** (place dans le menu et le fil d'Ariane) ;
   - **Priorité dans le plan du site** (laisser « Automatique » en cas de doute) ;
-  - **Dégradé derrière le texte du bandeau photo** (Accueil, Séminaires et Moon Bar) : un voile léger part de la gauche (du bas sur mobile) et une ombre douce détache le texte blanc, sans assombrir le reste de la photo ou de la vidéo. **Opacité** (50 % au départ) et **Étendue vers la droite** (70 %) se règlent au curseur ; **Revenir au réglage d'origine** remet ceux du site. Décoché, le bandeau de l'accueil et la vidéo du Moon Bar gardent leur voile d'origine. Enregistrer, puis vérifier dans la prévisualisation. Tous les bandeaux se règlent aussi sur un seul écran : voir [Les bandeaux photo (HERO)](#les-bandeaux-photo-hero).
+  - **Dégradé derrière le texte du bandeau photo** (Accueil, Séminaires et Moon Bar) : un voile léger part de la gauche (du bas sur mobile) et une ombre douce détache le texte blanc, sans assombrir le reste de la photo. **Opacité** (50 % au départ) et **Étendue vers la droite** (70 %) se règlent au curseur ; **Revenir au réglage d'origine** remet ceux du site. Décoché, le bandeau de l'accueil et la photo du Moon Bar gardent leur voile d'origine. Enregistrer, puis vérifier dans la prévisualisation. Tous les bandeaux se règlent aussi sur un seul écran : voir [Les bandeaux photo (HERO)](#les-bandeaux-photo-hero).
 
 ### Blocs d'une page
 
@@ -336,9 +336,9 @@ Les avis clients ont leur propre écran : voir [Les avis Google](#les-avis-googl
 
 ### Les bandeaux photo (HERO)
 
-**Fiches et listes** → **Bandeaux photo (HERO)** montre, sur un seul écran, chaque page qui a un grand bandeau réglable : Accueil, Séminaires et Moon Bar (vidéo). Pour chacune :
+**Fiches et listes** → **Bandeaux photo (HERO)** montre, sur un seul écran, chaque page qui a un grand bandeau réglable : Accueil, Séminaires et Moon Bar. Pour chacune :
 
-- **Dégradé derrière le texte** : un voile léger part de la gauche (du bas sur mobile) et une ombre douce détache le texte blanc, sans assombrir le reste de la photo ou de la vidéo. Décoché, le bandeau garde son voile d'origine.
+- **Dégradé derrière le texte** : un voile léger part de la gauche (du bas sur mobile) et une ombre douce détache le texte blanc, sans assombrir le reste de la photo. Décoché, le bandeau garde son voile d'origine.
 - **Opacité** (50 % au départ) et **Étendue vers la droite** (70 %) se règlent au curseur.
 - **Revenir au réglage d'origine** remet ceux du site (activé sur Séminaires et Moon Bar, désactivé sur l'Accueil).
 - **Enregistrer**, puis **Prévisualiser** ouvre la page dans la prévisualisation.
@@ -408,7 +408,7 @@ L'éditeur Live Music voit un menu réduit : sa page, le programme, les artistes
 
 ### Médiathèque
 
-- **Envoyer** : glisser-déposer des fichiers sur l'écran (ou **Envoyer des fichiers**), en choisissant le dossier d'envoi. Les photos sont optimisées automatiquement : WebP en plusieurs tailles, recadrage portrait pour mobile, miniature. Un doublon est signalé.
+- **Envoyer** : glisser-déposer des fichiers sur l'écran (ou **Envoyer des fichiers**), en choisissant le dossier d'envoi. Les photos sont optimisées automatiquement : WebP et AVIF (plus léger, lu par les navigateurs récents) en plusieurs tailles, recadrage portrait pour mobile en trois tailles, miniature. Les photos envoyées avant le 14/11/2026 reçoivent ces nouvelles tailles toutes seules au démarrage du serveur : le **Journal** affiche alors « Photos allégées (AVIF, téléphones) », et il faut **Publier** pour que le site en profite. Un doublon est signalé.
 - **Documents PDF** (cartes du restaurant, plaquettes…) : jusqu'à 20 Mo, au-delà de 5 Mo un avertissement signale qu'il sera long à ouvrir sur un téléphone. Le fichier garde un nom lisible tiré de son nom d'origine. On s'en sert dans [Menus et liens](#menus-et-liens).
 - **Liens externes** : coller une adresse YouTube, Vimeo, Spotify… puis **Ajouter**.
 - **Retrouver** : dossiers, filtre par type (images, vidéos, sons, documents PDF, liens externes), recherche par nom ou texte alternatif.
@@ -423,7 +423,7 @@ Pour changer la photo d'une page : onglet **Textes** de la page, **Changer l'ima
 
 Sur l'accueil, les vignettes **Conciergerie** et **Bagagerie gratuite** (section « Tout ce qu'un 4 étoiles doit faciliter ») montrent un pictogramme tant qu'aucune photo n'est choisie : **Pages** → **Accueil** → onglet **Textes**, ligne **Photo** juste sous le titre de la vignette, **Changer l'image**. **Retirer l'image** remet le pictogramme. La photo de la page Conciergerie elle-même se change dans **Fiches et listes** → **Services** → **Conciergerie**, champ **Photos**.
 
-D'autres images d'origine se remplacent de la même façon ; tant qu'aucune n'est choisie, l'image d'origine reste, et **Retirer l'image** (**Retirer la vidéo** pour la vidéo) la fait revenir :
+D'autres images d'origine se remplacent de la même façon ; tant qu'aucune n'est choisie, l'image d'origine reste, et **Retirer l'image** la fait revenir :
 
 | Image | Où la changer (taper le mot dans **Rechercher un texte…**) |
 |---|---|
@@ -431,9 +431,9 @@ D'autres images d'origine se remplacent de la même façon ; tant qu'aucune n'es
 | Fond de la section « Restaurant & bars » de l'accueil | **Pages** → **Accueil** → **Textes**, rechercher **fond** |
 | Logo blanc de l'en-tête (sur le bandeau de l'accueil, grand écran) | **Textes communs**, rechercher **logo** |
 | Logo or de l'en-tête (sur fond clair, grand écran) | **Textes communs**, rechercher **logo** |
-| Vidéo du bandeau de la page Moon Bar | **Pages** → **Le Moon Bar** → **Textes**, rechercher **vidéo**, puis **Changer la vidéo** |
+| Photo du bandeau de la page Moon Bar (le rooftop au crépuscule) | **Pages** → **Le Moon Bar** → **Textes**, rechercher **bandeau**, puis **Changer l'image** |
 
-Pour ces images, la description lue par Google et les lecteurs d'écran est celle de la **Médiathèque** : la remplir en ouvrant la photo. Les logos de l'en-tête doivent avoir un fond transparent (PNG). La vidéo du Moon Bar tourne en boucle, sans le son : une vidéo courte (10 à 20 secondes) et légère (MP4, quelques Mo) se charge vite ; son image d'attente est tirée de la vidéo par la médiathèque. Chaque ligne **Photo** de l'onglet **Textes** indique maintenant où elle s'affiche.
+Pour ces images, la description lue par Google et les lecteurs d'écran est celle de la **Médiathèque** : la remplir en ouvrant la photo. Les logos de l'en-tête doivent avoir un fond transparent (PNG). La photo du bandeau du Moon Bar avance d'un zoom très lent (coupé si le visiteur a demandé de réduire les animations) ; elle remplace l'ancienne vidéo, trop lourde sur téléphone. Chaque ligne **Photo** de l'onglet **Textes** indique maintenant où elle s'affiche.
 
 ### Bandeaux
 

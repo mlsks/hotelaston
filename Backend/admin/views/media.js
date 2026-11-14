@@ -103,10 +103,10 @@ Alpine.data('mediaView', () => ({
   },
   detailForm: { folder: '/', credit: '' },
   get large() {
-    const v = (this.detail?.variants || []).filter((x) => x.purpose === 'w1024' || x.purpose === 'w1600' || x.purpose === 'w640');
+    const v = (this.detail?.variants || []).filter((x) => x.format === 'webp' && (x.purpose === 'w1024' || x.purpose === 'w1600' || x.purpose === 'w640'));
     return v[0]?.url || this.detail?.thumb || null;
   },
-  get portrait() { return (this.detail?.variants || []).find((x) => x.purpose === 'portrait')?.url || null; },
+  get portrait() { return (this.detail?.variants || []).find((x) => x.purpose === 'portrait' && x.format === 'webp')?.url || null; },
   get original() { return (this.detail?.variants || []).find((x) => x.purpose === 'original')?.url || null; },
   get poster() { return (this.detail?.variants || []).find((x) => x.purpose === 'poster')?.url || null; },
   async setFocal(e) {

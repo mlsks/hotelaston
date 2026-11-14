@@ -656,7 +656,7 @@ picture { display: contents; }
 /* Bandeau de l'accueil : le dégradé remplace son voile propre */
 .hero.hero-veil .hero__media { z-index: -2; }
 .hero.hero-veil .hero__veil { display: none; }
-/* Bandeau vidéo (Moon Bar) : idem, voir .venue-video */
+/* Bandeau photo du Moon Bar : idem, voir .venue-video */
 @media (max-width: 699.98px) {
   .hero-veil::before { background: linear-gradient(0deg, rgba(var(--veil-rgb), var(--veil-opacity)) 0%, rgba(var(--veil-rgb), calc(var(--veil-opacity) * 0.6)) 55%, rgba(var(--veil-rgb), calc(var(--veil-opacity) * 0.25)) 100%); }
 }
@@ -723,6 +723,15 @@ picture { display: contents; }
 .booking__promise .icon { color: var(--ok); }
 @media (min-width: 600px) {
   .booking--hero, .booking--dialog { grid-template-columns: repeat(4, 1fr); }
+}
+/* Hauteur réservée au module de l'accueil (mobile et tablette) : sur un téléphone lent, la page s'affiche
+   parfois avant que tout le module soit lu ; sans cette réserve, il grandit ensuite et pousse le titre vers le haut.
+   Valeurs un peu sous la hauteur réelle (295 px et 190 px mesurés), pour ne jamais ajouter d'espace. */
+@media (max-width: 599.98px) {
+  .booking--hero:not(.is-compact) { min-height: 290px; }
+}
+@media (min-width: 600px) and (max-width: 1023.98px) {
+  .booking--hero:not(.is-compact) { min-height: 186px; }
 }
 @media (min-width: 1024px) {
   .booking--hero { grid-template-columns: 1.15fr 1.15fr 0.62fr 0.62fr 1.35fr; padding: 16px 18px; }
@@ -1363,10 +1372,12 @@ div.legal__facts { margin-bottom: 1em; }
 .menu-list__desc { grid-column: 1 / -1; font-size: var(--fs-sm); color: var(--ink-3); }
 .menu-page__cta { display: flex; flex-wrap: wrap; align-items: center; gap: 18px 28px; margin-top: 44px; padding-top: 28px; border-top: 1px solid var(--line); }
 
-/* Moon Bar : en-tête vidéo */
-.venue-video { position: relative; isolation: isolate; min-height: min(80svh, 720px); display: flex; align-items: flex-end; color: #fff; margin-bottom: clamp(24px, 4vw, 48px); background: var(--azure-950); }
-.venue-video video { position: absolute; inset: 0; z-index: -2; width: 100%; height: 100%; object-fit: cover; }
-/* Voile propre de la vidéo, remplacé par le module hero-veil (section 6) quand il est activé */
+/* Moon Bar : en-tête photo plein cadre (la vidéo d'origine est remplacée par une photo, plus légère sur mobile) */
+.venue-video { position: relative; isolation: isolate; min-height: min(80svh, 720px); display: flex; align-items: flex-end; color: #fff; margin-bottom: clamp(24px, 4vw, 48px); background: var(--azure-950); overflow: hidden; }
+.venue-video video, .venue-video__media { position: absolute; inset: 0; z-index: -2; width: 100%; height: 100%; object-fit: cover; }
+.venue-video__media picture { display: block; width: 100%; height: 100%; }
+.venue-video__image { display: block; width: 100%; height: 100%; object-fit: cover; }
+/* Voile propre du bandeau, remplacé par le module hero-veil (section 6) quand il est activé */
 .venue-video:not(.hero-veil)::before { content: ""; position: absolute; inset: 0; z-index: -1; background: linear-gradient(0deg, rgba(5, 13, 29, 0.85), rgba(5, 13, 29, 0) 60%), linear-gradient(180deg, rgba(5, 13, 29, 0.5), rgba(5, 13, 29, 0) 25%); }
 .venue-video__content { padding-top: calc(var(--header-h) + var(--strip-h) + 40px); padding-bottom: clamp(28px, 5vw, 56px); }
 .venue-video h1 { color: #fff; max-width: 18ch; }
@@ -1763,7 +1774,7 @@ div.legal__facts { margin-bottom: 1em; }
 /* Bandeaux photo : la photo se rapproche imperceptiblement, puis le titre apparaît */
 @keyframes breathe { from { transform: scale(1.06); } to { transform: scale(1); } }
 @keyframes title-in { from { opacity: 0; transform: translate3d(0, 14px, 0); } to { opacity: 1; transform: none; } }
-.hero__image, .page-head--image > img, .page-head--image > picture > img { animation: breathe 14s var(--ease-out) both; }
+.hero__image, .venue-video__image, .page-head--image > img, .page-head--image > picture > img { animation: breathe 14s var(--ease-out) both; }
 .hero .display, .page-head--image .page-head__overlay { animation: title-in 1s var(--ease-out) 0.25s both; }
 
 /* Photos : fondu à l'arrivée au lieu d'une apparition brusque (classe posée par remotion-vanilla.js) */

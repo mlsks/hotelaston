@@ -1,9 +1,10 @@
 /**
  * Pipeline des médias à l'upload.
  *  - Contrôles : type réel (premiers octets), poids maximal par type, empreinte SHA-256 contre les doublons.
- *  - Images (sharp) : orientation EXIF appliquée, métadonnées retirées, WebP en 640 / 1024 / 1600 / 2400 px
- *    (jamais au-delà de l'original, dont la largeur est gardée aussi), recadrage portrait 900×1600 centré sur le point d'intérêt,
- *    image de partage JPEG 1200×630, miniature.
+ *  - Images (sharp) : orientation EXIF appliquée, métadonnées retirées, WebP et AVIF en 640 / 1024 / 1600 / 2400 px
+ *    (jamais au-delà de l'original, dont la largeur est gardée aussi), recadrage portrait 9:16 centré sur le point
+ *    d'intérêt en 540 / 780 / 900 px de large (WebP et AVIF), image de partage JPEG 1200×630, miniature.
+ *    L'AVIF pèse environ deux fois moins que le WebP ; les navigateurs qui ne le lisent pas prennent le WebP.
  *  - Vidéos et sons (ffprobe / ffmpeg) : durée et dimensions ; poster WebP extrait des vidéos.
  * Les originaux restent dans storage/uploads (jamais servis) ; les variantes vont dans media/v/
  * avec un nom tiré de l'empreinte, donc immuables.
@@ -21,6 +22,12 @@ import { HttpError } from '../lib/http.js';
 import { sniff } from './sniff.js';
 
 const WIDTHS = [640, 1024, 1600, 2400];
+/** Largeurs du recadrage portrait (téléphones) : 900 px garde le nom historique « portrait ». */
+const PORTRAIT_WIDTHS = [540, 780, 900];
+const portraitPurpose = (w) => (w === 900 ? 'portrait' : `portrait-w${w}`);
+const WEBP = { quality: 78 };
+// effort 2 : dix fois plus rapide que le réglage par défaut, pour un fichier à peine plus lourd
+const AVIF = { quality: 50, effort: 2 };
 const MB = 1024 * 1024;
 const VARIANT_DIR = 'v';
 
@@ -110,9 +117,9 @@ const fileSlug = (name) => String(name || '').replace(/\.[a-z0-9]+$/i, '').norma
 const variantPath = (m, suffix) => `${VARIANT_DIR}/${m.sha256.slice(0, 16)}-${suffix}`;
 const absolute = (rel) => path.join(config.mediaDir, ...rel.split('/'));
 
-/** Recadrage 9:16 centré sur le point d'intérêt (pour les téléphones). */
-async function portrait(db, m, src, width, height) {
-  if (width / height < 0.8) return; // déjà vertical
+/** Zone du recadrage 9:16 centré sur le point d'intérêt, ou null pour une image déjà verticale. */
+function portraitCrop(m, width, height) {
+  if (width / height < 0.8) return null; // déjà vertical
   let cw = Math.round(height * (9 / 16));
   let ch = height;
   if (cw > width) {
@@ -121,10 +128,31 @@ async function portrait(db, m, src, width, height) {
   }
   const left = Math.min(Math.max(0, Math.round(m.focal_x * width - cw / 2)), width - cw);
   const top = Math.min(Math.max(0, Math.round(m.focal_y * height - ch / 2)), height - ch);
-  const rel = variantPath(m, `portrait-${Math.round(m.focal_x * 100)}-${Math.round(m.focal_y * 100)}.webp`);
-  const info = await sharp(src).rotate().extract({ left, top, width: cw, height: ch })
-    .resize({ width: 900, height: 1600, fit: 'cover', withoutEnlargement: true }).webp({ quality: 78 }).toFile(absolute(rel));
-  saveVariant(db, m.id, 'portrait', 'webp', info, rel);
+  return { left, top, width: cw, height: ch };
+}
+
+/** Largeurs de recadrage portrait utiles : la plus grande toujours (ramenée à la zone recadrée si elle est plus petite), les autres si elles sont plus petites que la zone. */
+const portraitWidths = (crop) => PORTRAIT_WIDTHS.filter((w) => w === 900 || w < crop.width);
+
+/**
+ * Recadrage 9:16 centré sur le point d'intérêt (pour les téléphones), en plusieurs largeurs, WebP et AVIF.
+ * only : ne crée que les variantes absentes de cette liste de couples « but/format » (rattrapage).
+ */
+async function portrait(db, m, src, width, height, { only = null } = {}) {
+  const crop = portraitCrop(m, width, height);
+  if (!crop) return;
+  const base = `portrait-${Math.round(m.focal_x * 100)}-${Math.round(m.focal_y * 100)}`;
+  for (const w of portraitWidths(crop)) {
+    const purpose = portraitPurpose(w);
+    const suffix = w === 900 ? base : `${base}-w${w}`;
+    for (const [format, opts] of [['webp', WEBP], ['avif', AVIF]]) {
+      if (only && !only.has(`${purpose}/${format}`)) continue;
+      const rel = variantPath(m, `${suffix}.${format}`);
+      const info = await sharp(src).rotate().extract(crop)
+        .resize({ width: w, height: Math.round(w * (16 / 9)), fit: 'cover', withoutEnlargement: true })[format](opts).toFile(absolute(rel));
+      saveVariant(db, m.id, purpose, format, info, rel);
+    }
+  }
 }
 
 /**
@@ -155,6 +183,65 @@ export async function shareImagePath(db, id) {
   return find();
 }
 
+/** Variantes d'une largeur : WebP (lu partout) et AVIF (deux fois plus léger). only : rattrapage, voir portrait(). */
+async function widthVariants(db, m, src, w, { only = null } = {}) {
+  for (const [format, opts] of [['webp', WEBP], ['avif', AVIF]]) {
+    if (only && !only.has(`w${w}/${format}`)) continue;
+    const rel = variantPath(m, `w${w}.${format}`);
+    const info = await sharp(src).rotate().resize({ width: w, withoutEnlargement: true })[format](opts).toFile(absolute(rel));
+    saveVariant(db, m.id, `w${w}`, format, info, rel);
+  }
+}
+
+/** Variantes attendues d'une image déjà traitée qui manquent encore (images envoyées avant l'AVIF et les portraits multiples). */
+export function missingVariants(db, m) {
+  if (m.kind !== 'image' || !m.width || !m.height) return [];
+  const have = new Set(db.prepare('SELECT purpose || \'/\' || format FROM cms_media_variants WHERE media_id = ?').pluck().all(m.id));
+  const want = [];
+  for (const purpose of db.prepare("SELECT DISTINCT purpose FROM cms_media_variants WHERE media_id = ? AND purpose GLOB 'w[0-9]*'").pluck().all(m.id)) {
+    want.push(`${purpose}/webp`, `${purpose}/avif`);
+  }
+  const crop = portraitCrop(m, m.width, m.height);
+  if (crop) for (const w of portraitWidths(crop)) want.push(`${portraitPurpose(w)}/webp`, `${portraitPurpose(w)}/avif`);
+  return want.filter((k) => !have.has(k));
+}
+
+/**
+ * Rattrapage, au démarrage et en arrière-plan : crée l'AVIF et les recadrages portrait manquants des images
+ * déjà dans la médiathèque, une image à la fois dans la file des médias (les envois de l'admin passent entre deux).
+ * Les originaux absents (copie partielle de storage/) sont sautés. Renvoie { images, variants, skipped }.
+ */
+export async function completeVariants(db, { log = () => {} } = {}) {
+  const images = db.prepare("SELECT * FROM cms_media WHERE kind = 'image' AND status = 'ready' AND deleted_at IS NULL AND width IS NOT NULL ORDER BY id").all();
+  const todo = images.map((m) => ({ m, missing: missingVariants(db, m) })).filter((t) => t.missing.length);
+  const result = { images: 0, variants: 0, skipped: 0 };
+  if (!todo.length) return result;
+  log(`Médiathèque : AVIF et recadrages pour téléphone à créer pour ${todo.length} image(s), en arrière-plan.`);
+  for (const { m, missing } of todo) {
+    const src = path.join(config.uploadsDir, m.storage_key);
+    if (!fs.existsSync(src)) {
+      result.skipped += 1;
+      continue;
+    }
+    await enqueue(`variants-${m.id}`, async () => {
+      const only = new Set(missing);
+      try {
+        for (const purpose of new Set(missing.filter((k) => k.startsWith('w')).map((k) => k.split('/')[0]))) {
+          await widthVariants(db, m, src, Number(purpose.slice(1)), { only });
+        }
+        if (missing.some((k) => k.startsWith('portrait'))) await portrait(db, m, src, m.width, m.height, { only });
+        result.images += 1;
+        result.variants += missing.length;
+      } catch (err) {
+        result.skipped += 1;
+        log(`Médiathèque : image n° ${m.id} non complétée (${err.message}).`);
+      }
+    });
+  }
+  log(`Médiathèque : ${result.variants} variante(s) créée(s) pour ${result.images} image(s)${result.skipped ? `, ${result.skipped} sautée(s) (original absent ou illisible)` : ''}. Publiez pour en profiter sur le site.`);
+  return result;
+}
+
 export async function processMedia(db, id) {
   const m = db.prepare('SELECT * FROM cms_media WHERE id = ?').get(id);
   if (!m || m.kind === 'embed') return;
@@ -167,11 +254,7 @@ export async function processMedia(db, id) {
       // Tailles standard, plus la largeur d'origine quand elle tombe entre deux (900 px → 640 et 900)
       const widths = WIDTHS.filter((w) => w <= width);
       if (width < WIDTHS[WIDTHS.length - 1] && !widths.includes(width)) widths.push(width);
-      for (const w of widths) {
-        const rel = variantPath(m, `w${w}.webp`);
-        const info = await sharp(src).rotate().resize({ width: w, withoutEnlargement: true }).webp({ quality: 78 }).toFile(absolute(rel));
-        saveVariant(db, m.id, `w${w}`, 'webp', info, rel);
-      }
+      for (const w of widths) await widthVariants(db, m, src, w);
       await portrait(db, m, src, width, height);
       await shareVariant(db, m, src, width, height);
       const thumbRel = variantPath(m, 'thumb.webp');

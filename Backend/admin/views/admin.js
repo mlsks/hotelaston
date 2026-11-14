@@ -214,7 +214,7 @@ Alpine.data('redirectsView', () => ({
 }));
 
 /* ---------- Journal ---------- */
-const ACTIONS = { create: 'Création', update: 'Modification', delete: 'Suppression', deactivate: 'Désactivation', publish: 'Publication', rollback: 'Restauration', login: 'Connexion', password: 'Mot de passe', reuse: 'Doublon réutilisé' };
+const ACTIONS = { create: 'Création', update: 'Modification', delete: 'Suppression', deactivate: 'Désactivation', publish: 'Publication', rollback: 'Restauration', login: 'Connexion', password: 'Mot de passe', reuse: 'Doublon réutilisé', optimize: 'Photos allégées (AVIF, téléphones)' };
 const ENTITIES = { entry: 'Texte', page: 'Page', page_i18n: 'Page (SEO)', item: 'Fiche', item_i18n: 'Fiche (traduction)', item_media: 'Médias d’une fiche', media: 'Média', media_i18n: 'Média (textes)', banner: 'Bandeau', banner_i18n: 'Bandeau (texte)', banner_placements: 'Bandeau (emplacements)', popup: 'Popup', popup_i18n: 'Popup (texte)', popup_pages: 'Popup (pages)', user: 'Utilisateur', settings: 'Réglages', redirect: 'Redirection', language: 'Langue', build: 'Version du site' };
 
 Alpine.data('auditView', () => ({

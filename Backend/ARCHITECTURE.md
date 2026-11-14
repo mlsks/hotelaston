@@ -346,8 +346,8 @@ CREATE TABLE cms_media (
 CREATE TABLE cms_media_variants (
   id       INTEGER PRIMARY KEY,
   media_id INTEGER NOT NULL REFERENCES cms_media(id) ON DELETE CASCADE,
-  purpose  TEXT NOT NULL,                        -- 'w640', 'w1024', 'w1600', 'w2400', 'portrait', 'thumb', 'poster'
-  format   TEXT NOT NULL,                        -- 'webp', 'jpg', 'mp4', 'webm', 'mp3'
+  purpose  TEXT NOT NULL,                        -- 'w640'…'w2400', 'portrait' (900), 'portrait-w540', 'portrait-w780', 'share', 'thumb', 'poster'
+  format   TEXT NOT NULL,                        -- 'webp', 'avif', 'jpg', 'mp4', 'webm', 'mp3'
   width    INTEGER,
   height   INTEGER,
   bytes    INTEGER NOT NULL,
@@ -939,8 +939,9 @@ Toutes les routes sauf `/api/track` exigent une session. Les écritures exigent 
 - **Contrôles** : taille maximale par type (réglable), type réel vérifié sur le contenu du fichier (pas l'extension), nom normalisé, empreinte SHA-256 contre les doublons.
 - **Images** (`sharp`) :
   - rotation EXIF appliquée, métadonnées retirées ;
-  - variantes WebP en 640, 1024, 1600 et 2400 px de large (jamais au-delà de l'original) ;
-  - recadrage portrait 900×1600 centré sur le point focal ;
+  - variantes WebP (q78) et AVIF (q50, effort 2) en 640, 1024, 1600 et 2400 px de large (jamais au-delà de l'original) ;
+  - recadrage portrait 9:16 centré sur le point focal, en 540, 780 et 900 px de large, WebP et AVIF ; le build écrit les sources portrait pour `(max-aspect-ratio: 4/5)` puis l'AVIF, le WebP restant dans `<img>` ;
+  - rattrapage au démarrage (`completeVariants`) des variantes manquantes des photos plus anciennes ;
   - miniature pour l'admin.
 - **Vidéos** (`ffprobe` / `ffmpeg`) :
   - lecture de la durée, des dimensions et du poids, avec alerte au-delà de 8 Mo pour une boucle de fond ;

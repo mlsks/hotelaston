@@ -30,6 +30,9 @@ import { loadGeoip } from './analytics/geoip.js';
 import { currentBuild } from './ssg/release.js';
 import { adminVendor, ADMIN_HEADERS, GOOGLE_TOOL_PATH, GOOGLE_TOOL_HEADERS, MANUAL_PATH, manualPage } from './admin-assets.js';
 
+/** Fichier publié avec son empreinte dans le nom, sous assets/ (CSS, JS, polices, images fixes). */
+const FINGERPRINTED_FILE = /[\\/]assets[\\/](?:.+[\\/])?[^\\/]+\.[0-9a-f]{10}\.[a-z0-9]+$/i;
+
 /** Erreur de validation de schéma en français lisible (le message d'Ajv est en anglais). */
 const FIELDS = { email: 'E-mail', name: 'Nom', password: 'Mot de passe', title: 'Title', slug: 'Adresse', text: 'Texte', meta_description: 'Description', from_path: 'Ancienne adresse', code: 'Code' };
 function validationMessage(v) {
@@ -178,6 +181,10 @@ export async function buildApp({ logger = { level: 'info' }, ingestFlushMs = 200
   app.register(fastifyStatic, {
     root: config.publicDist, prefix: '/', redirect: true,
     allowedPath: (p) => !p.replace(/^\//, '').startsWith('_meta/'),
+    // Fichiers à empreinte (assets/…/nom.0123456789.ext) : immuables, gardés un an par le navigateur (comme le Caddyfile)
+    setHeaders: (reply, file) => {
+      if (FINGERPRINTED_FILE.test(file)) reply.header('Cache-Control', 'public, max-age=31536000, immutable');
+    },
   });
 
   /** 404 : réponse JSON pour l'API, page 404 dans la langue de l'adresse sinon. */

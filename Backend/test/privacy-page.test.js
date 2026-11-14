@@ -104,7 +104,9 @@ test('page dans chaque langue : date masquée tant qu’elle est vide, bouton de
   // Polices hébergées sur le site : aucune requête vers Google, fichiers publiés à côté des pages
   assert.doesNotMatch(fr.html(), /fonts\.(googleapis|gstatic)\.com/);
   const preload = fr('link[rel="preload"][as="font"]').first().attr('href');
-  assert.equal(preload, '/preview/fonts/jost-var-latin.woff2');
+  // Copie à empreinte sous assets/ (cache d'un an) ; l'adresse d'origine reste servie
+  assert.match(preload, /^\/preview\/assets\/fonts\/jost-var-latin\.[0-9a-f]{10}\.woff2$/);
+  assert.ok(fs.existsSync(path.join(config.previewDir, preload.replace('/preview/', ''))));
   assert.ok(fs.existsSync(path.join(config.previewDir, 'fonts', 'jost-var-latin.woff2')));
   assert.equal(fr('.site-footer__legal a').eq(1).attr('href'), '/preview/fr/politique-de-confidentialite/');
   assert.equal(page$('fr/devis')('main a[href*="confidentialite"]').attr('href'), '/preview/fr/politique-de-confidentialite/');

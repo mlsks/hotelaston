@@ -153,10 +153,13 @@ test('médias : variantes WebP, recadrage portrait, doublon, type refusé', asyn
   assert.equal(res.statusCode, 201, res.body);
   const media = res.json().media;
   assert.equal(media.status, 'ready');
-  const purposes = media.variants.map((v) => v.purpose).sort();
-  assert.deepEqual(purposes, ['portrait', 'share', 'thumb', 'w1024', 'w1600', 'w2000', 'w640']); // 2000 px : largeur d'origine gardée
+  const purposes = media.variants.map((v) => `${v.purpose}/${v.format}`).sort();
+  // 2000 px : largeur d'origine gardée ; WebP et AVIF ; recadrage portrait 675 px de large (zone de 1200 px de haut) et 540 px
+  assert.deepEqual(purposes, ['portrait-w540/avif', 'portrait-w540/webp', 'portrait/avif', 'portrait/webp', 'share/jpeg', 'thumb/webp',
+    'w1024/avif', 'w1024/webp', 'w1600/avif', 'w1600/webp', 'w2000/avif', 'w2000/webp', 'w640/avif', 'w640/webp']);
   for (const v of media.variants) assert.ok(fs.existsSync(path.join(config.mediaDir, v.path)), v.path);
   assert.equal(media.variants.find((v) => v.purpose === 'portrait').height, 1200);
+  assert.deepEqual(['width', 'height'].map((k) => media.variants.find((v) => v.purpose === 'portrait-w540' && v.format === 'avif')[k]), [540, 960]);
   assert.deepEqual(['width', 'height', 'format'].map((k) => media.variants.find((v) => v.purpose === 'share')[k]), [1200, 630, 'jpeg']);
 
   const again = await upload('editor', 'copie.png', png);
@@ -195,7 +198,12 @@ test('image de la médiathèque injectée dans un gabarit (data-cms-media)', asy
   assert.equal(img.attr('fetchpriority'), 'high');
   assert.equal(img.attr('alt'), 'Piscine du rooftop au coucher du soleil');
   assert.match(img.attr('srcset'), /\/media\/v\/.+-w640\.webp 640w/);
-  assert.match($('source').attr('srcset'), /portrait/);
+  // Sources dans l'ordre : portrait AVIF, portrait WebP (téléphones), puis AVIF pour les autres écrans ; WebP dans <img>
+  const sources = $('source').map((i, el) => `${el.attribs.media || ''}|${el.attribs.type}`).get();
+  assert.deepEqual(sources, ['(max-aspect-ratio: 4/5)|image/avif', '(max-aspect-ratio: 4/5)|image/webp', '|image/avif']);
+  assert.match($('source').eq(0).attr('srcset'), /portrait-20-50-w540\.avif 540w, .+portrait-20-50\.avif 675w/);
+  assert.match($('source').eq(2).attr('srcset'), /-w640\.avif 640w/);
+  assert.equal($('source').eq(2).attr('sizes'), '100vw');
   assert.equal($('[data-cms-media]').length, 0);
 });
 
