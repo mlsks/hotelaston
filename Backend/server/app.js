@@ -76,7 +76,7 @@ export async function buildApp({ logger = { level: 'info' }, ingestFlushMs = 200
   app.setErrorHandler((err, req, reply) => {
     const status = err.statusCode || (err.validation ? 400 : 500);
     if (status >= 500) req.log.error(err);
-    reply.code(status).send({ error: status >= 500 ? 'Erreur interne du serveur.' : err.validation ? validationMessage(err.validation[0]) : err.message });
+    reply.code(status).send({ error: status >= 500 ? err.publicMessage || 'Erreur interne du serveur.' : err.validation ? validationMessage(err.validation[0]) : err.message });
   });
 
   /* Démo : site fermé par un mot de passe (DEMO_PASSWORD), jamais indexé (NOINDEX) */
